@@ -1,14 +1,17 @@
 const express = require('express');
 const app = express();
-const port = 5173;
+const port = 3001;
 const exphbs = require('express-handlebars')
 const alunoRoutes = require('./routes/alunoRoutes');
 const flash = require('express-flash')
+const cors = require('cors')
 
 
 const db = require("./db/db");
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
 
 app.engine('handlebars', exphbs.engine())
 app.set('view engine', 'handlebars')
@@ -16,7 +19,7 @@ app.set('view engine', 'handlebars')
 // public
 app.use(express.static('public'))
 
-app.use('/', alunoRoutes);
+app.use('/api/alunos', alunoRoutes);
 app.get('/', (req, res) => {
   res.render('home')
 })

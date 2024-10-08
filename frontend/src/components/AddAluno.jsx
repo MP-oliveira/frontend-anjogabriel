@@ -80,7 +80,7 @@ const AddAluno = () => {
     };
 
     try {
-      await api.post("/create", { newAluno }); // Envia uma requisição POST
+      await api.post("/alunos/create", newAluno); // Remova o { }
       alert("Usuário adicionado com sucesso!");
     } catch (error) {
       console.error("Erro ao adicionar usuário", error);
