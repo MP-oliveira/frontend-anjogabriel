@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3001;
+const port = 5173;
 const exphbs = require('express-handlebars')
 const alunoRoutes = require('./routes/alunoRoutes');
 const flash = require('express-flash')
@@ -16,14 +16,14 @@ app.set('view engine', 'handlebars')
 // public
 app.use(express.static('public'))
 
-app.use('/alunos', alunoRoutes);
+app.use('/', alunoRoutes);
 app.get('/', (req, res) => {
   res.render('home')
 })
 
 app.use(flash())
 
-db.sync()
+db.sync({force: true})
 .then(() => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

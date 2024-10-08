@@ -73,10 +73,10 @@ const Aluno = db.define('Aluno', {
   estado: {
     type: DataTypes.STRING,
   },
-  curso: {
+  curso: { // relacionar com tabela curso
     type: DataTypes.STRING,
   },
-  turno: {
+  turno: { // relacionar com tabela curso
     type: DataTypes.STRING,
   },
   foto_url: {
