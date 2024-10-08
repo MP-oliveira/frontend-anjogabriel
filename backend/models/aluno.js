@@ -6,9 +6,13 @@ const Aluno = db.define('Aluno', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   data_nascimento: {
     type: DataTypes.DATE,
-    allowNull: false,
+    // allowNull: false,
   },
   estado_civil: {
     type: DataTypes.STRING,
@@ -39,7 +43,7 @@ const Aluno = db.define('Aluno', {
   },
   cpf: {
     type: DataTypes.STRING(11),
-    allowNull: false,
+    // allowNull: false,
     unique: true,
   },
   endereco: {
