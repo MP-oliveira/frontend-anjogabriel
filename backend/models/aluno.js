@@ -12,7 +12,7 @@ const Aluno = db.define('Aluno', {
   },
   data_nascimento: {
     type: DataTypes.DATE,
-    // allowNull: false,
+    allowNull: false,
   },
   estado_civil: {
     type: DataTypes.STRING,
@@ -49,19 +49,19 @@ const Aluno = db.define('Aluno', {
   endereco: {
     type: DataTypes.TEXT,
   },
-  numero_casa: {
+  n_casa: {
     type: DataTypes.STRING(10),
   },
   bairro: {
     type: DataTypes.STRING,
   },
-  telefone_residencial: {
+  tel_res: {
     type: DataTypes.STRING(15),
   },
   celular: {
     type: DataTypes.STRING(15),
   },
-  telefone_trabalho: {
+  tel_trabalho: {
     type: DataTypes.STRING(15),
   },
   cep: {

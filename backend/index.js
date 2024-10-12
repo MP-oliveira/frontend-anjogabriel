@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.use(flash())
 
-db.sync({force: true})
+db.sync()
 .then(() => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

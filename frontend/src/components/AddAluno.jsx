@@ -26,64 +26,82 @@ const AddAluno = () => {
   const [estado, setEstado] = useState("");
   const [curso, setCurso] = useState("");
   const [turno, setTurno] = useState("");
-  const [foto_url, setFoto_url] = useState("");
-  const [historico_url, setHistorico_url] = useState("");
+  const [foto_url, setFoto_url] = useState(null); // Estado para armazenar a foto
+  const [historico_url, setHistorico_url] = useState(null); // Estado para armazenar o histórico
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newAluno = {
-      nome,
-      email,
-      data_nascimento,
-      estado_civil,
-      grupo_sanguineo,
-      naturalidade,
-      nacionalidade,
-      pai,
-      mae,
-      rg,
-      orgao_expedidor_rg,
-      data_expedicao_rg,
-      cpf,
-      endereco,
-      n_casa,
-      bairro,
-      tel_res,
-      celular,
-      tel_trabalho,
-      cep,
-      cidade,
-      estado,
-      curso,
-      turno,
-      foto_url,
-      historico_url,
-    };
 
-    const handleImageChange = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFoto_url(reader.result);
-      };
-      reader.readAsDataURL(file);
-    };
+    // Criar um FormData para enviar os arquivos junto com os dados
+    const formData = new FormData();
 
-    const handleHistoricoChange = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setHistorico_url(reader.result);
-      };
-      reader.readAsDataURL(file);
-    };
+    // Adicionar os campos de texto ao FormData
+    formData.append("nome", nome);
+    formData.append("email", email);
+    formData.append("data_nascimento", data_nascimento);
+    formData.append("estado_civil", estado_civil);
+    formData.append("grupo_sanguineo", grupo_sanguineo);
+    formData.append("naturalidade", naturalidade);
+    formData.append("nacionalidade", nacionalidade);
+    formData.append("pai", pai);
+    formData.append("mae", mae);
+    formData.append("rg", rg);
+    formData.append("orgao_expedidor_rg", orgao_expedidor_rg);
+    formData.append("data_expedicao_rg", data_expedicao_rg);
+    formData.append("cpf", cpf);
+    formData.append("endereco", endereco);
+    formData.append("n_casa", n_casa);
+    formData.append("bairro", bairro);
+    formData.append("tel_res", tel_res);
+    formData.append("celular", celular);
+    formData.append("tel_trabalho", tel_trabalho);
+    formData.append("cep", cep);
+    formData.append("cidade", cidade);
+    formData.append("estado", estado);
+    formData.append("curso", curso);
+    formData.append("turno", turno);
+
+    // Adicionar a foto ao FormData, se existir
+    if (foto_url) formData.append("foto", foto_url);
+
+    // Adicionar o histórico ao FormData, se existir
+    if (historico_url) formData.append("historico", historico_url);
 
     try {
-      await api.post("/alunos/create", newAluno); // Remova o { }
+      // Enviar os dados para a API
+      await api.post("/alunos/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Definir o cabeçalho adequado para envio de arquivos
+        },
+      });
       alert("Usuário adicionado com sucesso!");
     } catch (error) {
       console.error("Erro ao adicionar usuário", error);
+    }
+  };
+
+  // Função para manipular o arquivo de imagem selecionado
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // Obter o arquivo selecionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto_url(file); // Definir o arquivo no estado
+      };
+      reader.readAsDataURL(file); // Ler o arquivo para exibição prévia, se necessário
+    }
+  };
+
+  // Função para manipular o arquivo de histórico selecionado
+  const handleHistoricoChange = (e) => {
+    const file = e.target.files[0]; // Obter o arquivo selecionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setHistorico_url(file); // Definir o arquivo no estado
+      };
+      reader.readAsDataURL(file); // Ler o arquivo para exibição prévia, se necessário
     }
   };
 
@@ -95,180 +113,153 @@ const AddAluno = () => {
         value={nome}
         onChange={(e) => setNome(e.target.value)}
         placeholder="Nome"
-        // required
       />
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
-        // required
       />
       <input
         type="text"
         value={data_nascimento}
         onChange={(e) => setData_nascimento(e.target.value)}
         placeholder="Data de nascimento"
-        // required
       />
       <input
         type="text"
         value={estado_civil}
         onChange={(e) => setEstado_civil(e.target.value)}
-        placeholder="Estado"
-        // required
+        placeholder="Estado Civil"
       />
       <input
         type="text"
         value={grupo_sanguineo}
         onChange={(e) => setGrupo_sanguineo(e.target.value)}
-        placeholder="Grupo sanguineo"
-        // required
+        placeholder="Grupo Sanguíneo"
       />
       <input
         type="text"
         value={naturalidade}
         onChange={(e) => setNaturalidade(e.target.value)}
         placeholder="Naturalidade"
-        // required
       />
       <input
         type="text"
         value={nacionalidade}
         onChange={(e) => setNacionalidade(e.target.value)}
         placeholder="Nacionalidade"
-        // required
       />
       <input
         type="text"
         value={pai}
         onChange={(e) => setPai(e.target.value)}
         placeholder="Nome do Pai"
-        // required
       />
       <input
         type="text"
         value={mae}
         onChange={(e) => setMae(e.target.value)}
-        placeholder="Nome da mae"
-        // required
+        placeholder="Nome da Mãe"
       />
       <input
         type="text"
         value={rg}
         onChange={(e) => setRg(e.target.value)}
-        placeholder="Numero do RG"
-        // required
+        placeholder="RG"
       />
       <input
         type="text"
         value={orgao_expedidor_rg}
         onChange={(e) => setOrgao_expedidor_rg(e.target.value)}
-        placeholder="Orgão expedidor"
-        // required
+        placeholder="Orgão Expedidor do RG"
       />
       <input
         type="text"
         value={data_expedicao_rg}
         onChange={(e) => setData_expedicao_rg(e.target.value)}
-        placeholder="Data de expedição"
-        // required
+        placeholder="Data de Expedição do RG"
       />
       <input
         type="text"
         value={cpf}
         onChange={(e) => setCpf(e.target.value)}
         placeholder="CPF"
-        // required
       />
       <input
         type="text"
         value={endereco}
         onChange={(e) => setEndereco(e.target.value)}
         placeholder="Endereço"
-        // required
       />
       <input
         type="text"
         value={n_casa}
         onChange={(e) => setN_casa(e.target.value)}
-        placeholder="Numero"
-        // required
+        placeholder="Número da Casa"
       />
       <input
         type="text"
         value={bairro}
         onChange={(e) => setBairro(e.target.value)}
         placeholder="Bairro"
-        // required
       />
       <input
         type="text"
         value={tel_res}
         onChange={(e) => setTel_res(e.target.value)}
-        placeholder="Telefone residencial"
-        // required
+        placeholder="Telefone Residencial"
       />
       <input
         type="text"
         value={celular}
         onChange={(e) => setCelular(e.target.value)}
         placeholder="Celular"
-        // required
       />
       <input
         type="text"
         value={tel_trabalho}
         onChange={(e) => setTel_trabalho(e.target.value)}
-        placeholder="Tel trabalho"
-        // required
+        placeholder="Telefone do Trabalho"
       />
       <input
         type="text"
         value={cep}
         onChange={(e) => setCep(e.target.value)}
         placeholder="CEP"
-        // required
       />
       <input
         type="text"
         value={cidade}
         onChange={(e) => setCidade(e.target.value)}
         placeholder="Cidade"
-        // required
       />
       <input
         type="text"
         value={estado}
         onChange={(e) => setEstado(e.target.value)}
         placeholder="Estado"
-        // required
       />
       <input
         type="text"
         value={curso}
         onChange={(e) => setCurso(e.target.value)}
         placeholder="Curso"
-        // required
       />
       <input
         type="text"
         value={turno}
         onChange={(e) => setTurno(e.target.value)}
         placeholder="Turno"
-        // required
       />
-      <input type="file" onChange={(e) => handleImageChange}  placeholder="Foto"/>
-      <input
-        type="file"
-        value={historico_url}
-        onChange={(e) => {
-          handleHistoricoChange;
-        }}
-        placeholder="Historico"
-        // required
-      />
-      <button type="submit">Adicionar</button>
+
+      {/* Input para foto */}
+      <input type="file" accept="image/*" onChange={handleImageChange} />
+      
+      {/* Input para histórico */}
+      <input type="file" accept=".pdf" onChange={handleHistoricoChange} />
+
+      <button type="submit">Adicionar Usuário</button>
     </form>
   );
 };
