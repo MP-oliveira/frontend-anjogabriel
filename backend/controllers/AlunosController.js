@@ -1,8 +1,5 @@
 const Aluno = require("../models/aluno");
 
-// encriptar a senha
-// const bcrypt = require("bcryptjs");
-
 module.exports = class AuthController {
   // static login(req, res) {
   // 	res.render("auth/login");
@@ -60,21 +57,20 @@ module.exports = class AuthController {
       data_expedicao_rg,
       cpf,
       endereco,
-      numero_casa,
+      n_casa,
       bairro,
-      telefone_residencial,
+      tel_res,
       celular,
-      telefone_trabalho,
+      tel_trabalho,
       cep,
       cidade,
       estado,
       curso,
-      turno,
-      foto_url,
-      historico_url
+      turno
+      
     } = req.body;
 
-    /* Verificando se usuario existe */
+    /* Verificando se o aluno já existe */
     const checkIfAlunoExists = await Aluno.findOne({
       where: { cpf: cpf },
     });
@@ -83,15 +79,42 @@ module.exports = class AuthController {
       return;
     }
 
-    const aluno = {
-      nome,
-      email,
-    };
-
     try {
+
+
+      const aluno = {
+        nome,
+        email,
+        data_nascimento,
+        estado_civil,
+        grupo_sanguineo,
+        naturalidade,
+        nacionalidade,
+        pai,
+        mae,
+        rg,
+        orgao_expedidor_rg,
+        data_expedicao_rg,
+        cpf,
+        endereco,
+        n_casa,
+        bairro,
+        tel_res,
+        celular,
+        tel_trabalho,
+        cep,
+        cidade,
+        estado,
+        curso,
+        turno,
+        
+      };
+
+      console.log(aluno, nome)
       const createdUser = await Aluno.create(aluno);
     } catch (error) {
       console.error(error);
+      res.render('register', { error: 'Erro ao criar aluno' });
     }
   }
 
