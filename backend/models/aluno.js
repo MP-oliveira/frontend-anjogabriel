@@ -12,7 +12,7 @@ const Aluno = db.define('Aluno', {
   },
   data_nascimento: {
     type: DataTypes.DATE,
-    allowNull: false,
+    // allowNull: false,
   },
   estado_civil: {
     type: DataTypes.STRING,
