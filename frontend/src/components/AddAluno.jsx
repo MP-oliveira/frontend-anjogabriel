@@ -26,7 +26,7 @@ const AddAluno = () => {
   const [estado, setEstado] = useState("");
   const [curso, setCurso] = useState("");
   const [turno, setTurno] = useState("");
-  
+
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
@@ -35,30 +35,30 @@ const AddAluno = () => {
     // Criar um FormData para enviar os arquivos junto com os dados
     const newAluno = {
       nome,
-        email,
-        data_nascimento,
-        estado_civil,
-        grupo_sanguineo,
-        naturalidade,
-        nacionalidade,
-        pai,
-        mae,
-        rg,
-        orgao_expedidor_rg,
-        data_expedicao_rg,
-        cpf,
-        endereco,
-        n_casa,
-        bairro,
-        tel_res,
-        celular,
-        tel_trabalho,
-        cep,
-        cidade,
-        estado,
-        curso,
-        turno,
-        
+      email,
+      data_nascimento,
+      estado_civil,
+      grupo_sanguineo,
+      naturalidade,
+      nacionalidade,
+      pai,
+      mae,
+      rg,
+      orgao_expedidor_rg,
+      data_expedicao_rg,
+      cpf,
+      endereco,
+      n_casa,
+      bairro,
+      tel_res,
+      celular,
+      tel_trabalho,
+      cep,
+      cidade,
+      estado,
+      curso,
+      turno,
+
     }
 
 
@@ -74,155 +74,157 @@ const AddAluno = () => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <h2>Adicionar Usuário</h2>
-      <input
-        type="text"
-        value={nome}
-        onChange={(e) => setNome(e.target.value)}
-        placeholder="Nome"
-      />
-      <input
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="text"
-        value={data_nascimento}
-        onChange={(e) => setData_nascimento(e.target.value)}
-        placeholder="Data de nascimento"
-      />
-      <input
-        type="text"
-        value={estado_civil}
-        onChange={(e) => setEstado_civil(e.target.value)}
-        placeholder="Estado Civil"
-      />
-      <input
-        type="text"
-        value={grupo_sanguineo}
-        onChange={(e) => setGrupo_sanguineo(e.target.value)}
-        placeholder="Grupo Sanguíneo"
-      />
-      <input
-        type="text"
-        value={naturalidade}
-        onChange={(e) => setNaturalidade(e.target.value)}
-        placeholder="Naturalidade"
-      />
-      <input
-        type="text"
-        value={nacionalidade}
-        onChange={(e) => setNacionalidade(e.target.value)}
-        placeholder="Nacionalidade"
-      />
-      <input
-        type="text"
-        value={pai}
-        onChange={(e) => setPai(e.target.value)}
-        placeholder="Nome do Pai"
-      />
-      <input
-        type="text"
-        value={mae}
-        onChange={(e) => setMae(e.target.value)}
-        placeholder="Nome da Mãe"
-      />
-      <input
-        type="text"
-        value={rg}
-        onChange={(e) => setRg(e.target.value)}
-        placeholder="RG"
-      />
-      <input
-        type="text"
-        value={orgao_expedidor_rg}
-        onChange={(e) => setOrgao_expedidor_rg(e.target.value)}
-        placeholder="Orgão Expedidor do RG"
-      />
-      <input
-        type="text"
-        value={data_expedicao_rg}
-        onChange={(e) => setData_expedicao_rg(e.target.value)}
-        placeholder="Data de Expedição do RG"
-      />
-      <input
-        type="text"
-        value={cpf}
-        onChange={(e) => setCpf(e.target.value)}
-        placeholder="CPF"
-      />
-      <input
-        type="text"
-        value={endereco}
-        onChange={(e) => setEndereco(e.target.value)}
-        placeholder="Endereço"
-      />
-      <input
-        type="text"
-        value={n_casa}
-        onChange={(e) => setN_casa(e.target.value)}
-        placeholder="Número da Casa"
-      />
-      <input
-        type="text"
-        value={bairro}
-        onChange={(e) => setBairro(e.target.value)}
-        placeholder="Bairro"
-      />
-      <input
-        type="text"
-        value={tel_res}
-        onChange={(e) => setTel_res(e.target.value)}
-        placeholder="Telefone Residencial"
-      />
-      <input
-        type="text"
-        value={celular}
-        onChange={(e) => setCelular(e.target.value)}
-        placeholder="Celular"
-      />
-      <input
-        type="text"
-        value={tel_trabalho}
-        onChange={(e) => setTel_trabalho(e.target.value)}
-        placeholder="Telefone do Trabalho"
-      />
-      <input
-        type="text"
-        value={cep}
-        onChange={(e) => setCep(e.target.value)}
-        placeholder="CEP"
-      />
-      <input
-        type="text"
-        value={cidade}
-        onChange={(e) => setCidade(e.target.value)}
-        placeholder="Cidade"
-      />
-      <input
-        type="text"
-        value={estado}
-        onChange={(e) => setEstado(e.target.value)}
-        placeholder="Estado"
-      />
-      <input
-        type="text"
-        value={curso}
-        onChange={(e) => setCurso(e.target.value)}
-        placeholder="Curso"
-      />
-      <input
-        type="text"
-        value={turno}
-        onChange={(e) => setTurno(e.target.value)}
-        placeholder="Turno"
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Nome"
+        />
+        <input
+          type="text"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+        />
+        <input
+          type="text"
+          value={data_nascimento}
+          onChange={(e) => setData_nascimento(e.target.value)}
+          placeholder="Data de nascimento"
+        />
+        <input
+          type="text"
+          value={estado_civil}
+          onChange={(e) => setEstado_civil(e.target.value)}
+          placeholder="Estado Civil"
+        />
+        <input
+          type="text"
+          value={grupo_sanguineo}
+          onChange={(e) => setGrupo_sanguineo(e.target.value)}
+          placeholder="Grupo Sanguíneo"
+        />
+        <input
+          type="text"
+          value={naturalidade}
+          onChange={(e) => setNaturalidade(e.target.value)}
+          placeholder="Naturalidade"
+        />
+        <input
+          type="text"
+          value={nacionalidade}
+          onChange={(e) => setNacionalidade(e.target.value)}
+          placeholder="Nacionalidade"
+        />
+        <input
+          type="text"
+          value={pai}
+          onChange={(e) => setPai(e.target.value)}
+          placeholder="Nome do Pai"
+        />
+        <input
+          type="text"
+          value={mae}
+          onChange={(e) => setMae(e.target.value)}
+          placeholder="Nome da Mãe"
+        />
+        <input
+          type="text"
+          value={rg}
+          onChange={(e) => setRg(e.target.value)}
+          placeholder="RG"
+        />
+        <input
+          type="text"
+          value={orgao_expedidor_rg}
+          onChange={(e) => setOrgao_expedidor_rg(e.target.value)}
+          placeholder="Orgão Expedidor do RG"
+        />
+        <input
+          type="text"
+          value={data_expedicao_rg}
+          onChange={(e) => setData_expedicao_rg(e.target.value)}
+          placeholder="Data de Expedição do RG"
+        />
+        <input
+          type="text"
+          value={cpf}
+          onChange={(e) => setCpf(e.target.value)}
+          placeholder="CPF"
+        />
+        <input
+          type="text"
+          value={endereco}
+          onChange={(e) => setEndereco(e.target.value)}
+          placeholder="Endereço"
+        />
+        <input
+          type="text"
+          value={n_casa}
+          onChange={(e) => setN_casa(e.target.value)}
+          placeholder="Número da Casa"
+        />
+        <input
+          type="text"
+          value={bairro}
+          onChange={(e) => setBairro(e.target.value)}
+          placeholder="Bairro"
+        />
+        <input
+          type="text"
+          value={tel_res}
+          onChange={(e) => setTel_res(e.target.value)}
+          placeholder="Telefone Residencial"
+        />
+        <input
+          type="text"
+          value={celular}
+          onChange={(e) => setCelular(e.target.value)}
+          placeholder="Celular"
+        />
+        <input
+          type="text"
+          value={tel_trabalho}
+          onChange={(e) => setTel_trabalho(e.target.value)}
+          placeholder="Telefone do Trabalho"
+        />
+        <input
+          type="text"
+          value={cep}
+          onChange={(e) => setCep(e.target.value)}
+          placeholder="CEP"
+        />
+        <input
+          type="text"
+          value={cidade}
+          onChange={(e) => setCidade(e.target.value)}
+          placeholder="Cidade"
+        />
+        <input
+          type="text"
+          value={estado}
+          onChange={(e) => setEstado(e.target.value)}
+          placeholder="Estado"
+        />
+        <input
+          type="text"
+          value={curso}
+          onChange={(e) => setCurso(e.target.value)}
+          placeholder="Curso"
+        />
+        <input
+          type="text"
+          value={turno}
+          onChange={(e) => setTurno(e.target.value)}
+          placeholder="Turno"
+        />
 
-      <button type="submit">Adicionar Usuário</button>
-    </form>
+        <button type="submit">Adicionar Usuário</button>
+      </form>
+    </>
   );
 };
 

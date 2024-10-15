@@ -33,30 +33,32 @@ const AddDisciplina = () => {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <>
       <h2>Adicionar Disciplina</h2>
-      <input
-        type="text"
-        value={nome}
-        onChange={(e) => setNome(e.target.value)}
-        placeholder="Nome"
-      />
-      <input
-        type="text"
-        value={carga_horaria_semestral}
-        onChange={(e) => setCarga_horaria_semestral(e.target.value)}
-        placeholder="Carga Horaria"
-      />
-      <label for='estagio'>Estágio</label>
-      <select id='estagio'
-        onChange={(e) => setEstagio(e.target.value)}
-      >
-        <option value="Sim">Sim</option>
-        <option value="Nao">Não</option>
-      </select>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Nome"
+        />
+        <input
+          type="text"
+          value={carga_horaria_semestral}
+          onChange={(e) => setCarga_horaria_semestral(e.target.value)}
+          placeholder="Carga Horaria"
+        />
+        <label for='estagio'>Estágio</label>
+        <select id='estagio'
+          onChange={(e) => setEstagio(e.target.value)}
+        >
+          <option value="Sim">Sim</option>
+          <option value="Nao">Não</option>
+        </select>
 
-      <button type="submit">Adicionar Disciplina</button>
-    </form>
+        <button type="submit">Adicionar Disciplina</button>
+      </form>
+    </>
   );
 };
 
