@@ -26,11 +26,17 @@ const AddAluno = () => {
   const [estado, setEstado] = useState("");
   const [curso, setCurso] = useState("");
   const [turno, setTurno] = useState("");
+<<<<<<< HEAD
   
+=======
+  const [foto_url, setFoto_url] = useState(null); // Estado para armazenar a foto
+  const [historico_url, setHistorico_url] = useState(null); // Estado para armazenar o histórico
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
 
     // Criar um FormData para enviar os arquivos junto com os dados
     const newAluno = {
@@ -65,13 +71,84 @@ const AddAluno = () => {
     try {
       // Enviar os dados para a API
       await api.post("/alunos/create", newAluno);
+=======
+
+    // Criar um FormData para enviar os arquivos junto com os dados
+    const formData = new FormData();
+
+    // Adicionar os campos de texto ao FormData
+    formData.append("nome", nome);
+    formData.append("email", email);
+    formData.append("data_nascimento", data_nascimento);
+    formData.append("estado_civil", estado_civil);
+    formData.append("grupo_sanguineo", grupo_sanguineo);
+    formData.append("naturalidade", naturalidade);
+    formData.append("nacionalidade", nacionalidade);
+    formData.append("pai", pai);
+    formData.append("mae", mae);
+    formData.append("rg", rg);
+    formData.append("orgao_expedidor_rg", orgao_expedidor_rg);
+    formData.append("data_expedicao_rg", data_expedicao_rg);
+    formData.append("cpf", cpf);
+    formData.append("endereco", endereco);
+    formData.append("n_casa", n_casa);
+    formData.append("bairro", bairro);
+    formData.append("tel_res", tel_res);
+    formData.append("celular", celular);
+    formData.append("tel_trabalho", tel_trabalho);
+    formData.append("cep", cep);
+    formData.append("cidade", cidade);
+    formData.append("estado", estado);
+    formData.append("curso", curso);
+    formData.append("turno", turno);
+
+    // Adicionar a foto ao FormData, se existir
+    if (foto_url) formData.append("foto", foto_url);
+
+    // Adicionar o histórico ao FormData, se existir
+    if (historico_url) formData.append("historico", historico_url);
+
+    try {
+      // Enviar os dados para a API
+      await api.post("/alunos/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Definir o cabeçalho adequado para envio de arquivos
+        },
+      });
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
       alert("Usuário adicionado com sucesso!");
     } catch (error) {
       console.error("Erro ao adicionar usuário", error);
     }
   };
 
+<<<<<<< HEAD
 
+=======
+  // Função para manipular o arquivo de imagem selecionado
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // Obter o arquivo selecionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFoto_url(file); // Definir o arquivo no estado
+      };
+      reader.readAsDataURL(file); // Ler o arquivo para exibição prévia, se necessário
+    }
+  };
+
+  // Função para manipular o arquivo de histórico selecionado
+  const handleHistoricoChange = (e) => {
+    const file = e.target.files[0]; // Obter o arquivo selecionado
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setHistorico_url(file); // Definir o arquivo no estado
+      };
+      reader.readAsDataURL(file); // Ler o arquivo para exibição prévia, se necessário
+    }
+  };
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
 
   return (
     <form onSubmit={handleSubmit}>
@@ -221,6 +298,15 @@ const AddAluno = () => {
         placeholder="Turno"
       />
 
+<<<<<<< HEAD
+=======
+      {/* Input para foto */}
+      <input type="file" accept="image/*" onChange={handleImageChange} />
+      
+      {/* Input para histórico */}
+      <input type="file" accept=".pdf" onChange={handleHistoricoChange} />
+
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
       <button type="submit">Adicionar Usuário</button>
     </form>
   );

@@ -1,5 +1,21 @@
 const Aluno = require("../models/aluno");
+// Adicionando o SDK do Supabase no servidor
+const { createClient } = require('@supabase/supabase-js');
 
+<<<<<<< HEAD
+=======
+// Configuração do Supabase
+const supabaseUrl = 'https://your-project-url.supabase.co'; // Substitua pela URL do seu projeto
+const supabaseKey = 'your-anon-key'; // Substitua pela chave do seu projeto
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Função para fazer o upload dos arquivos no Supabase Storage
+async function uploadFileToSupabase(file, bucketName) {
+  const { data, error } = await supabase.storage.from(bucketName).upload(file.name, file.data);
+  if (error) throw error;
+  return data.path;
+}
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
 module.exports = class AuthController {
   // static login(req, res) {
   // 	res.render("auth/login");
@@ -67,7 +83,11 @@ module.exports = class AuthController {
       estado,
       curso,
       turno
+<<<<<<< HEAD
       
+=======
+      // Removido foto_url e historico_url dos dados recebidos
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
     } = req.body;
 
     /* Verificando se o aluno já existe */
@@ -80,7 +100,25 @@ module.exports = class AuthController {
     }
 
     try {
+<<<<<<< HEAD
 
+=======
+      // Upload da foto no Supabase Storage (Se a foto for enviada)
+      let foto_url = "";
+      if (req.files && req.files.foto_url) {
+        const foto = req.files.foto_url;
+        const fotoPath = await uploadFileToSupabase(foto, 'fotos-alunos'); // Define o bucket 'fotos-alunos'
+        foto_url = `${supabaseUrl}/storage/v1/object/public/fotos-alunos/${fotoPath}`;
+      }
+
+      // Upload do histórico no Supabase Storage (Se o histórico for enviado)
+      let historico_url = "";
+      if (req.files && req.files.historico) {
+        const historico = req.files.historico;
+        const historicoPath = await uploadFileToSupabase(historico, 'historico-alunos'); // Define o bucket 'historico-alunos'
+        historico_url = `${supabaseUrl}/storage/v1/object/public/historico-alunos/${historicoPath}`;
+      }
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
 
       const aluno = {
         nome,
@@ -97,21 +135,37 @@ module.exports = class AuthController {
         data_expedicao_rg,
         cpf,
         endereco,
+<<<<<<< HEAD
         n_casa,
         bairro,
         tel_res,
         celular,
         tel_trabalho,
+=======
+        numero_casa,
+        bairro,
+        telefone_residencial,
+        celular,
+        telefone_trabalho,
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
         cep,
         cidade,
         estado,
         curso,
         turno,
+<<<<<<< HEAD
         
       };
 
       console.log(aluno, nome)
+=======
+        foto_url, // Adicionando URL da foto no objeto aluno
+        historico_url // Adicionando URL do histórico no objeto aluno
+      };
+
+>>>>>>> 7b5768445a4bbd501d52bb79609e64703a5510e8
       const createdUser = await Aluno.create(aluno);
+      res.redirect('/');
     } catch (error) {
       console.error(error);
       res.render('register', { error: 'Erro ao criar aluno' });
