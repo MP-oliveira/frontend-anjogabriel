@@ -3,8 +3,10 @@ const app = express();
 const port = 3001;
 const exphbs = require('express-handlebars')
 const alunoRoutes = require('./routes/alunoRoutes');
+const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const flash = require('express-flash')
 const cors = require('cors')
+
 
 
 const db = require("./db/db");
@@ -20,6 +22,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.use('/api/alunos', alunoRoutes);
+app.use('/api/disciplinas', disciplinaRoutes);
 app.get('/', (req, res) => {
   res.render('home')
 })
@@ -27,7 +30,7 @@ app.get('/', (req, res) => {
 app.use(flash())
 
 db
-//.sync({force: true})
+// .sync({force: true})
 .sync()
 .then(() => {
   app.listen(port, () => {
