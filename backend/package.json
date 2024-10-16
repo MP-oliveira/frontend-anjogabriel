@@ -17,6 +17,8 @@
     "express": "^4.21.0",
     "express-flash": "^0.0.2",
     "express-handlebars": "^8.0.1",
+    "minimatch": "^10.0.1",
+    "mouter": "^0.0.0-reserved",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.4"
