@@ -16,6 +16,9 @@ const Navbar = () => {
         <li>
           <NavLink to={`/professores`}>Professores</NavLink>
         </li>
+        <li>
+          <NavLink to={`/materialeutensilios`}>Materiais e Utensilios</NavLink>
+        </li>
       </ul>
     </nav>
   );

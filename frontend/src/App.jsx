@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import AddAluno from "./components/AddAluno";
 import AddDisciplina from './components/AddDisciplina';
 import AddProfessor from './components/AddProfessor';
+import AddMaterialEUtensilio from './components/AddMaterialEUtensilo';
 import Navbar from "./components/Navbar/Navbar";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       
     <Route path="/disciplinas" element={ <AddDisciplina/> } />
     <Route path="/professores" element={ <AddProfessor /> } />
+    <Route path="/materialeutensilios" element={ <AddMaterialEUtensilio/> } />
 
       
 

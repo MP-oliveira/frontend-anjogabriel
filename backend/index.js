@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const alunoRoutes = require('./routes/alunoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
+const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const flash = require('express-flash')
 const cors = require('cors')
 
@@ -25,6 +26,7 @@ app.use(express.static('public'))
 app.use('/api/alunos', alunoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 app.use('/api/professores', professorRoutes);
+app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.get('/', (req, res) => {
   res.render('home')
 })
