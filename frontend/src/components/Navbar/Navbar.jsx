@@ -17,6 +17,9 @@ const Navbar = () => {
           <NavLink to={`/disciplinas`}>Disciplina</NavLink>
         </li>
         <li>
+          <NavLink to={`/turnos`}>Turno</NavLink>
+        </li>
+        <li>
           <NavLink to={`/professores`}>Professores</NavLink>
         </li>
         <li>

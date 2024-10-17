@@ -7,6 +7,7 @@ const cursoRoutes = require('./routes/cursoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
+const turnoRoutes = require('./routes/turnoRoutes');
 const flash = require('express-flash')
 const cors = require('cors')
 
@@ -29,6 +30,7 @@ app.use('/api/cursos', cursoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
+app.use('/api/turnos', turnoRoutes);
 app.get('/', (req, res) => {
   res.render('home')
 })
