@@ -26,6 +26,9 @@ const AddAluno = () => {
   const [estado, setEstado] = useState("");
   const [curso, setCurso] = useState("");
   const [turno, setTurno] = useState("");
+  const [data_matricula, setData_matricula] = useState("");
+  const [data_termino_curso, setData_termino_curso] = useState("");
+
 
 
   // Função para lidar com o envio do formulário
@@ -58,7 +61,8 @@ const AddAluno = () => {
       estado,
       curso,
       turno,
-
+      data_matricula,
+      data_termino_curso,
     }
 
 
@@ -220,6 +224,18 @@ const AddAluno = () => {
           value={turno}
           onChange={(e) => setTurno(e.target.value)}
           placeholder="Turno"
+        />
+         <input
+          type="text"
+          value={data_matricula}
+          onChange={(e) => setData_matricula(e.target.value)}
+          placeholder="Data da Matricula"
+        />
+         <input
+          type="text"
+          value={data_termino_curso}
+          onChange={(e) => setData_termino_curso(e.target.value)}
+          placeholder="Data de Término do Curso"
         />
 
         <button type="submit">Adicionar Usuário</button>

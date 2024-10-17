@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db/db');
+const Curso = require('../models/curso') 
 
 const Aluno = db.define('Aluno', {
   nome: {
@@ -11,7 +12,8 @@ const Aluno = db.define('Aluno', {
     // allowNull: false,
   },
   data_nascimento: {
-    type: DataTypes.DATE,
+    // ajustar pra DATE depois 
+    type: DataTypes.STRING,
     // allowNull: false,
   },
   estado_civil: {
@@ -39,7 +41,8 @@ const Aluno = db.define('Aluno', {
     type: DataTypes.STRING,
   },
   data_expedicao_rg: {
-    type: DataTypes.DATE,
+    // mudar para DATE 
+    type: DataTypes.STRING,
   },
   cpf: {
     type: DataTypes.STRING(11),
@@ -47,7 +50,7 @@ const Aluno = db.define('Aluno', {
     unique: true,
   },
   endereco: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
   },
   n_casa: {
     type: DataTypes.STRING(10),
@@ -85,9 +88,22 @@ const Aluno = db.define('Aluno', {
   historico_url: {
     type: DataTypes.STRING,
   },
+  data_matricula: {
+    // quando colocar curso pra funcionar mudar para date
+    type: DataTypes.STRING,
+  },
+  data_termino_curso: {
+    // quando colocar curso pra funcionar mudar para date
+    type: DataTypes.STRING,
+  },
+
 },
 {
   tableName: "alunos"
 });
+
+Curso.hasMany(Aluno);
+Aluno.hasMany(Curso);
+
 
 module.exports = Aluno;

@@ -66,7 +66,9 @@ module.exports = class AuthController {
       cidade,
       estado,
       curso,
-      turno
+      turno,
+      data_matricula,
+      data_termino_curso,
       
     } = req.body;
 
@@ -107,7 +109,8 @@ module.exports = class AuthController {
         estado,
         curso,
         turno,
-        
+        data_matricula,
+        data_termino_curso,
       };
 
       console.log(aluno, nome)

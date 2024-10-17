@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const alunoRoutes = require('./routes/alunoRoutes');
 const cursoRoutes = require('./routes/cursoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
+const diplomaRoutes = require('./routes/diplomaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const turnoRoutes = require('./routes/turnoRoutes');
@@ -28,6 +29,7 @@ app.use(express.static('public'))
 app.use('/api/alunos', alunoRoutes);
 app.use('/api/cursos', cursoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
+app.use('/api/diplomas', diplomaRoutes);
 app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.use('/api/turnos', turnoRoutes);
