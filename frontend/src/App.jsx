@@ -6,6 +6,7 @@ import AddDisciplina from './components/AddDisciplina';
 import AddProfessor from './components/AddProfessor';
 import AddMaterialEUtensilio from './components/AddMaterialEUtensilo';
 import Navbar from "./components/Navbar/Navbar";
+import AddCurso from './components/AddCurso';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
     <Route path="/" element={ <Home /> } />
       
     <Route path="/alunos" element={ <AddAluno /> } />
-      
+    <Route path="/cursos" element={ <AddCurso /> } />
     <Route path="/disciplinas" element={ <AddDisciplina/> } />
     <Route path="/professores" element={ <AddProfessor /> } />
     <Route path="/materialeutensilios" element={ <AddMaterialEUtensilio/> } />

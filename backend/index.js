@@ -3,6 +3,7 @@ const app = express();
 const port = 3001;
 const exphbs = require('express-handlebars')
 const alunoRoutes = require('./routes/alunoRoutes');
+const cursoRoutes = require('./routes/cursoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
@@ -24,6 +25,7 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.use('/api/alunos', alunoRoutes);
+app.use('/api/cursos', cursoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
