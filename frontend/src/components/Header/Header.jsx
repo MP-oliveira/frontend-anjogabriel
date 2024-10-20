@@ -62,7 +62,7 @@ const Header = () => {
       </div>
       <div className="login">
         <div className="icon">
-          <UserCircle size={32} color="#C6D6F3" />
+          <UserCircle size={30} color="#C6D6F3" />
         </div>
         <div className="user-text">
           Bem Vindo <span>Mauricio!</span>

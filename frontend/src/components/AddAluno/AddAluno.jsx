@@ -80,15 +80,15 @@ const AddAluno = () => {
 
   return (
     <div className="addaluno-container">
-      <h2>Adicionar Aluno</h2>
       <form className="form-addaluno" onSubmit={handleSubmit}>
+        <h2>Adicionar Aluno</h2>
         <input
           type="text"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           placeholder="Nome"
         />
-        <div>
+        <div className='email-dn'>
           <input
             type="text"
             value={email}
@@ -108,7 +108,7 @@ const AddAluno = () => {
             placeholder="Estado Civil"
           />
         </div>
-        <div>
+        <div className='gs-n-n'>
           <input
             type="text"
             value={grupo_sanguineo}
@@ -140,7 +140,7 @@ const AddAluno = () => {
           onChange={(e) => setMae(e.target.value)}
           placeholder="Nome da Mãe"
         />
-        <div>
+        <div className='rg-oe-de'>
           <input
             type="text"
             value={rg}
@@ -151,13 +151,13 @@ const AddAluno = () => {
             type="text"
             value={orgao_expedidor_rg}
             onChange={(e) => setOrgao_expedidor_rg(e.target.value)}
-            placeholder="Orgão Expedidor do RG"
+            placeholder="Orgão Expedidor"
           />
           <input
             type="text"
             value={data_expedicao_rg}
             onChange={(e) => setData_expedicao_rg(e.target.value)}
-            placeholder="Data de Expedição do RG"
+            placeholder="Data de Expedição "
           />
           <input
             type="text"
@@ -172,7 +172,7 @@ const AddAluno = () => {
           onChange={(e) => setEndereco(e.target.value)}
           placeholder="Endereço"
         />
-        <div>
+        <div className="nc-b">
           <input
             type="text"
             value={n_casa}
@@ -186,7 +186,7 @@ const AddAluno = () => {
             placeholder="Bairro"
           />
         </div>
-        <div>
+        <div className='tel'>
           <input
             type="text"
             value={tel_res}
@@ -206,7 +206,7 @@ const AddAluno = () => {
             placeholder="Telefone do Trabalho"
           />
         </div>
-        <div>
+        <div className='cep-ci-es'>
           <input
             type="text"
             value={cep}
@@ -226,7 +226,7 @@ const AddAluno = () => {
             placeholder="Estado"
           />
         </div>
-        <div>
+        <div className='cur-tur-dai-dat'>
           <input
             type="text"
             value={curso}
@@ -252,7 +252,9 @@ const AddAluno = () => {
             placeholder="Data de Término do Curso"
           />
         </div>
-        <button type="submit">Adicionar Usuário</button>
+        <div className="aluno-btn-container">
+          <button className='aluno-btn' type="submit">Adicionar Usuário</button>
+        </div>
       </form>
     </div>
   );
