@@ -21,6 +21,7 @@
     "mouter": "^0.0.0-reserved",
     "pg": "^8.13.0",
     "pg-hstore": "^2.3.4",
+    "phosphor-react": "^1.4.1",
     "sequelize": "^6.37.4"
   },
   "devDependencies": {

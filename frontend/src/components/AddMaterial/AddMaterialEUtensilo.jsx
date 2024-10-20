@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../services/api"; // Importando o serviço de API
+import api from "../../services/api"; // Importando o serviço de API
 
 const AddMaterialEUtensilio = () => {
   const [nome, setNome] = useState("");

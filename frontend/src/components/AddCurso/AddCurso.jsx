@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import api from "../services/api"; // Importando o serviço de API
+import api from "../../services/api"; // Importando o serviço de API
+
 
 const AddCurso = () => {
   const [nome, setNome] = useState("");

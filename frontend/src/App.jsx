@@ -1,23 +1,22 @@
-import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import "./index.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home/Home";
-import AddAluno from "./components/AddAluno";
-import AddDisciplina from './components/AddDisciplina';
-import AddProfessor from './components/AddProfessor';
-import AddMaterialEUtensilio from './components/AddMaterialEUtensilo';
-import Navbar from "./components/Navbar/Navbar";
-import AddCurso from './components/AddCurso';
-import AddTurno from './components/AddTurno';
-import AddDiploma from './components/AddDiploma';
+import AddAluno from "./components/AddAluno/AddAluno";
+import AddDisciplina from './components/AddDisciplina/AddDisciplina';
+import AddProfessor from './components/AddProfessor/AddProfessor';
+import AddMaterialEUtensilio from './components/AddMaterial/AddMaterialEUtensilo';
+import AddCurso from './components/AddCurso/AddCurso';
+import AddTurno from './components/Addturno/AddTurno';
+import AddDiploma from './components/AddDiploma/AddDiploma';
+import Header from './components/Header/Header';
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
+        <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-
+          <Route path="/" element={<Home />} /> 
           <Route path="/alunos" element={<AddAluno />} />
           <Route path="/cursos" element={<AddCurso />} />
           <Route path="/disciplinas" element={<AddDisciplina />} />
