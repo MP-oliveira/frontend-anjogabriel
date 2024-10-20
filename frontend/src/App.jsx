@@ -13,23 +13,20 @@ import AddDiploma from './components/AddDiploma';
 function App() {
   return (
     <>
-    <BrowserRouter>
-    <Navbar />
-    <Routes>
-    <Route path="/" element={ <Home /> } />
-      
-    <Route path="/alunos" element={ <AddAluno /> } />
-    <Route path="/cursos" element={ <AddCurso /> } />
-    <Route path="/disciplinas" element={ <AddDisciplina/> } />
-    <Route path="/diplomas" element={ <AddDiploma /> } />
-    <Route path="/professores" element={ <AddProfessor /> } />
-    <Route path="/turnos" element={ <AddTurno /> } />
-    <Route path="/materialeutensilios" element={ <AddMaterialEUtensilio/> } />
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-      
-
-    </Routes>
-    </BrowserRouter>
+          <Route path="/alunos" element={<AddAluno />} />
+          <Route path="/cursos" element={<AddCurso />} />
+          <Route path="/disciplinas" element={<AddDisciplina />} />
+          <Route path="/diplomas" element={<AddDiploma />} />
+          <Route path="/professores" element={<AddProfessor />} />
+          <Route path="/turnos" element={<AddTurno />} />
+          <Route path="/materialeutensilios" element={<AddMaterialEUtensilio />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
