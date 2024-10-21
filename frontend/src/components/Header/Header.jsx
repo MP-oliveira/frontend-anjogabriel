@@ -13,7 +13,7 @@ const Header = () => {
     } else {
       setIsBlurred(false);
     }
-    console.log("ScrollY:", window.scrollY, "isBlurred:", isBlurred); // Adicione este console log
+    // console.log("ScrollY:", window.scrollY, "isBlurred:", isBlurred); // Adicione este console log
   };
 
 

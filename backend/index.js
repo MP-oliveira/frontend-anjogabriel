@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 app.use(flash())
 
 db
-// .sync({force: true})
+//.sync({force: true})
 .sync()
 .then(() => {
   app.listen(port, () => {

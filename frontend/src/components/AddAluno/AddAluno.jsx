@@ -1,6 +1,75 @@
+import "./AddAluno.css";
 import React, { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
-import './AddAluno.css'
+import { z } from "zod";
+
+// Regex para CPF com ou sem pontuação
+const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
+
+// Regex para RG com ou sem pontuação
+const rgRegex = /^(\d{1,2}.?\d{3}.?\d{3}-?[A-Za-z0-9]{1})$/;
+
+// Regex para telefone celular e fixo com ou sem pontuação
+const telefoneRegex = /^(\d{2})?\s?\d{4,5}-?\d{4}$/;
+const celularRegex = /^(\d{2})?\s?\d{5}-?\d{4}$/;
+
+// Regex para CEP com ou sem hífen
+const cepRegex = /^\d{5}-?\d{3}$/;
+
+const alunoSchema = z.object({
+  nome: z
+    .string()
+    .min(3, { message: "O nome precisa ter no minimo 3 caracteres." }),
+  email: z.coerce.string().email({ message: "Digite um email valido." }).min(5),
+  data_nascimento: z
+    .date()
+    .max(new Date(), { message: "Digite uma data valida" }),
+  estado_civil: z.string({ message: "Selecione uma opção" }),
+  grupo_sanguineo: z.string({ message: "Selecione uma opção" }),
+  naturalidade: z
+    .string()
+    .min(3, { message: "Digite uma naturalizade valida" }),
+  nacionalidade: z
+    .string()
+    .min(3, { message: "Digite uma nacionalidade valida" }),
+  pai: z.string(),
+  mae: z.string(),
+  rg: z.string().refine((value) => rgRegex.test(value), {
+    message: "RG inválido",
+  }),
+  orgao_expedidor_rg: z.string(),
+  data_expedicao_rg: z
+    .date()
+    .max(new Date(), { message: "Digite uma data expedição valida" }),
+  cpf: z.string().refine((value) => cpfRegex.test(value), {
+    message: "CPF inválido",
+  }),
+  endereco: z.string(),
+  n_casa: z.string(),
+  bairro: z.string(),
+  tel_res: z.string().refine((value) => telefoneRegex.test(value), {
+    message: "Telefone inválido",
+  }),
+  celular: z.string().refine((value) => celularRegex.test(value), {
+    message: "Celular inválido",
+  }),
+  tel_trabalho: z.string().refine((value) => celularRegex.test(value), {
+    message: "Telefone de trabalho inválido",
+  }),
+  cep: z.string().refine((value) => cepRegex.test(value), {
+    message: "CEP inválido",
+  }),
+  cidade: z.string(),
+  estado: z.string(),
+  curso: z.string(),
+  turno: z.string(),
+  data_matricula: z
+    .date()
+    .max(new Date(), { message: "Digite uma data matricula valida" }),
+  data_termino_curso: z
+    .date()
+    .max(new Date(), { message: "Digite uma data termino valida" }),
+});
 
 const AddAluno = () => {
   const [nome, setNome] = useState("");
@@ -30,15 +99,84 @@ const AddAluno = () => {
   const [data_matricula, setData_matricula] = useState("");
   const [data_termino_curso, setData_termino_curso] = useState("");
 
-
+  // Estado para armazenar os erros de validação
+  const [errors, setErrors] = useState({});
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Criar um FormData para enviar os arquivos junto com os dados
-    const newAluno = {
+    const alunoFormValues = {
       nome,
+      email,
+      data_nascimento: new Date(data_nascimento),
+      estado_civil,
+      grupo_sanguineo,
+      naturalidade,
+      nacionalidade,
+      pai,
+      mae,
+      rg,
+      orgao_expedidor_rg,
+      data_expedicao_rg: new Date(data_expedicao_rg),
+      cpf,
+      endereco,
+      n_casa,
+      bairro,
+      tel_res,
+      celular,
+      tel_trabalho,
+      cep,
+      cidade,
+      estado,
+      curso,
+      turno,
+      data_matricula: new Date(data_matricula),
+      data_termino_curso: new Date(data_termino_curso),
+    };
+
+    // Validando os dados com o esquema do Zod
+    const alunoresult = alunoSchema.safeParse(alunoFormValues);
+
+    // Se houver erros, eles serão exibidos
+    if (!alunoresult.success) {
+      const fieldErrors = alunoresult.error.format();
+      setErrors({
+        nome: fieldErrors.nome?._errors[0],
+        email: fieldErrors.email?._errors[0],
+        data_nascimento: fieldErrors.email?._errors[0],
+        estado_civil: fieldErrors.estado_civil?._errors[0],
+        grupo_sanguineo: fieldErrors.grupo_sanguineo?._errors[0],
+        naturalidade: fieldErrors.naturalidade?._errors[0],
+        nacionalidade: fieldErrors.nacionalidade?._errors[0],
+        pai: fieldErrors.pai?._errors[0],
+        mae: fieldErrors.mae?._errors[0],
+        rg: fieldErrors.rg?._errors[0],
+        orgao_expedidor_rg: fieldErrors.orgao_expedidor_rg?._errors[0],
+        data_expedicao_rg: fieldErrors.data_expedicao_rg?._errors[0],
+        cpf: fieldErrors.cpf?._errors[0],
+        endereco: fieldErrors.endereco?._errors[0],
+        n_casa: fieldErrors.n_casa?._errors[0],
+        bairro: fieldErrors.bairro?._errors[0],
+        tel_res: fieldErrors.tel_res?._errors[0],
+        celular: fieldErrors.celular?._errors[0],
+        tel_trabalho: fieldErrors.tel_trabalho?._errors[0],
+        cep: fieldErrors.cep?._errors[0],
+        cidade: fieldErrors.cidade?._errors[0],
+        estado: fieldErrors.estado?._errors[0],
+        curso: fieldErrors.curso?._errors[0],
+        turno: fieldErrors.turno?._errors[0],
+        data_matricula: fieldErrors.data_matricula?._errors[0],
+        data_termino_curso: fieldErrors.data_termino_curso?._errors[0],
+      });
+    } else {
+      try {
+        // Enviar os dados para a API
+        const response = await api.post("/alunos/create", alunoFormValues);
+        console.log("Usuário adicionado com sucesso!", response.data);
+        
+        // zerar os inputs
+        setNome(''), // modelo
       email,
       data_nascimento,
       estado_civil,
@@ -62,73 +200,137 @@ const AddAluno = () => {
       estado,
       curso,
       turno,
-      data_matricula,
-      data_termino_curso,
+      data_matricula
+      data_termino_curso
+      } catch (error) {
+        console.error("Erro ao adicionar usuário", error);
+      }
+      // Se passar na validação, pode enviar os dados ou executar outras ações
+      console.log("Dados válidos", alunoresult.data);
+      setErrors({}); // Limpa os erros se a validação for bem-sucedida
     }
 
-
-    try {
-      // Enviar os dados para a API
-      await api.post("/alunos/create", newAluno);
-      alert("Usuário adicionado com sucesso!");
-    } catch (error) {
-      console.error("Erro ao adicionar usuário", error);
-    }
+    // const newAluno = alunoresult.data;
+    // console.log(
+    //   nome,
+    //   email,
+    //   data_nascimento,
+    //   estado_civil,
+    //   grupo_sanguineo,
+    //   naturalidade,
+    //   nacionalidade,
+    //   pai,
+    //   mae,
+    //   rg,
+    //   orgao_expedidor_rg,
+    //   data_expedicao_rg,
+    //   cpf,
+    //   endereco,
+    //   n_casa,
+    //   bairro,
+    //   tel_res,
+    //   celular,
+    //   tel_trabalho,
+    //   cep,
+    //   cidade,
+    //   estado,
+    //   curso,
+    //   turno,
+    //   data_matricula,
+    //   data_termino_curso
+    // );
   };
-
-  
-
-
 
   return (
     <div className="addaluno-container">
       <form className="form-addaluno" onSubmit={handleSubmit}>
         <h2>Adicionar Aluno</h2>
         <input
+          id="nome"
           type="text"
+          name="nome"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           placeholder="Nome"
         />
-        <div className='email-dn'>
+        {/* Exibe a mensagem de erro do campo nome, se houver */}
+        {errors.nome && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.nome}
+          </p>
+        )}
+        <div className="email-dn">
           <input
             type="text"
+            id="email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
           />
+          {/* Exibe a mensagem de erro do campo email, se houver */}
+          {errors.email && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.email}
+            </p>
+          )}
           <input
-            type="text"
+            type="date"
             value={data_nascimento}
             onChange={(e) => setData_nascimento(e.target.value)}
             placeholder="Data de nascimento"
           />
-          <input
-            type="text"
-            value={estado_civil}
-            onChange={(e) => setEstado_civil(e.target.value)}
-            placeholder="Estado Civil"
-          />
+          {errors.data_nascimento && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.data_nascimento}
+            </p>
+          )}
+          <select onChange={(e) => setEstado_civil(e.target.value)}>
+            <option value="">Estado civil</option>
+            <option value="solteiro">Solteiro(a)</option>
+            <option value="casado">Casado(a)</option>
+            <option value="viuvo">Viuvo(a)</option>
+          </select>
+          {errors.estado_civil && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.estado_civil}
+            </p>
+          )}
         </div>
-        <div className='gs-n-n'>
-          <input
-            type="text"
-            value={grupo_sanguineo}
-            onChange={(e) => setGrupo_sanguineo(e.target.value)}
-            placeholder="Grupo Sanguíneo"
-          />
+        <div className="gs-n-n">
+          <select onChange={(e) => setGrupo_sanguineo(e.target.value)}>
+            <option value="">Grupo Sanguineo</option>
+            <option value="A-">A-</option>
+            <option value="A+">A+</option>
+            <option value="B-">B-</option>
+            <option value="B+">B+</option>
+            <option value="AB-">AB-</option>
+            <option value="AB+">AB+</option>
+            <option value="O-">O-</option>
+            <option value="O+">O+</option>
+          </select>
           <input
             type="text"
             value={naturalidade}
             onChange={(e) => setNaturalidade(e.target.value)}
             placeholder="Naturalidade"
           />
+          {errors.naturalidade && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.naturalidade}
+            </p>
+          )}
           <input
             type="text"
             value={nacionalidade}
             onChange={(e) => setNacionalidade(e.target.value)}
             placeholder="Nacionalidade"
           />
+          {errors.nacionalidade && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.nacionalidade}
+            </p>
+          )}
         </div>
         <input
           type="text"
@@ -142,31 +344,51 @@ const AddAluno = () => {
           onChange={(e) => setMae(e.target.value)}
           placeholder="Nome da Mãe"
         />
-        <div className='rg-oe-de'>
+        <div className="rg-oe-de">
           <input
             type="text"
             value={rg}
             onChange={(e) => setRg(e.target.value)}
             placeholder="RG"
           />
+          {errors.rg && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.rg}
+            </p>
+          )}
           <input
             type="text"
             value={orgao_expedidor_rg}
             onChange={(e) => setOrgao_expedidor_rg(e.target.value)}
             placeholder="Orgão Expedidor"
           />
+          {errors.orgao_expedidor_rg && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.orgao_expedidor_rg}
+            </p>
+          )}
           <input
-            type="text"
+            type="date"
             value={data_expedicao_rg}
             onChange={(e) => setData_expedicao_rg(e.target.value)}
             placeholder="Data de Expedição "
           />
+          {errors.data_expedicao_rg && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.data_expedicao_rg}
+            </p>
+          )}
           <input
             type="text"
             value={cpf}
             onChange={(e) => setCpf(e.target.value)}
             placeholder="CPF"
           />
+          {errors.cpf && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.cpf}
+            </p>
+          )}
         </div>
         <input
           type="text"
@@ -188,74 +410,158 @@ const AddAluno = () => {
             placeholder="Bairro"
           />
         </div>
-        <div className='tel'>
+        <div className="tel">
           <input
             type="text"
             value={tel_res}
             onChange={(e) => setTel_res(e.target.value)}
             placeholder="Telefone Residencial"
           />
+          {errors.tel_res && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.tel_res}
+            </p>
+          )}
           <input
             type="text"
             value={celular}
             onChange={(e) => setCelular(e.target.value)}
             placeholder="Celular"
           />
+          {errors.celular && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.celular}
+            </p>
+          )}
           <input
             type="text"
             value={tel_trabalho}
             onChange={(e) => setTel_trabalho(e.target.value)}
             placeholder="Telefone do Trabalho"
           />
+          {errors.tel_trabalho && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.tel_trabalho}
+            </p>
+          )}
         </div>
-        <div className='cep-ci-es'>
+        <div className="cep-ci-es">
           <input
             type="text"
             value={cep}
             onChange={(e) => setCep(e.target.value)}
             placeholder="CEP"
           />
+          {errors.cep && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.cep}
+            </p>
+          )}
           <input
             type="text"
             value={cidade}
             onChange={(e) => setCidade(e.target.value)}
             placeholder="Cidade"
           />
-          <input
-            type="text"
-            value={estado}
+          {errors.cidade && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.cidade}
+            </p>
+          )}
+          <select
+            id="estado"
+            name="estado"
             onChange={(e) => setEstado(e.target.value)}
-            placeholder="Estado"
-          />
+          >
+            <option value="">Selecione o estado</option>
+            <option value="AC">Acre (AC)</option>
+            <option value="AL">Alagoas (AL)</option>
+            <option value="AP">Amapá (AP)</option>
+            <option value="AM">Amazonas (AM)</option>
+            <option value="BA">Bahia (BA)</option>
+            <option value="CE">Ceará (CE)</option>
+            <option value="DF">Distrito Federal (DF)</option>
+            <option value="ES">Espírito Santo (ES)</option>
+            <option value="GO">Goiás (GO)</option>
+            <option value="MA">Maranhão (MA)</option>
+            <option value="MT">Mato Grosso (MT)</option>
+            <option value="MS">Mato Grosso do Sul (MS)</option>
+            <option value="MG">Minas Gerais (MG)</option>
+            <option value="PA">Pará (PA)</option>
+            <option value="PB">Paraíba (PB)</option>
+            <option value="PR">Paraná (PR)</option>
+            <option value="PE">Pernambuco (PE)</option>
+            <option value="PI">Piauí (PI)</option>
+            <option value="RJ">Rio de Janeiro (RJ)</option>
+            <option value="RN">Rio Grande do Norte (RN)</option>
+            <option value="RS">Rio Grande do Sul (RS)</option>
+            <option value="RO">Rondônia (RO)</option>
+            <option value="RR">Roraima (RR)</option>
+            <option value="SC">Santa Catarina (SC)</option>
+            <option value="SP">São Paulo (SP)</option>
+            <option value="SE">Sergipe (SE)</option>
+            <option value="TO">Tocantins (TO)</option>
+          </select>
+          {errors.estado && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.estado}
+            </p>
+          )}
         </div>
-        <div className='cur-tur-dai-dat'>
-          <input
-            type="text"
-            value={curso}
+        <div className="cur-tur-dai-dat">
+          <select
+            name="curso"
+            id="curso"
             onChange={(e) => setCurso(e.target.value)}
-            placeholder="Curso"
-          />
-          <input
-            type="text"
-            value={turno}
+          >
+            <option value="">Curso</option>
+            <option value="tecnico em enfermagem">Tecnico em enfermagem</option>
+            <option value="tecnico em enfermagem do trabalho">
+              Tecnico em enfermagem do trabalho
+            </option>
+          </select>
+          {errors.curso && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.curso}
+            </p>
+          )}
+          <select
+            name="turno"
+            id="turno"
             onChange={(e) => setTurno(e.target.value)}
-            placeholder="Turno"
-          />
+          >
+            <option value="">Turno</option>
+            <option value="Matutino">Matutino</option>
+            <option value="Vespertino">Vespertino</option>
+            <option value="Noturno">Noturno</option>
+            <option value="Sabado">Sabado</option>
+          </select>
+
           <input
-            type="text"
+            type="date"
             value={data_matricula}
             onChange={(e) => setData_matricula(e.target.value)}
-            placeholder="Data da Matricula"
           />
+          {errors.data_matricula && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.data_matricula}
+            </p>
+          )}
           <input
-            type="text"
+            type="date"
             value={data_termino_curso}
             onChange={(e) => setData_termino_curso(e.target.value)}
-            placeholder="Data de Término do Curso"
           />
+          {errors.data_termino_curso && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.data_termino_curso}
+            </p>
+          )}
         </div>
         <div className="aluno-btn-container">
-          <button className='aluno-btn' type="submit">Adicionar Usuário</button>
+          <button className="aluno-btn" type="submit">
+            Adicionar Usuário
+          </button>
         </div>
       </form>
     </div>

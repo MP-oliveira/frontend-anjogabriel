@@ -73,13 +73,13 @@ module.exports = class AuthController {
     } = req.body;
 
     /* Verificando se o aluno já existe */
-    const checkIfAlunoExists = await Aluno.findOne({
-      where: { cpf: cpf },
-    });
-    if (checkIfAlunoExists) {
-      res.render("register");
-      return;
-    }
+    // const checkIfAlunoExists = await Aluno.findOne({
+    //   where: { cpf: cpf },
+    // });
+    // if (checkIfAlunoExists) {
+    //   res.render("register");
+    //   return;
+    // }
 
     try {
 
