@@ -176,32 +176,32 @@ const AddAluno = () => {
         console.log("Usuário adicionado com sucesso!", response.data);
         
         // zerar os inputs
-        setNome(''), // modelo
-      email,
-      data_nascimento,
-      estado_civil,
-      grupo_sanguineo,
-      naturalidade,
-      nacionalidade,
-      pai,
-      mae,
-      rg,
-      orgao_expedidor_rg,
-      data_expedicao_rg,
-      cpf,
-      endereco,
-      n_casa,
-      bairro,
-      tel_res,
-      celular,
-      tel_trabalho,
-      cep,
-      cidade,
-      estado,
-      curso,
-      turno,
-      data_matricula
-      data_termino_curso
+        setNome(''),
+          setEmail(''),
+          setData_nascimento(''),
+          setEstado_civil(''),
+          setGrupo_sanguineo(''),
+          setNaturalidade(''),
+          setNacionalidade(''),
+          setPai(''),
+          setMae(''),
+          setRg(''),
+          setOrgao_expedidor_rg(''),
+          setData_expedicao_rg(''),
+          setCpf(''),
+          setEndereco(''),
+          setN_casa(''),
+          setBairro(''),
+          setTel_res(''),
+          setCelular(''),
+          setTel_trabalho(''),
+          setCep(''),
+          setCidade(''),
+          setEstado(''),
+          setCurso(''),
+          setTurno(''),
+          setData_matricula(''),
+          setData_termino_curso('')
       } catch (error) {
         console.error("Erro ao adicionar usuário", error);
       }
