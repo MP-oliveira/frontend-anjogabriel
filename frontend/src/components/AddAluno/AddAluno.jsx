@@ -76,6 +76,8 @@ const AddAluno = () => {
     }
   };
 
+  
+
 
 
   return (
