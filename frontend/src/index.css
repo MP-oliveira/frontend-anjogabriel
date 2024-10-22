@@ -22,6 +22,14 @@ body {
   scroll-behavior: smooth;
 }
 
+select {
+  border: none;
+  color: #999999;
+  flex:1;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
 a {
   color: red;
 }

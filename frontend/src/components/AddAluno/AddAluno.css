@@ -1,12 +1,10 @@
 .addaluno-container {
   width: 100%;
-  height: calc(150vh - 125px);
   background-color: #fff;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  padding: 20px 100px 20px 120px;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   border-bottom-right-radius: 20px;
