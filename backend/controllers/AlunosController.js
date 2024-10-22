@@ -16,11 +16,11 @@ module.exports = class AlunosController {
 
   static async getAlunoByName(req, res) {
     const { nome } = req.query;
-    nome.toLowerCase()
-    console.log(`Nome recebido: ${nome}`);  // <-- Adicione este log
     
+    
+    console.log(`Nome recebido: ${nome}`);  // <-- Adicione este log
+
     try {
-      
       const alunos = await Aluno.findAll({
         where: { nome: { [Op.like]: `%${nome}%` } },
       });

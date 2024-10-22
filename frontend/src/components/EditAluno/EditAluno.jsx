@@ -55,7 +55,6 @@ const EditAluno = () => {
 
   const [errors, setErrors] = useState({});
 
-  console.log(id)
   useEffect(() => {
     const fetchAluno = async () => {
       try {
