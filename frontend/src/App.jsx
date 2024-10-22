@@ -10,6 +10,7 @@ import AddTurno from './components/Addturno/AddTurno';
 import AddDiploma from './components/AddDiploma/AddDiploma';
 import Header from './components/Header/Header';
 import Alunos from "./components/Alunos/Alunos";
+import EditAluno from "./components/EditAluno/EditAluno";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} /> 
           <Route path="/alunos/add" element={<AddAluno />} />
+          <Route path="/alunos/edit/:id" element={<EditAluno />} />
           <Route path="/alunos" element={<Alunos />} />
           <Route path="/cursos" element={<AddCurso />} />
           <Route path="/disciplinas" element={<AddDisciplina />} />

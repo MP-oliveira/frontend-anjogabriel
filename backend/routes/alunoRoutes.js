@@ -15,7 +15,7 @@ router.get('/search', alunoController.getAlunoByName);
 router.get('/:id', alunoController.getAlunoById);
 
 // Rota para atualizar um aluno
-router.put('/:id', alunoController.updateAluno);
+router.put('/edit/:id', alunoController.updateAluno);
 
 // Rota para deletar um aluno
 router.delete('/:id', alunoController.deleteAluno);

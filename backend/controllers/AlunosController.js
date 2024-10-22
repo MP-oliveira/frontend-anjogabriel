@@ -113,6 +113,7 @@ module.exports = class AlunosController {
   }
   static async getAlunoById(req, res) {
     const { id } = req.params;
+    
     try {
       const aluno = await Aluno.findByPk(id);
       if (!aluno) {
@@ -126,7 +127,7 @@ module.exports = class AlunosController {
   static async updateAluno(req, res) {
     const { id } = req.params;
     const updatedData = req.body;
-
+    console.log(id)
     try {
       const aluno = await Aluno.findByPk(id);
       if (!aluno) {
@@ -136,7 +137,7 @@ module.exports = class AlunosController {
       await aluno.update(updatedData);
       res.status(200).json({ message: 'Dados do aluno atualizados com sucesso' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao atualizar aluno' });
+      res.status(500).json({ error: 'Erro ao atualizar aluno back' });
     }
   }
 
