@@ -1,41 +1,15 @@
 const Aluno = require("../models/aluno");
 
-module.exports = class AuthController {
-  // static login(req, res) {
-  // 	res.render("auth/login");
-  // }
-
-  // static async loginPost(req, res) {
-  // 	const cpf = req.body.cpf;
-
-  // 	// find user?
-  // 	const user = await Aluno.findOne({ where: { cpf: cpf } });
-
-  // 	if (!user) {
-  // 		req.flash("message", "Usuário não encontrado");
-  // 		res.render("auth/register", {user});
-  // 		return;
-  // 	}
-
-  // 	// check if password match
-  // 	const passwordMatch = bcrypt.compareSync(password, user.password);
-
-  // 	if (!passwordMatch) {
-  // 		req.flash("message", "Senha incorreta");
-  // 		res.render("auth/login");
-  //           return
-  // 	}
-
-  // 	// initialize session
-  // 	req.session.userid = user.id;
-
-  // 	req.flash("message", "Autenticação realizada com sucesso!");
-
-  // 	/* Salvando a sessão */
-  // 	req.session.save(() => {
-  // 		res.redirect("/");
-  // 	});
-  // }
+module.exports = class AlunosController {
+  static async listAlunos(req, res) {
+    try {
+      const alunos = await Aluno.findAll();
+      console.log(alunos);
+      res.status(200).json(alunos);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar alunos' });
+    }
+  }
 
   static create(req, res) {
     res.render("register");
@@ -69,21 +43,9 @@ module.exports = class AuthController {
       turno,
       data_matricula,
       data_termino_curso,
-      
     } = req.body;
 
-    /* Verificando se o aluno já existe */
-    // const checkIfAlunoExists = await Aluno.findOne({
-    //   where: { cpf: cpf },
-    // });
-    // if (checkIfAlunoExists) {
-    //   res.render("register");
-    //   return;
-    // }
-
     try {
-
-
       const aluno = {
         nome,
         email,
@@ -113,11 +75,60 @@ module.exports = class AuthController {
         data_termino_curso,
       };
 
-      console.log(aluno, nome)
       const createdUser = await Aluno.create(aluno);
+      res.status(201).json(createdUser);
     } catch (error) {
       console.error(error);
-      res.render('register', { error: 'Erro ao criar aluno' });
+      res.status(500).json({ error: 'Erro ao criar aluno' });
+    }
+  }
+
+  // Método para buscar aluno por ID
+  static async getAlunoById(req, res) {
+    const { id } = req.params;
+    try {
+      const aluno = await Aluno.findByPk(id);
+      if (!aluno) {
+        return res.status(404).json({ error: 'Aluno não encontrado' });
+      }
+      res.status(200).json(aluno);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar aluno' });
+    }
+  }
+
+  // Método para atualizar aluno
+  static async updateAluno(req, res) {
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    try {
+      const aluno = await Aluno.findByPk(id);
+      if (!aluno) {
+        return res.status(404).json({ error: 'Aluno não encontrado' });
+      }
+
+      await aluno.update(updatedData);
+      res.status(200).json({ message: 'Dados do aluno atualizados com sucesso' });
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao atualizar aluno' });
+    }
+  }
+
+  // Método para deletar aluno
+  static async deleteAluno(req, res) {
+    const { id } = req.params;
+
+    try {
+      const aluno = await Aluno.findByPk(id);
+      if (!aluno) {
+        return res.status(404).json({ error: 'Aluno não encontrado' });
+      }
+
+      await aluno.destroy();
+      res.status(200).json({ message: 'Aluno deletado com sucesso' });
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao deletar aluno' });
     }
   }
 
