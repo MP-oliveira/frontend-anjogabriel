@@ -22,4 +22,8 @@ body {
   scroll-behavior: smooth;
 }
 
+a {
+  color: red;
+}
+
 

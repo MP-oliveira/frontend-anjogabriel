@@ -2,6 +2,7 @@ import "./AddAluno.css";
 import React, { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
+import { useNavigate } from "react-router-dom";
 
 // Regex para CPF com ou sem pontuação
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
@@ -72,6 +73,8 @@ const alunoSchema = z.object({
 });
 
 const AddAluno = () => {
+  const navigate = useNavigate()
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [data_nascimento, setData_nascimento] = useState("");
@@ -179,8 +182,8 @@ const AddAluno = () => {
         setNome(''),
           setEmail(''),
           setData_nascimento(''),
-          setEstado_civil(''),
-          setGrupo_sanguineo(''),
+          setEstado_civil('Estado Civil'),
+          setGrupo_sanguineo('Grupo Sanguineo'),
           setNaturalidade(''),
           setNacionalidade(''),
           setPai(''),
@@ -197,11 +200,12 @@ const AddAluno = () => {
           setTel_trabalho(''),
           setCep(''),
           setCidade(''),
-          setEstado(''),
-          setCurso(''),
-          setTurno(''),
+          setEstado('Selecione o estado'),
+          setCurso('Curso'),
+          setTurno('Turno'),
           setData_matricula(''),
           setData_termino_curso('')
+          navigate('/alunos')
       } catch (error) {
         console.error("Erro ao adicionar usuário", error);
       }
@@ -209,36 +213,6 @@ const AddAluno = () => {
       console.log("Dados válidos", alunoresult.data);
       setErrors({}); // Limpa os erros se a validação for bem-sucedida
     }
-
-    // const newAluno = alunoresult.data;
-    // console.log(
-    //   nome,
-    //   email,
-    //   data_nascimento,
-    //   estado_civil,
-    //   grupo_sanguineo,
-    //   naturalidade,
-    //   nacionalidade,
-    //   pai,
-    //   mae,
-    //   rg,
-    //   orgao_expedidor_rg,
-    //   data_expedicao_rg,
-    //   cpf,
-    //   endereco,
-    //   n_casa,
-    //   bairro,
-    //   tel_res,
-    //   celular,
-    //   tel_trabalho,
-    //   cep,
-    //   cidade,
-    //   estado,
-    //   curso,
-    //   turno,
-    //   data_matricula,
-    //   data_termino_curso
-    // );
   };
 
   return (

@@ -9,6 +9,7 @@ import AddCurso from './components/AddCurso/AddCurso';
 import AddTurno from './components/Addturno/AddTurno';
 import AddDiploma from './components/AddDiploma/AddDiploma';
 import Header from './components/Header/Header';
+import Alunos from "./components/Alunos/Alunos";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} /> 
-          <Route path="/alunos" element={<AddAluno />} />
+          <Route path="/alunos/add" element={<AddAluno />} />
+          <Route path="/alunos" element={<Alunos />} />
           <Route path="/cursos" element={<AddCurso />} />
           <Route path="/disciplinas" element={<AddDisciplina />} />
           <Route path="/diplomas" element={<AddDiploma />} />
