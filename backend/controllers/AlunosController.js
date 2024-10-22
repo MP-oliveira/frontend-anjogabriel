@@ -16,9 +16,11 @@ module.exports = class AlunosController {
 
   static async getAlunoByName(req, res) {
     const { nome } = req.query;
+    nome.toLowerCase()
     console.log(`Nome recebido: ${nome}`);  // <-- Adicione este log
-  
+    
     try {
+      
       const alunos = await Aluno.findAll({
         where: { nome: { [Op.like]: `%${nome}%` } },
       });
@@ -32,8 +34,8 @@ module.exports = class AlunosController {
       res.status(200).json(alunos);
       // res.status(200).json([{ id: 1, nome: 'Teste', email: 'teste@example.com', cpf: '12345678900' }]);
     } catch (error) {
-      console.error('Erro ao buscar aluno:', error);  // <-- Verifique o erro aqui
-      res.status(500).json({ error: 'Erro ao buscar aluno' });
+      console.error('Erro ao buscar aluno controller:', error);  // <-- Verifique o erro aqui
+      res.status(500).json({ error: 'Erro ao buscar aluno controller' });
     }
   }
 
@@ -98,7 +100,11 @@ module.exports = class AlunosController {
         data_termino_curso,
       };
 
-      const createdUser = await Aluno.create(aluno);
+      const alunoLowercase = Object.fromEntries(
+        Object.entries(aluno).map(([key, value]) => [key, typeof value === 'string' ? value.toLowerCase() : value])
+    );
+
+      const createdUser = await Aluno.create(alunoLowercase);
       res.status(201).json(createdUser);
     } catch (error) {
       console.error(error);
