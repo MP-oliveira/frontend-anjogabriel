@@ -20,11 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
 
-app.engine('handlebars', exphbs.engine())
-app.set('view engine', 'handlebars')
-
-// public
-app.use(express.static('public'))
 
 app.use('/api/alunos', alunoRoutes);
 app.use('/api/cursos', cursoRoutes);
@@ -37,7 +32,6 @@ app.get('/', (req, res) => {
   res.render('home')
 })
 
-app.use(flash())
 
 db
 //.sync({force: true})

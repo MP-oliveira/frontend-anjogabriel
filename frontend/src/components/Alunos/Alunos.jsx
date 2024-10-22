@@ -10,9 +10,10 @@ const Alunos = () => {
   useEffect(() => {
     const fetchAlunos = async () => {
       try {
-        const response = await fetch('https://localhost:3000/api/alunos'); // API para buscar todos os alunos
+        const response = await api.get('/alunos'); // API para buscar todos os alunos
         console.log(response)
         const data = await response.json();
+        console.log(data)
         setAlunos(data);
       } catch (error) {
         console.error('Erro ao buscar alunos:', error);

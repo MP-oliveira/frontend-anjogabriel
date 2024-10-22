@@ -11,10 +11,6 @@ module.exports = class AlunosController {
     }
   }
 
-  static create(req, res) {
-    res.render("register");
-  }
-
   static async createAluno(req, res) {
     const {
       nome,
@@ -82,8 +78,6 @@ module.exports = class AlunosController {
       res.status(500).json({ error: 'Erro ao criar aluno' });
     }
   }
-
-  // Método para buscar aluno por ID
   static async getAlunoById(req, res) {
     const { id } = req.params;
     try {
@@ -96,8 +90,6 @@ module.exports = class AlunosController {
       res.status(500).json({ error: 'Erro ao buscar aluno' });
     }
   }
-
-  // Método para atualizar aluno
   static async updateAluno(req, res) {
     const { id } = req.params;
     const updatedData = req.body;
@@ -115,7 +107,6 @@ module.exports = class AlunosController {
     }
   }
 
-  // Método para deletar aluno
   static async deleteAluno(req, res) {
     const { id } = req.params;
 
@@ -130,10 +121,5 @@ module.exports = class AlunosController {
     } catch (error) {
       res.status(500).json({ error: 'Erro ao deletar aluno' });
     }
-  }
-
-  static async logout(req, res) {
-    req.session.destroy();
-    res.redirect("/login");
   }
 };
