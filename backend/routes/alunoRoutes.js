@@ -9,6 +9,8 @@ router.get('/', alunoController.listAlunos);
 // Rota para criar um novo aluno
 router.post('/create', alunoController.createAluno);
 
+router.get('/search', alunoController.getAlunoByName);
+
 // Rota para buscar um aluno por ID
 router.get('/:id', alunoController.getAlunoById);
 

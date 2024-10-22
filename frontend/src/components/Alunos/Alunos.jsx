@@ -22,7 +22,7 @@ const Alunos = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await api.get(`/alunos?nome=${search}`);
+      const response = await api.get(`/alunos/search?nome=${search}`); // Chama a nova rota
       setAlunos(response.data);
     } catch (error) {
       console.error('Erro ao buscar aluno:', error);

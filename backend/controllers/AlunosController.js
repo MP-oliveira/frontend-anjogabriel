@@ -1,15 +1,42 @@
 const Aluno = require("../models/aluno");
+const { Op } = require('sequelize');
+
 
 module.exports = class AlunosController {
   static async listAlunos(req, res) {
     try {
       const alunos = await Aluno.findAll();
-      console.log(alunos);
+      // console.log(alunos);
       res.status(200).json(alunos);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao buscar alunos' });
     }
   }
+
+
+  static async getAlunoByName(req, res) {
+    const { nome } = req.query;
+    console.log(`Nome recebido: ${nome}`);  // <-- Adicione este log
+  
+    try {
+      const alunos = await Aluno.findAll({
+        where: { nome: { [Op.like]: `%${nome}%` } },
+      });
+  
+      console.log(`Alunos encontrados: ${JSON.stringify(alunos)}`);  // <-- Adicione este log
+  
+      if (alunos.length === 0) {
+        return res.status(404).json({ error: 'Aluno não encontrado' });
+      }
+  
+      res.status(200).json(alunos);
+      // res.status(200).json([{ id: 1, nome: 'Teste', email: 'teste@example.com', cpf: '12345678900' }]);
+    } catch (error) {
+      console.error('Erro ao buscar aluno:', error);  // <-- Verifique o erro aqui
+      res.status(500).json({ error: 'Erro ao buscar aluno' });
+    }
+  }
+
 
   static async createAluno(req, res) {
     const {
