@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from "../../services/api";
 
+import './Alunos.css'
+
 const Alunos = () => {
   const [alunos, setAlunos] = useState([]);
   const [search, setSearch] = useState('');
@@ -37,7 +39,7 @@ const Alunos = () => {
   };
 
   return (
-    <div>
+    <div className="aluno_container">
       <h1>Lista de Alunos</h1>
 
       <input
