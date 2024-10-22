@@ -2,16 +2,15 @@
   display: flex;
   justify-content: center;
   align-items: center; 
-  padding: 20px;
   gap: 20px;
   background-color: #C6D6F3;
-  width: 100%;
+  width: 100vw;
   height: 100vh
 }
 
 .about-us-card {
   flex: 1;
-  max-width: 35%;
+  max-width: 32.5%;
   height: 560px;
   border-radius: 50px;
   overflow: hidden;

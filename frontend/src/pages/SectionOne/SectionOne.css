@@ -1,7 +1,7 @@
 .sectionOne-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 100px;
+  gap: 58px;
   padding: 50px 100px;
   width: 100%;
   justify-content: center;
@@ -49,6 +49,7 @@
   font-size: 18px;
   font-weight: 500;
   letter-spacing: 0.7px;
+  color: black;
 }
 
 .sectionOne-right {
