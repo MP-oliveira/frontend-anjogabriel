@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Caso esteja usando react-router
-import api from "../../services/api"; // Importando o serviço de API
+import { Link } from 'react-router-dom';
+import api from "../../services/api";
 
 const Alunos = () => {
   const [alunos, setAlunos] = useState([]);
   const [search, setSearch] = useState('');
 
-  // Função para buscar todos os alunos
   useEffect(() => {
     const fetchAlunos = async () => {
       try {
-        const response = await api.get('/alunos'); // API para buscar todos os alunos
-        console.log(response)
-        const data = await response.json();
-        console.log(data)
-        setAlunos(data);
+        const response = await api.get('/alunos');
+        setAlunos(response.data);
       } catch (error) {
         console.error('Erro ao buscar alunos:', error);
       }
@@ -22,22 +18,19 @@ const Alunos = () => {
     fetchAlunos();
   }, []);
 
-  // Função para realizar a busca de aluno por CPF ou nome
   const handleSearch = async () => {
     try {
-      const response = await fetch(`/aluno/search?nome=${search}`); // Busca pelo nome
-      const data = await response.json();
-      setAlunos([data]); // Atualiza a lista de alunos com o resultado da busca
+      const response = await api.get(`/alunos?nome=${search}`);
+      setAlunos(response.data);
     } catch (error) {
       console.error('Erro ao buscar aluno:', error);
     }
   };
 
-  // Função para deletar um aluno
   const handleDelete = async (id) => {
     try {
-      await fetch(`/aluno/${id}`, { method: 'DELETE' });
-      setAlunos(alunos.filter((aluno) => aluno.id !== id)); // Remove o aluno da lista
+      await api.delete(`/alunos/${id}`);
+      setAlunos(alunos.filter((aluno) => aluno.id !== id));
     } catch (error) {
       console.error('Erro ao deletar aluno:', error);
     }
@@ -47,7 +40,6 @@ const Alunos = () => {
     <div>
       <h1>Lista de Alunos</h1>
 
-      {/* Barra de Pesquisa */}
       <input
         type="text"
         placeholder="Buscar por nome ou CPF"
