@@ -4,6 +4,60 @@
   align-items: center;
   background-color: #fff;
   width: 100vw;
-  height: 100vh;
+  height: 120vh;
   overflow: hidden;
+  gap: 20px;
+}
+
+.aluno_content {
+  background-color: #EDF3FC;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  gap: 12px;
+  padding: 20px 50px 20px 50px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.aluno_h1 {
+  font-size: 32px;
+  text-align: center;
+}
+
+.aluno_input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.aluno_input input {
+  padding: 12px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #a6a7a9;
+  border: none;
+  outline-color: #C6D6F3;
+  padding: opx;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+
+.aluno_lista_input {
+  width: 300px;
+}
+
+.aluno_content_btn {
+  width: 50px;
+  background-color: #FBD064;
+  border: none;
+  padding: 8px;
+  width: 130px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-size: 18px;
 }

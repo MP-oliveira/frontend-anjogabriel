@@ -21,7 +21,7 @@ const Alunos = () => {
   }, []);
 
   const handleSearch = async () => {
-    
+
     try {
       const response = await api.get(`/alunos/search?nome=${search}`); // Chama a nova rota
       setAlunos(response.data);
@@ -41,47 +41,50 @@ const Alunos = () => {
 
   return (
     <div className="aluno_container">
-      <h1>Lista de Alunos</h1>
-
-      <input
-        type="text"
-        placeholder="Buscar por nome ou CPF"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-      <button onClick={handleSearch}>Buscar</button>
-
-      <Link to="/alunos/add">Criar Aluno</Link>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>CPF</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {alunos.length > 0 ? (
-            alunos.map((aluno) => (
-              <tr key={aluno.id}>
-                <td>{aluno.nome}</td>
-                <td>{aluno.email}</td>
-                <td>{aluno.cpf}</td>
-                <td>
-                  <Link to={`/alunos/edit/${aluno.id}`}>Editar</Link>
-                  <button onClick={() => handleDelete(aluno.id)}>Deletar</button>
-                </td>
-              </tr>
-            ))
-          ) : (
+      <div className="aluno_content">
+        <h1 className="aluno_h1">Gerenciamento de Alunos</h1>
+        <div className="aluno_input">
+          <input
+            className='aluno_lista_input'
+            type="text"
+            placeholder="Buscar por nome ou CPF"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className="aluno_content_btn" onClick={handleSearch}>Buscar</button>
+        </div>
+        <table>
+          <thead>
             <tr>
-              <td colSpan="4">Nenhum aluno encontrado</td>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>CPF</th>
+              <th>Ações</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {alunos.length > 0 ? (
+              alunos.map((aluno) => (
+                <tr key={aluno.id}>
+                  <td>{aluno.nome}</td>
+                  <td>{aluno.email}</td>
+                  <td>{aluno.cpf}</td>
+                  <td>
+                    <Link to={`/alunos/edit/${aluno.id}`}>Editar</Link>
+                    <button onClick={() => handleDelete(aluno.id)}>Deletar</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">Nenhum aluno encontrado</td>
+              </tr>
+            )}
+            <Link to="/alunos/add">Criar Aluno</Link>
+
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
