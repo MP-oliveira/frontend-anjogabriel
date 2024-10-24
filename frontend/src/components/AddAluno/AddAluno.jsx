@@ -476,11 +476,6 @@ const AddAluno = () => {
             <option value="SE">Sergipe (SE)</option>
             <option value="TO">Tocantins (TO)</option>
           </select>
-          {errors.estado && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.estado}
-            </p>
-          )}
         </div>
         <div className="cur-tur-dai-dat">
           <select
