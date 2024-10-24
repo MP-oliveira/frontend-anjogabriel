@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from "../../services/api";
-import  Delete  from '../../assets/trash.svg'
-import  Edit  from '../../assets/pencil.svg'
-
-import './Alunos.css'
+import Delete from '../../assets/trash.svg';
+import Edit from '../../assets/pencil.svg';
+import './Alunos.css';
 
 const Alunos = () => {
   const [alunos, setAlunos] = useState([]);
+  const [filteredAlunos, setFilteredAlunos] = useState([]);
   const [search, setSearch] = useState('');
 
   useEffect(() => {
@@ -15,6 +15,7 @@ const Alunos = () => {
       try {
         const response = await api.get('/alunos');
         setAlunos(response.data);
+        setFilteredAlunos(response.data);
       } catch (error) {
         console.error('Erro ao buscar alunos:', error);
       }
@@ -22,20 +23,21 @@ const Alunos = () => {
     fetchAlunos();
   }, []);
 
-  const handleSearch = async () => {
-
-    try {
-      const response = await api.get(`/alunos/search?nome=${search}`); // Chama a nova rota
-      setAlunos(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar aluno: front', error);
-    }
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    const filtered = alunos.filter(aluno => 
+      aluno.nome.toLowerCase().includes(value.toLowerCase()) ||
+      aluno.cpf.includes(value)
+    );
+    setFilteredAlunos(filtered);
   };
 
   const handleDelete = async (id) => {
     try {
       await api.delete(`/alunos/${id}`);
       setAlunos(alunos.filter((aluno) => aluno.id !== id));
+      setFilteredAlunos(filteredAlunos.filter((aluno) => aluno.id !== id));
     } catch (error) {
       console.error('Erro ao deletar aluno:', error);
     }
@@ -51,9 +53,8 @@ const Alunos = () => {
             type="text"
             placeholder="Buscar por nome ou CPF"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={handleSearch}
           />
-          <button className="aluno_content_btn" onClick={handleSearch}>Buscar</button>
         </div>
         <Link className="criar_aluno" to="/alunos/add">Adicionar Aluno</Link>
         <table className="tabela_aluno_lista">
@@ -66,8 +67,8 @@ const Alunos = () => {
             </tr>
           </thead>
           <tbody>
-            {alunos.length > 0 ? (
-              alunos.map((aluno) => (
+            {filteredAlunos.length > 0 ? (
+              filteredAlunos.map((aluno) => (
                 <tr key={aluno.id}>
                   <td>{aluno.nome}</td>
                   <td>{aluno.email}</td>
