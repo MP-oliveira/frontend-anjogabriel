@@ -26,7 +26,7 @@ const Alunos = () => {
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearch(value);
-    const filtered = alunos.filter(aluno => 
+    const filtered = alunos.filter(aluno =>
       aluno.nome.toLowerCase().includes(value.toLowerCase()) ||
       aluno.cpf.includes(value)
     );
@@ -46,7 +46,10 @@ const Alunos = () => {
   return (
     <div className="aluno_container">
       <div className="aluno_content">
-        <h1 className="aluno_h1">Gerenciamento de Alunos</h1>
+        <div className="aluno_top">
+          <h1 className="aluno_h1">Gerenciamento de Alunos</h1>
+          <Link className="criar_aluno" to="/alunos/add">Adicionar Aluno</Link>
+        </div>
         <div className="aluno_input">
           <input
             className='aluno_lista_input'
@@ -56,7 +59,6 @@ const Alunos = () => {
             onChange={handleSearch}
           />
         </div>
-        <Link className="criar_aluno" to="/alunos/add">Adicionar Aluno</Link>
         <table className="tabela_aluno_lista">
           <thead>
             <tr>
@@ -77,9 +79,9 @@ const Alunos = () => {
                     <Link to={`/alunos/edit/${aluno.id}`}>
                       <img src={Edit} alt="" />
                     </Link>
-                    <button onClick={() => handleDelete(aluno.id)}>
+                    <Link onClick={() => handleDelete(aluno.id)}>
                       <img src={Delete} alt="" />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))

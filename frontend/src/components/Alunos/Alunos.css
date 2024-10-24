@@ -9,6 +9,7 @@
   gap: 20px;
 }
 
+
 .aluno_content {
   width: 80%;
   background-color: #EDF3FC;
@@ -18,13 +19,42 @@
   border-radius: 20px;
   gap: 12px;
   padding: 20px 50px 20px 50px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   margin-top: 50px;
 }
+
+.aluno_top {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: end;
+  /* background-color: red; */
+  /* position: relative; */
+}
+
+.criar_aluno {
+  width: 130px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #FBD064;
+  color: #000;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 10px 20px;
+  flex:1;
+  margin-top: 30px;
+  /* position: absolute; */
+  /* left: 800px; */
+  /* top: 34px */
+}
+
 
 .aluno_h1 {
   font-size: 32px;
   text-align: center;
+  flex:6;
+  margin-left: 10.4rem;
+  
 }
 
 .aluno_input {
@@ -67,16 +97,6 @@
   border: none;
 }
 
-.criar_aluno {
-  text-align: center;
-  margin-bottom: 30px;
-  text-decoration: none;
-  background-color: #FBD064;
-  color: #000;
-  border-radius: 10px;
-  font-size: 18px;
-  padding: 10px 20px;
-}
 
 .tabela_aluno_lista {
   width: 100%;
