@@ -10,9 +10,11 @@
 }
 
 .aluno_content {
+  width: 80%;
   background-color: #EDF3FC;
   display: flex;
   flex-direction: column;
+  align-items: center;
   border-radius: 20px;
   gap: 12px;
   padding: 20px 50px 20px 50px;
@@ -30,6 +32,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-bottom: 30px;
 }
 
 .aluno_input input {
@@ -48,16 +51,61 @@
 
 .aluno_lista_input {
   width: 300px;
+  font-size: 18px;
 }
 
 .aluno_content_btn {
   width: 50px;
-  background-color: #FBD064;
+  background-color: #1C65D1;
   border: none;
   padding: 8px;
-  width: 130px;
+  width: 120px;
   border-radius: 10px;
   cursor: pointer;
-  color: #000;
+  color: #fff;
   font-size: 18px;
+  border: none;
+}
+
+.criar_aluno {
+  text-align: center;
+  margin-bottom: 30px;
+  text-decoration: none;
+  background-color: #FBD064;
+  color: #000;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
+.tabela_aluno_lista {
+  width: 100%;
+}
+
+.tabela_aluno_lista th {
+  background-color: #3875d616;
+  text-align: left;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.tabela_aluno_lista td {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.tabela_aluno_lista tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.tabela_aluno_lista tbody tr:nth-child(even) {
+  background-color: #c6d6f310
+}
+
+.aluno_acoes {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: left;
+  margin-left: 10px;
 }

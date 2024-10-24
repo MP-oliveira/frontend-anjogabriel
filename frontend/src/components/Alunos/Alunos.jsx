@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from "../../services/api";
+import  Delete  from '../../assets/trash.svg'
+import  Edit  from '../../assets/pencil.svg'
 
 import './Alunos.css'
 
@@ -53,7 +55,8 @@ const Alunos = () => {
           />
           <button className="aluno_content_btn" onClick={handleSearch}>Buscar</button>
         </div>
-        <table>
+        <Link className="criar_aluno" to="/alunos/add">Adicionar Aluno</Link>
+        <table className="tabela_aluno_lista">
           <thead>
             <tr>
               <th>Nome</th>
@@ -69,9 +72,13 @@ const Alunos = () => {
                   <td>{aluno.nome}</td>
                   <td>{aluno.email}</td>
                   <td>{aluno.cpf}</td>
-                  <td>
-                    <Link to={`/alunos/edit/${aluno.id}`}>Editar</Link>
-                    <button onClick={() => handleDelete(aluno.id)}>Deletar</button>
+                  <td className="aluno_acoes">
+                    <Link to={`/alunos/edit/${aluno.id}`}>
+                      <img src={Edit} alt="" />
+                    </Link>
+                    <button onClick={() => handleDelete(aluno.id)}>
+                      <img src={Delete} alt="" />
+                    </button>
                   </td>
                 </tr>
               ))
@@ -80,8 +87,6 @@ const Alunos = () => {
                 <td colSpan="4">Nenhum aluno encontrado</td>
               </tr>
             )}
-            <Link to="/alunos/add">Criar Aluno</Link>
-
           </tbody>
         </table>
       </div>
