@@ -101,6 +101,9 @@ const AddAluno = () => {
   const [turno, setTurno] = useState("");
   const [data_matricula, setData_matricula] = useState("");
   const [data_termino_curso, setData_termino_curso] = useState("");
+  const [file, setFile] = useState(null);
+
+
 
   // Estado para armazenar os erros de validação
   const [errors, setErrors] = useState({});
@@ -136,6 +139,10 @@ const AddAluno = () => {
       turno,
       data_matricula: new Date(data_matricula),
       data_termino_curso: new Date(data_termino_curso),
+    };
+
+    const handleFileChange = (event) => {
+      setFile(event.target.files[0]);
     };
 
     // Validando os dados com o esquema do Zod
@@ -526,6 +533,15 @@ const AddAluno = () => {
               {errors.data_termino_curso}
             </p>
           )}
+        </div>
+        <div>
+          <label htmlFor="file">Selecione um arquivo:</label>
+          <input
+            type="file"
+            id="file"
+            // onChange={handleFileChange}
+            required
+          />
         </div>
         <div className="aluno-btn-container">
           <button className="aluno-btn" type="submit">
