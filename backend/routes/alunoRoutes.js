@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const alunoController = require('../controllers/AlunosController');
+const upload = require('../db/upload')
 // const authMiddleware = require('../middlewares/authMiddleware');
 
 // Rota para listar todos os alunos
 router.get('/', alunoController.listAlunos);
 
 // Rota para criar um novo aluno
-router.post('/create', alunoController.createAluno);
+router.post('/create', upload.single('file'), alunoController.createAluno);
 
 router.get('/search', alunoController.getAlunoByName);
 

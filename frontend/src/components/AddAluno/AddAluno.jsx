@@ -146,37 +146,6 @@ const AddAluno = () => {
     // Validando os dados com o esquema do Zod
     const alunoresult = alunoSchema.safeParse(alunoFormValues);
 
-    const formData = new FormData();
-    formData.append("nome", alunoresult.data.nome);
-    formData.append("email", alunoresult.data.email);
-    formData.append("data_nascimento", alunoresult.data.data_nascimento);
-    formData.append("estado_civil", alunoresult.data.estado_civil);
-    formData.append("grupo_sanguineo", alunoresult.data.grupo_sanguineo);
-    formData.append("naturalidade", alunoresult.data.naturalidade);
-    formData.append("nacionalidade", alunoresult.data.nacionalidade);
-    formData.append("pai", alunoresult.data.pai);
-    formData.append("mae", alunoresult.data.mae);
-    formData.append("rg", alunoresult.data.rg);
-    formData.append("orgao_expedidor_rg", alunoresult.data.orgao_expedidor_rg);
-    formData.append("data_expedicao_rg", alunoresult.data.data_expedicao_rg);
-    formData.append("cpf", alunoresult.data.cpf);
-    formData.append("endereco", alunoresult.data.endereco);
-    formData.append("n_casa", alunoresult.data.n_casa);
-    formData.append("bairro", alunoresult.data.bairro);
-    formData.append("tel_res", alunoresult.data.tel_res);
-    formData.append("celular", alunoresult.data.celular);
-    formData.append("tel_trabalho", alunoresult.data.tel_trabalho);
-    formData.append("cep", alunoresult.data.cep);
-    formData.append("cidade", alunoresult.data.cidade);
-    formData.append("estado", alunoresult.data.estado);
-    formData.append("curso", alunoresult.data.curso);
-    formData.append("turno", alunoresult.data.turno);
-    formData.append("data_matricula", alunoresult.data.data_matricula);
-    formData.append("data_termino_curso", alunoresult.data.data_termino_curso);
-    formData.append("file", file);
-
-    console.log(formData, " form Data");
-
     // Se houver erros, eles serão exibidos
     if (!alunoresult.success) {
       const fieldErrors = alunoresult.error.format();
@@ -208,19 +177,56 @@ const AddAluno = () => {
         data_matricula: fieldErrors.data_matricula?._errors[0],
         data_termino_curso: fieldErrors.data_termino_curso?._errors[0],
       });
-
     } else {
       try {
+        const formData = new FormData();
+        formData.append("nome", alunoresult.data.nome);
+        formData.append("email", alunoresult.data.email);
+        formData.append("data_nascimento", alunoresult.data.data_nascimento);
+        formData.append("estado_civil", alunoresult.data.estado_civil);
+        formData.append("grupo_sanguineo", alunoresult.data.grupo_sanguineo);
+        formData.append("naturalidade", alunoresult.data.naturalidade);
+        formData.append("nacionalidade", alunoresult.data.nacionalidade);
+        formData.append("pai", alunoresult.data.pai);
+        formData.append("mae", alunoresult.data.mae);
+        formData.append("rg", alunoresult.data.rg);
+        formData.append(
+          "orgao_expedidor_rg",
+          alunoresult.data.orgao_expedidor_rg
+        );
+        formData.append(
+          "data_expedicao_rg",
+          alunoresult.data.data_expedicao_rg
+        );
+        formData.append("cpf", alunoresult.data.cpf);
+        formData.append("endereco", alunoresult.data.endereco);
+        formData.append("n_casa", alunoresult.data.n_casa);
+        formData.append("bairro", alunoresult.data.bairro);
+        formData.append("tel_res", alunoresult.data.tel_res);
+        formData.append("celular", alunoresult.data.celular);
+        formData.append("tel_trabalho", alunoresult.data.tel_trabalho);
+        formData.append("cep", alunoresult.data.cep);
+        formData.append("cidade", alunoresult.data.cidade);
+        formData.append("estado", alunoresult.data.estado);
+        formData.append("curso", alunoresult.data.curso);
+        formData.append("turno", alunoresult.data.turno);
+        formData.append("data_matricula", alunoresult.data.data_matricula);
+        formData.append(
+          "data_termino_curso",
+          alunoresult.data.data_termino_curso
+        );
+        formData.append("file", file);
+
+        console.log(formData, " form Data");
         // Enviar os dados para a API
         // const response = await api.post("/alunos/create", alunoFormValues);
-        const response = await api
-          .post("/alunos/create", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => console.log(res))
-          .catch((err) => console.log(err));
+        const response = await api.post("/alunos/create", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        // .then((res) => console.log(res))
+        // .catch((err) => console.log(err));
 
         alert(`Upload bem-sucedido: ${response.data.fileUrl}`);
         console.log("Usuário adicionado com sucesso!", response.data);

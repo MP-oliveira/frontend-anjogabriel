@@ -1,6 +1,6 @@
 const Aluno = require("../models/aluno");
 const { Op } = require('sequelize');
-
+const supabase = require('../db/supabaseCilent')
 
 module.exports = class AlunosController {
   static async listAlunos(req, res) {
@@ -71,6 +71,33 @@ module.exports = class AlunosController {
     } = req.body;
 
     try {
+      if (!req.file) {
+        return res.status(400).json({ message: 'Nenhum arquivo enviado.' });
+      }
+  
+      // Subir o arquivo para o Supabase
+      const { originalname, buffer } = req.file;
+      const { data, error } = await supabase.storage
+        .from('aluno_fot')
+        .upload(`aluno_foto/${Date.now()}-${originalname}`, buffer, {
+          cacheControl: '3600',
+          upsert: false,
+          contentType: req.file.mimetype,
+        });
+  
+      if (error) {
+        return res.status(500).json({ error: error.message });
+      }
+  
+      // Retornar a URL pública do arquivo
+      const publicUrl = supabase.storage
+        .from('aluno_foto')
+        .getPublicUrl(data.path);
+        
+        const url = publicUrl.data.publicUrl
+        console.log(url, 'back')
+
+
       const aluno = {
         nome,
         email,
@@ -98,6 +125,7 @@ module.exports = class AlunosController {
         turno,
         data_matricula,
         data_termino_curso,
+        foto_url: url
       };
 
       const alunoLowercase = Object.fromEntries(
