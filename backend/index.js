@@ -29,9 +29,9 @@ app.use('/api/diplomas', diplomaRoutes);
 app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.use('/api/turnos', turnoRoutes);
-app.get('/', (req, res) => {
-  res.render('home')
-})
+// app.get('/', (req, res) => {
+//   res.render('home')
+// })
 
 
 db
