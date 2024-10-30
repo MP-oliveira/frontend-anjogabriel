@@ -69,7 +69,7 @@ module.exports = class AlunosController {
       data_matricula,
       data_termino_curso,
     } = req.body;
-
+  
     try {
       if (!req.file) {
         return res.status(400).json({ message: 'Nenhum arquivo enviado.' });
@@ -78,7 +78,7 @@ module.exports = class AlunosController {
       // Subir o arquivo para o Supabase
       const { originalname, buffer } = req.file;
       const { data, error } = await supabase.storage
-        .from('aluno_fot')
+        .from('aluno_foto')
         .upload(`aluno_foto/${Date.now()}-${originalname}`, buffer, {
           cacheControl: '3600',
           upsert: false,
@@ -86,18 +86,16 @@ module.exports = class AlunosController {
         });
   
       if (error) {
-        return res.status(500).json({ error: error.message });
+        console.error("Erro ao fazer upload no Supabase:", error.message);
+        return res.status(500).json({ error: 'Erro ao fazer upload da foto' });
       }
   
-      // Retornar a URL pública do arquivo
+      // Obter a URL pública do arquivo
       const publicUrl = supabase.storage
         .from('aluno_foto')
         .getPublicUrl(data.path);
-        
-        const url = publicUrl.data.publicUrl
-        console.log(url, 'back')
-
-
+      const url = publicUrl.data.publicUrl;
+  
       const aluno = {
         nome,
         email,
@@ -125,20 +123,24 @@ module.exports = class AlunosController {
         turno,
         data_matricula,
         data_termino_curso,
-        foto_url: url
+        foto_url: url,
       };
-
+  
+      // Converter para minúsculas com exceções
       const alunoLowercase = Object.fromEntries(
-        Object.entries(aluno).map(([key, value]) => [key, typeof value === 'string' ? value.toLowerCase() : value])
-    );
-
+        Object.entries(aluno).map(([key, value]) =>
+          [key, typeof value === 'string' && key !== 'nome' && key !== 'pai' && key !== 'mae' ? value.toLowerCase() : value]
+        )
+      );
+  
       const createdUser = await Aluno.create(alunoLowercase);
       res.status(201).json(createdUser);
     } catch (error) {
-      console.error(error);
+      console.error("Erro ao criar aluno:", error);
       res.status(500).json({ error: 'Erro ao criar aluno' });
     }
   }
+  
   static async getAlunoById(req, res) {
     const { id } = req.params;
     
