@@ -8,7 +8,10 @@ const upload = require('../db/upload')
 router.get('/', alunoController.listAlunos);
 
 // Rota para criar um novo aluno
-router.post('/create', upload.single('file'), alunoController.createAluno);
+router.post('/create', upload.fields([
+  {name: 'file', maxCount: 1},
+  {name: 'historico', maxCount: 1}
+]), alunoController.createAluno);
 
 router.get('/search', alunoController.getAlunoByName);
 

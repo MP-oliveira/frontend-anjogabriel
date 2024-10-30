@@ -102,6 +102,7 @@ const AddAluno = () => {
   const [data_matricula, setData_matricula] = useState("");
   const [data_termino_curso, setData_termino_curso] = useState("");
   const [file, setFile] = useState(null);
+  const [historico, setHistorico] = useState(null);
 
   // Estado para armazenar os erros de validação
   const [errors, setErrors] = useState({});
@@ -109,6 +110,10 @@ const AddAluno = () => {
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
+
+  const handleHistoricoChange = (event) => {
+    setHistorico(event.target.value[0]);
+  }
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
@@ -216,6 +221,7 @@ const AddAluno = () => {
           alunoresult.data.data_termino_curso
         );
         formData.append("file", file);
+        formData.append("historico", historico);
 
         console.log(formData, " form Data");
         // Enviar os dados para a API
@@ -583,6 +589,10 @@ const AddAluno = () => {
         <div>
           <label htmlFor="file">Selecione um arquivo:</label>
           <input type="file" id="file" onChange={handleFileChange} required />
+        </div>
+        <div>
+          <label htmlFor="historico">Selecione um arquivo:</label>
+          <input type="file" id="historico" onChange={handleHistoricoChange} required />
         </div>
         <div className="aluno-btn-container">
           <button className="aluno-btn" type="submit">
