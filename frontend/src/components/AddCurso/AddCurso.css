@@ -1,0 +1,92 @@
+.addcurso-container {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+.form-addcurso {
+  background-color: #EDF3FC;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  gap: 12px;
+  padding: 20px 50px 20px 50px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.form-addcurso h2 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-addcurso input,
+.form-addcurso textarea,
+.form-addcurso select {
+  padding: 15px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+  border: none;
+  outline-color: #C6D6F3;
+  border-radius: 8px;
+}
+
+.form-addcurso input::placeholder,
+.form-addcurso textarea::placeholder {
+  color: #999999;
+  font-weight: normal;
+}
+
+.curso-info,
+.curso-valores,
+.curso-status-modalidade {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.curso-info input,
+.curso-valores input,
+.curso-status-modalidade select {
+  flex: 1;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.curso-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.curso-btn {
+  background-color: #FBD064;
+  border: none;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.curso-btn:hover {
+  background-color: #fac43c;
+}
+
+.error_message {
+  font-size: 12px;
+  margin-top: -8px;
+}

@@ -1,64 +1,317 @@
-import React, { useState } from "react";
-import api from "../../services/api"; // Importando o serviço de API
+import "./AddDisciplina.css";
+import React, { useState, useEffect } from "react";
+import api from "../../services/api";
+import { z } from "zod";
+import { useNavigate } from "react-router-dom";
+
+const disciplinaSchema = z.object({
+  nome: z
+    .string()
+    .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
+  descricao: z
+    .string()
+    .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
+  carga_horaria: z
+    .number()
+    .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  curso_id: z
+    .string()
+    .min(1, { message: "Selecione um curso" }),
+  professor_id: z
+    .string()
+    .min(1, { message: "Selecione um professor" }),
+  semestre: z
+    .number()
+    .min(1, { message: "O semestre precisa ser maior que 0" })
+    .max(12, { message: "O semestre não pode ser maior que 12" }),
+  status: z
+    .string()
+    .min(1, { message: "Selecione um status válido" }),
+  horario_inicio: z
+    .string()
+    .min(1, { message: "Defina um horário de início" }),
+  horario_fim: z
+    .string()
+    .min(1, { message: "Defina um horário de término" }),
+  dias_semana: z
+    .array(z.string())
+    .min(1, { message: "Selecione pelo menos um dia da semana" })
+});
 
 const AddDisciplina = () => {
+  const navigate = useNavigate();
+
   const [nome, setNome] = useState("");
-  const [carga_horaria_semestral, setCarga_horaria_semestral] = useState("");
-  const [estagio, setEstagio] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [carga_horaria, setCarga_horaria] = useState("");
+  const [curso_id, setCurso_id] = useState("");
+  const [professor_id, setProfessor_id] = useState("");
+  const [semestre, setSemestre] = useState("");
+  const [status, setStatus] = useState("");
+  const [horario_inicio, setHorario_inicio] = useState("");
+  const [horario_fim, setHorario_fim] = useState("");
+  const [dias_semana, setDias_semana] = useState([]);
+  const [errors, setErrors] = useState({});
 
+  // Estados para as listas de cursos e professores
+  const [cursos, setCursos] = useState([]);
+  const [professores, setProfessores] = useState([]);
 
+  // Carregar cursos e professores quando o componente montar
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [cursosResponse, professoresResponse] = await Promise.all([
+          api.get("/cursos"),
+          api.get("/professores")
+        ]);
+        setCursos(cursosResponse.data);
+        setProfessores(professoresResponse.data);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+    };
 
-  // Função para lidar com o envio do formulário
+    fetchData();
+  }, []);
+
+  const handleDiasSemanaChange = (e) => {
+    const dia = e.target.value;
+    setDias_semana(prev => {
+      if (e.target.checked) {
+        return [...prev, dia];
+      } else {
+        return prev.filter(d => d !== dia);
+      }
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Criar um FormData para enviar os arquivos junto com os dados
-    const newDisciplina = {
+    const disciplinaFormValues = {
       nome,
-      carga_horaria_semestral,
-      estagio,
-    }
+      descricao,
+      carga_horaria: Number(carga_horaria),
+      curso_id,
+      professor_id,
+      semestre: Number(semestre),
+      status,
+      horario_inicio,
+      horario_fim,
+      dias_semana
+    };
 
-    console.log(newDisciplina)
+    const disciplinaresult = disciplinaSchema.safeParse(disciplinaFormValues);
 
-    try {
-      // Enviar os dados para a API
-      await api.post("/disciplinas/create", newDisciplina);
-      alert("Disciplina adicionada com sucesso!");
-    } catch (error) {
-      console.error("Erro ao adicionar disciplina", error);
+    if (!disciplinaresult.success) {
+      const fieldErrors = disciplinaresult.error.format();
+      setErrors({
+        nome: fieldErrors.nome?._errors[0],
+        descricao: fieldErrors.descricao?._errors[0],
+        carga_horaria: fieldErrors.carga_horaria?._errors[0],
+        curso_id: fieldErrors.curso_id?._errors[0],
+        professor_id: fieldErrors.professor_id?._errors[0],
+        semestre: fieldErrors.semestre?._errors[0],
+        status: fieldErrors.status?._errors[0],
+        horario_inicio: fieldErrors.horario_inicio?._errors[0],
+        horario_fim: fieldErrors.horario_fim?._errors[0],
+        dias_semana: fieldErrors.dias_semana?._errors[0]
+      });
+    } else {
+      try {
+        const response = await api.post("/disciplinas/create", disciplinaresult.data);
+        console.log("Disciplina adicionada com sucesso!", response.data);
+
+        // Limpar os campos após o sucesso
+        setNome("");
+        setDescricao("");
+        setCarga_horaria("");
+        setCurso_id("");
+        setProfessor_id("");
+        setSemestre("");
+        setStatus("");
+        setHorario_inicio("");
+        setHorario_fim("");
+        setDias_semana([]);
+        
+        navigate("/disciplinas");
+      } catch (error) {
+        console.error("Erro ao adicionar disciplina", error);
+      }
+      setErrors({});
     }
   };
 
-
-
   return (
-    <>
-      <h2>Adicionar Disciplina</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="adddisciplina-container">
+      <form className="form-adddisciplina" onSubmit={handleSubmit}>
+        <h2>Adicionar Disciplina</h2>
+        
         <input
           type="text"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          placeholder="Nome"
+          placeholder="Nome da Disciplina"
         />
-        <input
-          type="text"
-          value={carga_horaria_semestral}
-          onChange={(e) => setCarga_horaria_semestral(e.target.value)}
-          placeholder="Carga Horaria"
-        />
-        <label for='estagio'>Estágio</label>
-        <select id='estagio'
-          onChange={(e) => setEstagio(e.target.value)}
-        >
-          <option value="Sim">Sim</option>
-          <option value="Nao">Não</option>
-        </select>
+        {errors.nome && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.nome}
+          </p>
+        )}
 
-        <button type="submit">Adicionar Disciplina</button>
+        <textarea
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+          placeholder="Descrição da Disciplina"
+          rows={4}
+        />
+        {errors.descricao && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.descricao}
+          </p>
+        )}
+
+        <div className="disciplina-curso-prof">
+          <select
+            value={curso_id}
+            onChange={(e) => setCurso_id(e.target.value)}
+          >
+            <option value="">Selecione o Curso</option>
+            {cursos.map(curso => (
+              <option key={curso.id} value={curso.id}>
+                {curso.nome}
+              </option>
+            ))}
+          </select>
+          {errors.curso_id && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.curso_id}
+            </p>
+          )}
+
+          <select
+            value={professor_id}
+            onChange={(e) => setProfessor_id(e.target.value)}
+          >
+            <option value="">Selecione o Professor</option>
+            {professores.map(professor => (
+              <option key={professor.id} value={professor.id}>
+                {professor.nome}
+              </option>
+            ))}
+          </select>
+          {errors.professor_id && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.professor_id}
+            </p>
+          )}
+        </div>
+
+        <div className="disciplina-info">
+          <input
+            type="number"
+            value={carga_horaria}
+            onChange={(e) => setCarga_horaria(e.target.value)}
+            placeholder="Carga Horária (horas)"
+          />
+          {errors.carga_horaria && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria}
+            </p>
+          )}
+
+          <input
+            type="number"
+            value={semestre}
+            onChange={(e) => setSemestre(e.target.value)}
+            placeholder="Semestre"
+            min="1"
+            max="12"
+          />
+          {errors.semestre && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.semestre}
+            </p>
+          )}
+
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="">Selecione o Status</option>
+            <option value="ativa">Ativa</option>
+            <option value="inativa">Inativa</option>
+            <option value="em_andamento">Em Andamento</option>
+            <option value="concluida">Concluída</option>
+          </select>
+          {errors.status && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.status}
+            </p>
+          )}
+        </div>
+
+        <div className="disciplina-horarios">
+          <div className="horario-input">
+            <label>Horário de Início:</label>
+            <input
+              type="time"
+              value={horario_inicio}
+              onChange={(e) => setHorario_inicio(e.target.value)}
+            />
+          </div>
+          {errors.horario_inicio && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.horario_inicio}
+            </p>
+          )}
+
+          <div className="horario-input">
+            <label>Horário de Término:</label>
+            <input
+              type="time"
+              value={horario_fim}
+              onChange={(e) => setHorario_fim(e.target.value)}
+            />
+          </div>
+          {errors.horario_fim && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.horario_fim}
+            </p>
+          )}
+        </div>
+
+        <div className="dias-semana">
+          <label>Dias da Semana:</label>
+          <div className="dias-checkboxes">
+            {['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((dia) => (
+              <div key={dia} className="dia-checkbox">
+                <input
+                  type="checkbox"
+                  id={dia}
+                  value={dia}
+                  checked={dias_semana.includes(dia)}
+                  onChange={handleDiasSemanaChange}
+                />
+                <label htmlFor={dia}>{dia}</label>
+              </div>
+            ))}
+          </div>
+          {errors.dias_semana && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.dias_semana}
+            </p>
+          )}
+        </div>
+
+        <div className="disciplina-btn-container">
+          <button className="disciplina-btn" type="submit">
+            Adicionar Disciplina
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 
