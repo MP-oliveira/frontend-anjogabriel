@@ -588,11 +588,11 @@ const AddAluno = () => {
         </div>
         <div>
           <label htmlFor="file">Selecione um arquivo:</label>
-          <input type="file" id="file" name='file'  onChange={handleFileChange} required />
+          <input type="file" id="file" name='file' accept="image/*" onChange={handleFileChange} required />
         </div>
         <div>
           <label htmlFor="historico">Selecione um arquivo:</label>
-          <input type="file" id="historico" name="historico" onChange={handleHistoricoChange} required />
+          <input type="file" id="historico" name="historico" accept="application/pdf" onChange={handleHistoricoChange} required />
         </div>
         <div className="aluno-btn-container">
           <button className="aluno-btn" type="submit">
