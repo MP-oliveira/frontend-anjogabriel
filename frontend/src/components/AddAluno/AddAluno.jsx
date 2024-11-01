@@ -112,7 +112,7 @@ const AddAluno = () => {
   };
 
   const handleHistoricoChange = (event) => {
-    setHistorico(event.target.value[0]);
+    setHistorico(event.target.files[0]);
   }
 
   // Função para lidar com o envio do formulário
@@ -588,11 +588,11 @@ const AddAluno = () => {
         </div>
         <div>
           <label htmlFor="file">Selecione um arquivo:</label>
-          <input type="file" id="file" onChange={handleFileChange} required />
+          <input type="file" id="file" name='file'  onChange={handleFileChange} required />
         </div>
         <div>
           <label htmlFor="historico">Selecione um arquivo:</label>
-          <input type="file" id="historico" onChange={handleHistoricoChange} required />
+          <input type="file" id="historico" name="historico" onChange={handleHistoricoChange} required />
         </div>
         <div className="aluno-btn-container">
           <button className="aluno-btn" type="submit">
