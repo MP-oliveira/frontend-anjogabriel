@@ -1,30 +1,45 @@
 const { DataTypes } = require('sequelize');
 const db = require('../db/db');
 
-
-
-
 const Curso = db.define('Curso', {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  duracao: {
-    type: DataTypes.STRING,
+  descricao: {
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   carga_horaria: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  duracao: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  valor_total: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  valor_mensal: {
+    type: DataTypes.FLOAT,
+    allowNull: false,
+  },
+  status: {
+    type: DataTypes.ENUM('ativo', 'inativo', 'em breve'),
+    allowNull: false,
+  },
+  modalidade: {
+    type: DataTypes.ENUM('presencial', 'hibrido', 'EAD'),
     allowNull: false,
   },
   estagio_supervisionado: {
-    type: DataTypes.STRING,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
-  },
-},
-  {
-    tableName: "cursos",
-    timestamps: false,
-  });
+  }
+}, {
+  tableName: 'cursos',
+});
 
 module.exports = Curso;

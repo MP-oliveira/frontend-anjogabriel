@@ -14,7 +14,7 @@ const cursoSchema = z.object({
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
-  duracao_meses: z
+  duracao: z
     .number()
     .min(1, { message: "A duração precisa ser maior que 0" }),
   valor_total: z
@@ -24,7 +24,8 @@ const cursoSchema = z.object({
     .number()
     .min(0, { message: "O valor mensal não pode ser negativo" }),
   status: z.string({ message: "Selecione um status válido" }),
-  modalidade: z.string({ message: "Selecione uma modalidade válida" })
+  modalidade: z.string({ message: "Selecione uma modalidade válida" }),
+  estagio_supervisionado: z.boolean({ message: "Selecione se há estágio supervisionado" })
 });
 
 const AddCurso = () => {
@@ -33,11 +34,12 @@ const AddCurso = () => {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [carga_horaria, setCarga_horaria] = useState("");
-  const [duracao_meses, setDuracao_meses] = useState("");
+  const [duracao, setDuracao] = useState("");
   const [valor_total, setValor_total] = useState("");
   const [valor_mensal, setValor_mensal] = useState("");
   const [status, setStatus] = useState("");
   const [modalidade, setModalidade] = useState("");
+  const [estagio_supervisionado, setEstagio_supervisionado] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
@@ -47,11 +49,12 @@ const AddCurso = () => {
       nome,
       descricao,
       carga_horaria: Number(carga_horaria),
-      duracao_meses: Number(duracao_meses),
+      duracao: Number(duracao),
       valor_total: Number(valor_total),
       valor_mensal: Number(valor_mensal),
       status,
-      modalidade
+      modalidade,
+      estagio_supervisionado
     };
 
     const cursoresult = cursoSchema.safeParse(cursoFormValues);
@@ -62,11 +65,12 @@ const AddCurso = () => {
         nome: fieldErrors.nome?._errors[0],
         descricao: fieldErrors.descricao?._errors[0],
         carga_horaria: fieldErrors.carga_horaria?._errors[0],
-        duracao_meses: fieldErrors.duracao_meses?._errors[0],
+        duracao: fieldErrors.duracao?._errors[0],
         valor_total: fieldErrors.valor_total?._errors[0],
         valor_mensal: fieldErrors.valor_mensal?._errors[0],
         status: fieldErrors.status?._errors[0],
-        modalidade: fieldErrors.modalidade?._errors[0]
+        modalidade: fieldErrors.modalidade?._errors[0],
+        estagio_supervisionado: fieldErrors.estagio_supervisionado?._errors[0]
       });
     } else {
       try {
@@ -77,12 +81,13 @@ const AddCurso = () => {
         setNome("");
         setDescricao("");
         setCarga_horaria("");
-        setDuracao_meses("");
+        setDuracao("");
         setValor_total("");
         setValor_mensal("");
         setStatus("");
         setModalidade("");
-        
+        setEstagio_supervisionado(false);
+
         navigate("/cursos");
       } catch (error) {
         console.error("Erro ao adicionar curso", error);
@@ -135,8 +140,8 @@ const AddCurso = () => {
 
           <input
             type="number"
-            value={duracao_meses}
-            onChange={(e) => setDuracao_meses(e.target.value)}
+            value={duracao}
+            onChange={(e) => setDuracao(e.target.value)}
             placeholder="Duração (meses)"
           />
           {errors.duracao_meses && (
@@ -200,6 +205,22 @@ const AddCurso = () => {
           {errors.modalidade && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.modalidade}
+            </p>
+          )}
+        </div>
+
+        <div className="curso-estagio">
+          <label>
+            Estágio Supervisionado:
+            <input
+              type="checkbox"
+              checked={estagio_supervisionado}
+              onChange={(e) => setEstagio_supervisionado(e.target.checked)}
+            />
+          </label>
+          {errors.estagio_supervisionado && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.estagio_supervisionado}
             </p>
           )}
         </div>

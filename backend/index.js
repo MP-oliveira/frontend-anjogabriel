@@ -35,7 +35,7 @@ app.use('/api/turnos', turnoRoutes);
 
 
 db
-//.sync({force: true})
+// .sync({force: true})
 .sync()
 .then(() => {
   app.listen(port, () => {
