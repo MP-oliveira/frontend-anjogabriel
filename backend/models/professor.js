@@ -4,26 +4,38 @@ const db = require('../db/db');
 const Professor = db.define('Professor', {
   nome: {
     type: DataTypes.STRING,
-    // allowNull: false,
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
-    // allowNull: false,
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: true
+    }
   },
-  rg: {
-    type: DataTypes.STRING(20),
+  telefone: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   cpf: {
-    type: DataTypes.STRING(11),
-    // allowNull: false,
+    type: DataTypes.STRING,
+    allowNull: false,
     unique: true,
   },
-  celular: {
-    type: DataTypes.STRING(15),
+  status: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
   },
+  disciplinas: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 },
-  {
-    tableName: "professores"
-  });
+{
+  tableName: "professores",
+  timestamps: false,
+});
 
 module.exports = Professor;
