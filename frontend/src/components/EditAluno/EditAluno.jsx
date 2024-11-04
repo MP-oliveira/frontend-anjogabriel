@@ -16,7 +16,7 @@ const cepRegex = /^\d{5}-?\d{3}$/;
 const alunoSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
   email: z.string().email({ message: "Digite um email válido." }).min(5),
-  data_nascimento: z.date().max(new Date(), { message: "Data inválida" }),
+  data_nascimento: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
   estado_civil: z.string(),
   grupo_sanguineo: z.string(),
   naturalidade: z.string().min(3),
@@ -25,7 +25,7 @@ const alunoSchema = z.object({
   mae: z.string(),
   rg: z.string().refine((value) => rgRegex.test(value), { message: "RG inválido" }),
   orgao_expedidor_rg: z.string(),
-  data_expedicao_rg: z.date().max(new Date(), { message: "Data de expedição inválida" }),
+  data_expedicao_rg: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data de expedição inválida" }),
   cpf: z.string().refine((value) => cpfRegex.test(value), { message: "CPF inválido" }),
   endereco: z.string(),
   n_casa: z.string(),
@@ -38,23 +38,43 @@ const alunoSchema = z.object({
   estado: z.string(),
   curso: z.string(),
   turno: z.string(),
-  data_matricula: z.date().max(new Date(), { message: "Data inválida" }),
-  data_termino_curso: z.date().max(new Date(), { message: "Data inválida" }),
+  data_matricula: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
+  data_termino_curso: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
 });
 
 const EditAluno = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const [apiError, setApiError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [alunoData, setAlunoData] = useState({
-    nome: "", email: "", data_nascimento: "", estado_civil: "",
-    grupo_sanguineo: "", naturalidade: "", nacionalidade: "", pai: "",
-    mae: "", rg: "", orgao_expedidor_rg: "", data_expedicao_rg: "",
-    cpf: "", endereco: "", n_casa: "", bairro: "", tel_res: "", celular: "",
-    tel_trabalho: "", cep: "", cidade: "", estado: "", curso: "",
-    turno: "", data_matricula: "", data_termino_curso: ""
+    nome: "",
+    email: "",
+    data_nascimento: "",
+    estado_civil: "",
+    grupo_sanguineo: "",
+    naturalidade: "",
+    nacionalidade: "",
+    pai: "",
+    mae: "",
+    rg: "",
+    orgao_expedidor_rg: "",
+    data_expedicao_rg: "",
+    cpf: "",
+    endereco: "",
+    n_casa: "",
+    bairro: "",
+    tel_res: "",
+    celular: "",
+    tel_trabalho: "",
+    cep: "",
+    cidade: "",
+    estado: "",
+    curso: "",
+    turno: "",
+    data_matricula: "",
+    data_termino_curso: "",
   });
-
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -69,34 +89,57 @@ const EditAluno = () => {
           data_matricula: aluno.data_matricula.slice(0, 10),
           data_termino_curso: aluno.data_termino_curso.slice(0, 10),
         });
-      } catch (error) {
+      }  catch (error) {
         console.error("Erro ao carregar os dados do aluno", error);
+        setApiError(
+          error.response?.data?.message || 
+          'Erro ao carregar os dados do aluno. Por favor, tente novamente.'
+        );
+      } finally {
+        setLoading(false);
       }
     };
-    fetchAluno();
+    if (id) {
+      fetchAluno();
+    }
   }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const cursoResult = cursoSchema.safeParse(cursoData);
+    const alunoResult = alunoSchema.safeParse(alunoData);
 
-    if (!cursoResult.success) {
-      setErrors(cursoResult.error.format());
+    if (!alunoResult.success) {
+      setErrors(alunoResult.error.format());
     } else {
       try {
-        await api.put(`/cursos/edit/${id}`, cursoData);
-        navigate("/cursos");
+        await api.put(`/alunos/edit/${id}`, alunoData);
+        navigate("/alunos");
       } catch (error) {
-        console.error("Erro ao atualizar curso", error);
+        console.error("Erro ao atualizar alunos", error);
       }
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCursoData({ ...cursoData, [name]: value });
+    setAlunoData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Limpa o erro do campo quando ele é editado
+    setErrors(prev => ({
+      ...prev,
+      [name]: undefined
+    }));
   };
+
+
+  if (loading) {
+    return <div className="loading">Carregando...</div>;
+  }
+
+
 
   return (
     <div className="addaluno-container">
