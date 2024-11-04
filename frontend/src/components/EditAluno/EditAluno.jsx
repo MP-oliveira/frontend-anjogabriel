@@ -79,29 +79,23 @@ const EditAluno = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const alunoResult = alunoSchema.safeParse({
-      ...alunoData,
-      data_nascimento: new Date(alunoData.data_nascimento),
-      data_expedicao_rg: new Date(alunoData.data_expedicao_rg),
-      data_matricula: new Date(alunoData.data_matricula),
-      data_termino_curso: new Date(alunoData.data_termino_curso),
-    });
+    const cursoResult = cursoSchema.safeParse(cursoData);
 
-    if (!alunoResult.success) {
-      setErrors(alunoResult.error.format());
+    if (!cursoResult.success) {
+      setErrors(cursoResult.error.format());
     } else {
       try {
-        await api.put(`/alunos/edit/${id}`, alunoData);
-        navigate("/alunos");
+        await api.put(`/cursos/edit/${id}`, cursoData);
+        navigate("/cursos");
       } catch (error) {
-        console.error("Erro ao atualizar aluno front", error);
+        console.error("Erro ao atualizar curso", error);
       }
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setAlunoData({ ...alunoData, [name]: value });
+    setCursoData({ ...cursoData, [name]: value });
   };
 
   return (
