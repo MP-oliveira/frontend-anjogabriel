@@ -6,7 +6,7 @@ import Edit from '../../assets/pencil.svg';
 import './Cursos.css';
 
 const Cursos = () => {
-  const[ cursos, setCursos ] = useState([]);
+  const [cursos, setCursos] = useState([]);
   const [filteredCursos, setFilteredCursos] = useState([]);
   const [search, setSearch] = useState('');
 
@@ -20,14 +20,14 @@ const Cursos = () => {
         console.error('Erro ao buscar cursus:', error);
       }
     };
-    fetchAlunos();
+    fetchCursos();
   }, []);
 
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearch(value);
     const filtered = cursos.filter(curso =>
-      curso.nome.toLowerCase().includes(value.toLowerCase()) 
+      curso.nome.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredCursos(filtered);
   };
@@ -44,52 +44,52 @@ const Cursos = () => {
 
 
   return (
-    <div className="curso_container">
-    <div className="curso_content">
-      <div className="curso_top">
-        <h1 className="curso_h1">Gerenciamento de Cursos</h1>
-        <Link className="criar_curso" to="/cursos/add">Adicionar Curso</Link>
-      </div>
-      <div className="curso_input">
-        <input
-          className='curso_lista_input'
-          type="text"
-          placeholder="Buscar por nome do curso"
-          value={search}
-          onChange={handleSearch}
-        />
-      </div>
-      <table className="tabela_curso_lista">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAlunos.length > 0 ? (
-            filteredAlunos.map((curso) => (
-              <tr key={curso.id}>
-                <td>{curso.nome}</td>
-                <td className="curso_acoes">
-                  <Link to={`/cursos/edit/${curso.id}`}>
-                    <img src={Edit} alt="" />
-                  </Link>
-                  <Link onClick={() => handleDelete(curso.id)}>
-                    <img src={Delete} alt="" />
-                  </Link>
-                </td>
-              </tr>
-            ))
-          ) : (
+    <div className="aluno_container">
+      <div className="aluno_content">
+        <div className="aluno_top">
+          <h1 className="aluno_h1">Gerenciamento de Cursos</h1>
+          <Link className="criar_aluno" to="/cursos/add">Adicionar Curso</Link>
+        </div>
+        <div className="aluno_input">
+          <input
+            className='aluno_lista_input'
+            type="text"
+            placeholder="Buscar por nome do curso"
+            value={search}
+            onChange={handleSearch}
+          />
+        </div>
+        <table className="tabela_aluno_lista">
+          <thead>
             <tr>
-              <td colSpan="4">Nenhum curso encontrado</td>
+              <th>Nome</th>
+              <th>Ações</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredCursos.length > 0 ? (
+              filteredCursos.map((curso) => (
+                <tr key={curso.id}>
+                  <td>{curso.nome}</td>
+                  <td className="aluno_acoes">
+                    <Link to={`/cursos/edit/${curso.id}`}>
+                      <img src={Edit} alt="" />
+                    </Link>
+                    <Link onClick={() => handleDelete(curso.id)}>
+                      <img src={Delete} alt="" />
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">Nenhum curso encontrado</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
   )
 }
 

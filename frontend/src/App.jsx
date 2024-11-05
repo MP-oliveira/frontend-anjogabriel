@@ -1,16 +1,20 @@
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home/Home";
-import AddAluno from "./components/AddAluno/AddAluno";
 import AddDisciplina from './components/AddDisciplina/AddDisciplina';
 import AddProfessor from './components/AddProfessor/AddProfessor';
 import AddMaterialEUtensilio from './components/AddMaterial/AddMaterialEUtensilo';
-import AddCurso from './components/AddCurso/AddCurso';
 import AddTurno from './components/Addturno/AddTurno';
 import AddDiploma from './components/AddDiploma/AddDiploma';
 import Header from './components/Header/Header';
-import Alunos from "./components/Alunos/Alunos";
+
+import AddAluno from "./components/AddAluno/AddAluno";
 import EditAluno from "./components/EditAluno/EditAluno";
+import Alunos from "./components/Alunos/Alunos";
+
+import AddCurso from './components/AddCurso/AddCurso';
+import EditCurso from './components/EditCurso/EditCurso';
+import Cursos from './components/Cursos/Cursos';
 
 function App() {
   return (
@@ -22,7 +26,11 @@ function App() {
           <Route path="/alunos/add" element={<AddAluno />} />
           <Route path="/alunos/edit/:id" element={<EditAluno />} />
           <Route path="/alunos" element={<Alunos />} />
-          <Route path="/cursos" element={<AddCurso />} />
+
+          <Route path="/cursos/add" element={<AddCurso />} />
+          <Route path="/cursos/edit/:id" element={<EditCurso />} />
+          <Route path="/cursos" element={<Cursos />} />
+
           <Route path="/disciplinas" element={<AddDisciplina />} />
           <Route path="/diplomas" element={<AddDiploma />} />
           <Route path="/professores" element={<AddProfessor />} />

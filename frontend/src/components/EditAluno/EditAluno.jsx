@@ -127,6 +127,7 @@ const EditAluno = () => {
       ...prev,
       [name]: value
     }));
+    
     // Limpa o erro do campo quando ele é editado
     setErrors(prev => ({
       ...prev,
