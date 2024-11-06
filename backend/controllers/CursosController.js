@@ -63,6 +63,7 @@ module.exports = class CursosController {
     const updatedData = req.body;
 
     try {
+      console.log('curso', updatedData)
       const curso = await Curso.findByPk(id);
       if (!curso) {
         return res.status(404).json({ error: "Curso não encontrado" });

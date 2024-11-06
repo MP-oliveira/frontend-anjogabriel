@@ -1,24 +1,37 @@
+import "../EditAluno/Edit.css";
 import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 
-import '../EditAluno/Edit.css';
-
 const cursoSchema = z.object({
-  nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  descricao: z.string().min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
-  carga_horaria: z.number().min(1, { message: "A carga horária deve ser um número positivo." }),
-  duracao: z.number().min(1, { message: "A duração não pode estar vazia." }),
-  valor_total: z.number().min(0, { message: "O valor total deve ser um número positivo." }),
-  valor_mensal: z.number().min(0, { message: "O valor mensal deve ser um número positivo." }),
-  status: z.enum(['Ativo', 'Inativo'], { message: "Status inválido. Escolha entre 'Ativo' ou 'Inativo'." }),
-  modalidade: z.enum(['Presencial', 'Online', 'Híbrido'], { message: "Modalidade inválida. Escolha entre 'Presencial', 'Online' ou 'Híbrido'." }),
+  nome: z
+    .string()
+    .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
+  descricao: z
+    .string()
+    .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
+  carga_horaria: 
+    z.number()
+    .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  duracao: 
+    z.number()
+    .min(1, { message: "A duração precisa ser maior que 0" }),
+  valor_total: z
+    .number()
+    .min(0, { message: "O valor total não pode ser negativo" }),
+  valor_mensal: z
+    .number()
+    .min(0, { message: "O valor mensal não pode ser negativo" }),
+  status: z.string({ message: "Selecione um status válido" }),
+  modalidade: z.string({ message: "Selecione uma modalidade válida" }),
+  estagio_supervisionado: z.boolean({ message: "Selecione se há estágio supervisionado" })
 });
 
 const EditCurso = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [cursoData, setCursoData] = useState({
@@ -28,73 +41,90 @@ const EditCurso = () => {
     duracao: 0,
     valor_total: 0,
     valor_mensal: 0,
-    status: "Ativo",
+    status: "",
     modalidade: "",
     estagio_supervisionado: false
   });
-
-  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchCurso = async () => {
       try {
         const response = await api.get(`/cursos/${id}`);
         const curso = response.data;
-        console.log(curso)
+        
+        // Garantir que os valores numéricos sejam do tipo number
         setCursoData({
-          nome: curso.nome,
-          descricao: curso.descricao,
+          ...curso,
           carga_horaria: Number(curso.carga_horaria),
           duracao: Number(curso.duracao),
           valor_total: Number(curso.valor_total),
           valor_mensal: Number(curso.valor_mensal),
-          status: curso.status,
-          modalidade: curso.modalidade,
-          estagio_supervisionado: curso.estagioSupervisionado
+          estagio_supervisionado: Boolean(curso.estagio_supervisionado)
         });
       } catch (error) {
         console.error("Erro ao carregar os dados do curso", error);
         setApiError(
           error.response?.data?.message ||
-          'Erro ao carregar os dados do curso. Por favor, tente novamente'
+          'Erro ao carregar os dados do curso. Por favor, tente novamente.'
         );
       } finally {
         setLoading(false);
       }
     };
-    fetchCurso();
+
+    if (id) {
+      fetchCurso();
+    }
   }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const cursoResult = cursoSchema.safeParse({
+    // Converter valores para os tipos corretos antes da validação
+    const dataToValidate = {
       ...cursoData,
-      duracao: cursoData.duracao,
-    });
+      carga_horaria: Number(cursoData.carga_horaria),
+      duracao: Number(cursoData.duracao),
+      valor_total: Number(cursoData.valor_total),
+      valor_mensal: Number(cursoData.valor_mensal),
+      estagio_supervisionado: Boolean(cursoData.estagio_supervisionado)
+    };
+
+    const cursoResult = cursoSchema.safeParse(dataToValidate);
 
     if (!cursoResult.success) {
       setErrors(cursoResult.error.format());
-    } else {
-      try {
-        console.log(cursoData)
-        await api.put(`/cursos/edit/${id}`, cursoData);
-        navigate("/cursos");
-      } catch (error) {
-        console.error("Erro ao atualizar curso front", error);
-        setApiError('Erro ao atualizar curso. Por favor, tente novamente.');
-      }
+      return;
+    }
+
+    try {
+      await api.put(`/cursos/edit/${id}`, dataToValidate);
+      navigate("/cursos");
+    } catch (error) {
+      console.error("Erro ao atualizar curso", error);
+      setApiError("Erro ao atualizar curso. Por favor, tente novamente.");
     }
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, type, value, checked } = e.target;
+    
+    // Tratar diferentes tipos de input
+    let processedValue;
+    if (type === 'checkbox') {
+      processedValue = checked;
+    } else if (type === 'number') {
+      processedValue = value === '' ? '' : Number(value);
+    } else {
+      processedValue = value;
+    }
+
     setCursoData(prev => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value
+      [name]: processedValue
     }));
 
-    // Limpa o erro do campo quando ele é editado
+    // Limpar erro do campo quando editado
     setErrors(prev => ({
       ...prev,
       [name]: undefined
@@ -110,109 +140,148 @@ const EditCurso = () => {
   }
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="addcurso-container">
+      <form className="form-addcurso" onSubmit={handleSubmit}>
         <h2>Editar Curso</h2>
+
         <input
-          type='text'
+          type="text"
           name="nome"
           value={cursoData.nome}
           onChange={handleChange}
-          placeholder="Nome"
+          placeholder="Nome do Curso"
         />
-        {errors.nome && <p className="error_message">{errors.nome._errors[0]}</p>}
-
+        {errors.nome && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.nome._errors?.[0]}
+          </p>
+        )}
 
         <textarea
-          name='descricao'
+          name="descricao"
           value={cursoData.descricao}
           onChange={handleChange}
           placeholder="Descrição do Curso"
           rows={4}
-        ></textarea>
-        {errors.descricao && <p className="error_message">{errors.descricao._errors[0]}</p>}
-
-        <input
-          type='number'
-          name="carga_horaria"
-          value={cursoData.carga_horaria}
-          onChange={handleChange}
-          placeholder="Carga Horária"
         />
-        {errors.carga_horaria && <p className="error_message">{errors.carga_horaria._errors[0]}</p>}
+        {errors.descricao && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.descricao._errors?.[0]}
+          </p>
+        )}
 
-        <input
-          name="duracao"
-          value={cursoData.duracao}
-          onChange={handleChange}
-          type="number"
-          placeholder="Duração"
-        />
-        {errors.duracao && <p className="error_message">{errors.duracao._errors[0]}</p>}
+        <div className="curso-info">
+          <input
+            name="carga_horaria"
+            type="number"
+            value={cursoData.carga_horaria}
+            onChange={handleChange}
+            placeholder="Carga Horária (horas)"
+          />
+          {errors.carga_horaria && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria._errors?.[0]}
+            </p>
+          )}
 
-        <input
-          name="valor_total"
-          value={cursoData.valor_total}
-          onChange={handleChange}
-          type="number"
-          placeholder="Valor Total"
-        />
-        {errors.valor_total && <p className="error_message">{errors.valor_total._errors[0]}</p>}
+          <input
+            name="duracao"
+            type="number"
+            value={cursoData.duracao}
+            onChange={handleChange}
+            placeholder="Duração (meses)"
+          />
+          {errors.duracao && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.duracao._errors?.[0]}
+            </p>
+          )}
+        </div>
 
-        <input
-          name="valor_mensal"
-          value={cursoData.valor_mensal}
-          onChange={handleChange}
-          type="number"
-          placeholder="Valor Mensal"
-        />
-        {errors.valor_mensal && <p className="error_message">{errors.valor_mensal._errors[0]}</p>}
+        <div className="curso-valores">
+          <input
+            name="valor_total"
+            type="number"
+            value={cursoData.valor_total}
+            onChange={handleChange}
+            placeholder="Valor Total"
+          />
+          {errors.valor_total && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.valor_total._errors?.[0]}
+            </p>
+          )}
 
-        <div className="status_selector">
-          <label htmlFor="status">Status:</label>
+          <input
+            name="valor_mensal"
+            type="number"
+            value={cursoData.valor_mensal}
+            onChange={handleChange}
+            placeholder="Valor Mensal"
+          />
+          {errors.valor_mensal && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.valor_mensal._errors?.[0]}
+            </p>
+          )}
+        </div>
+
+        <div className="curso-status-modalidade">
           <select
-            id="status"
             name="status"
+            value={cursoData.status}
             onChange={handleChange}
           >
-            <option value={cursoData.status}>{cursoData.status}</option>
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-            <option value="Em breve">Em breve</option>
+            <option value="">Selecione um status</option>
+            <option value="ativo">Ativo</option>
+            <option value="inativo">Inativo</option>
+            <option value="em_breve">Em Breve</option>
           </select>
-          {errors.status && <p className="error_message">{errors.status._errors[0]}</p>}
-        </div>
+          {errors.status && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.status._errors?.[0]}
+            </p>
+          )}
 
-        <div className="modalidade_selector">
-          <label htmlFor="modalidade">Modalidade:</label>
           <select
-            id="modalidade"
             name="modalidade"
-            value={cursoData.modalidade || "presencial"}
+            value={cursoData.modalidade}
             onChange={handleChange}
           >
-            <option value={cursoData.modalidade}>{cursoData.modalidade}</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Híbrido">Híbrido</option>
-            <option value="EAD">EAD</option>
+            <option value="">Selecione uma modalidade</option>
+            <option value="presencial">Presencial</option>
+            <option value="ead">EAD</option>
+            <option value="hibrido">Híbrido</option>
           </select>
-          {errors.modalidade && <p className="error_message">{errors.modalidade._errors[0]}</p>}
+          {errors.modalidade && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.modalidade._errors?.[0]}
+            </p>
+          )}
         </div>
 
-        <div className="estagio_supervisionado">
-          <label htmlFor="estagio_supervisionado">
+        <div className="curso-estagio">
+          <label>
+            Estágio Supervisionado:
             <input
-              type="checkbox"
-              id="estagio_supervisionado"
               name="estagio_supervisionado"
+              type="checkbox"
               checked={cursoData.estagio_supervisionado}
               onChange={handleChange}
             />
-            Estágio Supervisionado
           </label>
+          {errors.estagio_supervisionado && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.estagio_supervisionado._errors?.[0]}
+            </p>
+          )}
         </div>
 
-        <button className="curso-btn" type="submit">Salvar</button>
+        <div className="curso-btn-container">
+          <button className="curso-btn" type="submit">
+            Salvar
+          </button>
+        </div>
       </form>
     </div>
   );

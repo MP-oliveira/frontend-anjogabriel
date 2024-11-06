@@ -17,7 +17,7 @@ const Cursos = () => {
         setCursos(response.data);
         setFilteredCursos(response.data);
       } catch (error) {
-        console.error('Erro ao buscar cursus:', error);
+        console.error('Erro ao buscar cursos:', error);
       }
     };
     fetchCursos();
