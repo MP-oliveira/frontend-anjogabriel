@@ -14,6 +14,7 @@ const disciplinaSchema = z.object({
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  duracao: z.string().min(1, { message: "A duração não pode estar vazia." }),
   curso_id: z
     .string()
     .min(1, { message: "Selecione um curso" }),
@@ -35,7 +36,11 @@ const disciplinaSchema = z.object({
     .min(1, { message: "Defina um horário de término" }),
   dias_semana: z
     .array(z.string())
-    .min(1, { message: "Selecione pelo menos um dia da semana" })
+    .min(1, { message: "Selecione pelo menos um dia da semana" }),
+  pre_requisitos: z
+    .array(z.string().min(1, { message: "Cada pré-requisito deve ter no mínimo 1 caractere." })).optional(),
+  modalidade: z.enum(['Presencial', 'Online', 'Híbrido'],
+    { message: "Modalidade inválida. Escolha entre 'Presencial', 'Online' ou 'Híbrido'." }),
 });
 
 const AddDisciplina = () => {
@@ -44,6 +49,7 @@ const AddDisciplina = () => {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [carga_horaria, setCarga_horaria] = useState("");
+  const [duracao, setDuracao] = useState("");
   const [curso_id, setCurso_id] = useState("");
   const [professor_id, setProfessor_id] = useState("");
   const [semestre, setSemestre] = useState("");
@@ -51,6 +57,8 @@ const AddDisciplina = () => {
   const [horario_inicio, setHorario_inicio] = useState("");
   const [horario_fim, setHorario_fim] = useState("");
   const [dias_semana, setDias_semana] = useState([]);
+  const [pre_requisitos, setPre_requisitos] = useState([]);
+  const [modalidade, setModalidade] = useState("");
   const [errors, setErrors] = useState({});
 
   // Estados para as listas de cursos e professores
@@ -93,13 +101,16 @@ const AddDisciplina = () => {
       nome,
       descricao,
       carga_horaria: Number(carga_horaria),
-      curso_id,
-      professor_id,
+      duracao: Number(duracao),
+      curso_id: Number(curso_id),
+      professor_id: Number(professor_id),
       semestre: Number(semestre),
       status,
       horario_inicio,
       horario_fim,
-      dias_semana
+      dias_semana,
+      pre_requisitos,
+      modalidade,
     };
 
     const disciplinaresult = disciplinaSchema.safeParse(disciplinaFormValues);
@@ -110,13 +121,16 @@ const AddDisciplina = () => {
         nome: fieldErrors.nome?._errors[0],
         descricao: fieldErrors.descricao?._errors[0],
         carga_horaria: fieldErrors.carga_horaria?._errors[0],
+        duracao:fieldErrors.duracao?._errors[0],
         curso_id: fieldErrors.curso_id?._errors[0],
         professor_id: fieldErrors.professor_id?._errors[0],
         semestre: fieldErrors.semestre?._errors[0],
         status: fieldErrors.status?._errors[0],
         horario_inicio: fieldErrors.horario_inicio?._errors[0],
         horario_fim: fieldErrors.horario_fim?._errors[0],
-        dias_semana: fieldErrors.dias_semana?._errors[0]
+        dias_semana: fieldErrors.dias_semana?._errors[0],
+        pre_requisitos: fieldErrors.pre_requisitos?._errors[0],
+        modalidade: fieldErrors.modalidade?._errors[0],
       });
     } else {
       try {
@@ -127,6 +141,7 @@ const AddDisciplina = () => {
         setNome("");
         setDescricao("");
         setCarga_horaria("");
+        setDuracao("");
         setCurso_id("");
         setProfessor_id("");
         setSemestre("");
@@ -134,7 +149,9 @@ const AddDisciplina = () => {
         setHorario_inicio("");
         setHorario_fim("");
         setDias_semana([]);
-        
+        setPre_requisitos([]);
+        setModalidade("");
+
         navigate("/disciplinas");
       } catch (error) {
         console.error("Erro ao adicionar disciplina", error);
@@ -147,7 +164,7 @@ const AddDisciplina = () => {
     <div className="adddisciplina-container">
       <form className="form-adddisciplina" onSubmit={handleSubmit}>
         <h2>Adicionar Disciplina</h2>
-        
+
         <input
           type="text"
           value={nome}
@@ -240,10 +257,8 @@ const AddDisciplina = () => {
             onChange={(e) => setStatus(e.target.value)}
           >
             <option value="">Selecione o Status</option>
-            <option value="ativa">Ativa</option>
-            <option value="inativa">Inativa</option>
-            <option value="em_andamento">Em Andamento</option>
-            <option value="concluida">Concluída</option>
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
           </select>
           {errors.status && (
             <p className="error_message" style={{ color: "red" }}>
@@ -252,29 +267,25 @@ const AddDisciplina = () => {
           )}
         </div>
 
-        <div className="disciplina-horarios">
-          <div className="horario-input">
-            <label>Horário de Início:</label>
-            <input
-              type="time"
-              value={horario_inicio}
-              onChange={(e) => setHorario_inicio(e.target.value)}
-            />
-          </div>
+        <div className="disciplina-horario">
+          <input
+            type="time"
+            value={horario_inicio}
+            onChange={(e) => setHorario_inicio(e.target.value)}
+            placeholder="Horário de Início"
+          />
           {errors.horario_inicio && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.horario_inicio}
             </p>
           )}
 
-          <div className="horario-input">
-            <label>Horário de Término:</label>
-            <input
-              type="time"
-              value={horario_fim}
-              onChange={(e) => setHorario_fim(e.target.value)}
-            />
-          </div>
+          <input
+            type="time"
+            value={horario_fim}
+            onChange={(e) => setHorario_fim(e.target.value)}
+            placeholder="Horário de Fim"
+          />
           {errors.horario_fim && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.horario_fim}
@@ -283,32 +294,67 @@ const AddDisciplina = () => {
         </div>
 
         <div className="dias-semana">
-          <label>Dias da Semana:</label>
-          <div className="dias-checkboxes">
-            {['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'].map((dia) => (
-              <div key={dia} className="dia-checkbox">
-                <input
-                  type="checkbox"
-                  id={dia}
-                  value={dia}
-                  checked={dias_semana.includes(dia)}
-                  onChange={handleDiasSemanaChange}
-                />
-                <label htmlFor={dia}>{dia}</label>
-              </div>
-            ))}
-          </div>
-          {errors.dias_semana && (
+          <label>
+            <input
+              type="checkbox"
+              value="Segunda"
+              onChange={handleDiasSemanaChange}
+            />
+            Segunda-feira
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Terça"
+              onChange={handleDiasSemanaChange}
+            />
+            Terça-feira
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Quarta"
+              onChange={handleDiasSemanaChange}
+            />
+            Quarta-feira
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Quinta"
+              onChange={handleDiasSemanaChange}
+            />
+            Quinta-feira
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              value="Sexta"
+              onChange={handleDiasSemanaChange}
+            />
+            Sexta-feira
+          </label>
+        </div>
+
+        <div className="disciplina-modalidade">
+          <select
+            value={modalidade}
+            onChange={(e) => setModalidade(e.target.value)}
+          >
+            <option value="">Selecione a Modalidade</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Online">Online</option>
+            <option value="Híbrido">Híbrido</option>
+          </select>
+          {errors.modalidade && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.dias_semana}
+              {errors.modalidade}
             </p>
           )}
         </div>
 
-        <div className="disciplina-btn-container">
-          <button className="disciplina-btn" type="submit">
-            Adicionar Disciplina
-          </button>
+        <div className="form-actions">
+          <button type="submit">Adicionar Disciplina</button>
         </div>
       </form>
     </div>

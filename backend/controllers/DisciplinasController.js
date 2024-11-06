@@ -27,21 +27,35 @@ module.exports = class DisciplinasController {
   static async createDisciplina(req, res) {
     const {
       nome,
-      carga_horaria,
       descricao,
+      carga_horaria,
+      duracao,
+      curso_id,
+      professor_id,
+      smestre,
+      status,
+      horario_incio,
+      horario_fim,
+      dias_semana,
       pre_requisitos,
       modalidade,
-      status
     } = req.body
 
     try {
       const disciplina = {
         nome,
-        carga_horaria,
         descricao,
+        carga_horaria,
+        duracao,
+        curso_id,
+        professor_id,
+        smestre,
+        status,
+        horario_incio,
+        horario_fim,
+        dias_semana,
         pre_requisitos,
         modalidade,
-        status
       }
 
       const createDisciplina = await Disciplina.create(disciplina)
