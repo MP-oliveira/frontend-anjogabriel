@@ -1,12 +1,75 @@
-const Professores = require("../models/professor");
+const Professor = require("../models/professor");
+const Disciplina = require("../models/disciplina");
 
-module.exports = class ProfessoressController {
+module.exports = class ProfessoresController {
+
   static async listProfessores(req, res) {
     try {
-      const professores = await Professores.findAll();
+      const professores = await Professor.findAll({
+        include: [{
+          model: Disciplina,
+          as: 'disciplinas',
+          through: { attributes: [] }
+        }]
+      });
       res.status(200).json(professores);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar professoress" });
+      console.error('Erro ao listar professores:', error);
+      res.status(500).json({ error: 'Erro ao listar professores' });
+    }
+  }
+
+  static async createProfessor(req, res) {
+    const {
+      nome,
+      especialidade,
+      email,
+      telefone,
+      status,
+      disciplinasIds
+    } = req.body;
+
+    try {
+      const professorExists = await Professor.findOne({
+        where: { email: email },
+      });
+
+      if (professorExists) {
+        return res.status(400).json({ error: 'Professor já cadastrado com este email' });
+      }
+
+      const professor = {
+        nome,
+        especialidade,
+        email,
+        telefone,
+        status
+      };
+
+      const createdProfessor = await Professor.create(professor);
+
+      if (disciplinasIds && disciplinasIds.length > 0) {
+        const disciplinas = await Disciplina.findAll({
+          where: {
+            id: disciplinasIds
+          }
+        });
+        await createdProfessor.setDisciplinas(disciplinas);
+      }
+
+      const newProfessor = await Professor.findOne({
+        where: { id: createdProfessor.id },
+        include: [{
+          model: Disciplina,
+          as: 'disciplinas',
+          through: { attributes: [] }
+        }]
+      });
+
+      res.status(201).json(newProfessor);
+    } catch (error) {
+      console.error('Erro ao criar professor:', error);
+      res.status(500).json({ error: 'Erro ao criar professor' });
     }
   }
 
@@ -14,58 +77,84 @@ module.exports = class ProfessoressController {
     const { id } = req.params;
 
     try {
-      const professores = await Professor.findByPk(id);
+      const professor = await Professor.findOne({
+        where: { id: id },
+        include: [{
+          model: Disciplina,
+          as: 'disciplinas',
+          through: { attributes: [] }
+        }]
+      });
+
       if (!professor) {
-        return res.status(404).json({ error: "Professor não encontrado" });
+        return res.status(404).json({ error: 'Professor não encontrado' });
       }
+
       res.status(200).json(professor);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar professor" });
-    }
-  }
-
-  static async createProfessor(req, res) {
-    const {
-      nome,
-      email,
-      cpf,
-      telefone,
-      status,
-      disciplinas,
-    } = req.body;
-
-    try {
-      const professor = {
-        nome,
-        email,
-        cpf,
-        telefone,
-        status,
-        disciplinas,
-      };
-
-      const createdProfessor = await Professor.create(professor);
-      res.status(200).json(createdProfessor);
-    } catch (error) {
-      console.error("Erro ao criar professor:", error);
-      res.status(500).json({ error: "Erro ao criar professor" });
+      console.error('Erro ao buscar professor:', error);
+      res.status(500).json({ error: 'Erro ao buscar professor' });
     }
   }
 
   static async updateProfessor(req, res) {
     const { id } = req.params;
-    const updatedData = req.body;
+    const {
+      nome,
+      especialidade,
+      email,
+      telefone,
+      status,
+      disciplinasIds
+    } = req.body;
 
     try {
       const professor = await Professor.findByPk(id);
+      
       if (!professor) {
-        return res.status(404).json({ error: "Professor não encontrado" });
+        return res.status(404).json({ error: 'Professor não encontrado' });
       }
 
-      await professor.update(updatedData);
-      res.status(200).json({ message: "Dados do professor atualizados com sucesso" });
+      // Verifica se o novo email já está em uso por outro professor
+      if (email && email !== professor.email) {
+        const emailExists = await Professor.findOne({
+          where: { email: email }
+        });
+        if (emailExists) {
+          return res.status(400).json({ error: 'Email já está em uso' });
+        }
+      }
+
+      await professor.update({
+        nome,
+        especialidade,
+        email,
+        telefone,
+        status
+      });
+
+      if (disciplinasIds) {
+        const disciplinas = await Disciplina.findAll({
+          where: {
+            id: disciplinasIds
+          }
+        });
+        await professor.setDisciplinas(disciplinas);
+      }
+
+      const updatedProfessor = await Professor.findOne({
+        where: { id: id },
+        include: [{
+          model: Disciplina,
+          as: 'disciplinas',
+          through: { attributes: [] }
+        }]
+      });
+
+      res.status(200).json(updatedProfessor);
     } catch (error) {
-      res.status(500).json({ error: "Erro ao atualizar professor" });
+      console.error('Erro ao atualizar professor:', error);
+      res.status(500).json({ error: 'Erro ao atualizar professor' });
     }
   }
 
@@ -74,14 +163,16 @@ module.exports = class ProfessoressController {
 
     try {
       const professor = await Professor.findByPk(id);
+      
       if (!professor) {
-        return res.status(404).json({ error: "Professor não encontrado" });
+        return res.status(404).json({ error: 'Professor não encontrado' });
       }
 
       await professor.destroy();
-      res.status(200).json({ message: "Professor deletado com sucesso" });
+      res.status(204).send();
     } catch (error) {
-      res.status(500).json({ error: "Erro ao deletar professor" });
+      console.error('Erro ao deletar professor:', error);
+      res.status(500).json({ error: 'Erro ao deletar professor' });
     }
   }
 };

@@ -47,7 +47,7 @@ const Disciplinas = () => {
       <div className="aluno_content">
         <div className="aluno_top">
           <h1 className="aluno_h1">Gerenciamento de Disciplinas</h1>
-          <Link className="criar_aluno" to="/disciplina/add">Adicionar Disciplina</Link>
+          <Link className="criar_aluno" to="/disciplinas/add">Adicionar Disciplina</Link>
         </div>
         <div className="aluno_input">
           <input
@@ -62,18 +62,9 @@ const Disciplinas = () => {
           <thead>
             <tr>
               <th>Nome</th>
-              <th>Descrição</th>
               <th>Carga Horária</th>
-              <th>Duração</th>
-              <th>Curso ID</th>
-              <th>Professor ID</th>
-              <th>Semestre</th>
-              <th>Status</th>
               <th>Horário de Início</th>
-              <th>Horário de Fim</th>
               <th>Dias da Semana</th>
-              <th>Pré-requisitos</th>
-              <th>Modalidade</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -82,18 +73,9 @@ const Disciplinas = () => {
               filteredDisciplinas.map((disciplina) => (
                 <tr key={disciplina.id}>
                   <td>{disciplina.nome}</td>
-                  <td>{disciplina.descricao}</td>
                   <td>{disciplina.carga_horaria}</td>
-                  <td>{disciplina.duracao}</td>
-                  <td>{disciplina.curso_id}</td>
-                  <td>{disciplina.professor_id}</td>
-                  <td>{disciplina.semestre}</td>
-                  <td>{disciplina.status}</td>
                   <td>{disciplina.horario_inicio}</td>
-                  <td>{disciplina.horario_fim}</td>
                   <td>{disciplina.dias_semana}</td>
-                  <td>{disciplina.pre_requisitos}</td>
-                  <td>{disciplina.modalidade}</td>
                   <td className="aluno_acoes">
                     <Link to={`/disciplina/edit/${disciplina.id}`}>
                       <img src={Edit} alt="Editar" />

@@ -1,7 +1,6 @@
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "./pages/Home/Home";
-import AddProfessor from './components/AddProfessor/AddProfessor';
 import AddMaterialEUtensilio from './components/AddMaterial/AddMaterialEUtensilo';
 import AddTurno from './components/Addturno/AddTurno';
 import AddDiploma from './components/AddDiploma/AddDiploma';
@@ -19,6 +18,9 @@ import AddDisciplina from './components/AddDisciplina/AddDisciplina';
 import EditDisciplina from './components/EditDisciplina/EditDisciplina';
 import Disciplinas from './components/Disciplinas/Disciplina';
 
+import AddProfessor from './components/AddProfessor/AddProfessor';
+import EditProfessor from './components/EditProfessor/EditProfessor';
+import Professores from './components/Professores/Professores';
 
 function App() {
   return (
@@ -39,8 +41,11 @@ function App() {
           <Route path="/disciplinas/edit/:id" element={<EditDisciplina />} />
           <Route path="/disciplinas" element={<Disciplinas />} />
 
+          <Route path="/professores/add" element={<AddProfessor />} />
+          <Route path="/professores/edit/:id" element={<EditProfessor />} />
+          <Route path="/professores" element={<Professores />} />
+
           <Route path="/diplomas" element={<AddDiploma />} />
-          <Route path="/professores" element={<AddProfessor />} />
           <Route path="/turnos" element={<AddTurno />} />
           <Route path="/materialeutensilios" element={<AddMaterialEUtensilio />} />
         </Routes>

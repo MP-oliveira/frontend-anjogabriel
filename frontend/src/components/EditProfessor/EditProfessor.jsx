@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
-import '../AddAluno/AddAluno.css';
+import { useNavigate, useParams } from "react-router-dom";
+import '../EditAluno/Edit.css';
 
 const professorSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
@@ -12,9 +12,12 @@ const professorSchema = z.object({
   status: z.string().nonempty({ message: "Selecione um status válido." }),
 });
 
-const AddProfessor = () => {
+const EditProfessor = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [apiError, setApiError] = useState(null);
   const [professorData, setProfessorData] = useState({
     nome: "",
     especialidade: "",
@@ -22,6 +25,27 @@ const AddProfessor = () => {
     telefone: "",
     status: "",
   });
+
+  useEffect(() => {
+    const fetchProfessor = async () => {
+      try {
+        const response = await api.get(`/professores/${id}`);
+        setProfessorData(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar os dados do professor", error);
+        setApiError(
+          error.response?.data?.message ||
+          'Erro ao carregar os dados do professor. Por favor, tente novamente.'
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchProfessor();
+    }
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,10 +58,11 @@ const AddProfessor = () => {
     }
 
     try {
-      await api.post("/professores/create", professorData);
+      await api.put(`/professores/edit/${id}`, professorData);
       navigate("/professores");
     } catch (error) {
-      console.error("Erro ao adicionar professor", error);
+      console.error("Erro ao atualizar professor", error);
+      setApiError("Erro ao atualizar professor. Por favor, tente novamente.");
     }
   };
 
@@ -55,10 +80,18 @@ const AddProfessor = () => {
     }));
   };
 
+  if (loading) {
+    return <div className="loading">Carregando...</div>;
+  }
+
+  if (apiError) {
+    return <div className="error">{apiError}</div>;
+  }
+
   return (
-    <div className="addprofessor-container">
-      <form className="form-addprofessor" onSubmit={handleSubmit}>
-        <h2>Adicionar Professor</h2>
+    <div className="editprofessor-container">
+      <form className="form-editprofessor" onSubmit={handleSubmit}>
+        <h2>Editar Professor</h2>
 
         <input
           type="text"
@@ -109,4 +142,4 @@ const AddProfessor = () => {
   );
 };
 
-export default AddProfessor;
+export default EditProfessor;

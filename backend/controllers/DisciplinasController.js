@@ -68,7 +68,7 @@ module.exports = class DisciplinasController {
 
   static async updateDisciplina(req, res) {
     const { id } = req.params
-    const updatedData = rea.body
+    const updatedData = req.body
 
     try {
       const disciplina = await Disciplina.findByPk(id)
