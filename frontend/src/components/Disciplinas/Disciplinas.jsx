@@ -13,7 +13,8 @@ const Disciplinas = () => {
   useEffect(() => {
     const fetchDisciplinas = async () => {
       try {
-        const response = await api.get('/disciplina');
+
+        const response = await api.get('/disciplinas');
         setDisciplinas(response.data);
         setFilteredDisciplinas(response.data);
       } catch (error) {
@@ -77,7 +78,7 @@ const Disciplinas = () => {
                   <td>{disciplina.horario_inicio}</td>
                   <td>{disciplina.dias_semana}</td>
                   <td className="aluno_acoes">
-                    <Link to={`/disciplina/edit/${disciplina.id}`}>
+                    <Link to={`/disciplinas/edit/${disciplina.id}`}>
                       <img src={Edit} alt="Editar" />
                     </Link>
                     <Link onClick={() => handleDelete(disciplina.id)}>

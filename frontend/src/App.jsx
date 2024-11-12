@@ -16,7 +16,7 @@ import Cursos from './components/Cursos/Cursos';
 
 import AddDisciplina from './components/AddDisciplina/AddDisciplina';
 import EditDisciplina from './components/EditDisciplina/EditDisciplina';
-import Disciplinas from './components/Disciplinas/Disciplina';
+import Disciplinas from './components/Disciplinas/Disciplinas';
 
 import AddProfessor from './components/AddProfessor/AddProfessor';
 import EditProfessor from './components/EditProfessor/EditProfessor';

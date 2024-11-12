@@ -35,7 +35,7 @@ const Disciplina = db.define('Disciplina', {
     allowNull: false,
   },
   semestre: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   status: {

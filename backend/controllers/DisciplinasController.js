@@ -32,9 +32,9 @@ module.exports = class DisciplinasController {
       duracao,
       curso_id,
       professor_id,
-      smestre,
+      semestre,
       status,
-      horario_incio,
+      horario_inicio,
       horario_fim,
       dias_semana,
       pre_requisitos,
@@ -49,15 +49,15 @@ module.exports = class DisciplinasController {
         duracao,
         curso_id,
         professor_id,
-        smestre,
+        semestre,
         status,
-        horario_incio,
+        horario_inicio,
         horario_fim,
         dias_semana,
         pre_requisitos,
         modalidade,
       }
-
+        console.log('disciplina', disciplina)
       const createDisciplina = await Disciplina.create(disciplina)
       res.status(200).json(createDisciplina)
     } catch (error) {

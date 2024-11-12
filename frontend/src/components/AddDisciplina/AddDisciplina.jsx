@@ -14,12 +14,12 @@ const disciplinaSchema = z.object({
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
-  duracao: z.string().min(1, { message: "A duração não pode estar vazia." }),
+  duracao: z.number(),
   curso_id: z
-    .string()
+    .number()
     .min(1, { message: "Selecione um curso" }),
   professor_id: z
-    .string()
+    .number()
     .min(1, { message: "Selecione um professor" }),
   semestre: z
     .number()
@@ -28,7 +28,7 @@ const disciplinaSchema = z.object({
   status: z
     .string()
     .min(1, { message: "Selecione um status válido" }),
-  horario_inicio: z
+    horario_inicio: z
     .string()
     .min(1, { message: "Defina um horário de início" }),
   horario_fim: z
@@ -37,8 +37,7 @@ const disciplinaSchema = z.object({
   dias_semana: z
     .array(z.string())
     .min(1, { message: "Selecione pelo menos um dia da semana" }),
-  pre_requisitos: z
-    .array(z.string().min(1, { message: "Cada pré-requisito deve ter no mínimo 1 caractere." })).optional(),
+  pre_requisitos: z.string(),
   modalidade: z.enum(['Presencial', 'Online', 'Híbrido'],
     { message: "Modalidade inválida. Escolha entre 'Presencial', 'Online' ou 'Híbrido'." }),
 });
@@ -96,7 +95,6 @@ const AddDisciplina = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const disciplinaFormValues = {
       nome,
       descricao,
@@ -112,6 +110,7 @@ const AddDisciplina = () => {
       pre_requisitos,
       modalidade,
     };
+    console.log('disciplina form values', disciplinaFormValues)
 
     const disciplinaresult = disciplinaSchema.safeParse(disciplinaFormValues);
 
@@ -134,6 +133,7 @@ const AddDisciplina = () => {
       });
     } else {
       try {
+        console.log('disciplina result', disciplinaresult.data)
         const response = await api.post("/disciplinas/create", disciplinaresult.data);
         console.log("Disciplina adicionada com sucesso!", response.data);
 
@@ -224,6 +224,18 @@ const AddDisciplina = () => {
             </p>
           )}
         </div>
+
+        <input
+          type="number"
+          value={duracao}
+          onChange={(e) => setDuracao(e.target.value)}
+          placeholder="Duração do Curso"
+        />
+        {errors.duracao && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.duracao}
+          </p>
+        )}
 
         <div className="disciplina-info">
           <input
@@ -334,6 +346,18 @@ const AddDisciplina = () => {
             />
             Sexta-feira
           </label>
+        </div>
+        <div>
+          <input type="text"
+          value={pre_requisitos}
+          onChange={(e) => setPre_requisitos(e.target.value)}
+          placeholder='Pré requisitos'
+          />
+            {errors.pre_requisitos && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.pre_requisitos}
+            </p>
+          )}
         </div>
 
         <div className="disciplina-modalidade">

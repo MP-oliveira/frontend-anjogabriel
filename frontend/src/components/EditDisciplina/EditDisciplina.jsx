@@ -23,7 +23,9 @@ const disciplinaSchema = z.object({
   status: z.string().min(1, { message: "Selecione um status válido" }),
   horario_inicio: z.string().min(1, { message: "Informe o horário de início" }),
   horario_fim: z.string().min(1, { message: "Informe o horário de fim" }),
-  dias_semana: z.string().min(1, { message: "Selecione os dias da semana" }),
+  dias_semana: z
+    .array(z.string())
+    .min(1, { message: "Selecione pelo menos um dia da semana" }),
   pre_requisitos: z.string().min(1, { message: "Informe os pré-requisitos" }),
   modalidade: z.string().min(1, { message: "Selecione uma modalidade" }),
 });
