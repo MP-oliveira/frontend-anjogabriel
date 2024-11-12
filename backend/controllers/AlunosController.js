@@ -8,8 +8,8 @@ module.exports = class AlunosController {
       const alunos = await Aluno.findAll();
       // console.log(alunos);
       res.status(200).json(alunos);
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao buscar alunos" });
+    } catch (err) {
+      res.status(500).json({ err: "Erro ao buscar alunos" });
     }
   }
 
@@ -83,7 +83,7 @@ module.exports = class AlunosController {
       // Subir o arquivo para o Supabase
       const { originalname: imageName, buffer: imageBuffer } =
         req.files.file[0];
-        const normalizedImageName = normalizeFileName(imageName);
+      const normalizedImageName = normalizeFileName(imageName);
 
       const { data: imageData, error: fileError } = await supabase.storage
         .from("aluno_foto")
@@ -167,14 +167,14 @@ module.exports = class AlunosController {
         Object.entries(aluno).map(([key, value]) => [
           key,
           typeof value === "string" &&
-          key !== "nome" &&
-          key !== "pai" &&
-          key !== "mae"
+            key !== "nome" &&
+            key !== "pai" &&
+            key !== "mae"
             ? value.toLowerCase()
             : value,
         ])
       );
-console.log(alunoLowercase)
+      console.log(alunoLowercase)
       const createdUser = await Aluno.create(alunoLowercase);
       res.status(200).json(createdUser);
     } catch (error) {
@@ -226,8 +226,8 @@ console.log(alunoLowercase)
 
       await aluno.destroy();
       res.status(200).json({ message: "Aluno deletado com sucesso" });
-    } catch (error) {
-      res.status(500).json({ error: "Erro ao deletar aluno" });
+    } catch (err) {
+      res.status(500).json({ err: "Erro ao deletar aluno" });
     }
   }
 };
