@@ -1,4 +1,5 @@
 const Curso = require("../models/curso");
+const { Op } = require('sequelize');
 
 module.exports = class CursosController {
   static async listCursos(req, res) {
@@ -63,7 +64,6 @@ module.exports = class CursosController {
     const updatedData = req.body;
 
     try {
-      console.log('curso', updatedData)
       const curso = await Curso.findByPk(id);
       if (!curso) {
         return res.status(404).json({ error: "Curso não encontrado" });

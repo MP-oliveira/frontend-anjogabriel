@@ -11,6 +11,20 @@ module.exports = class MaterialEUtensiliosController {
     }
   }
 
+  static async getMaterialById(req, res) {
+    const { id } = req.params;
+    
+    try {
+      const material = await MaterialEUtensilio.findByPk(id);
+      if (!material) {
+        return res.status(404).json({ error: 'Material não encontrado' });
+      }
+      res.status(200).json(material);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar material' });
+    }
+  }
+
   static async getMaterialByName(req, res) {
     const { nome } = req.query;
     
@@ -61,24 +75,10 @@ module.exports = class MaterialEUtensiliosController {
       );
 
       const createdMaterial = await MaterialEUtensilio.create(materialLowercase);
-      res.status(201).json(createdMaterial);
+      res.status(200).json(createdMaterial);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao criar material',error);
       res.status(500).json({ error: 'Erro ao criar material' });
-    }
-  }
-
-  static async getMaterialById(req, res) {
-    const { id } = req.params;
-    
-    try {
-      const material = await MaterialEUtensilio.findByPk(id);
-      if (!material) {
-        return res.status(404).json({ error: 'Material não encontrado' });
-      }
-      res.status(200).json(material);
-    } catch (error) {
-      res.status(500).json({ error: 'Erro ao buscar material' });
     }
   }
 
