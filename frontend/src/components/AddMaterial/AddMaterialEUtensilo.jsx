@@ -42,9 +42,9 @@ const AddMaterialEUtensilio = () => {
 
 
   return (
-    <>
-      <h2>Adicionar Materiais e Utensilios</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="addaluno-container">
+      <form className="form-addaluno" onSubmit={handleSubmit}>
+        <h2>Adicionar Materiais e Utensilios</h2>
         <input
           type="text"
           value={nome}
@@ -87,9 +87,13 @@ const AddMaterialEUtensilio = () => {
           placeholder="Estatos de Materiais e Ultensilios"
         />
 
-        <button type="submit">Adicionar Materiais e Utensilios</button>
+<div className="aluno-btn-container">
+          <button className="aluno-btn" type="submit">
+            Adicionar Material ou Utensílio
+          </button>
+        </div>
       </form>
-    </>
+    </div>
   );
 };
 

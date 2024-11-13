@@ -134,8 +134,8 @@ const EditDisciplina = () => {
   }
 
   return (
-    <div className="editdisciplina-container">
-      <form className="form-editdisciplina" onSubmit={handleSubmit}>
+    <div className="addaluno-container">
+      <form className="form-addaluno" onSubmit={handleSubmit}>
         <h2>Editar Disciplina</h2>
 
         <input
@@ -164,7 +164,7 @@ const EditDisciplina = () => {
           </p>
         )}
 
-        <div className="disciplina-info">
+        <div className="addaluno-info">
           <input
             name="carga_horaria"
             type="number"
@@ -290,7 +290,7 @@ const EditDisciplina = () => {
           )}
         </div>
 
-        <button type="submit">Salvar</button>
+        <button className="aluno-btn" type="submit">Salvar</button>
       </form>
     </div>
   );
