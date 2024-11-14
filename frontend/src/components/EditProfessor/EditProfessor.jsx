@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
-import '../EditAluno/Edit.css';
+import '../AddAluno/AddAluno.css';
 
 const professorSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
@@ -89,8 +89,8 @@ const EditProfessor = () => {
   }
 
   return (
-    <div className="editprofessor-container">
-      <form className="form-editprofessor" onSubmit={handleSubmit}>
+    <div className="addaluno-container">
+      <form className="form-addaluno" onSubmit={handleSubmit}>
         <h2>Editar Professor</h2>
 
         <input
