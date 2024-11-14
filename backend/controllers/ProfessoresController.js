@@ -1,6 +1,32 @@
 const Professor = require("../models/professor");
 const Disciplina = require("../models/disciplina");
 
+// Função para criar um usuário no Supabase Auth
+async function createSupabaseUser(nome, email, password, role) {
+  try {
+    const { user, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          displayName: nome,
+          role // Definir o papel do usuário (aluno, professor ou admin)
+        }
+      }
+    });
+
+    if (error) {
+      console.error('Erro ao criar usuário:', error.message);
+      return null;
+    }
+
+    return user;
+  } catch (err) {
+    console.error('Erro ao criar usuário:', err);
+    return null;
+  }
+}
+
 module.exports = class ProfessoresController {
 
   static async listProfessores(req, res) {
@@ -47,7 +73,8 @@ module.exports = class ProfessoresController {
       };
 
       const createdProfessor = await Professor.create(professor);
-
+      await createSupabaseUser(professor.nome, professor.email, professor.cpf, 'professor');
+      
       if (disciplinasIds && disciplinasIds.length > 0) {
         const disciplinas = await Disciplina.findAll({
           where: {

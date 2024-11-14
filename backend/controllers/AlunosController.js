@@ -2,6 +2,33 @@ const Aluno = require("../models/aluno");
 const { Op } = require("sequelize");
 const supabase = require("../db/supabaseCilent");
 
+// Função para criar um usuário no Supabase Auth
+async function createSupabaseUser(nome, email, password, role) {
+  try {
+    const { user, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          displayName: nome,
+          role // Definir o papel do usuário (aluno, professor ou admin)
+        }
+      }
+    });
+
+    if (error) {
+      console.error('Erro ao criar usuário:', error.message);
+      return null;
+    }
+
+    return user;
+  } catch (err) {
+    console.error('Erro ao criar usuário:', err);
+    return null;
+  }
+}
+
+
 module.exports = class AlunosController {
   static async listAlunos(req, res) {
     try {
@@ -177,6 +204,8 @@ module.exports = class AlunosController {
       console.log(alunoLowercase)
       const createdUser = await Aluno.create(alunoLowercase);
       res.status(200).json(createdUser);
+      // Criar o usuário no Supabase Auth
+      await createSupabaseUser(alunoLowercase.nome, alunoLowercase.email, alunoLowercase.cpf, 'aluno');
     } catch (error) {
       console.error("Erro ao criar aluno:", error);
       res.status(500).json({ error: "Erro ao criar aluno" });

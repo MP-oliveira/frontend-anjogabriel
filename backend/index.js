@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = 3001;
-const exphbs = require('express-handlebars')
+const adminRoutes = require('./routes/adminRoutes');
 const alunoRoutes = require('./routes/alunoRoutes');
 const cursoRoutes = require('./routes/cursoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
@@ -10,7 +10,6 @@ const diplomaRoutes = require('./routes/diplomaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const turnoRoutes = require('./routes/turnoRoutes');
-const flash = require('express-flash')
 const cors = require('cors')
 
 
@@ -21,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(cors({ credentials: true, origin: 'http://localhost:5173' }))
 
-
+app.use('/api/admins', adminRoutes);
 app.use('/api/alunos', alunoRoutes);
 app.use('/api/cursos', cursoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
