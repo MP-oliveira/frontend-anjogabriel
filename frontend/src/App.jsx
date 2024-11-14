@@ -18,6 +18,10 @@ import AddDisciplina from './components/AddDisciplina/AddDisciplina';
 import EditDisciplina from './components/EditDisciplina/EditDisciplina';
 import Disciplinas from './components/Disciplinas/Disciplinas';
 
+import AddAdmin from './components/AddAdmin/AddAdmin';
+import EditAdmin from './components/EditAdmin/EditAdmin';
+import Admins from './components/Admin/Admin';
+
 import AddProfessor from './components/AddProfessor/AddProfessor';
 import EditProfessor from './components/EditProfessor/EditProfessor';
 import Professores from './components/Professores/Professores';
@@ -40,6 +44,10 @@ function App() {
           <Route path="/disciplinas/add" element={<AddDisciplina />} />
           <Route path="/disciplinas/edit/:id" element={<EditDisciplina />} />
           <Route path="/disciplinas" element={<Disciplinas />} />
+
+          <Route path="/admins/add" element={<AddAdmin />} />
+          <Route path="/admins/edit/:id" element={<EditAdmin />} />
+          <Route path="/admins" element={<Admins />} />
 
           <Route path="/professores/add" element={<AddProfessor />} />
           <Route path="/professores/edit/:id" element={<EditProfessor />} />

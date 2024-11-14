@@ -58,6 +58,9 @@ const Header = () => {
             <NavLink to={`/professores`} className="nav-link">Professores</NavLink>
           </li>
           <li>
+            <NavLink to={`/admins`} className="nav-link">Administrador</NavLink>
+          </li>
+          <li>
             <NavLink to={`/materialeutensilios`} className="nav-link">Materiais e Utensilios</NavLink>
           </li>
         </div>
