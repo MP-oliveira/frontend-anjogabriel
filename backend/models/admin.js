@@ -19,9 +19,8 @@ const Admin = db.define('Admin', {
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM('Ativo', 'Inativo'),
+    type: DataTypes.ENUM('ativo', 'inativo'),
     allowNull: false,
-    defaultValue: 'Ativo'
   }
 }, {
   tableName: "admins",

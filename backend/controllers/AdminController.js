@@ -1,4 +1,5 @@
-const Admin = require('../models/admin')
+const Admin = require("../models/admin");
+const supabase = require("../db/supabaseCilent");
 
 // Função para criar um usuário no Supabase Auth
 async function createSupabaseUser(nome, email, password, role) {
@@ -9,42 +10,36 @@ async function createSupabaseUser(nome, email, password, role) {
       options: {
         data: {
           displayName: nome,
-          role // Definir o papel do usuário (aluno, admin ou admin)
-        }
-      }
+          role, // Definir o papel do usuário (aluno, admin ou admin)
+        },
+      },
     });
 
     if (error) {
-      console.error('Erro ao criar usuário:', error.message);
+      console.error("Erro ao criar usuário:", error.message);
       return null;
     }
 
     return user;
   } catch (err) {
-    console.error('Erro ao criar usuário:', err);
+    console.error("Erro ao criar usuário:", err);
     return null;
   }
 }
 
 module.exports = class AdminsController {
-
   static async listAdmins(req, res) {
     try {
       const admins = await Admin.findAll();
       res.status(200).json(admins);
     } catch (error) {
-      console.error('Erro ao listar admins:', error);
-      res.status(500).json({ error: 'Erro ao listar admins' });
+      console.error("Erro ao listar admins:", error);
+      res.status(500).json({ error: "Erro ao listar admins" });
     }
   }
 
   static async createAdmin(req, res) {
-    const {
-      nome,
-      email,
-      telefone,
-      status,
-    } = req.body;
+    const { nome, email, telefone, status } = req.body;
 
     try {
       const adminExists = await Admin.findOne({
@@ -52,28 +47,42 @@ module.exports = class AdminsController {
       });
 
       if (adminExists) {
-        return res.status(400).json({ error: 'Admin já cadastrado com este email' });
+        return res
+          .status(400)
+          .json({ error: "Admin já cadastrado com este email" });
       }
 
       const admin = {
         nome,
         email,
         telefone,
-        status
+        status,
       };
 
-      const createdAdmin = await Admin.create(admin);
-      await createSupabaseUser(admin.nome, admin.email, admin.cpf, 'admin');
+      // Converter para minúsculas com exceções
+      const adminLowercase = Object.fromEntries(
+        Object.entries(admin).map(([key, value]) => [
+          key,
+          typeof value === "string" &&
+          key !== "nome" 
+            ? value.toLowerCase()
+            : value,
+        ])
+      );
+      console.log(adminLowercase, 'antes do await');
 
+      const createdAdmin = await Admin.create(adminLowercase);
+      console.log('depois do create', createdAdmin)
+      await createSupabaseUser(adminLowercase.nome, adminLowercase.email, adminLowercase.telefone , "admin");
 
-      const newAdmin = await Admin.findOne({
-        where: { id: createdAdmin.id }
-    });
+      //   const newAdmin = await Admin.findOne({
+      //     where: { id: createdAdmin.id }
+      // });
 
-      res.status(201).json(newAdmin);
+      // res.status(201).json(newAdmin);
     } catch (error) {
-      console.error('Erro ao criar admin:', error);
-      res.status(500).json({ error: 'Erro ao criar admin' });
+      console.error("Erro ao criar admin:", error);
+      res.status(500).json({ error: "Erro ao criar admin" });
     }
   }
 
@@ -82,43 +91,38 @@ module.exports = class AdminsController {
 
     try {
       const admin = await Admin.findOne({
-        where: { id: id }
+        where: { id: id },
       });
 
       if (!admin) {
-        return res.status(404).json({ error: 'Admin não encontrado' });
+        return res.status(404).json({ error: "Admin não encontrado" });
       }
 
       res.status(200).json(admin);
     } catch (error) {
-      console.error('Erro ao buscar admin:', error);
-      res.status(500).json({ error: 'Erro ao buscar admin' });
+      console.error("Erro ao buscar admin:", error);
+      res.status(500).json({ error: "Erro ao buscar admin" });
     }
   }
 
   static async updateAdmin(req, res) {
     const { id } = req.params;
-    const {
-      nome,
-      email,
-      telefone,
-      status,
-    } = req.body;
+    const { nome, email, telefone, status } = req.body;
 
     try {
       const admin = await Admin.findByPk(id);
-      
+
       if (!admin) {
-        return res.status(404).json({ error: 'Admin não encontrado' });
+        return res.status(404).json({ error: "Admin não encontrado" });
       }
 
       // Verifica se o novo email já está em uso por outro admin
       if (email && email !== admin.email) {
         const emailExists = await Admin.findOne({
-          where: { email: email }
+          where: { email: email },
         });
         if (emailExists) {
-          return res.status(400).json({ error: 'Email já está em uso' });
+          return res.status(400).json({ error: "Email já está em uso" });
         }
       }
 
@@ -126,19 +130,17 @@ module.exports = class AdminsController {
         nome,
         email,
         telefone,
-        status
+        status,
       });
 
-
-
       const updatedAdmin = await Admin.findOne({
-        where: { id: id }
+        where: { id: id },
       });
 
       res.status(200).json(updatedAdmin);
     } catch (error) {
-      console.error('Erro ao atualizar admin:', error);
-      res.status(500).json({ error: 'Erro ao atualizar admin' });
+      console.error("Erro ao atualizar admin:", error);
+      res.status(500).json({ error: "Erro ao atualizar admin" });
     }
   }
 
@@ -147,16 +149,16 @@ module.exports = class AdminsController {
 
     try {
       const admin = await Admin.findByPk(id);
-      
+
       if (!admin) {
-        return res.status(404).json({ error: 'Admin não encontrado' });
+        return res.status(404).json({ error: "Admin não encontrado" });
       }
 
       await admin.destroy();
       res.status(204).send();
     } catch (error) {
-      console.error('Erro ao deletar admin:', error);
-      res.status(500).json({ error: 'Erro ao deletar admin' });
+      console.error("Erro ao deletar admin:", error);
+      res.status(500).json({ error: "Erro ao deletar admin" });
     }
   }
 };
