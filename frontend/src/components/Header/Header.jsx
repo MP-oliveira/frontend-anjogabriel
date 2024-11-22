@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { UserCircle } from 'phosphor-react';
 import Logo from '../../assets/Logo.png';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import './Header.css';
 
 const Header = () => {
   const [isBlurred, setIsBlurred] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -13,9 +16,7 @@ const Header = () => {
     } else {
       setIsBlurred(false);
     }
-    // console.log("ScrollY:", window.scrollY, "isBlurred:", isBlurred); // Adicione este console log
   };
-
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -23,6 +24,26 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    // Verificar se o usuário está autenticado
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (token && user) {
+      setIsAuthenticated(true);
+      setUsername(user.name || user.email); // Ajuste conforme os dados que você está armazenando
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setIsAuthenticated(false);
+    navigate('/login');
+  };
 
   return (
     <header className={`header header.${isBlurred ? 'blur' : ''}`}>
@@ -65,12 +86,19 @@ const Header = () => {
           </li>
         </div>
         <div className="login">
-          <div className="icon">
-            <UserCircle size={30} color="#C6D6F3" />
-          </div>
-          <div className="user-text">
-            Bem Vindo <span>Mauricio!</span>
-          </div>
+          {isAuthenticated ? (
+            <>
+              <div className="icon">
+                <UserCircle size={30} color="#C6D6F3" />
+              </div>
+              <div className="user-text">
+                Bem Vindo <span>{username}!</span>
+                <button onClick={handleLogout} className="logout-button">Logout</button>
+              </div>
+            </>
+          ) : (
+            <button onClick={() => navigate('/login')} className="login-button">Login</button>
+          )}
         </div>
       </div>
     </header>

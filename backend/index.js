@@ -10,6 +10,7 @@ const diplomaRoutes = require('./routes/diplomaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const turnoRoutes = require('./routes/turnoRoutes');
+const loginRoutes = require('./routes/loginRoutes');
 const cors = require('cors')
 
 
@@ -28,6 +29,7 @@ app.use('/api/diplomas', diplomaRoutes);
 app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.use('/api/turnos', turnoRoutes);
+app.use('/api/login', loginRoutes);
 // app.get('/', (req, res) => {
 //   res.render('home')
 // })
