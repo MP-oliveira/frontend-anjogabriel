@@ -1,3 +1,9 @@
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(
+  process.env.SUPABASE_URL, 
+  process.env.SUPABASE_KEY
+);
+
 const Professor = require("../models/professor");
 const Disciplina = require("../models/disciplina");
 
@@ -72,8 +78,19 @@ module.exports = class ProfessoresController {
         status
       };
 
+      const professorLowercase = Object.fromEntries(
+        Object.entries(professor).map(([key, value]) => [
+          key,
+          typeof value === "string" &&
+            key !== "nome"
+            ? value.toLowerCase()
+            : value,
+        ])
+      );
+      console.log(professorLowercase)
+
       const createdProfessor = await Professor.create(professor);
-      await createSupabaseUser(professor.nome, professor.email, professor.cpf, 'professor');
+      await createSupabaseUser(professorLowercase.nome, professorLowercase.email, professorLowercase.email, 'professor');
       
       if (disciplinasIds && disciplinasIds.length > 0) {
         const disciplinas = await Disciplina.findAll({
