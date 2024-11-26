@@ -1,6 +1,9 @@
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+
 import Home from "./pages/Home/Home";
+// import Login from './pages/Login/Login'
+
 import AddMaterialEUtensilio from './components/AddMaterial/AddMaterialEUtensilo';
 import AddTurno from './components/Addturno/AddTurno';
 import AddDiploma from './components/AddDiploma/AddDiploma';
@@ -26,13 +29,14 @@ import AddProfessor from './components/AddProfessor/AddProfessor';
 import EditProfessor from './components/EditProfessor/EditProfessor';
 import Professores from './components/Professores/Professores';
 
+
 function App() {
   return (
     <>
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} /> 
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/alunos/add" element={<AddAluno />} />
           <Route path="/alunos/edit/:id" element={<EditAluno />} />
           <Route path="/alunos" element={<Alunos />} />
@@ -56,6 +60,7 @@ function App() {
           <Route path="/diplomas" element={<AddDiploma />} />
           <Route path="/turnos" element={<AddTurno />} />
           <Route path="/materialeutensilios" element={<AddMaterialEUtensilio />} />
+          <Route path="/" element={<Home />} /> 
         </Routes>
       </BrowserRouter>
     </>

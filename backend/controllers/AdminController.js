@@ -39,7 +39,7 @@ module.exports = class AdminsController {
  }
 
  static async createAdmin(req, res) {
-   const { nome, email, telefone, status } = req.body;
+   const { nome, email, telefone, role, password } = req.body;
 
    try {
      const adminExists = await Admin.findOne({
@@ -56,7 +56,8 @@ module.exports = class AdminsController {
        nome,
        email,
        telefone,
-       status,
+       role,
+       password,
      };
 
      // Converter para minúsculas com exceções
@@ -73,7 +74,7 @@ module.exports = class AdminsController {
 
      const createdAdmin = await Admin.create(adminLowercase);
      console.log('depois do create', createdAdmin)
-     await createSupabaseUser(adminLowercase.nome, adminLowercase.email, adminLowercase.email, "admin");
+     await createSupabaseUser(adminLowercase.email, adminLowercase.password, "admin");
 
      const newAdmin = await Admin.findOne({
        where: { id: createdAdmin.id }
@@ -107,7 +108,7 @@ module.exports = class AdminsController {
 
  static async updateAdmin(req, res) {
    const { id } = req.params;
-   const { nome, email, telefone, status } = req.body;
+   const { nome, email, telefone, role, password } = req.body;
 
    try {
      const admin = await Admin.findByPk(id);
@@ -130,7 +131,8 @@ module.exports = class AdminsController {
        nome,
        email,
        telefone,
-       status,
+       role,
+       password
      });
 
      const updatedAdmin = await Admin.findOne({

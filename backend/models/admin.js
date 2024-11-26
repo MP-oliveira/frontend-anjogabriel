@@ -12,16 +12,21 @@ const Admin = db.define('Admin', {
     unique: true,
     validate: {
       isEmail: true
-    }
+    } 
   },
   telefone: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  status: {
-    type: DataTypes.ENUM('ativo', 'inativo'),
+  role: {
+    type: DataTypes.ENUM('admin'),
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
     allowNull: false,
   }
+
 }, {
   tableName: "admins",
   timestamps: false,

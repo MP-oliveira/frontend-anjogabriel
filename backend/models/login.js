@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       allowNull: false
     },
-    senha: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('admin', 'professor', 'aluno'),
       allowNull: false
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
   });
   return Login;
 };

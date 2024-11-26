@@ -36,7 +36,7 @@ app.use('/api/login', loginRoutes);
 
 
 db
-//.sync({force: true})
+// .sync({force: true})
 .sync()
 .then(() => {
   app.listen(port, () => {
