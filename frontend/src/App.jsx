@@ -49,7 +49,7 @@ function App() {
           <Route path="/disciplinas/edit/:id" element={<EditDisciplina />} />
           <Route path="/disciplinas" element={<Disciplinas />} />
 
-          <Route path="/admins/add" element={<AddAdmin />} />
+          <Route path="/admins/create" element={<AddAdmin />} />
           <Route path="/admins/edit/:id" element={<EditAdmin />} />
           <Route path="/admins" element={<Admins />} />
 

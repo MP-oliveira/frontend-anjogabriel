@@ -74,7 +74,7 @@ module.exports = class AdminsController {
 
      const createdAdmin = await Admin.create(adminLowercase);
      console.log('depois do create', createdAdmin)
-     await createSupabaseUser(adminLowercase.email, adminLowercase.password, "admin");
+     await createSupabaseUser(adminLowercase.nome, adminLowercase.email, adminLowercase.password, "admin");
 
      const newAdmin = await Admin.findOne({
        where: { id: createdAdmin.id }

@@ -12,7 +12,7 @@ const Admin = db.define('Admin', {
     unique: true,
     validate: {
       isEmail: true
-    } 
+    }
   },
   telefone: {
     type: DataTypes.STRING,
@@ -25,12 +25,18 @@ const Admin = db.define('Admin', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+    validate: {
+      len: {
+        args: [6, 100], // ajusta o segundo argumento conforme necessário
+        msg: "Password should be at least 6 characters."
+      }
+    }
   }
-
-}, {
-  tableName: "admins",
-  timestamps: false,
-});
+},
+  {
+    tableName: "admins",
+    timestamps: false,
+  });
 
 
 

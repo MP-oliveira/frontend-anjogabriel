@@ -47,7 +47,7 @@ const Admins = () => {
       <div className="aluno_content">
         <div className="aluno_top">
           <h1 className="aluno_h1">Gerenciamento de Admins</h1>
-          <Link className="criar_aluno" to="/admins/add">Adicionar Admin</Link>
+          <Link className="criar_aluno" to="/admins/create">Adicionar Admin</Link>
         </div>
         <div className="aluno_input">
           <input

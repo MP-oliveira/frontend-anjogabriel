@@ -8,7 +8,8 @@ const adminSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
   email: z.string().email({ message: "Email inválido." }),
   telefone: z.string().min(10, { message: "Telefone inválido." }),
-  status: z.string().nonempty({ message: "Selecione um status válido." }),
+  role: z.string().nonempty({ message: "Selecione um status válido." }),
+  password: z.string().min(6,{message: "Senha Invalida"})
 });
 
 const AddAdmin = () => {
@@ -18,7 +19,8 @@ const AddAdmin = () => {
     nome: "",
     email: "",
     telefone: "",
-    status: "",
+    role: "",
+    password: ""
   });
 
   const handleSubmit = async (e) => {
@@ -85,12 +87,20 @@ const AddAdmin = () => {
         />
         {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
 
-        <select name="status" value={adminData.status} onChange={handleChange}>
+        <input
+          type="password"
+          name="password"
+          value={adminData.password}
+          onChange={handleChange}
+          placeholder="Senha"
+        />
+        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+
+        <select name="role" value={adminData.role} onChange={handleChange}>
           <option value="">Selecione um status</option>
-          <option value="Ativo">Ativo</option>
-          <option value="Inativo">Inativo</option>
+          <option value="admin">Administrador</option>
         </select>
-        {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
+        {errors.role && <p className="error_message" style={{ color: "red" }}>{errors.role._errors?.[0]}</p>}
 
         <button className="aluno-btn" type="submit">Salvar</button>
       </form>
