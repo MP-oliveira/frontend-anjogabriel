@@ -28,7 +28,7 @@ const Admin = db.define('Admin', {
     validate: {
       len: {
         args: [6, 100], // ajusta o segundo argumento conforme necessário
-        msg: "Password should be at least 6 characters."
+        msg: "A senha precisa ter ao menos 6 caracteres."
       }
     }
   }

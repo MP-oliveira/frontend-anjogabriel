@@ -9,7 +9,7 @@ const adminSchema = z.object({
   email: z.string().email({ message: "Email inválido." }),
   telefone: z.string().min(10, { message: "Telefone inválido." }),
   role: z.string().nonempty({ message: "Selecione um status válido." }),
-  password: z.string().min(6,{message: "Senha Invalida"})
+  password: z.string().min(6,{message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. "})
 });
 
 const AddAdmin = () => {

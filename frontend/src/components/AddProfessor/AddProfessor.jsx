@@ -10,6 +10,7 @@ const professorSchema = z.object({
   email: z.string().email({ message: "Email inválido." }),
   telefone: z.string().min(10, { message: "Telefone inválido." }),
   status: z.string().nonempty({ message: "Selecione um status válido." }),
+  password:z.string().min(6, {message: "Senha Invalida. A senha de ter pelo menos 6 caracteres."})
 });
 
 const AddProfessor = () => {
@@ -21,6 +22,7 @@ const AddProfessor = () => {
     email: "",
     telefone: "",
     status: "",
+    password: ""
   });
 
   const handleSubmit = async (e) => {
@@ -56,8 +58,8 @@ const AddProfessor = () => {
   };
 
   return (
-    <div className="addprofessor-container">
-      <form className="form-addprofessor" onSubmit={handleSubmit}>
+    <div className="addaluno-container">
+      <form className="form-addaluno" onSubmit={handleSubmit}>
         <h2>Adicionar Professor</h2>
 
         <input
@@ -103,7 +105,16 @@ const AddProfessor = () => {
         </select>
         {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
 
-        <button className="professor-btn" type="submit">Salvar</button>
+        <input
+          type="password"
+          name="password"
+          value={professorData.password}
+          onChange={handleChange}
+          placeholder="Senha"
+        />
+        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+        
+        <button className="aluno-btn" type="submit">Salvar</button>
       </form>
     </div>
   );

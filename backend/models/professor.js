@@ -24,9 +24,24 @@ const Professor = db.define('Professor', {
     allowNull: false,
   },
   status: {
-    type: DataTypes.ENUM('Ativo', 'Inativo'),
+    type: DataTypes.ENUM('ativo', 'inativo'),
     allowNull: false,
-    defaultValue: 'Ativo'
+    defaultValue: 'ativo'
+  },
+  role: {
+    type: DataTypes.ENUM('professor'),
+    allowNull: false,
+    defaultValue: 'professor'
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [6, 100], // ajusta o segundo argumento conforme necessário
+        msg: "Senha precisa ter ao menos 6 caracteres."
+      }
+    }
   }
 }, {
   tableName: "professores",

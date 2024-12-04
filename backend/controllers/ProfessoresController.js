@@ -58,6 +58,8 @@ module.exports = class ProfessoresController {
       email,
       telefone,
       status,
+      role,
+      password,
       disciplinasIds
     } = req.body;
 
@@ -75,7 +77,9 @@ module.exports = class ProfessoresController {
         especialidade,
         email,
         telefone,
-        status
+        status,
+        role,
+        password
       };
 
       const professorLowercase = Object.fromEntries(
@@ -87,10 +91,11 @@ module.exports = class ProfessoresController {
             : value,
         ])
       );
-      console.log(professorLowercase)
+      console.log(professorLowercase, 'antes do await')
 
-      const createdProfessor = await Professor.create(professor);
-      await createSupabaseUser(professorLowercase.nome, professorLowercase.email, professorLowercase.email, 'professor');
+      const createdProfessor = await Professor.create(professorLowercase);
+      console.log(createdProfessor, 'professor depois do create')
+      await createSupabaseUser(professorLowercase.nome, professorLowercase.email, professorLowercase.password, 'professor');
       
       if (disciplinasIds && disciplinasIds.length > 0) {
         const disciplinas = await Disciplina.findAll({
@@ -149,6 +154,8 @@ module.exports = class ProfessoresController {
       email,
       telefone,
       status,
+      role,
+      password,
       disciplinasIds
     } = req.body;
 
@@ -174,7 +181,9 @@ module.exports = class ProfessoresController {
         especialidade,
         email,
         telefone,
-        status
+        status,
+        role,
+        password
       });
 
       if (disciplinasIds) {
