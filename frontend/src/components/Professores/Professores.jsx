@@ -47,7 +47,7 @@ const Professores = () => {
       <div className="aluno_content">
         <div className="aluno_top">
           <h1 className="aluno_h1">Gerenciamento de Professores</h1>
-          <Link className="criar_aluno" to="/professores/create">Adicionar Professor</Link>
+          <Link className="criar_aluno" to="/professores/add">Adicionar Professor</Link>
         </div>
         <div className="aluno_input">
           <input
