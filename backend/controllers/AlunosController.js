@@ -28,12 +28,10 @@ async function createSupabaseUser(nome, email, password, role) {
   }
 }
 
-
 module.exports = class AlunosController {
   static async listAlunos(req, res) {
     try {
       const alunos = await Aluno.findAll();
-      // console.log(alunos);
       res.status(200).json(alunos);
     } catch (err) {
       res.status(500).json({ err: "Erro ao buscar alunos" });
@@ -43,23 +41,22 @@ module.exports = class AlunosController {
   static async getAlunoByName(req, res) {
     const { nome } = req.query;
 
-    console.log(`Nome recebido: ${nome}`); // <-- Adicione este log
+    console.log(`Nome recebido: ${nome}`);
 
     try {
       const alunos = await Aluno.findAll({
         where: { nome: { [Op.like]: `%${nome}%` } },
       });
 
-      console.log(`Alunos encontrados: ${JSON.stringify(alunos)}`); // <-- Adicione este log
+      console.log(`Alunos encontrados: ${JSON.stringify(alunos)}`);
 
       if (alunos.length === 0) {
         return res.status(404).json({ error: "Aluno não encontrado" });
       }
 
       res.status(200).json(alunos);
-      // res.status(200).json([{ id: 1, nome: 'Teste', email: 'teste@example.com', cpf: '12345678900' }]);
     } catch (error) {
-      console.error("Erro ao buscar aluno controller:", error); // <-- Verifique o erro aqui
+      console.error("Erro ao buscar aluno controller:", error);
       res.status(500).json({ error: "Erro ao buscar aluno controller" });
     }
   }
@@ -92,6 +89,7 @@ module.exports = class AlunosController {
       turno,
       data_matricula,
       data_termino_curso,
+      password
     } = req.body;
 
     try {
@@ -99,7 +97,6 @@ module.exports = class AlunosController {
         return res.status(400).json({ message: "Nenhum arquivo enviado." });
       }
 
-      // Função para normalizar o nome do arquivo, removendo caracteres especiais
       const normalizeFileName = (fileName) => {
         return fileName
           .normalize("NFD") // Normaliza caracteres Unicode
@@ -107,9 +104,8 @@ module.exports = class AlunosController {
           .replace(/[^a-zA-Z0-9.]/g, "_"); // Substitui caracteres especiais por "_"
       };
 
-      // Subir o arquivo para o Supabase
-      const { originalname: imageName, buffer: imageBuffer } =
-        req.files.file[0];
+      // Subir a foto do aluno para o Supabase
+      const { originalname: imageName, buffer: imageBuffer } = req.files.file[0];
       const normalizedImageName = normalizeFileName(imageName);
 
       const { data: imageData, error: fileError } = await supabase.storage
@@ -121,42 +117,30 @@ module.exports = class AlunosController {
         });
 
       if (fileError) {
-        console.error(
-          "Erro ao fazer upload da foto no Supabase:",
-          error.message
-        );
+        console.error("Erro ao fazer upload da foto no Supabase:", fileError.message);
         return res.status(500).json({ error: "Erro ao fazer upload da foto" });
       }
 
-      const { originalname: historico, buffer: historicoBuffer } =
-        req.files.file[0];
-      const { data: historicoData, error: historicoError } =
-        await supabase.storage
-          .from("aluno_historico")
-          .upload(`aluno_historico/${Date.now()}-${historico}`, historicoBuffer, {
-            cacheControl: "3600",
-            upsert: false,
-            contentType: req.files.historico[0].mimetype,
-          });
+      // Subir o histórico do aluno para o Supabase
+      const { originalname: historicoName, buffer: historicoBuffer } = req.files.historico[0];
+      const normalizedHistoricoName = normalizeFileName(historicoName);
+
+      const { data: historicoData, error: historicoError } = await supabase.storage
+        .from("aluno_historico")
+        .upload(`aluno_historico/${Date.now()}-${normalizedHistoricoName}`, historicoBuffer, {
+          cacheControl: "3600",
+          upsert: false,
+          contentType: req.files.historico[0].mimetype,
+        });
 
       if (historicoError) {
-        console.error(
-          "Erro ao fazer upload do historico no Supabase:",
-          error.message
-        );
-        return res.status(500).json({ error: "Erro ao fazer upload da foto" });
+        console.error("Erro ao fazer upload do histórico no Supabase:", historicoError.message);
+        return res.status(500).json({ error: "Erro ao fazer upload do histórico" });
       }
 
-      // Obter a URL pública do arquivo
-      const imagePublicUrl = supabase.storage
-        .from("aluno_foto")
-        .getPublicUrl(imageData.path);
-      const imageUrl = imagePublicUrl.data.publicUrl;
-
-      const historicoPublicUrl = supabase.storage
-        .from("aluno_historico")
-        .getPublicUrl(historicoData.path);
-      const historicoUrl = historicoPublicUrl.data.publicUrl;
+      // Obter a URL pública dos arquivos
+      const imagePublicUrl = supabase.storage.from("aluno_foto").getPublicUrl(imageData.path).data.publicUrl;
+      const historicoPublicUrl = supabase.storage.from("aluno_historico").getPublicUrl(historicoData.path).data.publicUrl;
 
       const aluno = {
         nome,
@@ -185,27 +169,27 @@ module.exports = class AlunosController {
         turno,
         data_matricula,
         data_termino_curso,
-        foto_url: imageUrl,
-        historico_url: historicoUrl,
+        foto_url: imagePublicUrl,
+        historico_url: historicoPublicUrl,
+        password
       };
 
-      // Converter para minúsculas com exceções
+      // Converter campos específicos para minúsculas
       const alunoLowercase = Object.fromEntries(
         Object.entries(aluno).map(([key, value]) => [
           key,
-          typeof value === "string" &&
-            key !== "nome" &&
-            key !== "pai" &&
-            key !== "mae"
+          typeof value === "string" && key !== "nome" && key !== "pai" && key !== "mae"
             ? value.toLowerCase()
             : value,
         ])
       );
-      console.log(alunoLowercase)
+
+      // Criar aluno no banco de dados
       const createdUser = await Aluno.create(alunoLowercase);
       res.status(200).json(createdUser);
-      // Criar o usuário no Supabase Auth
-      await createSupabaseUser(alunoLowercase.nome, alunoLowercase.email, alunoLowercase.cpf, 'aluno');
+
+      // Criar usuário no Supabase Auth
+      await createSupabaseUser(alunoLowercase.nome, alunoLowercase.email, alunoLowercase.password, 'aluno');
     } catch (error) {
       console.error("Erro ao criar aluno:", error);
       res.status(500).json({ error: "Erro ao criar aluno" });
@@ -225,10 +209,11 @@ module.exports = class AlunosController {
       res.status(500).json({ error: "Erro ao buscar aluno" });
     }
   }
+
   static async updateAluno(req, res) {
     const { id } = req.params;
     const updatedData = req.body;
-    console.log(id);
+
     try {
       const aluno = await Aluno.findByPk(id);
       if (!aluno) {
@@ -236,11 +221,9 @@ module.exports = class AlunosController {
       }
 
       await aluno.update(updatedData);
-      res
-        .status(200)
-        .json({ message: "Dados do aluno atualizados com sucesso" });
+      res.status(200).json({ message: "Dados do aluno atualizados com sucesso" });
     } catch (error) {
-      res.status(500).json({ error: "Erro ao atualizar aluno back" });
+      res.status(500).json({ error: "Erro ao atualizar aluno" });
     }
   }
 
@@ -256,7 +239,7 @@ module.exports = class AlunosController {
       await aluno.destroy();
       res.status(200).json({ message: "Aluno deletado com sucesso" });
     } catch (err) {
-      res.status(500).json({ err: "Erro ao deletar aluno" });
+      res.status(500).json({ error: "Erro ao deletar aluno" });
     }
   }
 };

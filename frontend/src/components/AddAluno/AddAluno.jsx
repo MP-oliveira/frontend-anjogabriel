@@ -70,6 +70,8 @@ const alunoSchema = z.object({
   data_termino_curso: z
     .date()
     .max(new Date(), { message: "Digite uma data termino valida" }),
+  password: z.string().min(6, { message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. " })
+
 });
 
 const AddAluno = () => {
@@ -103,6 +105,7 @@ const AddAluno = () => {
   const [data_termino_curso, setData_termino_curso] = useState("");
   const [file, setFile] = useState(null);
   const [historico, setHistorico] = useState(null);
+  const [password, setPassword] = useState("");
 
   // Estado para armazenar os erros de validação
   const [errors, setErrors] = useState({});
@@ -146,6 +149,7 @@ const AddAluno = () => {
       turno,
       data_matricula: new Date(data_matricula),
       data_termino_curso: new Date(data_termino_curso),
+      password,
     };
 
     // Validando os dados com o esquema do Zod
@@ -181,6 +185,7 @@ const AddAluno = () => {
         turno: fieldErrors.turno?._errors[0],
         data_matricula: fieldErrors.data_matricula?._errors[0],
         data_termino_curso: fieldErrors.data_termino_curso?._errors[0],
+        password: fieldErrors.password?._errors[0],
       });
     } else {
       try {
@@ -222,6 +227,7 @@ const AddAluno = () => {
         );
         formData.append("file", file);
         formData.append("historico", historico);
+        formData.append("password", alunoresult.data.password);
 
         console.log(formData, " form Data");
         // Enviar os dados para a API
@@ -264,6 +270,7 @@ const AddAluno = () => {
           setTurno("Turno"),
           setData_matricula(""),
           setData_termino_curso("");
+          setPassword("")
         navigate("/alunos");
       } catch (error) {
         console.error("Erro ao adicionar usuário", error);
@@ -594,6 +601,15 @@ const AddAluno = () => {
           <label htmlFor="historico">Selecione um arquivo:</label>
           <input type="file" id="historico" name="historico" accept="application/pdf" onChange={handleHistoricoChange} required />
         </div>
+        <input
+          type="password"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Senha"
+        />
+        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+
         <div className="aluno-btn-container">
           <button className="aluno-btn" type="submit">
             Adicionar Usuário

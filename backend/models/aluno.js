@@ -96,7 +96,16 @@ const Aluno = db.define('Aluno', {
     // quando colocar curso pra funcionar mudar para date
     type: DataTypes.STRING,
   },
-
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      len: {
+        args: [6, 100], // ajusta o segundo argumento conforme necessário
+        msg: "A senha precisa ter ao menos 6 caracteres."
+      }
+    }
+  }
 },
 {
   tableName: "alunos"
