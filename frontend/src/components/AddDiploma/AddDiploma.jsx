@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
+import '../AddAluno/AddAluno.css';
 
 const AddDiploma = () => {
   const [nome, setNome] = useState("")
@@ -31,16 +32,23 @@ const AddDiploma = () => {
 
   return (
     <>
-      <h2>Adicionar Diploma</h2>
-      <form onSubmit={handleSubmit}>
+      <h2 className="addaluno-container">Adicionar Diploma</h2>
+      <form
+        className="form-addaluno"
+        onSubmit={handleSubmit}
+      >
         <input
           type="text"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           placeholder="Nome"
         />
-    
-        <button type="submit">Adicionar Diploma</button>
+
+        <button
+          className="aluno-btn"
+          type="submit">
+          Adicionar Diploma
+        </button>
       </form>
     </>
   );
