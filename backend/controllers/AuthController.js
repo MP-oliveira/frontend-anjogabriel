@@ -1,56 +1,74 @@
-const { createClient } = require('@supabase/supabase-js');
+const { createClient } = require("@supabase/supabase-js");
 
-const supabase = createClient(
-  process.env.SUPABASE_URL, 
-  process.env.SUPABASE_KEY
-);
+const supabase = require("../db/supabaseCilent");
 
- module.exports = class AuthController {
+module.exports = class AuthController {
   static async login(req, res) {
     const { email, password } = req.body;
 
     try {
+      // Autenticar o usuário no Supabase
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
 
       if (error) {
-        return res.status(401).json({ message: 'Credenciais inválidas' });
+        return res.status(401).json({ message: "Credenciais inválidas" });
       }
 
-      const { data: profileData, error: profileError } = await supabase
-        .from('Users')
-        .select('role')
-        .eq('user_id', data.user.id)
-        .single();
+      // Obter o user_id do usuário autenticado
+      const userId = data.user.id;
 
-      if (profileError) {
-        return res.status(500).json({ message: 'Erro ao buscar perfil' });
+      // Verificar em qual tabela o user_id está presente
+      const roles = ["professores", "alunos", "admins"];
+      let userRole = null;
+      let roler = null;
+      
+      for (const role of roles) {
+        const { data: roleData, error: roleError } = await supabase
+        .from(role) // Acessa a tabela dinâmica
+        .select("*") // Seleciona todos os campos (ou apenas o necessário)
+        .eq("email", email)
+        .single(); // Retorna apenas um registro
+        
+        roler = roleData
+        if (!roleError && roleData) {
+          userRole = role;
+          break; // Interrompe o loop quando encontrar o usuário
+        }
       }
 
+console.log(roler)
+      if (!userRole) {
+        return res
+          .status(404)
+          .json({ message: "Usuário não encontrado em nenhuma tabela" });
+      }
+
+      // Retornar o papel do usuário e o token de sessão
       res.status(200).json({
-        message: 'Login bem-sucedido',
-        role: profileData.role,
-        token: data.session.access_token
+        message: "Login bem-sucedido",
+        role: roler,
+        token: data.session.access_token,
       });
-
     } catch (error) {
-      res.status(500).json({ message: 'Erro no servidor' });
+      console.error("Erro no servidor:", error);
+      res.status(500).json({ message: "Erro no servidor" });
     }
   }
 
   static async logout(req, res) {
     try {
       const { error } = await supabase.auth.signOut();
-      
+
       if (error) {
-        return res.status(500).json({ message: 'Erro ao fazer logout' });
+        return res.status(500).json({ message: "Erro ao fazer logout" });
       }
 
-      res.status(200).json({ message: 'Logout realizado com sucesso' });
+      res.status(200).json({ message: "Logout realizado com sucesso" });
     } catch (error) {
-      res.status(500).json({ message: 'Erro no servidor' });
+      res.status(500).json({ message: "Erro no servidor" });
     }
   }
   static async esqueciASenha(req, res) {
@@ -58,17 +76,16 @@ const supabase = createClient(
 
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'http://localhost:5173/esqueciasenha'
+        redirectTo: "http://localhost:5173/esqueciasenha",
       });
-  
+
       if (error) {
         return res.status(400).json({ message: error.message });
       }
-  
-      res.status(200).json({ message: 'Link de recuperação enviado' });
+
+      res.status(200).json({ message: "Link de recuperação enviado" });
     } catch (error) {
-      res.status(500).json({ message: 'Erro interno do servidor' });
+      res.status(500).json({ message: "Erro interno do servidor" });
     }
   }
-}
-
+};

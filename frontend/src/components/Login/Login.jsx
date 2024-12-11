@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
+import { useUser } from '../../context/UseContext'; // Importar o contexto
 import './Login.css';
 
 function Login() {
+  const  {setUser}  = useUser(); // Obter o setter do estado do usuário
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-
+    
     try {
       const response = await fetch('http://localhost:3001/api/auth/login', {
         method: 'POST',
@@ -19,26 +20,16 @@ function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
+      const { message, role, token} = await response.json();
+      // console.log(response, 'response front')
+      if (response.ok) {
+        // console.log(response, 'response ok', role)
+        setUser(role); // Atualizar o estado global com os dados do usuário
+        // console.log('ok', message, role.role)
 
-      // if (response.ok) {
-      //   // Redirecionar baseado na role
-      //   switch(data.role) {
-      //     case 'professor':
-      //       window.location.href = '/professor/dashboard';
-      //       break;
-      //     case 'aluno':
-      //       window.location.href = '/aluno/dashboard';
-      //       break;
-      //     case 'admin':
-      //       window.location.href = '/admin/dashboard';
-      //       break;
-      //     default:
-      //       window.location.href = '/dashboard';
-      //   }
-      // } else {
-      //   setError(data.message || 'Erro no login');
-      // }
+      } else {
+        setError(data.message || 'Erro no login');
+      }
     } catch (err) {
       setError('Erro de conexão');
     }

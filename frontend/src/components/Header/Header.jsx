@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { UserCircle } from 'phosphor-react';
+import { useUser } from '../../context/UseContext'; // Importar o contexto
+
 import Logo from '../../assets/Logo.png';
 import { NavLink, useNavigate } from "react-router-dom";
 import './Header.css';
 
 const Header = () => {
+  const  {user}  = useUser(); // Obter o setter do estado do usuário
   const [isBlurred, setIsBlurred] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
-
+  
   const handleScroll = () => {
     if (window.scrollY > 0) {
       setIsBlurred(true);
@@ -17,19 +20,19 @@ const Header = () => {
       setIsBlurred(false);
     }
   };
-
+  
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
+  
   useEffect(() => {
     // Verificar se o usuário está autenticado
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user'));
-
+    
     if (token && user) {
       setIsAuthenticated(true);
       setUsername(user.name || user.email); // Ajuste conforme os dados que você está armazenando
@@ -37,7 +40,8 @@ const Header = () => {
       setIsAuthenticated(false);
     }
   }, []);
-
+  
+  console.log(user)
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -97,7 +101,7 @@ const Header = () => {
               </div>
             </>
           ) : (
-            <button onClick={() => navigate('/login')} className="login-button">Login</button>
+            <button onClick={() => navigate('/login')} className="login-button">{!user ? 'Login': 'Logout'}</button>
           )}
         </div>
       </div>
