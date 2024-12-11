@@ -2,7 +2,8 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Home from "./pages/Home/Home";
-// import Login from './pages/Login/Login'
+import Login from './components/Login/Login'
+import EsqueciASenha from './components/EsqueciASenha/EsqueciASenha'
 
 import AddMaterialEUtensilio from './components/AddMaterial/AddMaterialEUtensilo';
 import AddTurno from './components/Addturno/AddTurno';
@@ -36,7 +37,8 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/esqueciaasenha" element={<EsqueciASenha />} />
           <Route path="/alunos/add" element={<AddAluno />} />
           <Route path="/alunos/edit/:id" element={<EditAluno />} />
           <Route path="/alunos" element={<Alunos />} />
