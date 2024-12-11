@@ -39,7 +39,6 @@ module.exports = class AuthController {
         }
       }
 
-console.log(roler)
       if (!userRole) {
         return res
           .status(404)
@@ -59,6 +58,7 @@ console.log(roler)
   }
 
   static async logout(req, res) {
+
     try {
       const { error } = await supabase.auth.signOut();
 
@@ -71,6 +71,7 @@ console.log(roler)
       res.status(500).json({ message: "Erro no servidor" });
     }
   }
+  
   static async esqueciASenha(req, res) {
     const { email } = req.body;
 

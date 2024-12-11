@@ -42,11 +42,29 @@ const Header = () => {
   }, []);
   
   console.log(user)
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setIsAuthenticated(false);
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+   
+      const response = await fetch('http://localhost:3001/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await response.json();
+      console.log(response, 'logout res')
+      if (response.ok) {
+        // Redirecionar para a página de login após o logout
+        window.location.href = '/login'; // Ou use react-router para redirecionar
+      } else {
+        setError(data.message || 'Erro ao fazer logout');
+      }
+    } catch (err) {
+      setError('Erro de conexão');
+    }
+
+   
   };
 
   return (
@@ -90,13 +108,13 @@ const Header = () => {
           </li>
         </div>
         <div className="login">
-          {isAuthenticated ? (
+          {user ? (
             <>
               <div className="icon">
                 <UserCircle size={30} color="#C6D6F3" />
               </div>
               <div className="user-text">
-                Bem Vindo <span>{username}!</span>
+                Bem Vindo <span>{user.nome}!</span>
                 <button onClick={handleLogout} className="logout-button">Logout</button>
               </div>
             </>
