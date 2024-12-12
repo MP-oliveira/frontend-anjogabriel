@@ -82,6 +82,9 @@ const Alunos = () => {
                     <Link onClick={() => handleDelete(aluno.id)}>
                       <img src={Delete} alt="" />
                     </Link>
+                    <Link to={`/diplomas/${aluno.id}`}>
+                      <button>Diploma</button>
+                    </Link>
                   </td>
                 </tr>
               ))

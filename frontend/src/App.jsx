@@ -42,9 +42,13 @@ function App() {
           <Route path="/login" element={!user ? <Login /> : <Home />} />
           <Route path="/esqueciaasenha" element={<EsqueciASenha />} />
 
-          <Route path="/alunos/add" element={user && role.role === 'aluno' ? <AddAluno /> : <Navigate to="/login" />} />
-          <Route path="/alunos/edit/:id" element={user && role.role === 'aluno' ? <EditAluno /> : <Navigate to="/login" />} />
-          <Route path="/alunos" element={user && role.role === 'aluno' ? <Alunos /> : <Navigate to="/login" />} />
+          {/* <Route path="/alunos/add" element={user && role.role === 'aluno' ?<AddAluno /> :<Navigate to="/login"/>} />
+          <Route path="/alunos/edit/:id" element={user && role.role === 'aluno' ?<EditAluno />:<Navigate to="/login"/>} />
+          <Route path="/alunos" element={user && role.role === 'aluno' ?<Alunos />: <Navigate to="/login"/>} /> */}
+
+          <Route path="/alunos/add" element={<AddAluno />} />
+          <Route path="/alunos/edit/:id" element={<EditAluno />} />
+          <Route path="/alunos" element={<Alunos />} />
 
           <Route path="/cursos/add" element={<AddCurso />} />
           <Route path="/cursos/edit/:id" element={<EditCurso />} />
@@ -62,7 +66,7 @@ function App() {
           <Route path="/professores/edit/:id" element={user && role.role === 'professor' ? <EditProfessor /> : <Navigate to="/login" />} />
           <Route path="/professores" element={user && role.role === 'professor' ? <Professores /> : <Navigate to="/login" />} />
 
-          <Route path="/diplomas" element={<AddDiploma />} />
+          <Route path="/diplomas/:id" element={<AddDiploma />} />
           <Route path="/turnos" element={<AddTurno />} />
           <Route
             path="/materialeutensilios"

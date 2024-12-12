@@ -4,12 +4,13 @@
   align-items: center;
   height: 100vh;
   background-color: #f0f2f5;
+  margin-bottom: 50px;
 }
 
 .login-form {
   background-color: white;
-  padding: 30px;
-  border-radius: 8px;
+  padding: 30px 60px;
+  border-radius: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 300px;
 }

@@ -1,55 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../services/api"; // Importando o serviço de API
+import { useParams } from "react-router-dom";
 import '../AddAluno/AddAluno.css';
 
 const AddDiploma = () => {
-  const [nome, setNome] = useState("")
+  const { id } = useParams();
+  const [aluno, setAluno] = useState(null);
 
+  useEffect(() => {
+    const fetchAluno = async () => {
+      try {
+        const response = await api.get(`/alunos/${id}`);
+        setAluno(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar aluno:', error);
+      }
+    };
+    fetchAluno();
+  }, [id]);
 
-
-  // Função para lidar com o envio do formulário
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Criar um FormData para enviar os arquivos junto com os dados
-    const newDiploma = {
-      nome,
-    }
-
-    console.log(newDiploma)
-
-    try {
-      // Enviar os dados para a API
-      await api.post("/diplomas/create", newDiploma);
-      alert("Turno adicionada com sucesso!");
-    } catch (error) {
-      console.error("Erro ao adicionar Turno", error);
-    }
-  };
-
-
-
+  if (!aluno) {
+    return <p>Carregando...</p>;
+  }
 
   return (
     <>
-      <h2 className="addaluno-container">Adicionar Diploma</h2>
-      <form
-        className="form-addaluno"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          placeholder="Nome"
-        />
-
-        <button
-          className="aluno-btn"
-          type="submit">
-          Adicionar Diploma
-        </button>
-      </form>
+      <h2>Diploma de {aluno.nome}</h2>
+      <p>Nome: {aluno.nome}</p>
+      <p>RG: {aluno.rg}</p>
+      <p>Nome do Pai: {aluno.pai}</p>
+      <p>Nome da Mãe: {aluno.mae}</p>
+      <p>Data de Nascimento: {new Date(aluno.data_nascimento).toLocaleDateString()}</p>
+      <p>Nacionalidade: {aluno.nacionalidade}</p>
     </>
   );
 };
