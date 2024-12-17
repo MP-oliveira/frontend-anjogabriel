@@ -44,12 +44,11 @@ const AddDiploma = () => {
     <div>
       <div className="diploma-container" ref={printRef}>
         <div className="diploma-front">
-          <h2>Diploma de {aluno.nome}</h2>
-          <p className="info nome">Nome: {aluno.nome}</p>
-          <p className="info rg">RG: {aluno.rg}</p>
-          <p className="info pai">Nome do Pai: {aluno.pai}</p>
-          <p className="info mae">Nome da Mãe: {aluno.mae}</p>
-          <p className="info nascimento">Data de Nascimento: {new Date(aluno.data_nascimento).toLocaleDateString()}</p>
+          <p className="info nome">{aluno.nome}</p>
+          <p className="info rg">RG nº, {aluno.rg}</p>
+          <p className="info pai">{aluno.pai} e </p>
+          <p className="info mae">{aluno.mae}</p>
+          <p className="info nascimento">{new Date(aluno.data_nascimento).toLocaleDateString()}</p>
           <p className="info nacionalidade">Nacionalidade: {aluno.nacionalidade}</p>
         </div>
         <div className="diploma-back">
