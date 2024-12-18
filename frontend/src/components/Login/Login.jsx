@@ -21,7 +21,7 @@ function Login() {
       });
 
       const { message, role, token} = await response.json();
-      // console.log(response, 'response front')
+      //console.log(response, 'response front')
       if (response.ok) {
         // console.log(response, 'response ok', role)
         setUser(role); // Atualizar o estado global com os dados do usuário

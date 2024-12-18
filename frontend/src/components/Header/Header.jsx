@@ -41,7 +41,6 @@ const Header = () => {
     }
   }, []);
   
-  console.log(user)
   const handleLogout = async () => {
     try {
    

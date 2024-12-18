@@ -42,13 +42,9 @@ function App() {
           <Route path="/login" element={!user ? <Login /> : <Home />} />
           <Route path="/esqueciaasenha" element={<EsqueciASenha />} />
 
-          {/* <Route path="/alunos/add" element={user && role.role === 'aluno' ?<AddAluno /> :<Navigate to="/login"/>} />
-          <Route path="/alunos/edit/:id" element={user && role.role === 'aluno' ?<EditAluno />:<Navigate to="/login"/>} />
-          <Route path="/alunos" element={user && role.role === 'aluno' ?<Alunos />: <Navigate to="/login"/>} /> */}
-
-          <Route path="/alunos/add" element={<AddAluno />} />
-          <Route path="/alunos/edit/:id" element={<EditAluno />} />
-          <Route path="/alunos" element={<Alunos />} />
+          <Route path="/alunos/add" element={user && (role.role === 'aluno' || role.role === 'admin') ?<AddAluno /> :<Navigate to="/login"/>} />
+          <Route path="/alunos/edit/:id" element={user && (role.role === 'aluno' || role.role === 'admin') ?<EditAluno />:<Navigate to="/login"/>} />
+          <Route path="/alunos" element={user && (role.role === 'aluno' || role.role === 'admin') ?<Alunos />: <Navigate to="/login"/>} />
 
           <Route path="/cursos/add" element={<AddCurso />} />
           <Route path="/cursos/edit/:id" element={<EditCurso />} />
@@ -56,15 +52,15 @@ function App() {
 
           <Route path="/disciplinas/add" element={<AddDisciplina />} />
           <Route path="/disciplinas/edit/:id" element={<EditDisciplina />} />
-          <Route path="/disciplinas" element={<Disciplinas />} />
+          <Route path="/disciplinas" element={user && (role.role === 'professor' || role.role === 'admin')  ? <Disciplinas /> : <Navigate to="/" />} />
 
           <Route path="/admins/create" element={user && role.role === 'admin' ? <AddAdmin /> : <Navigate to="/login" />} />
           <Route path="/admins/edit/:id" element={user && role.role === 'admin' ? <EditAdmin /> : <Navigate to="/login" />} />
           <Route path="/admins" element={user && role.role === 'admin' ? <Admins /> : <Navigate to="/login" />} />
 
-          <Route path="/professores/add" element={user && role.role === 'professor' ? <AddProfessor /> : <Navigate to="/login" />} />
-          <Route path="/professores/edit/:id" element={user && role.role === 'professor' ? <EditProfessor /> : <Navigate to="/login" />} />
-          <Route path="/professores" element={user && role.role === 'professor' ? <Professores /> : <Navigate to="/login" />} />
+          <Route path="/professores/add" element={user && (role.role === 'professor' || role.role === 'admin') ? <AddProfessor /> : <Navigate to="/login" />} />
+          <Route path="/professores/edit/:id" element={user && (role.role === 'professor' || role.role === 'admin') ? <EditProfessor /> : <Navigate to="/login" />} />
+          <Route path="/professores" element={user && (role.role === 'professor' || role.role === 'admin')  ? <Professores /> : <Navigate to="/login" />} />
 
           <Route path="/diplomas/:id" element={<AddDiploma />} />
           <Route path="/turnos" element={<AddTurno />} />

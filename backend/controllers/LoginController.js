@@ -5,6 +5,7 @@ const supabase = require('../db/supabaseCilent');
 module.exports = {
   async login(req, res) {
     const { email, password } = req.body;
+    console.log(email, password)
 
     try {
       // Verifica se o usuário existe no banco de dados
