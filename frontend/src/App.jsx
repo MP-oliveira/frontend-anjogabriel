@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useUser } from "./context/UseContext"; // Importar o contexto
 
 import Home from "./pages/Home/Home";
-import Login from "./components/Login/Login";
+import Login from "./pages/Login/Login";
 import EsqueciASenha from "./components/EsqueciASenha/EsqueciASenha";
 
 import AddMaterialEUtensilio from "./components/AddMaterial/AddMaterialEUtensilo";
@@ -34,6 +34,7 @@ import Professores from "./components/Professores/Professores";
 function App() {
   const { user } = useUser(); // Obter o estado do usuário
   const role = user;
+  console.log('user app', user)
   return (
     <>
       <BrowserRouter>
@@ -54,9 +55,9 @@ function App() {
           <Route path="/disciplinas/edit/:id" element={user && (role.role === 'professor' || role.role === 'admin') ? <EditDisciplina /> : <Navigate to="/login" />} />
           <Route path="/disciplinas" element={user && (role.role === 'professor' || role.role === 'admin' || role.role === 'aluno') ? <Disciplinas /> : <Navigate to="/login" />} />
 
-          <Route path="/admins/create" element={user && role.role === 'admin' ? <AddAdmin /> : <Navigate to="/login" />} />
+          <Route path="/admins/create" element={ <AddAdmin />} />
           <Route path="/admins/edit/:id" element={user && role.role === 'admin' ? <EditAdmin /> : <Navigate to="/login" />} />
-          <Route path="/admins" element={user && role.role === 'admin' ? <Admins /> : <Navigate to="/login" />} />
+          <Route path="/admins" element={<Admins /> } />
 
           <Route path="/professores/add" element={user && role.role === 'admin' ? <AddProfessor /> : <Navigate to="/login" />} />
           <Route path="/professores/edit/:id" element={user && role.role === 'admin' ? <EditProfessor /> : <Navigate to="/login" />} />

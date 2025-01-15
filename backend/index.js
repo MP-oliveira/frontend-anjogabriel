@@ -11,7 +11,6 @@ const diplomaRoutes = require('./routes/diplomaRoutes');
 const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const turnoRoutes = require('./routes/turnoRoutes');
-const loginRoutes = require('./routes/loginRoutes');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors')
 const db = require("./db/db");
@@ -33,7 +32,6 @@ app.use('/api/diplomas', diplomaRoutes);
 app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.use('/api/turnos', turnoRoutes);
-app.use('/api/login', loginRoutes);
 app.use('/api/auth', authRoutes);
 
 db

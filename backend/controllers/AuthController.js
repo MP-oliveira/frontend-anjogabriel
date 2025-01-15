@@ -14,11 +14,13 @@ module.exports = class AuthController {
       });
 
       if (error) {
-        return res.status(401).json({ message: "Credenciais inválidas" });
+        return res.status(401).json({ message: "Credenciais inválidas", error: error.message });
       }
 
       // Obter o user_id do usuário autenticado
       const userId = data.user.id;
+      console.log(data)
+
 
       // Verificar em qual tabela o user_id está presente
       const roles = ["professores", "alunos", "admins"];
@@ -51,6 +53,7 @@ module.exports = class AuthController {
         role: roler,
         token: data.session.access_token,
       });
+      localStorage.setItem("data", data)
     } catch (error) {
       console.error("Erro no servidor:", error);
       res.status(500).json({ message: "Erro no servidor" });

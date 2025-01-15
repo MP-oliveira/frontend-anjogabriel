@@ -31,7 +31,8 @@ const Header = () => {
   useEffect(() => {
     // Verificar se o usuário está autenticado
     const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = localStorage.getItem('data');
+    console.log('user email', user)
     
     if (token && user) {
       setIsAuthenticated(true);
