@@ -53,7 +53,7 @@ module.exports = class AuthController {
         role: roler,
         token: data.session.access_token,
       });
-      localStorage.setItem("data", data)
+      
     } catch (error) {
       console.error("Erro no servidor:", error);
       res.status(500).json({ message: "Erro no servidor" });
