@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Criar o contexto
 const UserContext = createContext();
@@ -6,6 +6,10 @@ const UserContext = createContext();
 // Provedor do contexto
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    console.log('User state:', user);
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

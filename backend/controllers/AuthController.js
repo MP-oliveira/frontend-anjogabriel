@@ -47,6 +47,7 @@ module.exports = class AuthController {
           .json({ message: "Usuário não encontrado em nenhuma tabela" });
       }
 
+      console.log('roler:', roler);
       // Retornar o papel do usuário e o token de sessão
       res.status(200).json({
         message: "Login bem-sucedido",

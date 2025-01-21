@@ -12,6 +12,12 @@ const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      console.log('User updated:', user);
+    }
+  }, [user]);
   
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -31,12 +37,15 @@ const Header = () => {
   useEffect(() => {
     // Verificar se o usuário está autenticado
     const token = localStorage.getItem('token');
-    const user = localStorage.getItem('data');
-    console.log('user email', user)
+    const userLog = JSON.parse(localStorage.getItem('user')); // Parse a string JSON
     
-    if (token && user) {
+    if (userLog) {
+      console.log('user email', userLog.role?.nome); // Acessando o email corretamente
+    }
+
+    if (token && userLog) {
       setIsAuthenticated(true);
-      setUsername(user.name || user.email); // Ajuste conforme os dados que você está armazenando
+      setUsername(userLog.role?.name || userLog.role?.email); // Ajuste conforme os dados que você está armazenando
     } else {
       setIsAuthenticated(false);
     }
