@@ -12,6 +12,7 @@ const professorRoutes = require('./routes/professorRoutes');
 const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const turnoRoutes = require('./routes/turnoRoutes');
 const authRoutes = require('./routes/authRoutes');
+const regsitroAcademicoRoutes = require('./routes/registroAcademicoRoutes')
 const cors = require('cors')
 const db = require("./db/db");
 
@@ -33,6 +34,7 @@ app.use('/api/professores', professorRoutes);
 app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.use('/api/turnos', turnoRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/registroacademico', regsitroAcademicoRoutes)
 
 db
 .sync()

@@ -1,0 +1,133 @@
+.detalhes-container {
+    padding: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #EDF3FC; /* Cor de fundo da página */
+    min-height: 100vh;
+    border-radius: 20px;
+  }
+  
+  .detalhes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .voltar-btn {
+    padding: 10px 20px;
+    background-color: #FFD700; /* Botão amarelo */
+    color: #000; /* Texto preto */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+  }
+  
+  .voltar-btn:hover {
+    background-color: #FFC107;
+  }
+  
+  .aluno-info h1 {
+    margin: 0;
+    color: #333;
+    font-size: 30px;
+  }
+  
+  .curso-nome {
+    color: #666;
+    margin-top: 5px;
+  }
+  
+  .disciplinas-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .detalhes-container h2 {
+    font-size: 30px;
+  }
+  
+  .disciplinas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .disciplina-card, .notas-card  {
+    width: 200px;
+    height: 140px;
+    padding: 25\px;
+    border-radius: 30px;
+    background-color: #FFF;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 16px;
+  }
+  
+  .disciplina-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .disciplina-card-content {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    
+  }
+  
+  .disciplina-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .disciplina-card-content-p {
+    margin-top: 10px;
+  }
+  
+  .disciplina-card-content-p p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+    height: 5px;
+  }
+  
+  .notas-section, .presenca-section {
+    margin-top: 30px;
+  }
+  
+  .notas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .notas-card h4 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .presenca-info {
+    background-color: #FFF;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .alerta {
+    color: red;
+    font-weight: bold;
+  }

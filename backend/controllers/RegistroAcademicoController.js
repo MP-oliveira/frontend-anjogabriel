@@ -1,0 +1,193 @@
+const { createClient } = require('@supabase/supabase-js');
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_KEY
+);
+
+const Aluno = require('../models/aluno');
+const Disciplina = require('../models/disciplina');
+const RegistroAcademico = require('../models/registroAcademico');
+
+// Função para criar um novo registro acadêmico
+const createRegistroAcademico = async (req, res) => {
+  const { alunoId, disciplinaId, faltaData, faltaMotivo, notaValor, provaData, provaDescricao, testeData, testeDescricao, trabalhoData, trabalhoDescricao } = req.body;
+
+  if (!alunoId || !disciplinaId || notaValor === undefined) {
+    return res.status(400).json({ error: 'Campos obrigatórios ausentes: alunoId, disciplinaId e notaValor são necessários.' });
+  }
+
+  try {
+    const novoRegistro = await RegistroAcademico.create({
+      alunoId,
+      disciplinaId,
+      faltaData,
+      faltaMotivo,
+      notaValor,
+      provaData,
+      provaDescricao,
+      testeData,
+      testeDescricao,
+      trabalhoData,
+      trabalhoDescricao,
+    });
+    res.status(201).json(novoRegistro);
+  } catch (error) {
+    console.error('Erro ao criar registro acadêmico:', error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Função para obter todos os registros acadêmicos
+const listRegistrosAcademicos = async (req, res) => {
+  try {
+    const registros = await RegistroAcademico.findAll({
+      include: [
+        {
+          model: Aluno,
+          as: 'aluno',
+          attributes: ['id', 'nome']
+        },
+        {
+          model: Disciplina,
+          as: 'disciplina',
+          attributes: ['id', 'nome']
+        }
+      ],
+      attributes: [
+        'id', 'alunoId', 'disciplinaId', 'faltaData', 'faltaMotivo',
+        'notaValor', 'provaData', 'provaDescricao', 'testeData',
+        'testeDescricao', 'trabalhoData', 'trabalhoDescricao',
+        'createdAt', 'updatedAt'
+      ]
+    });
+
+    const registrosFormatados = registros.map(registro => ({
+      id: registro.id,
+      aluno: registro.aluno,
+      disciplina: registro.disciplina,
+      faltaData: registro.faltaData,
+      faltaMotivo: registro.faltaMotivo,
+      notaValor: registro.notaValor,
+      provaData: registro.provaData,
+      provaDescricao: registro.provaDescricao,
+      testeData: registro.testeData,
+      testeDescricao: registro.testeDescricao,
+      trabalhoData: registro.trabalhoData,
+      trabalhoDescricao: registro.trabalhoDescricao,
+      createdAt: registro.createdAt,
+      updatedAt: registro.updatedAt,
+    }));
+    res.status(200).json(registrosFormatados);
+  } catch (error) {
+    console.error('Erro ao listar registros acadêmicos:', error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Função para obter um registro acadêmico por ID
+const getRegistroAcademicoById = async (req, res) => {
+  // console.log('Requisição recebida para o ID:', req.params.id);
+  const { id } = req.params;
+ 
+
+  try {
+    const registro = await RegistroAcademico.findByPk(id, {
+      include: [
+        { model: Aluno, as: 'aluno', attributes: ['id', 'nome'] },
+        { model: Disciplina, as: 'disciplina', attributes: ['id', 'nome'] }
+      ]
+    });
+    if (registro) {
+      const registroFormatado = {
+        id: registro.id,
+        aluno: registro.aluno,
+        disciplina: registro.disciplina,
+        faltaData: registro.faltaData,
+        faltaMotivo: registro.faltaMotivo,
+        notaValor: registro.notaValor,
+        provaData: registro.provaData,
+        provaDescricao: registro.provaDescricao,
+        testeData: registro.testeData,
+        testeDescricao: registro.testeDescricao,
+        trabalhoData: registro.trabalhoData,
+        trabalhoDescricao: registro.trabalhoDescricao,
+        createdAt: registro.createdAt,
+        updatedAt: registro.updatedAt
+      };
+      res.status(200).json(registroFormatado);
+    } else {
+      res.status(404).json({ error: 'Registro não encontrado' });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar registro acadêmico por ID:', error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Função para atualizar um registro acadêmico
+const updateRegistroAcademico = async (req, res) => {
+  const { id } = req.params;
+  console.log(id, 'edit')
+  const { alunoId, disciplinaId, faltaData, faltaMotivo, notaValor, provaData, provaDescricao, testeData, testeDescricao, trabalhoData, trabalhoDescricao } = req.body;
+
+  if (notaValor === undefined) {
+    return res.status(400).json({ error: 'Nota é obrigatória para atualização.' });
+  }
+
+  try {
+    const registro = await RegistroAcademico.findByPk(id);
+    if (registro) {
+      await registro.update({
+        alunoId,
+        disciplinaId,
+        faltaData,
+        faltaMotivo,
+        notaValor,
+        provaData,
+        provaDescricao,
+        testeData,
+        testeDescricao,
+        trabalhoData,
+        trabalhoDescricao
+      });
+      res.status(200).json(registro);
+    } else {
+      res.status(404).json({ error: 'Registro não encontrado' });
+    }
+  } catch (error) {
+    console.error('Erro ao atualizar registro acadêmico:', error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Função para excluir um registro acadêmico
+const deleteRegistroAcademico = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const registro = await RegistroAcademico.findByPk(id);
+    if (registro) {
+      await registro.destroy();
+      res.status(204).json();
+    } else {
+      res.status(404).json({ error: 'Registro não encontrado' });
+    }
+  } catch (error) {
+    console.error('Erro ao excluir registro acadêmico:', error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Função de teste
+const testeRegistroAcademico = (req, res) => {
+  res.status(200).json({ message: 'Teste de conexão bem-sucedido' });
+};
+
+module.exports = {
+  createRegistroAcademico,
+  listRegistrosAcademicos,
+  getRegistroAcademicoById,
+  updateRegistroAcademico,
+  deleteRegistroAcademico,
+  testeRegistroAcademico,
+};

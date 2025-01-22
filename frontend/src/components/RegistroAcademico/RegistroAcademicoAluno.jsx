@@ -1,0 +1,149 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import api from "../../services/api";
+import Delete from '../../assets/trash.svg';
+import Edit from '../../assets/pencil.svg';
+
+const RegistroAcademicoAluno = () => {
+  const [registros, setRegistros] = useState([]);
+  const [filteredRegistros, setFilteredRegistros] = useState([]);
+  const [search, setSearch] = useState('');
+  const [cursoSelecionado, setCursoSelecionado] = useState('');
+
+  useEffect(() => {
+    const fetchRegistros = async () => {
+      try {
+        const response = await api.get('/registroacademico/');
+        const registrosUnicos = response.data.reduce((acc, registro) => {
+          const key = registro.aluno.id;
+          if (!acc[key]) {
+            acc[key] = {
+              id: registro.id,
+              aluno: registro.aluno.nome,
+              curso: registro.aluno.curso?.nome || 'Não definido',
+              disciplinas: new Set([registro.disciplina.nome])
+            };
+          } else {
+            acc[key].disciplinas.add(registro.disciplina.nome);
+          }
+          return acc;
+        }, {});
+
+        const registrosFormatados = Object.values(registrosUnicos).map(reg => ({
+          ...reg,
+          disciplinas: Array.from(reg.disciplinas)
+        }));
+
+        setRegistros(registrosFormatados);
+        setFilteredRegistros(registrosFormatados);
+      } catch (error) {
+        console.error('Erro ao buscar registros acadêmicos:', error);
+      }
+    };
+    fetchRegistros();
+  }, []);
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearch(value);
+    
+    const filtered = registros.filter(registro => 
+      registro.aluno.toLowerCase().includes(value) ||
+      registro.curso.toLowerCase().includes(value)
+    );
+    setFilteredRegistros(filtered);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Tem certeza que deseja excluir este registro?')) {
+      try {
+        await api.delete(`/registroacademico/${id}`);
+        setRegistros(registros.filter(registro => registro.id !== id));
+        setFilteredRegistros(filteredRegistros.filter(registro => registro.id !== id));
+        alert('Registro excluído com sucesso!');
+      } catch (error) {
+        console.error('Erro ao deletar registro:', error);
+        alert('Erro ao excluir registro');
+      }
+    }
+  };
+
+  return (
+    <div className="addaluno-container">
+      <div className="form-addaluno">
+        <div className="registro_top">
+          <h1 className="registro_h1">Registros Acadêmicos</h1>
+          <Link className="aluno-btn" to="/registroacademico/create">
+            Adicionar Registro
+          </Link>
+        </div>
+
+        <div className="registro_filters">
+          <select 
+            className="registro_select"
+            value={cursoSelecionado}
+            onChange={(e) => setCursoSelecionado(e.target.value)}
+          >
+            <option value="">Todos os Cursos</option>
+            <option value="enfermagem">Técnico de Enfermagem</option>
+            <option value="enfermagem_trabalho">Técnico de Enfermagem do Trabalho</option>
+          </select>
+
+          <input
+            className="registro_lista_input"
+            type="text"
+            placeholder="Buscar por aluno ou curso"
+            value={search}
+            onChange={handleSearch}
+          />
+        </div>
+
+        <table className="tabela_registro_lista">
+          <thead>
+            <tr>
+              <th>Aluno</th>
+              <th>Curso</th>
+              <th>Disciplinas</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredRegistros.length > 0 ? (
+              filteredRegistros.map((registro) => (
+                <tr key={registro.id}>
+                  <td>
+                    <Link 
+                    to={`/registroacademico/${registro.id}`} 
+                      className="aluno-link"
+                    >
+                      {registro.aluno}
+                    </Link>
+                  </td>
+                  <td>{registro.curso}</td>
+                  <td>{registro.disciplinas.join(', ')}</td>
+                  <td className="registro_acoes">
+                    <Link to={`/registroacademico/edit/${registro.id}`}>
+                      <img src={Edit} alt="Editar" />
+                    </Link>
+                    <button 
+                      onClick={() => handleDelete(registro.id)}
+                      className="delete-btn"
+                    >
+                      <img src={Delete} alt="Deletar" />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">Nenhum registro encontrado</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+export default RegistroAcademicoAluno;

@@ -13,11 +13,6 @@ const Header = () => {
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user) {
-      console.log('User updated:', user);
-    }
-  }, [user]);
   
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -40,8 +35,7 @@ const Header = () => {
     const userLog = JSON.parse(localStorage.getItem('user')); // Parse a string JSON
     
     if (userLog) {
-      console.log('user email', userLog.role?.nome); // Acessando o email corretamente
-      console.log('user log', userLog); 
+
       const newUser = userLog.role
       setUser(newUser)// Acessando o email corretamente
     }
@@ -56,15 +50,10 @@ const Header = () => {
   
   const handleLogout = async () => {
     try {
-   
-      const response = await fetch('http://localhost:3001/api/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      setUser(null)
 
-      const data = await response.json();
       console.log(response, 'logout res')
       if (response.ok) {
         // Redirecionar para a página de login após o logout
@@ -117,6 +106,9 @@ const Header = () => {
           </li>
           <li>
             <NavLink to={`/materialeutensilios`} className="nav-link">Materiais e Utensilios</NavLink>
+          </li>
+          <li>
+            <NavLink to={`/registroacademico`} className="nav-link">Registro Acadêmico</NavLink>
           </li>
         </div>
         <div className="login">

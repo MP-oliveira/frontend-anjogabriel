@@ -20,7 +20,7 @@ const AddTurno = () => {
       termino
     }
 
-    console.log(newTurno)
+    // console.log(newTurno)
 
     try {
       // Enviar os dados para a API
@@ -39,7 +39,7 @@ const AddTurno = () => {
       <h2 className="addaluno-container" >Adicionar Turno</h2>
       <form
         className="form-addaluno"
-        ÍonSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
         <input
           type="text"
