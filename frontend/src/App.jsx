@@ -1,6 +1,7 @@
 import "./index.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useUser } from "./context/UseContext"; // Importar o contexto
+import { useContext } from "react";
+import { UserContext } from "./context/UseContext";
 
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -32,8 +33,8 @@ import EditProfessor from "./components/EditProfessor/EditProfessor";
 import Professores from "./components/Professores/Professores";
 
 function App() {
-  const { user } = useUser(); // Obter o estado do usuário
-  const role = user;
+  const { user } = useContext(UserContext); // Obter o estado do usuário
+  const role = user
   console.log('user app', user)
   return (
     <>

@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { UserCircle } from 'phosphor-react';
-import { useUser } from '../../context/UseContext'; // Importar o contexto
+import { UserContext } from "../../context/UseContext";
 
 import Logo from '../../assets/Logo.png';
 import { NavLink, useNavigate } from "react-router-dom";
 import './Header.css';
 
 const Header = () => {
-  const  {user}  = useUser(); // Obter o setter do estado do usuário
+  const  {user, setUser}  = useContext(UserContext); // Obter o setter do estado do usuário
   const [isBlurred, setIsBlurred] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
@@ -41,6 +41,9 @@ const Header = () => {
     
     if (userLog) {
       console.log('user email', userLog.role?.nome); // Acessando o email corretamente
+      console.log('user log', userLog); 
+      const newUser = userLog.role
+      setUser(newUser)// Acessando o email corretamente
     }
 
     if (token && userLog) {

@@ -1,7 +1,7 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 // Criar o contexto
-const UserContext = createContext();
+export const UserContext = createContext();
 
 // Provedor do contexto
 export const UserProvider = ({ children }) => {
@@ -16,9 +16,4 @@ export const UserProvider = ({ children }) => {
       {children}
     </UserContext.Provider>
   );
-};
-
-// Hook para usar o contexto
-export const useUser = () => {
-  return useContext(UserContext);
 };

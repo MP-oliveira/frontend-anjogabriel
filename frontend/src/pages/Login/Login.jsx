@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import api from "../../services/api";
 import "./Login.css";
-import { useUser } from '../../context/UseContext'; // Importar o contexto
+import { UserContext } from "../../context/UseContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const { setUser } = useUser(); // Obter o setter do estado do usuário
+  const { setUser } = useContext(UserContext)
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,7 +24,9 @@ function Login() {
       // Salvar token e informações do usuário
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data));
-      setUser(JSON.stringify(response.data)); // Defina o usuário no contexto
+      const newUser = JSON.stringify(localStorage.getItem('user'))
+      console.log("newUseer",newUser)
+      setUser(JSON.stringify(localStorage.getItem('user'))); // Defina o usuário no contexto
       // Redirecionar baseado no papel
       switch (role) {
         case "admin":
