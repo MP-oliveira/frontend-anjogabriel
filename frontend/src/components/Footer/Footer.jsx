@@ -1,5 +1,11 @@
 import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
 import './Footer.css';
+import footer1 from '../../assets/footer1.png';
+import footer2 from '../../assets/footer2.png';
+import footer3 from '../../assets/footer3.png';
+import footer4 from '../../assets/footer4.png';
+import footer5 from '../../assets/footer5.png';
+import footer6 from '../../assets/footer6.png';
 
 const Footer = () => {
   return (
@@ -30,12 +36,12 @@ const Footer = () => {
         </div>
 
         <div className="footer-gallery">
-          <img src="/img1.jpg" alt="Laboratório" />
-          <img src="/img2.jpg" alt="Sala de Aula" />
-          <img src="/img3.jpg" alt="Prática" />
-          <img src="/img4.jpg" alt="Formatura" />
-          <img src="/img5.jpg" alt="Estrutura" />
-          <img src="/img6.jpg" alt="Equipamentos" />
+          <img src={footer1} alt="Laboratório" />
+          <img src={footer2} alt="Sala de Aula" />
+          <img src={footer3} alt="Prática" />
+          <img src={footer4} alt="Formatura" />
+          <img src={footer5} alt="Estrutura" />
+          <img src={footer6} alt="Equipamentos" />
         </div>
       </div>
 
