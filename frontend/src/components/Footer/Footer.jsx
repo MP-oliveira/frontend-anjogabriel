@@ -49,9 +49,9 @@ const Footer = () => {
         <p>© 2024 - Escola Técnica de Enfermagem AnjoGabriel</p>
         <nav>
           <a href="#">Home</a>
-          <a href="#">Sobre</a>
-          <a href="#">Contato</a>
-          <a href="#">Blog</a>
+          <a href="#">Nossos Cursos</a>
+          <a href="#">Nossa Estrutura</a>
+          <a href="#">Fale Conosco</a>
         </nav>
       </div>
     </footer>
