@@ -1,43 +1,55 @@
 import './SectionTwo.css';
-import Foto1 from '../../assets/foto1.jpg';
-import Foto7 from '../../assets/foto7.jpg';
-import Foto3 from '../../assets/foto3.jpg';
-import Foto8 from '../../assets/foto8.jpg';
-import Foto5 from '../../assets/foto5.jpg';
-import Foto6 from '../../assets/foto6.jpg';
+
 
 const SectionTwo = () => {
+  const courses = [
+    {
+      title: "Técnico em Enfermagem",
+      description: "Formação completa para atuar em hospitais, clínicas e postos de saúde",
+      icon: "🏥"
+    },
+    {
+      title: "Técnico em Enfermagem do Trabalho",
+      description: "Especialização para atuar em medicina ocupacional e empresarial",
+      icon: "⚕️"
+    },
+    {
+      title: "Técnico em Pronto Atendimento",
+      description: "Preparação específica para emergências e atendimentos urgentes",
+      icon: "🚑"
+    },
+    {
+      title: "Técnico em Enfermagem de Pronto Socorro",
+      description: "Formação especializada para atendimentos de emergência",
+      icon: "🏨"
+    },
+    {
+      title: "Técnico em Enfermagem de Ambulância",
+      description: "Capacitação para atendimento móvel de urgência",
+      icon: "🚨"
+    }
+  ];
+
   return (
-    <section id="sectionTwo" className="about-us">
-      <div className="about-us-card">
-        <img src={Foto3} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
-        <div className="about-us-card-text"></div>
+    <div className="services-section">
+      <div className="services-header">
+        <h2>Nossos Cursos</h2>
+        <p>Oferecemos uma ampla gama de cursos para atender a todas as suas necessidades.</p>
       </div>
-      <div className="about-us-content">
-        <div className="about-us-text">
-          <h2>Sobre Nós</h2>
-          <p>
-            Na Escola de Enfermagem Anjo Gabriel, formamos profissionais capacitados para transformar vidas. Nosso compromisso é oferecer um ensino de qualidade que combina teoria sólida e aulas práticas, permitindo que os alunos desenvolvam habilidades essenciais para a profissão.
-
-            Contamos com um corpo docente experiente que proporciona suporte contínuo, garantindo que cada estudante tenha a orientação necessária para sua formação.
-
-            Junte-se a nós e construa uma carreira de sucesso! Aqui,
-          </p>
-        </div>
-        <div className="card">
-          <div className="carousel">
-            <img src={Foto1} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
-            <img src={Foto7} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
-            <img src={Foto8} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
+      <div className="services-grid">
+        {courses.map((service, index) => (
+          <div key={index} className="service-card">
+            <div className="service-icon">{service.icon}</div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
           </div>
-          <div className="carousel1">
-            <img src={Foto1} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
-            <img src={Foto7} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
-            <img src={Foto8} alt="Escola de Enfermagem Anjo Gabriel" className="about-us-image" />
-          </div>
-        </div>
+        ))}
       </div>
-    </section>
+      <div className="emergency-cta">
+        <h3>Quer saber mais sobre os nossos cursos?</h3>
+        <button className="contact-btn">Fale Conosco</button>
+      </div>
+    </div>
   );
 };
 

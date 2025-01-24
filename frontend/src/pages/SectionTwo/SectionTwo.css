@@ -109,3 +109,156 @@
   }
 }
 
+.services-section {
+  background-color: #1E56B8;
+  padding: 80px 120px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.services-header {
+  text-align: center;
+  margin-bottom: 48px;
+  color: white;
+  max-width: 600px;
+}
+
+.services-header h2 {
+  font-size: 42px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.services-header p {
+  font-size: 18px;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.service-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 32px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+  color: white;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.service-icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.service-card h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.service-card p {
+  font-size: 16px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.emergency-cta {
+  margin-top: 60px;
+  text-align: center;
+  color: white;
+}
+
+.emergency-cta h3 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.contact-btn {
+  background-color: #FBD064;
+  color: #1E56B8;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #ffc93c;
+  transform: translateY(-2px);
+}
+
+/* Responsividade para MacBook 13" (1280x800) */
+@media screen and (max-width: 1280px) {
+  .services-section {
+    padding: 60px 80px;
+  }
+  
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* iPad 10 (820x1180) */
+@media screen and (max-width: 820px) {
+  .services-section {
+    padding: 40px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .services-header h2 {
+    font-size: 36px;
+  }
+}
+
+/* iPhone 15 Pro Max (430x932) */
+@media screen and (max-width: 430px) {
+  .services-section {
+    padding: 24px;
+  }
+  
+  .services-header h2 {
+    font-size: 32px;
+  }
+  
+  .service-card {
+    padding: 24px;
+  }
+  
+  .emergency-cta h3 {
+    font-size: 24px;
+  }
+}
+
+/* iPhone (375x667) */
+@media screen and (max-width: 375px) {
+  .services-header h2 {
+    font-size: 28px;
+  }
+  
+  .contact-btn {
+    width: 100%;
+    padding: 12px 24px;
+  }
+}
+

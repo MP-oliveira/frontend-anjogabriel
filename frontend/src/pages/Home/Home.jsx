@@ -1,8 +1,8 @@
-import React from 'react'
-
 import SectionOne from '../SectionOne/SectionOne'
 import SectionTwo from '../SectionTwo/SectionTwo'
 import SectionThree from '../SectionThree/SectionThree'
+import SectionFour from '../SectionFour/SectionFour'
+import Footer from '../../components/Footer/Footer'
 
 const Home = () => {
   return (
@@ -10,6 +10,8 @@ const Home = () => {
       <SectionOne />
       <SectionTwo />
       <SectionThree />
+      <SectionFour />
+      <Footer />
     </div>
   )
 }

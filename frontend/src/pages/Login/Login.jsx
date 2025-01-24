@@ -54,6 +54,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
+          className='form-input'
         />
         <input
           type="password"
@@ -68,7 +69,7 @@ function Login() {
           <option value="professor">Professor</option>
           <option value="aluno">Aluno</option>
         </select>
-        <button type="submit">Entrar</button>
+        <button type="submit" className='aluno-btn'>Entrar</button>
       </form>
     </div>
   );
