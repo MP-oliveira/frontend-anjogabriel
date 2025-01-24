@@ -5,8 +5,8 @@ const SectionOne = () => {
   return (
     <div className="sectionOne-content">
       <div className="sectionOne-left">
-        <h1 className="sectionOne-h1">Sua escola de enfermagem de confiança em São Paulo</h1>
-        <p className="sectionOne-p">Com mais de 20 anos de experiência, construímos uma reputação sólida na formação de profissionais de enfermagem qualificados, oferecendo cursos técnicos adaptados às suas necessidades.</p>
+        <h1 className="sectionOne-h1">Sua escola de enfermagem de confiança em Simões Filho</h1>
+        <p className="sectionOne-p">Com mais de 30 anos de experiência, construímos uma reputação sólida na formação de profissionais de enfermagem qualificados, oferecendo cursos técnicos adaptados às suas necessidades.</p>
         <div className="sectionOne-cta">
           <button className="sectionOne-btn">
             Explore nossos cursos
