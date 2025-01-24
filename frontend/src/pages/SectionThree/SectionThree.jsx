@@ -1,4 +1,5 @@
 import './SectionThree.css';
+import bgWaves from '../../assets/bg-waves.png';
 import foto1 from '../../assets/foto1.jpg';
 import foto2 from '../../assets/foto2.jpg';
 import foto3 from '../../assets/foto3.jpg';
@@ -17,7 +18,15 @@ const SectionThree = () => {
   ];
 
   return (
-    <section className="gallery-section">
+    <section 
+      className="gallery-section" 
+      style={{ 
+        backgroundImage: `url(${bgWaves})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center',
+        backgroundSize: 'cover'
+      }}
+    >
       <div className="gallery-header">
         <h1>Nossa Estrutura</h1>
         <p>Conheça nosso ambiente de aprendizado, equipado com tecnologia de ponta e espaços 
