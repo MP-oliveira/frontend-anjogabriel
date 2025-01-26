@@ -21,12 +21,6 @@ const Header = () => {
     }
   };
 
-  const handleNavigation = (section) => {
-    if (location.pathname !== '/') {
-      navigate('/', { state: { scrollTo: section } });
-    }
-  };
-
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -58,6 +52,17 @@ const Header = () => {
     }
   };
 
+  const handleNavigateAndScroll = (sectionId) => {
+    if (location.pathname !== "/") {
+      navigate("/", { state: { scrollTo: sectionId } });
+    } else {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <header className={`header ${isBlurred ? 'blur' : ''}`}>
       <div className="header__container">
@@ -74,55 +79,43 @@ const Header = () => {
             <NavLink to="/" className="nav-link">Home</NavLink>
           </li>
           <li>
-            <Link 
+            <Link
               activeClass="active"
               to="sectionTwo"
-              spy={true} 
-              smooth={true} 
-              offset={-70} 
-              duration={500} 
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
               className="nav-link"
-              onClick={() => {
-                if (location.pathname !== '/') {
-                  navigate('/');
-                }
-              }}
+              onClick={() => handleNavigateAndScroll("sectionTwo")}
             >
               Nossos Cursos
             </Link>
           </li>
           <li>
-            <Link 
+            <Link
               activeClass="active"
               to="sectionThree"
-              spy={true} 
-              smooth={true} 
-              offset={-70} 
-              duration={500} 
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
               className="nav-link"
-              onClick={() => {
-                if (location.pathname !== '/') {
-                  navigate('/');
-                }
-              }}
+              onClick={() => handleNavigateAndScroll("sectionThree")}
             >
               Nossa Estrutura
             </Link>
           </li>
           <li>
-            <Link 
+            <Link
               activeClass="active"
               to="sectionFour"
-              spy={true} 
-              smooth={true} 
-              offset={-70} 
-              duration={500} 
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
               className="nav-link"
-              onClick={() => {
-                if (location.pathname !== '/') {
-                  navigate('/');
-                }
-              }}
+              onClick={() => handleNavigateAndScroll("sectionFour")}
             >
               Fale Conosco
             </Link>
