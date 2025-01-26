@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import '../AddAluno/AddAluno.css';
 

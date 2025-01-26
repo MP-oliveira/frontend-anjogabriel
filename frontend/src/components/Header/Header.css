@@ -19,6 +19,7 @@
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* Classe para aplicar o efeito de blur */
@@ -101,4 +102,87 @@
 
 .user-text span {
   color: #fbd064;
+}
+
+.dropdown {
+  position: relative;
+  bottom: 15px;
+}
+
+.dropdown-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 16px;
+  color: inherit;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgba(255, 255, 255, 0.8);
+  transition: opacity 0.3s ease;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown:hover .dropdown-menu::before {
+  opacity: 1;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 8px 16px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 2px 0;
+}
+
+.dropdown-item:hover {
+  background: rgba(30, 86, 184, 0.1);
+  color: #1E56B8;
+}
+
+/* Ajuste para mobile */
+@media screen and (max-width: 768px) {
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 8px;
+    
+    &::before {
+      display: none;
+    }
+  }
 }

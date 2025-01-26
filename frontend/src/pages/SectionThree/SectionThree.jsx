@@ -1,11 +1,11 @@
 import './SectionThree.css';
 import bgWaves from '../../assets/bg-waves.png';
-import foto1 from '../../assets/foto1.jpg';
-import foto2 from '../../assets/foto2.jpg';
-import foto3 from '../../assets/foto3.jpg';
-import foto4 from '../../assets/foto4.jpg';
-import foto5 from '../../assets/foto5.jpg';
-import foto6 from '../../assets/foto6.jpg';
+import foto1 from '../../assets/footer1.png';
+import foto2 from '../../assets/footer2.png';
+import foto3 from '../../assets/footer3.png';
+import foto4 from '../../assets/footer4.png';
+import foto5 from '../../assets/footer5.png';
+import foto6 from '../../assets/footer6.png';
 
 const SectionThree = () => {
   const images = [
