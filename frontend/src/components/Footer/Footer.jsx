@@ -48,10 +48,10 @@ const Footer = () => {
       <div className="footer-bottom">
         <p>© 2024 - Escola Técnica de Enfermagem AnjoGabriel</p>
         <nav>
-          <a href="#">Home</a>
-          <a href="#">Nossos Cursos</a>
-          <a href="#">Nossa Estrutura</a>
-          <a href="#">Fale Conosco</a>
+          <a href="#sectionOne">Home</a>
+          <a href="#sectionTwo">Nossos Cursos</a>
+          <a href="#sectionThree">Nossa Estrutura</a>
+          <a href="#sectionFour">Fale Conosco</a>
         </nav>
       </div>
     </footer>

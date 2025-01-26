@@ -29,7 +29,7 @@ const SectionFour = () => {
   };
 
   return (
-    <div className="contact-section">
+    <div id='sectionFour' className="contact-section">
       <div className="contact-header">
         <h1 className="contact-title">Fale Conosco</h1>
         <p className="contact-subtitle">Estamos prontos para atender você da melhor forma possível</p>

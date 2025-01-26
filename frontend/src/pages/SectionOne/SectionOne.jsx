@@ -3,7 +3,7 @@ import Sala from '../../assets/sala.jpg'
 
 const SectionOne = () => {
   return (
-    <div className="sectionOne-content">
+    <div id="sectionOne" className="sectionOne-content">
       <div className="sectionOne-left">
         <h1 className="sectionOne-h1">Sua escola de enfermagem de confiança em Simões Filho</h1>
         <p className="sectionOne-p">Com mais de 30 anos de experiência, construímos uma reputação sólida na formação de profissionais de enfermagem qualificados, oferecendo cursos técnicos adaptados às suas necessidades.</p>
@@ -13,7 +13,7 @@ const SectionOne = () => {
           </button>
           <div className="rating-box">
             <div className="stars">★★★★★</div>
-            <span>Mais de 2000+ avaliações</span>
+            <span>Mais de 2000+ alunos</span>
           </div>
         </div>
         <div className="features">

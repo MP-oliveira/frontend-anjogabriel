@@ -18,7 +18,7 @@ const SectionThree = () => {
   ];
 
   return (
-    <section 
+    <section id='sectionThree'
       className="gallery-section" 
       style={{ 
         backgroundImage: `url(${bgWaves})`,

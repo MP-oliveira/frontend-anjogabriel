@@ -31,7 +31,7 @@ const SectionTwo = () => {
   ];
 
   return (
-    <div className="services-section">
+    <div id='sectionTwo' className="services-section">
       <div className="services-header">
         <h2>Nossos Cursos</h2>
         <p>Oferecemos uma ampla gama de cursos para atender a todas as suas necessidades.</p>
