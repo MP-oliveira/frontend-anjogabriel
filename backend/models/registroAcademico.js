@@ -14,7 +14,7 @@ const RegistroAcademico = sequelize.define('registroAcademico', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'alunos', 
+      model: 'aluno', 
       key: 'id',
     },
   },
@@ -22,7 +22,7 @@ const RegistroAcademico = sequelize.define('registroAcademico', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'disciplinas', 
+      model: 'disciplina', 
       key: 'id',
     },
   },
