@@ -32,12 +32,12 @@ const createRegistroAcademico = async (req, res) => {
     mediaFinal,
   } = req.body;
 
-  if (!alunoId || !disciplinaId || notaValor === undefined) {
+  if (!alunoId || !disciplinaId) {
     return res
       .status(400)
       .json({
         error:
-          "Campos obrigatórios ausentes: alunoId, disciplinaId e notaValor são necessários.",
+          "Campos obrigatórios ausentes: alunoId, disciplinaId  são necessários.",
       });
   }
 
@@ -80,7 +80,7 @@ const createRegistroAcademico = async (req, res) => {
     });
 
     // Deus erro no formato da data
-    res.status(200).json({ message: "Aluno e disciplina encontrado", aluno: aluno.nome, disciplina: disciplina.id })
+    res.status(200).json({ message: "Aluno e disciplina encontrado", aluno: aluno.nome, disciplina: disciplina.nome, novoRegistro: novoRegistro })
   } catch (error) {
     console.error("Erro ao criar registro acadêmico:", error.message);
     res.status(400).json({ error: error.message });
@@ -158,7 +158,7 @@ const listRegistrosAcademicos = async (req, res) => {
   }
 };
 
-// AINDA FALTA VERIFICAR
+// Esse controller esta ok - FUNCIONANDO
 // Função para obter um registro acadêmico por ID
 const getRegistroAcademicoById = async (req, res) => {
   // console.log('Requisição recebida para o ID:', req.params.id);
@@ -167,8 +167,8 @@ const getRegistroAcademicoById = async (req, res) => {
   try {
     const registro = await RegistroAcademico.findByPk(id, {
       include: [
-        { model: Aluno, as: "aluno", attributes: ["id", "nome"] },
-        { model: Disciplina, as: "disciplina", attributes: ["id", "nome"] },
+        { model: Aluno, as: "alunos" /*, attributes: ["id", "nome"]*/ },
+        { model: Disciplina, as: "disciplinas"/*, attributes: ["id", "nome"]*/ },
       ],
     });
     if (registro) {
@@ -178,11 +178,15 @@ const getRegistroAcademicoById = async (req, res) => {
         disciplina: registro.disciplina,
         faltaData: registro.faltaData,
         faltaMotivo: registro.faltaMotivo,
-        notaValor: registro.notaValor,
+        notaTeste: registro.notaTeste,
+        media: registro.media,
+        mediaFinal: registro.mediaFinal,
+        notaProva: registro.notaProva,
         provaData: registro.provaData,
         provaDescricao: registro.provaDescricao,
         testeData: registro.testeData,
         testeDescricao: registro.testeDescricao,
+        notaTrabalho: registro.notaTrabalho,
         trabalhoData: registro.trabalhoData,
         trabalhoDescricao: registro.trabalhoDescricao,
         createdAt: registro.createdAt,
