@@ -1,10 +1,10 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../db/db');
-const Aluno = require('./aluno')
-const Disciplina = require('./disciplina')
+const { DataTypes } = require("sequelize");
+const sequelize = require("../db/db");
+const Aluno = require("./aluno");
+const Disciplina = require("./disciplina");
 
 // Modelo RegistroAcademico
-const RegistroAcademico = sequelize.define('registroAcademico', {
+const RegistroAcademico = sequelize.define("registroAcademico", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -14,16 +14,16 @@ const RegistroAcademico = sequelize.define('registroAcademico', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'aluno', 
-      key: 'id',
+      model: "alunos",
+      key: "id",
     },
   },
   disciplinaId: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'disciplina', 
-      key: 'id',
+      model: "disciplinas",
+      key: "id",
     },
   },
 
@@ -35,7 +35,15 @@ const RegistroAcademico = sequelize.define('registroAcademico', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  notaValor: {
+  testeData: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  testeDescricao: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  notaTeste: {
     type: DataTypes.FLOAT,
     allowNull: true,
   },
@@ -47,12 +55,8 @@ const RegistroAcademico = sequelize.define('registroAcademico', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  testeData: {
-    type: DataTypes.DATE,
-    allowNull: true,
-  },
-  testeDescricao: {
-    type: DataTypes.STRING,
+  notaProva: {
+    type: DataTypes.FLOAT,
     allowNull: true,
   },
   trabalhoData: {
@@ -63,9 +67,39 @@ const RegistroAcademico = sequelize.define('registroAcademico', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  notaTrabalho: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  estagioData: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  estagioDescricao: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  estagioNota: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  media: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+  mediaFinal: {
+    type: DataTypes.FLOAT,
+    allowNull: true,
+  },
+},
+{
+  tableName: "registroAcademico"
 });
 
-RegistroAcademico.belongsTo(Aluno, { foreignKey: 'alunoId', as: 'aluno' });
-RegistroAcademico.belongsTo(Disciplina, { foreignKey: 'disciplinaId', as: 'disciplina' });
+RegistroAcademico.belongsTo(Aluno, { foreignKey: "alunoId", as: "alunos" });
+RegistroAcademico.belongsTo(Disciplina, {
+  foreignKey: "disciplinaId",
+  as: "disciplinas",
+});
 
 module.exports = RegistroAcademico;

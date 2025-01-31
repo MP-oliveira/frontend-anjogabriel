@@ -16,13 +16,20 @@ const createRegistroAcademico = async (req, res) => {
     disciplinaId,
     faltaData,
     faltaMotivo,
-    notaValor,
-    provaData,
-    provaDescricao,
     testeData,
     testeDescricao,
+    notaTeste,
+    provaData,
+    provaDescricao,
+    notaProva,
     trabalhoData,
     trabalhoDescricao,
+    notaTrabalho,
+    estagioData,
+    estagioDescricao,
+    estagioNota,
+    media,
+    mediaFinal,
   } = req.body;
 
   if (!alunoId || !disciplinaId || notaValor === undefined) {
@@ -40,33 +47,40 @@ const createRegistroAcademico = async (req, res) => {
 
     // console.log(aluno.id, disciplina.id)  // Aqui esta recebendo o aluno e disciplina
 
-    if (!aluno && !disciplina) {
-        res.status(404).json({error: ["Aluno nao encotnrato"]})
-        return
+    if (!aluno) {
+      res.status(404).json({ error: ["Aluno nao encotnrato, informe o codigo do aluno valido!"] })
+      return
     }
 
     if (!disciplina) {
-        res.status(404).json({error: ["Disciplina nao encotnrato"]})
-        return
+      res.status(404).json({ error: ["Disciplina nao encotnrato, informe o codigo da disciplina valido!"] })
+      return
     }
 
-    
-    const novoRegistro = await RegistroAcademico.create({
-          alunoId: aluno.id,
-          disciplinaId: disciplina.id,
-          faltaData,
-          faltaMotivo,
-          notaValor,
-          provaData,
-          provaDescricao,
-          testeData,
-          testeDescricao,
-          trabalhoData,
-          trabalhoDescricao,
-        });
 
-        // Deus erro no formato da data
-        res.status(200).json({message: "Aluno e disciplina encontrado", aluno: aluno.nome, disciplina: disciplina.id})
+    const novoRegistro = await RegistroAcademico.create({
+      alunoId: aluno.id,
+      disciplinaId: disciplina.id,
+      faltaData,
+      faltaMotivo,
+      testeData,
+      testeDescricao,
+      notaTeste,
+      provaData,
+      provaDescricao,
+      notaProva,
+      trabalhoData,
+      trabalhoDescricao,
+      notaTrabalho,
+      estagioData,
+      estagioDescricao,
+      estagioNota,
+      media,
+      mediaFinal,
+    });
+
+    // Deus erro no formato da data
+    res.status(200).json({ message: "Aluno e disciplina encontrado", aluno: aluno.nome, disciplina: disciplina.id })
   } catch (error) {
     console.error("Erro ao criar registro acadêmico:", error.message);
     res.status(400).json({ error: error.message });
@@ -81,12 +95,12 @@ const listRegistrosAcademicos = async (req, res) => {
       include: [
         {
           model: Aluno,
-          as: "aluno",
+          as: "alunos",
           attributes: ["id", "nome"],
         },
         {
           model: Disciplina,
-          as: "disciplina",
+          as: "disciplinas",
           attributes: ["id", "nome"],
         },
       ],
@@ -96,13 +110,20 @@ const listRegistrosAcademicos = async (req, res) => {
         "disciplinaId",
         "faltaData",
         "faltaMotivo",
-        "notaValor",
+        "notaTeste",
+        "notaProva",
         "provaData",
         "provaDescricao",
         "testeData",
         "testeDescricao",
+        "notaTrabalho",
         "trabalhoData",
         "trabalhoDescricao",
+        "estagioData",
+        "estagioDescricao",
+        "estagioNota",
+        "media",
+        "mediaFinal",
         "createdAt",
         "updatedAt",
       ],
@@ -116,11 +137,15 @@ const listRegistrosAcademicos = async (req, res) => {
       disciplina: registro.disciplina,
       faltaData: registro.faltaData,
       faltaMotivo: registro.faltaMotivo,
-      notaValor: registro.notaValor,
+      notaTeste: registro.notaTeste,
+      media: registro.media,
+      mediaFinal: registro.mediaFinal,
+      notaProva: registro.notaProva,
       provaData: registro.provaData,
       provaDescricao: registro.provaDescricao,
       testeData: registro.testeData,
       testeDescricao: registro.testeDescricao,
+      notaTrabalho: registro.notaTrabalho,
       trabalhoData: registro.trabalhoData,
       trabalhoDescricao: registro.trabalhoDescricao,
       createdAt: registro.createdAt,

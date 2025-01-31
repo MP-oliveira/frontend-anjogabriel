@@ -111,8 +111,12 @@ const Aluno = db.define('Aluno', {
   tableName: "alunos"
 });
 
+
+
+
 // Curso.hasMany(Aluno);
 // Aluno.hasMany(Curso);
 
 
 module.exports = Aluno;
+
