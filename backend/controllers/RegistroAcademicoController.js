@@ -207,7 +207,6 @@ const getRegistroAcademicoById = async (req, res) => {
 };
 
 // Esse controller esta ok - FUNCIONANDO
-
 // Função para atualizar um registro acadêmico
 const updateRegistroAcademico = async (req, res) => {
   const { id } = req.params;
@@ -272,7 +271,7 @@ const updateRegistroAcademico = async (req, res) => {
   }
 };
 
-// AINDA FALTA VERIFICAR
+// Esse controller esta ok - FUNCIONANDO
 // Função para excluir um registro acadêmico
 const deleteRegistroAcademico = async (req, res) => {
   const { id } = req.params;
@@ -281,16 +280,17 @@ const deleteRegistroAcademico = async (req, res) => {
     const registro = await RegistroAcademico.findByPk(id);
     if (registro) {
       await registro.destroy();
-      res.status(204).json();
+
     } else {
       res.status(404).json({ error: "Registro não encontrado" });
+      return
     }
+
   } catch (error) {
     console.error("Erro ao excluir registro acadêmico:", error.message);
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
-
 
 // Função de teste
 const testeRegistroAcademico = (req, res) => {

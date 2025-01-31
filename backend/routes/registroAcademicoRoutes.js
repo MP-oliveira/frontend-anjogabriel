@@ -7,7 +7,7 @@ router.post('/create', registroAcademicoController.createRegistroAcademico);
 router.get('/:id', registroAcademicoController.getRegistroAcademicoById);
 router.get('/', registroAcademicoController.listRegistrosAcademicos);
 router.put('/edit/:id', registroAcademicoController.updateRegistroAcademico);
-router.delete('/:id', registroAcademicoController.deleteRegistroAcademico);
+router.delete('/delete/:id', registroAcademicoController.deleteRegistroAcademico);
 router.get('/teste', registroAcademicoController.testeRegistroAcademico);
 
 
