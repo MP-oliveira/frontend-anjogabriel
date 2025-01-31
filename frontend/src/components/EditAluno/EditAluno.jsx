@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
@@ -45,6 +45,7 @@ const alunoSchema = z.object({
 const EditAluno = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  // eslint-disable-next-line no-unused-vars
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alunoData, setAlunoData] = useState({

@@ -1,5 +1,5 @@
 import "./AddCurso.css";
-import React, { useState } from "react";
+import { useState } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";

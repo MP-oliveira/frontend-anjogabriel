@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { useParams } from "react-router-dom";
 import { useReactToPrint } from 'react-to-print';

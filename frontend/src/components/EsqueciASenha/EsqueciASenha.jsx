@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './EsqueciASenha.css';
 
 function EsqueciASenha() {
@@ -28,6 +28,7 @@ function EsqueciASenha() {
         setError(data.message || 'Erro ao enviar link de recuperação');
       }
     } catch (err) {
+      console.error('Erro ao enviar link de recuperação:', err);
       setError('Erro de conexão');
     }
   };
