@@ -11,6 +11,8 @@ const RegistroAcademico = require("../models/registroAcademico");
 // Esse controller esta ok - FUNCIONANDO
 // Função para criar um novo registro acadêmico
 const createRegistroAcademico = async (req, res) => {
+  let media = 0
+  let mediaFinal = 0
   const {
     alunoId,
     disciplinaId,
@@ -28,9 +30,11 @@ const createRegistroAcademico = async (req, res) => {
     estagioData,
     estagioDescricao,
     estagioNota,
-    media,
-    mediaFinal,
+    // fazer o calculo da media para salvar no banco de dados
   } = req.body;
+
+  media = (notaTeste + notaProva + notaTrabalho + estagioNota) / 4
+  mediaFinal = (media + mediaFinal) / 2
 
   if (!alunoId || !disciplinaId) {
     return res
@@ -202,54 +206,69 @@ const getRegistroAcademicoById = async (req, res) => {
   }
 };
 
-// AINDA FALTA VERIFICAR
+// Esse controller esta ok - FUNCIONANDO
+
 // Função para atualizar um registro acadêmico
 const updateRegistroAcademico = async (req, res) => {
   const { id } = req.params;
-  console.log(id, "edit");
   const {
-    alunoId,
-    disciplinaId,
     faltaData,
     faltaMotivo,
-    notaValor,
-    provaData,
-    provaDescricao,
     testeData,
     testeDescricao,
+    notaTeste,
+    provaData,
+    provaDescricao,
+    notaProva,
     trabalhoData,
     trabalhoDescricao,
+    notaTrabalho,
+    estagioData,
+    estagioDescricao,
+    estagioNota,
   } = req.body;
-
-  if (notaValor === undefined) {
-    return res
-      .status(400)
-      .json({ error: "Nota é obrigatória para atualização." });
-  }
 
   try {
     const registro = await RegistroAcademico.findByPk(id);
+    
     if (registro) {
+      // Calcula a nova média com os valores do body
+      const novaMedia = (
+        (notaTeste || registro.notaTeste) + 
+        (notaProva || registro.notaProva) + 
+        (notaTrabalho || registro.notaTrabalho) + 
+        (estagioNota || registro.estagioNota)
+      ) / 4;
+      
+      // Calcula a média final usando a média antiga do registro e a nova média
+      const mediaFinal = (novaMedia + registro.media) / 2;
+
       await registro.update({
-        alunoId,
-        disciplinaId,
         faltaData,
         faltaMotivo,
-        notaValor,
-        provaData,
-        provaDescricao,
         testeData,
         testeDescricao,
+        notaTeste,
+        provaData,
+        provaDescricao,
+        notaProva,
         trabalhoData,
         trabalhoDescricao,
+        notaTrabalho,
+        estagioData,
+        estagioDescricao,
+        estagioNota,
+        media: novaMedia,
+        mediaFinal,
       });
-      res.status(200).json(registro);
+      
+      res.status(200).json({message: "Registro atualizado com sucesso", registro: registro});
     } else {
       res.status(404).json({ error: "Registro não encontrado" });
     }
   } catch (error) {
     console.error("Erro ao atualizar registro acadêmico:", error.message);
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
