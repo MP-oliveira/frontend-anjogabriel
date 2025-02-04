@@ -14,20 +14,23 @@ const RegistroAcademicoAluno = () => {
     const fetchRegistros = async () => {
       try {
         const response = await api.get('/registroacademico/');
+        console.log("response registro academico", response.data)
         const registrosUnicos = response.data.reduce((acc, registro) => {
-          const key = registro.aluno.id;
+          const key = registro.id;
           if (!acc[key]) {
             acc[key] = {
               id: registro.id,
-              aluno: registro.aluno.nome,
-              curso: registro.aluno.curso?.nome || 'Não definido',
-              disciplinas: new Set([registro.disciplina.nome])
+              aluno: registro.aluno,
+              // para aparecer o curso, precisa fazer o relacionamento de curso com o registro academico e fazer o include no fetch do controller
+              curso: registro.curso?.nome || 'Não definido',  
+              disciplinas: new Set([registro.disciplina])
             };
           } else {
             acc[key].disciplinas.add(registro.disciplina.nome);
           }
           return acc;
         }, {});
+        console.log("Registros unicaos", registrosUnicos)
 
         const registrosFormatados = Object.values(registrosUnicos).map(reg => ({
           ...reg,
