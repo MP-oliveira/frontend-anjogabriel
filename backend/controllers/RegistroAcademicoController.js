@@ -100,45 +100,45 @@ const listRegistrosAcademicos = async (req, res) => {
         {
           model: Aluno,
           as: "alunos",
-          attributes: ["id", "nome"],
+          // attributes: ["id", "nome"],
         },
         {
           model: Disciplina,
           as: "disciplinas",
-          attributes: ["id", "nome"],
+          // attributes: ["id", "nome"],
         },
       ],
-      attributes: [
-        "id",
-        "alunoId",
-        "disciplinaId",
-        "faltaData",
-        "faltaMotivo",
-        "notaTeste",
-        "notaProva",
-        "provaData",
-        "provaDescricao",
-        "testeData",
-        "testeDescricao",
-        "notaTrabalho",
-        "trabalhoData",
-        "trabalhoDescricao",
-        "estagioData",
-        "estagioDescricao",
-        "estagioNota",
-        "media",
-        "mediaFinal",
-        "createdAt",
-        "updatedAt",
-      ],
+      // attributes: [
+      //   "id",
+      //   "alunoId",
+      //   "disciplinaId",
+      //   "faltaData",
+      //   "faltaMotivo",
+      //   "notaTeste",
+      //   "notaProva",
+      //   "provaData",
+      //   "provaDescricao",
+      //   "testeData",
+      //   "testeDescricao",
+      //   "notaTrabalho",
+      //   "trabalhoData",
+      //   "trabalhoDescricao",
+      //   "estagioData",
+      //   "estagioDescricao",
+      //   "estagioNota",
+      //   "media",
+      //   "mediaFinal",
+      //   "createdAt",
+      //   "updatedAt",
+      // ],
     });
 
-    console.log(registros);
+    // console.log("registro academico", registros[0].alunos)  // chegou aqui ok
 
     const registrosFormatados = registros.map((registro) => ({
       id: registro.id,
-      aluno: registro.aluno,
-      disciplina: registro.disciplina,
+      aluno: registro.alunos.nome,
+      disciplina: registro.disciplinas.nome,
       faltaData: registro.faltaData,
       faltaMotivo: registro.faltaMotivo,
       notaTeste: registro.notaTeste,
@@ -155,6 +155,7 @@ const listRegistrosAcademicos = async (req, res) => {
       createdAt: registro.createdAt,
       updatedAt: registro.updatedAt,
     }));
+    // console.log("registro formatado", registrosFormatados)  chegou aqui ok
     res.status(200).json(registrosFormatados);
   } catch (error) {
     console.error("Erro ao listar registros acadêmicos:", error.message);
