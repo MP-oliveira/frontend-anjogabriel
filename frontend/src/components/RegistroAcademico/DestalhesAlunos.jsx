@@ -16,21 +16,23 @@ const DetalhesAluno = () => {
     const fetchDetalhesAluno = async () => {
       try {
         const response = await api.get(`/registroacademico/${id}`);
-        console.log('Dados recebidos:', response.data); // Para debug
-
+        // console.log('Dados recebidos:', response.data); // Para debug
+        
         if (response.data) {
           const registro = response.data;
+          // console.log('Dados recebidos registro:', registro); // Para debug
 
           // Configura o aluno
           setAluno({
-            nome: registro.aluno.nome,
-            curso: registro.aluno.curso
+            nome: registro.aluno,
+            curso: registro.disciplina
           });
 
           // Configura a disciplina
           const disciplina = {
-            id: registro.disciplina.id,
-            nome: registro.disciplina.nome,
+            id: registro.id,
+            aluno: registro.aluno,
+            nome: registro.disciplina,
             notas: {
               provas: registro.provaData ? [{
                 descricao: registro.provaDescricao,
@@ -49,6 +51,8 @@ const DetalhesAluno = () => {
             diasAula: [], // Você pode ajustar isso conforme necessário
             status: 'em_andamento'
           };
+
+          console.log('Dados recebidos registro:', disciplina, aluno); // Para debug
 
           // Atualiza as disciplinas
           setDisciplinas({
@@ -89,7 +93,8 @@ const DetalhesAluno = () => {
     return presenca.toFixed(2);
   };
 
-  if (!aluno) return <div>Carregando...</div>;
+  // if (!aluno) return <div>Carregando...</div>;
+  console.log("disciplina selecionada", disciplinaSelecionada)
 
   return (
     <div className="detalhes-container">

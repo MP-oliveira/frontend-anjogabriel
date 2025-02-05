@@ -23,10 +23,10 @@ const RegistroAcademicoAluno = () => {
               aluno: registro.aluno,
               // para aparecer o curso, precisa fazer o relacionamento de curso com o registro academico e fazer o include no fetch do controller
               curso: registro.curso?.nome || 'Não definido',  
-              disciplinas: new Set([registro.disciplina])
+              disciplinas: registro.disciplina
             };
           } else {
-            acc[key].disciplinas.add(registro.disciplina.nome);
+            acc[key].disciplinas.add(registro.disciplina);
           }
           return acc;
         }, {});
@@ -37,7 +37,7 @@ const RegistroAcademicoAluno = () => {
           disciplinas: Array.from(reg.disciplinas)
         }));
 
-        setRegistros(registrosFormatados);
+        setRegistros(registrosUnicos);
         setFilteredRegistros(registrosFormatados);
       } catch (error) {
         console.error('Erro ao buscar registros acadêmicos:', error);
@@ -123,7 +123,7 @@ const RegistroAcademicoAluno = () => {
                     </Link>
                   </td>
                   <td>{registro.curso}</td>
-                  <td>{registro.disciplinas.join(', ')}</td>
+                  <td>{registro.disciplinas}</td>
                   <td className="registro_acoes">
                     <Link to={`/registroacademico/edit/${registro.id}`}>
                       <img src={Edit} alt="Editar" />

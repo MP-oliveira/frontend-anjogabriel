@@ -176,11 +176,12 @@ const getRegistroAcademicoById = async (req, res) => {
         { model: Disciplina, as: "disciplinas"/*, attributes: ["id", "nome"]*/ },
       ],
     });
+    // console.log("registro by id", registro.disciplinas.nome, registro.alunos.nome)  // chegou ok
     if (registro) {
       const registroFormatado = {
         id: registro.id,
-        aluno: registro.aluno,
-        disciplina: registro.disciplina,
+        aluno: registro.alunos.nome,
+        disciplina: registro.disciplinas.nome,
         faltaData: registro.faltaData,
         faltaMotivo: registro.faltaMotivo,
         notaTeste: registro.notaTeste,
@@ -197,6 +198,7 @@ const getRegistroAcademicoById = async (req, res) => {
         createdAt: registro.createdAt,
         updatedAt: registro.updatedAt,
       };
+      // console.log("registro by id", registroFormatado)  // chegou ok
       res.status(200).json(registroFormatado);
     } else {
       res.status(404).json({ error: "Registro não encontrado" });
