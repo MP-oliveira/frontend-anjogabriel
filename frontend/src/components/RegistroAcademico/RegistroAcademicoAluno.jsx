@@ -14,7 +14,7 @@ const RegistroAcademicoAluno = () => {
     const fetchRegistros = async () => {
       try {
         const response = await api.get('/registroacademico/');
-        console.log("response registro academico", response.data)
+        // console.log("response registro academico", response.data)  // chegou aqui ok
         const registrosUnicos = response.data.reduce((acc, registro) => {
           const key = registro.id;
           if (!acc[key]) {
@@ -30,7 +30,7 @@ const RegistroAcademicoAluno = () => {
           }
           return acc;
         }, {});
-        console.log("Registros unicaos", registrosUnicos)
+        // console.log("Registros unicos", registrosUnicos)  // chegou aqui ok
 
         const registrosFormatados = Object.values(registrosUnicos).map(reg => ({
           ...reg,
