@@ -9,7 +9,6 @@ import EsqueciASenha from "./components/EsqueciASenha/EsqueciASenha";
 
 import AddMaterialEUtensilio from "./components/AddMaterial/AddMaterialEUtensilo";
 import AddTurno from "./components/Addturno/AddTurno";
-import AddDiploma from "./components/AddDiploma/AddDiploma";
 import Diploma from "./components/Diploma/Diploma"
 import Header from "./components/Header/Header";
 
@@ -75,7 +74,6 @@ function App() {
           <Route path="/registroacademico/:id" element={user && (role.role === 'aluno' || role.role === 'admin') ? <DetalhesAluno />  : <Navigate to="/login" />} />
 
           <Route path="/diplomas" element={user && role.role === 'admin' ? <Diploma /> : <Navigate to="/login" />}/>
-          <Route path="/diplomas/:id" element={user && role.role === 'admin' ? <AddDiploma /> : <Navigate to="/login" />} />
           <Route path="/turnos" element={user && role.role === 'admin' ? <AddTurno /> : <Navigate to="/login" />} />
           <Route
             path="/materialeutensilios"

@@ -1,0 +1,71 @@
+.diploma_container {
+  width: 1180px;
+  height: 868px;
+  background-color: white;
+}
+
+.diploma_impressao {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.diploma_headers h1,
+.diploma_headers h2 {
+  font-size: 30px;
+}
+
+.diploma_headers h1 {
+  margin-top: 80px;
+  margin-bottom: -30px;
+}
+
+.diploma_headers p {
+  font-size: 16px;
+}
+
+.diploma_headers h3 {
+  font-size: 34px;
+}
+
+.logo_anjo {
+  display: flex;
+  width: 90%;
+margin-left: 100px;
+}
+.logo_anjo img {
+  width: 400px;
+}
+
+.logo_anjo .bandeira {
+  width: 140px;
+  height: 120px;
+}
+
+.logo_anjo_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.assinaturas {
+  display: flex;
+  flex-direction: column;
+}
+
+.assinaturas_bottom {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 50px;
+}
+
+.assinaturas_line {
+  border-bottom: 1px solid black;
+}
+
+
+.diploma_borda {
+  border: 50px solid transparent;
+  border-image: url("../../assets/fundoazul.png") 150;
+}
