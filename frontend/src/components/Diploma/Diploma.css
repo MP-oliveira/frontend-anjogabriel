@@ -1,18 +1,22 @@
 .diploma_container {
-  width: 1180px;
-  height: 868px;
+  width: 1169px;
+  height: 827px;
   background-color: white;
+  margin: 0 auto;
 }
 
 .diploma_impressao {
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding: 20px;
 }
 
 .diploma_headers h1,
 .diploma_headers h2 {
-  font-size: 30px;
+  font-size: 24px;
+  text-align: center;
+  margin-right: 150px;
 }
 
 .diploma_headers h1 {
@@ -25,33 +29,66 @@
 }
 
 .diploma_headers h3 {
-  font-size: 34px;
+  font-size: 28px;
 }
 
 .logo_anjo {
   display: flex;
-  width: 90%;
-margin-left: 100px;
+  width: 100%;
+  justify-content: center;
 }
+
+.log_anjo_text {
+  position: relative;
+  margin: 0 auto;
+}
+
 .logo_anjo img {
-  width: 400px;
+  width: 300px;
+  position: absolute;
+  top: 320px;
+  right: 290px;
 }
 
 .logo_anjo .bandeira {
   width: 140px;
-  height: 120px;
+  height: auto;
+  position: absolute;
+  top: 340px;
+  left: 350px;
+}
+
+.anjo2 {
+  position: absolute;
+  top: 100px;
+  left:-150px;
+  opacity: 0.2;
 }
 
 .logo_anjo_text {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
+.logo_anjo_text h1, 
+.logo_anjo_text h2 {
+  padding-left: 130px;
+}
+
+.diploma_content p {
+  font-size: 16px;
+}
 
 .assinaturas {
   display: flex;
   flex-direction: column;
+}
+
+.assinaturas p {
+  font-size: 16px;
 }
 
 .assinaturas_bottom {
@@ -64,8 +101,21 @@ margin-left: 100px;
   border-bottom: 1px solid black;
 }
 
-
 .diploma_borda {
   border: 50px solid transparent;
   border-image: url("../../assets/fundoazul.png") 150;
+  padding: 40px;
+}
+
+@media print {
+  body * {
+    /* display: none; */
+    /* Oculta todos os elementos da página */
+  }
+
+  .diploma_container,
+  .diploma_container * {
+    display: block;
+    /* Exibe apenas o conteúdo dentro da diploma_container */
+  }
 }
