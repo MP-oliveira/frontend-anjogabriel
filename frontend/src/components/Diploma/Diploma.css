@@ -104,7 +104,8 @@
 }
 
 .assinaturas_line {
-  border-bottom: 1px solid black;
+  width: 220px;
+  border-bottom: 1px solid #1C65D1;
 }
 
 .diploma_borda {
