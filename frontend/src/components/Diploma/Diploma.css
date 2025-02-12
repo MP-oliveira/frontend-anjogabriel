@@ -62,7 +62,7 @@
 .anjo2 {
   position: absolute;
   top: 100px;
-  left:-150px;
+  left:-230px;
   opacity: 0.2;
 }
 
@@ -90,6 +90,11 @@
 
 .assinaturas p {
   font-size: 16px;
+}
+
+.diploma_assinatura_top {
+  margin-top: -20px;
+  margin-bottom: 20px;
 }
 
 .assinaturas_bottom {
