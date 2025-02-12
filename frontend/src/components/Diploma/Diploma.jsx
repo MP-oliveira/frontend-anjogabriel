@@ -19,7 +19,7 @@ const Diploma = () => {
       setLoading(false);
       return;
     }
-    
+
     const fetchAluno = async () => {
       try {
         const response = await api.get(`/alunos/${id}`);
@@ -57,9 +57,11 @@ const Diploma = () => {
 
   return (
     <div>
-      <button onClick={handlePrint} className="aluno-btn print-button">
-        Imprimir Diploma
-      </button>
+      <div className='print-btn'>
+        <button onClick={handlePrint} className="aluno-btn">
+          Imprimir Diploma
+        </button>
+      </div>
       <div className='diploma_container'>
         <div className="diploma_impressao">
           <div className='diploma_borda'>
