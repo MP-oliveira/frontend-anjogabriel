@@ -73,7 +73,7 @@ function App() {
           <Route path="/registroacademico/edit/:id" element={user && (role.role === 'professor' || role.role === 'admin') ? <EditRegistroAcademico /> : <Navigate to="/login" />} />
           <Route path="/registroacademico/:id" element={user && (role.role === 'aluno' || role.role === 'admin') ? <DetalhesAluno />  : <Navigate to="/login" />} />
 
-          <Route path="/diplomas" element={user && role.role === 'admin' ? <Diploma /> : <Navigate to="/login" />}/>
+          <Route path="/diplomas/:id" element={<Diploma />} />
           <Route path="/turnos" element={user && role.role === 'admin' ? <AddTurno /> : <Navigate to="/login" />} />
           <Route
             path="/materialeutensilios"

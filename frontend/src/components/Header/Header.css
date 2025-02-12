@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 20px 100px;
+  padding-top: 20px;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -107,7 +107,7 @@
 
 .dropdown {
   position: relative;
-  bottom: 15px;
+
 }
 
 .dropdown-trigger {

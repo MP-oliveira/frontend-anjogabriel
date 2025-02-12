@@ -3,6 +3,7 @@
   height: 827px;
   background-color: white;
   margin: 0 auto;
+  color: #1C65D1;
 }
 
 .diploma_impressao {
@@ -47,15 +48,15 @@
   width: 300px;
   position: absolute;
   top: 320px;
-  right: 290px;
+  right: 160px;
 }
 
 .logo_anjo .bandeira {
-  width: 140px;
+  width: 150px;
   height: auto;
   position: absolute;
-  top: 340px;
-  left: 350px;
+  top: 350px;
+  left: 250px;
 }
 
 .anjo2 {
@@ -107,15 +108,3 @@
   padding: 40px;
 }
 
-@media print {
-  body * {
-    /* display: none; */
-    /* Oculta todos os elementos da página */
-  }
-
-  .diploma_container,
-  .diploma_container * {
-    display: block;
-    /* Exibe apenas o conteúdo dentro da diploma_container */
-  }
-}
