@@ -1,0 +1,177 @@
+/* FundoDiploma.css */
+.diploma-container {
+  width: 297mm;
+  height: 210mm;
+  margin: 0 auto;
+  background-color: white;
+  padding: 15mm;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  border: 2px solid black;
+  position: relative;
+}
+
+.diploma-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Informações do Curso */
+.curso-info, .curso-atual {
+  margin-bottom: 8px;
+}
+
+.info-row {
+  display: flex;
+  border-bottom: 1px solid black;
+  padding: 1px 0;
+  margin-bottom: 2px;
+  min-height: 14px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+.value {
+  flex: 1;
+}
+
+.dates-row {
+  display: flex;
+  gap: 20px;
+}
+
+.dates-row .info-row {
+  flex: 1;
+}
+
+/* Seções de Texto */
+.perfil-section {
+  margin: 8px 0;
+}
+
+.section-title {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.section-text {
+  text-align: justify;
+  line-height: 1.2;
+  font-size: 9px;
+  margin-bottom: 5px;
+}
+
+.competencias-section {
+  margin-bottom: 8px;
+}
+
+/* Tabelas */
+.modulos-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modulo {
+  margin-bottom: 8px;
+}
+
+.modulo-title {
+  font-weight: bold;
+  margin-bottom: 2px;
+  font-size: 10px;
+}
+
+.modulo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8px;
+  font-size: 9px;
+}
+
+.modulo-table th,
+.modulo-table td {
+  border: 1px solid black;
+  padding: 2px 4px;
+  text-align: left;
+}
+
+.modulo-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.modulo-table td:nth-child(1) {
+  width: 50%;
+}
+
+.modulo-table td:nth-child(2),
+.modulo-table td:nth-child(3),
+.modulo-table td:nth-child(4) {
+  width: 16.66%;
+  text-align: center;
+}
+
+.subtotal-row, .total-row {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+/* Rodapé */
+.diploma-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  margin-top: auto;
+}
+
+.autenticacao,
+.coren {
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+}
+
+.linha-assinatura {
+  border-top: 1px solid black;
+  margin-bottom: 3px;
+  width: 150px;
+  margin: 0 auto 3px;
+}
+
+.codigo {
+  font-size: 8px;
+  margin-top: 2px;
+}
+
+/* Ajustes de Impressão */
+@media print {
+  .diploma-container {
+    margin: 0;
+    padding: 15mm;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+}
+
+/* Bordas da página */
+.page-border {
+  position: absolute;
+  top: 5mm;
+  left: 5mm;
+  right: 5mm;
+  bottom: 5mm;
+  border: 1px solid black;
+  pointer-events: none;
+}

@@ -5,6 +5,7 @@ import LogoBandeira from '../../assets/bandeira.png';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
+import FundoDiploma from './FundoDiploma';
 
 const Diploma = () => {
   const { id } = useParams();
@@ -118,6 +119,7 @@ const Diploma = () => {
           </div>
         </div>
       </div>
+      <FundoDiploma />
     </div>
   );
 };
