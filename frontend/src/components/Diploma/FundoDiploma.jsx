@@ -5,24 +5,21 @@ import './FundoDiploma.css';
 const FundoDiploma = () => {
   return (
     <div className="diploma-container">
-        <div className="page-border"></div>
+      <div className="page-border"></div>
+
       <div className="diploma-content">
         {/* Seção Superior */}
         <section className="curso-info">
-          <div className="info-row">
+          <div className="info-row-top">
             <span className="label">CURSO ANTERIOR:</span>
             <span className="value">ENSINO MÉDIO</span>
-          </div>
-          <div className="info-row">
-            <span className="label">ESTABELECIMENTO:</span>
-            <span className="value"></span>
-          </div>
-          <div className="info-row">
             <span className="label">ANO DE CONCLUSÃO:</span>
             <span className="value"></span>
           </div>
-          <div className="info-row">
-            <span className="label">LOCAL:</span>
+          <div className="info-row-bottom">
+            <span className="label">ESTABELECIMENTO:</span>
+            <span className="value"></span>
+            <span className="label-local">LOCAL:</span>
             <span className="value"></span>
           </div>
         </section>
@@ -50,8 +47,22 @@ const FundoDiploma = () => {
 
         {/* Perfil e Competências */}
         <section className="perfil-section">
-          <div className="section-title">PERFIL PROFISSIONAL DO TÉCNICO DE ENFERMAGEM:</div>
-          <p className="section-text">Prestar cuidados de enfermagem a individuo e população com a prerrogativa legal de assistir ao Enfermeiro nos diferentes níveis de atenção a saúde, em especial junto a pacientes graves e/ou com demandas especiais e no planejamento, programação orientação e supervisão das atividades de assistência, com integrante da equipe.</p>
+          <p className="section-title">PERFIL PROFISSIONAL DO TÉCNICO DE ENFERMAGEM: </p>
+            <span className="section-text"> Prestar cuidados de enfermagem a individuo e população com a prerrogativa legal 
+              de assistir ao Enfermeiro nos diferentes níveis de atenção a saúde, em especial junto a pacientes graves e/ou 
+              com demandas especiais e no planejamento, programação orientação
+              e supervisão das atividades de assistência, com integrante da equipe.</span>
+
+        </section>
+        <section className="competencia-section">
+          <div className="section-title">COMPETÊNCIA ESPECÍFICA DO TÉCNICO DE ENFERMAGEM: </div>
+          <p className="section-text"> Participar do planejamento, programação e orientação das atividades de assistência de enfermagem; Desempenhar ações de enfermagem inclusive a paciente em estado grave nos níveis de promoção,
+            proteção, recuperação e de reabilitação da saúde do individuo e/ ou grupos sociais, excetuando-se aos cuidados requeridos por pacientes com risco de vida; Participar da prevenção e controle sistemático da infecção hospitalar; Atuar nos programas de higiene e
+            segurança no trabalho; Participar da implementação de programa de vigilância a saúde; Desenvolver atividades de educação e comunicação em saúde; participar de programas / projetos de pesqu isa; Conhecer e aplicar princípios éticos profissionais, forma de
+            conduta, noções básicas sobre o Código de Deontologia de Enfermagem, informações sobre o Órgão de Classe, ler e interpretar os dispositivos legais que orientam a formação do exercício profissional na enfermagem; Prestar assistência integral a binômia mãe
+            filho durante o pré-natal, parto e puerpério e orientar quanto a importância do aleitamento materno. Conhecer as diversas fases do crescimento e desenvolvimento da criança, suas característica as reações da criança frente a hospitalização e atender para a
+            amenização dos conflitos. Conhecer as ações do saneamento básico e sua importância na prevenção das doenças transmissíveis. Conhecer os transtornos mentais, formas de tratamento, cuidados e seguranças nas intercorrências psiquiátricas desfazendo
+            preconceitos e favorecendo a integração social do doente.</p>
         </section>
 
         {/* Tabelas de Módulos */}

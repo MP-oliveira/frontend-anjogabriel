@@ -1,15 +1,15 @@
 /* FundoDiploma.css */
 .diploma-container {
-  width: 297mm;
-  height: 210mm;
+  width: 1169px;
+  height: 827px;
   margin: 0 auto;
   background-color: white;
-  padding: 15mm;
+  padding: 5mm;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
   font-size: 10px;
-  border: 2px solid black;
   position: relative;
+  margin-top: 50px;
 }
 
 .diploma-content {
@@ -19,17 +19,34 @@
   gap: 8px;
 }
 
+.curso-info {
+  width: 100%;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Informações do Curso */
-.curso-info, .curso-atual {
+.curso-info {
   margin-bottom: 8px;
 }
 
-.info-row {
+.info-row-top,
+.info-row-bottom {
+  width: 100%;
   display: flex;
-  border-bottom: 1px solid black;
   padding: 1px 0;
-  margin-bottom: 2px;
+  margin-left: 18px;
   min-height: 14px;
+  margin-bottom: 5px;
+}
+
+
+.label-local {
+  font-weight: bold;
+  margin-right: 5px;
+  white-space: nowrap;
+  margin-right: 80px;
 }
 
 .label {
@@ -42,9 +59,16 @@
   flex: 1;
 }
 
-.dates-row {
+.curso-atual{
+  margin-top: -15px;
+  padding-left: 15px;
+  border-bottom: 1px solid black;
+}
+
+.curso-atual,
+.dates-row  {
   display: flex;
-  gap: 20px;
+  gap: 100px;
 }
 
 .dates-row .info-row {
@@ -52,13 +76,19 @@
 }
 
 /* Seções de Texto */
-.perfil-section {
-  margin: 8px 0;
+.perfil-section,
+.competencia-section {
+ margin-top: -5px;
+ padding-left: 15px;
 }
+
+
+
 
 .section-title {
   font-weight: bold;
   margin-bottom: 3px;
+  display: inline; 
 }
 
 .section-text {
@@ -66,6 +96,8 @@
   line-height: 1.2;
   font-size: 9px;
   margin-bottom: 5px;
+  display: inline; /* Mantém o texto na mesma linha */
+  margin-left: 5px; /* Pequeno espaçamento após os dois pontos */
 }
 
 .competencias-section {
@@ -120,7 +152,8 @@
   text-align: center;
 }
 
-.subtotal-row, .total-row {
+.subtotal-row,
+.total-row {
   background-color: #f5f5f5;
   font-weight: bold;
 }
