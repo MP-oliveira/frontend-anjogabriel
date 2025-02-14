@@ -97,7 +97,7 @@ const FundoDiploma = () => {
                 </td>
                 <td>
                   <table className="inner-table">
-                    <thead>
+                    <thead className='thead-teoria'>
                       <tr>
                         <th>Teoria/ Prática</th>
                         <th>Notas</th>
@@ -176,7 +176,7 @@ const FundoDiploma = () => {
                 </td>
                 <td>
                   <table className="inner-table">
-                    <thead>
+                    <thead className='thead-teoria'>
                       <tr>
                         <th>Teoria/ Prática</th>
                         <th>Notas</th>
@@ -245,7 +245,7 @@ const FundoDiploma = () => {
                 </td>
                 <td>
                   <table className="inner-table">
-                    <thead>
+                    <thead className='thead-teoria'>
                       <tr>
                         <th>Teoria/ Prática</th>
                         <th>Notas</th>
@@ -314,7 +314,7 @@ const FundoDiploma = () => {
                 </td>
                 <td>
                   <table className="inner-table">
-                    <thead>
+                    <thead className='thead-teoria'>
                       <tr>
                         <th>Teoria/ Prática</th>
                         <th>Notas</th>
@@ -362,14 +362,16 @@ const FundoDiploma = () => {
               <tr>
                 <td>
                   <table className="inner-table">
-                    <tbody>
-                      <tr><td className="total-row">Total Geral</td></tr>
+                    <tbody className='tbody-footer'>
+                      <tr>
+                        <td className="total-row">Total Geral</td>
+                      </tr>
                     </tbody>
                   </table>
                 </td>
                 <td>
                   <table className="inner-table">
-                    <tbody>
+                    <tbody className='tbody-total'>
                       <tr className="total-row">
                         <td>1200</td>
                         <td></td>

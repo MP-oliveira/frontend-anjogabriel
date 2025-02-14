@@ -200,11 +200,6 @@
   display: flex;
 }
 
-.body-flex td {
-  display: flex;
-  justify-content: space-between;
-}
-
 .inner-table {
   width: 100%;
   border-collapse: collapse;
@@ -217,7 +212,7 @@
 .inner-table td {
   border: none;
   padding: 2px 4px;
-  text-align: left;
+  text-align: center;
 }
 
 .inner-table th {
@@ -227,6 +222,7 @@
 
 .inner-table td {
   border-bottom: 1px solid black;
+  text-align: center;
 }
 
 /* Ajuste das larguras das colunas internas */
@@ -238,6 +234,15 @@
 .inner-table td:nth-child(3),
 .inner-table td:nth-child(4) {
   width: 25%;
+  text-align: center;
+}
+
+.thead-teoria tr, .body-flex tr, .tbody-total tr {
+ display: flex;
+}
+
+.thead-teoria th, .body-flex td, .subtotal-row td, .total-row td {
+  border-right: 1px solid black;
   text-align: center;
 }
 
@@ -273,6 +278,15 @@
 
 .no-border {
   border-bottom: none;
+}
+
+
+.tbody-footer tbody{
+  width: 100%;
+}
+
+.tbody-footer td {
+  text-align: center;
 }
 
 
