@@ -45,17 +45,17 @@
 }
 
 .logo_anjo img {
-  width: 300px;
+  width: 100px;
   position: absolute;
-  top: 320px;
-  right: 160px;
+  top: 374px;
+  right: 280px;
 }
 
 .logo_anjo .bandeira {
-  width: 150px;
+  width: 165px;
   height: auto;
   position: absolute;
-  top: 350px;
+  top: 374px;
   left: 250px;
 }
 

@@ -59,14 +59,14 @@
   flex: 1;
 }
 
-.curso-atual{
+.curso-atual {
   margin-top: -15px;
   padding-left: 15px;
   border-bottom: 1px solid black;
 }
 
 .curso-atual,
-.dates-row  {
+.dates-row {
   display: flex;
   gap: 100px;
 }
@@ -78,8 +78,8 @@
 /* Seções de Texto */
 .perfil-section,
 .competencia-section {
- margin-top: -5px;
- padding-left: 15px;
+  margin-top: -5px;
+  padding-left: 15px;
 }
 
 
@@ -88,7 +88,7 @@
 .section-title {
   font-weight: bold;
   margin-bottom: 3px;
-  display: inline; 
+  display: inline;
 }
 
 .section-text {
@@ -96,8 +96,10 @@
   line-height: 1.2;
   font-size: 9px;
   margin-bottom: 5px;
-  display: inline; /* Mantém o texto na mesma linha */
-  margin-left: 5px; /* Pequeno espaçamento após os dois pontos */
+  display: inline;
+  /* Mantém o texto na mesma linha */
+  margin-left: 5px;
+  /* Pequeno espaçamento após os dois pontos */
 }
 
 .competencias-section {
@@ -106,10 +108,8 @@
 
 /* Tabelas */
 .modulos-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .modulo {
@@ -125,36 +125,31 @@
 .modulo-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 8px;
-  font-size: 9px;
 }
 
 .modulo-table th,
 .modulo-table td {
   border: 1px solid black;
-  padding: 2px 4px;
-  text-align: left;
+  text-align: center;
 }
 
 .modulo-table th {
-  background-color: #f5f5f5;
-  font-weight: bold;
+  width: 33.33%;
 }
 
-.modulo-table td:nth-child(1) {
-  width: 50%;
+.modulo-table td {
+  width: 33.33%;
 }
 
-.modulo-table td:nth-child(2),
-.modulo-table td:nth-child(3),
-.modulo-table td:nth-child(4) {
-  width: 16.66%;
-  text-align: center;
+
+/* Remove a borda inferior da célula que contém "Autenticação da Escola" */
+.autenticacao-cell {
+  border-bottom: none;
 }
 
 .subtotal-row,
 .total-row {
-  background-color: #f5f5f5;
+  background-color: white;
   font-weight: bold;
 }
 
@@ -184,6 +179,102 @@
   font-size: 8px;
   margin-top: 2px;
 }
+
+.modulos-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.modulo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9px;
+}
+
+.modulo-table td {
+  border: 1px solid black;
+  vertical-align: top;
+}
+
+.body-flex tr {
+  display: flex;
+}
+
+.body-flex td {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inner-table {
+  width: 100%;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inner-table th,
+.inner-table td {
+  border: none;
+  padding: 2px 4px;
+  text-align: left;
+}
+
+.inner-table th {
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+
+.inner-table td {
+  border-bottom: 1px solid black;
+}
+
+/* Ajuste das larguras das colunas internas */
+.inner-table td:first-child {
+  width: 25%;
+}
+
+.inner-table td:nth-child(2),
+.inner-table td:nth-child(3),
+.inner-table td:nth-child(4) {
+  width: 25%;
+  text-align: center;
+}
+
+.subtotal-row,
+.total-row {
+  font-weight: bold;
+}
+
+.autenticacao-cell {
+  text-align: center;
+  vertical-align: bottom !important;
+  padding-bottom: 20px !important;
+}
+
+.linha-assinatura {
+  width: 80%;
+  margin: 0 auto 5px;
+  border-top: 1px solid black;
+}
+
+.codigo {
+  font-size: 8px;
+  margin-top: 10px;
+}
+
+/* Ajustes dos cabeçalhos principais */
+
+.header-row td {
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.no-border {
+  border-bottom: none;
+}
+
 
 /* Ajustes de Impressão */
 @media print {
