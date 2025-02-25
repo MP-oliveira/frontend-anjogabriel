@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../db/db");
 const Aluno = require("./aluno");
 const Disciplina = require("./disciplina");
+const Curso = require("./curso");
 
 // Modelo RegistroAcademico
 const RegistroAcademico = sequelize.define("registroAcademico", {
@@ -23,6 +24,15 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
     allowNull: false,
     references: {
       model: "disciplinas",
+      key: "id",
+    },
+  },
+
+  cursoId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "cursos",
       key: "id",
     },
   },
@@ -92,14 +102,12 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
     allowNull: true,
   },
 },
-{
-  tableName: "registroAcademico"
-});
+  {
+    tableName: "registroAcademico"
+  });
 
 RegistroAcademico.belongsTo(Aluno, { foreignKey: "alunoId", as: "alunos" });
-RegistroAcademico.belongsTo(Disciplina, {
-  foreignKey: "disciplinaId",
-  as: "disciplinas",
-});
+RegistroAcademico.belongsTo(Curso, { foreignKey: "cursoId", as: "cursos" });
+RegistroAcademico.belongsTo(Disciplina, { foreignKey: "disciplinaId", as: "disciplinas", });
 
 module.exports = RegistroAcademico;

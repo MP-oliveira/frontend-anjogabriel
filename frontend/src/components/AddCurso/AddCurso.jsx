@@ -25,7 +25,6 @@ const cursoSchema = z.object({
     .min(0, { message: "O valor mensal não pode ser negativo" }),
   status: z.string({ message: "Selecione um status válido" }),
   modalidade: z.string({ message: "Selecione uma modalidade válida" }),
-  estagio_supervisionado: z.boolean({ message: "Selecione se há estágio supervisionado" })
 });
 
 const AddCurso = () => {
@@ -39,7 +38,6 @@ const AddCurso = () => {
   const [valor_mensal, setValor_mensal] = useState("");
   const [status, setStatus] = useState("");
   const [modalidade, setModalidade] = useState("");
-  const [estagio_supervisionado, setEstagio_supervisionado] = useState(false);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
@@ -54,7 +52,6 @@ const AddCurso = () => {
       valor_mensal: Number(valor_mensal),
       status,
       modalidade,
-      estagio_supervisionado
     };
 
     const cursoresult = cursoSchema.safeParse(cursoFormValues);
@@ -70,7 +67,6 @@ const AddCurso = () => {
         valor_mensal: fieldErrors.valor_mensal?._errors[0],
         status: fieldErrors.status?._errors[0],
         modalidade: fieldErrors.modalidade?._errors[0],
-        estagio_supervisionado: fieldErrors.estagio_supervisionado?._errors[0]
       });
     } else {
       try {
@@ -86,7 +82,6 @@ const AddCurso = () => {
         setValor_mensal("");
         setStatus("");
         setModalidade("");
-        setEstagio_supervisionado(false);
 
         navigate("/cursos");
       } catch (error) {
@@ -208,23 +203,6 @@ const AddCurso = () => {
             </p>
           )}
         </div>
-
-        <div className="curso-estagio">
-          <label>
-            Estágio Supervisionado:
-            <input
-              type="checkbox"
-              checked={estagio_supervisionado}
-              onChange={(e) => setEstagio_supervisionado(e.target.checked)}
-            />
-          </label>
-          {errors.estagio_supervisionado && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.estagio_supervisionado}
-            </p>
-          )}
-        </div>
-
         <div className="curso-btn-container">
           <button className="curso-btn" type="submit">
             Adicionar Curso

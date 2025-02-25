@@ -35,7 +35,6 @@ module.exports = class CursosController {
       valor_mensal,
       status,
       modalidade,
-      estagio_supervisionado,
     } = req.body;
 
     try {
@@ -48,7 +47,6 @@ module.exports = class CursosController {
         valor_mensal,
         status,
         modalidade,
-        estagio_supervisionado,
       };
 
       const createdCurso = await Curso.create(curso);

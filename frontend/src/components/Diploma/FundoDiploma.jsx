@@ -1,4 +1,4 @@
-// FundoDiploma.jsx
+
 
 import './FundoDiploma.css';
 

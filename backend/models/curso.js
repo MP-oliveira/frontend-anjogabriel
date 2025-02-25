@@ -34,10 +34,7 @@ const Curso = db.define('Curso', {
     type: DataTypes.ENUM('presencial', 'hibrido', 'EAD'),
     allowNull: false,
   },
-  estagio_supervisionado: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-  }
+
 }, {
   tableName: 'cursos',
 });

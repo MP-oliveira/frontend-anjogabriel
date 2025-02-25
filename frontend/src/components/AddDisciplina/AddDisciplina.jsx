@@ -14,6 +14,9 @@ const disciplinaSchema = z.object({
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  carga_horaria_estagio: z
+    .number()
+    .min(1, { message: "A carga horária precisa ser maior que 0" }),
   duracao: z.number(),
   curso_id: z
     .number()
@@ -28,7 +31,7 @@ const disciplinaSchema = z.object({
   status: z
     .string()
     .min(1, { message: "Selecione um status válido" }),
-    horario_inicio: z
+  horario_inicio: z
     .string()
     .min(1, { message: "Defina um horário de início" }),
   horario_fim: z
@@ -48,6 +51,8 @@ const AddDisciplina = () => {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [carga_horaria, setCarga_horaria] = useState("");
+  const [carga_horaria_estagio, setCarga_horaria_estagio] = useState("");
+  const [estagio_supervisionado, setEstagio_supervisionado] = useState("");
   const [duracao, setDuracao] = useState("");
   const [curso_id, setCurso_id] = useState("");
   const [professor_id, setProfessor_id] = useState("");
@@ -99,6 +104,8 @@ const AddDisciplina = () => {
       nome,
       descricao,
       carga_horaria: Number(carga_horaria),
+      carga_horaria_estagio: Number(carga_horaria_estagio),
+      estagio_supervisionado,
       duracao: Number(duracao),
       curso_id: Number(curso_id),
       professor_id: Number(professor_id),
@@ -120,7 +127,9 @@ const AddDisciplina = () => {
         nome: fieldErrors.nome?._errors[0],
         descricao: fieldErrors.descricao?._errors[0],
         carga_horaria: fieldErrors.carga_horaria?._errors[0],
-        duracao:fieldErrors.duracao?._errors[0],
+        carga_horaria_estagio: fieldErrors.carga_horaria_estagio?._errors[0],
+        estagio_supervisionado: fieldErrors.estagio_supervisionado?._errors[0],
+        duracao: fieldErrors.duracao?._errors[0],
         curso_id: fieldErrors.curso_id?._errors[0],
         professor_id: fieldErrors.professor_id?._errors[0],
         semestre: fieldErrors.semestre?._errors[0],
@@ -141,6 +150,8 @@ const AddDisciplina = () => {
         setNome("");
         setDescricao("");
         setCarga_horaria("");
+        setCarga_horaria_estagio("");
+        estagio_supervisionado(false);
         setDuracao("");
         setCurso_id("");
         setProfessor_id("");
@@ -252,6 +263,30 @@ const AddDisciplina = () => {
 
           <input
             type="number"
+            value={carga_horaria_estagio}
+            onChange={(e) => setCarga_horaria_estagio(e.target.value)}
+            placeholder="Carga Horária do Estágio (horas)"
+          />
+          {errors.carga_horaria && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria}
+            </p>
+          )}
+
+          <input
+            type="number"
+            value={estagio_supervisionado}
+            onChange={(e) => setEstagio_supervisionado(e.target.value)}
+            placeholder="Carga Horária do Estágio (horas)"
+          />
+          {errors.carga_horaria && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria}
+            </p>
+          )}
+
+          <input
+            type="number"
             value={semestre}
             onChange={(e) => setSemestre(e.target.value)}
             placeholder="Semestre"
@@ -349,11 +384,11 @@ const AddDisciplina = () => {
         </div>
         <div>
           <input type="text"
-          value={pre_requisitos}
-          onChange={(e) => setPre_requisitos(e.target.value)}
-          placeholder='Pré requisitos'
+            value={pre_requisitos}
+            onChange={(e) => setPre_requisitos(e.target.value)}
+            placeholder='Pré requisitos'
           />
-            {errors.pre_requisitos && (
+          {errors.pre_requisitos && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.pre_requisitos}
             </p>

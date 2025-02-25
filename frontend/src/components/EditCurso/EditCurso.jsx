@@ -25,7 +25,6 @@ const cursoSchema = z.object({
     .min(0, { message: "O valor mensal não pode ser negativo" }),
   status: z.string({ message: "Selecione um status válido" }),
   modalidade: z.string({ message: "Selecione uma modalidade válida" }),
-  estagio_supervisionado: z.boolean({ message: "Selecione se há estágio supervisionado" })
 });
 
 const EditCurso = () => {
@@ -43,7 +42,6 @@ const EditCurso = () => {
     valor_mensal: 0,
     status: "",
     modalidade: "",
-    estagio_supervisionado: false
   });
 
   useEffect(() => {
@@ -59,7 +57,6 @@ const EditCurso = () => {
           duracao: Number(curso.duracao),
           valor_total: Number(curso.valor_total),
           valor_mensal: Number(curso.valor_mensal),
-          estagio_supervisionado: Boolean(curso.estagio_supervisionado)
         });
       } catch (error) {
         console.error("Erro ao carregar os dados do curso", error);
@@ -87,7 +84,6 @@ const EditCurso = () => {
       duracao: Number(cursoData.duracao),
       valor_total: Number(cursoData.valor_total),
       valor_mensal: Number(cursoData.valor_mensal),
-      estagio_supervisionado: Boolean(cursoData.estagio_supervisionado)
     };
 
     const cursoResult = cursoSchema.safeParse(dataToValidate);
@@ -259,24 +255,6 @@ const EditCurso = () => {
             </p>
           )}
         </div>
-
-        <div className="curso-estagio">
-          <label>
-            Estágio Supervisionado:
-            <input
-              name="estagio_supervisionado"
-              type="checkbox"
-              checked={cursoData.estagio_supervisionado}
-              onChange={handleChange}
-            />
-          </label>
-          {errors.estagio_supervisionado && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.estagio_supervisionado._errors?.[0]}
-            </p>
-          )}
-        </div>
-
         <div className="curso-btn-container">
           <button className="curso-btn" type="submit">
             Salvar

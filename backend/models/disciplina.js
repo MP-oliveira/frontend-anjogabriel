@@ -22,6 +22,18 @@ const Disciplina = db.define('disciplina', {
       min: 1,
     },
   },
+  carga_horaria_estagio: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    validate: {
+      isInt: true,
+      min: 1,
+    },
+  },
+  estagio_supervisionado: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
   duracao: {
     type: DataTypes.INTEGER,
     allowNull: false,

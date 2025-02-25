@@ -6,6 +6,7 @@ const supabase = createClient(
 
 const Aluno = require("../models/aluno");
 const Disciplina = require("../models/disciplina");
+const Curso = require("../models/curso");
 const RegistroAcademico = require("../models/registroAcademico");
 
 // Esse controller esta ok - FUNCIONANDO
@@ -16,6 +17,7 @@ const createRegistroAcademico = async (req, res) => {
   const {
     alunoId,
     disciplinaId,
+    cursoId,
     faltaData,
     faltaMotivo,
     testeData,
@@ -48,6 +50,7 @@ const createRegistroAcademico = async (req, res) => {
   try {
     const aluno = await Aluno.findByPk(alunoId);
     const disciplina = await Disciplina.findByPk(disciplinaId)
+    const curso = await Disciplina.findByPk(cursoId)
 
     // console.log(aluno.id, disciplina.id)  // Aqui esta recebendo o aluno e disciplina
 
@@ -61,10 +64,16 @@ const createRegistroAcademico = async (req, res) => {
       return
     }
 
+    if (!curso) {
+      res.status(404).json({ error: ["Curso nao encotnrato, informe o codigo do curso valido!"] })
+      return
+    }
+
 
     const novoRegistro = await RegistroAcademico.create({
       alunoId: aluno.id,
       disciplinaId: disciplina.id,
+      cursoId: curso.id,
       faltaData,
       faltaMotivo,
       testeData,
@@ -100,37 +109,16 @@ const listRegistrosAcademicos = async (req, res) => {
         {
           model: Aluno,
           as: "alunos",
-          // attributes: ["id", "nome"],
         },
         {
           model: Disciplina,
           as: "disciplinas",
-          // attributes: ["id", "nome"],
+        },
+        {
+          model: Curso,
+          as: "cursos",
         },
       ],
-      // attributes: [
-      //   "id",
-      //   "alunoId",
-      //   "disciplinaId",
-      //   "faltaData",
-      //   "faltaMotivo",
-      //   "notaTeste",
-      //   "notaProva",
-      //   "provaData",
-      //   "provaDescricao",
-      //   "testeData",
-      //   "testeDescricao",
-      //   "notaTrabalho",
-      //   "trabalhoData",
-      //   "trabalhoDescricao",
-      //   "estagioData",
-      //   "estagioDescricao",
-      //   "estagioNota",
-      //   "media",
-      //   "mediaFinal",
-      //   "createdAt",
-      //   "updatedAt",
-      // ],
     });
 
     // console.log("registro academico", registros[0].alunos)  // chegou aqui ok
@@ -139,6 +127,7 @@ const listRegistrosAcademicos = async (req, res) => {
       id: registro.id,
       aluno: registro.alunos.nome,
       disciplina: registro.disciplinas.nome,
+      curso: registro.cursos.nome,
       faltaData: registro.faltaData,
       faltaMotivo: registro.faltaMotivo,
       notaTeste: registro.notaTeste,
@@ -172,8 +161,9 @@ const getRegistroAcademicoById = async (req, res) => {
   try {
     const registro = await RegistroAcademico.findByPk(id, {
       include: [
-        { model: Aluno, as: "alunos" /*, attributes: ["id", "nome"]*/ },
-        { model: Disciplina, as: "disciplinas"/*, attributes: ["id", "nome"]*/ },
+        { model: Aluno, as: "alunos"  },
+        { model: Disciplina, as: "disciplinas" },
+        { model: Curso, as: "cursos" },
       ],
     });
     // console.log("registro by id", registro.disciplinas.nome, registro.alunos.nome)  // chegou ok
@@ -182,6 +172,7 @@ const getRegistroAcademicoById = async (req, res) => {
         id: registro.id,
         aluno: registro.alunos.nome,
         disciplina: registro.disciplinas.nome,
+        curso: registro.cursos.nome,
         faltaData: registro.faltaData,
         faltaMotivo: registro.faltaMotivo,
         notaTeste: registro.notaTeste,
@@ -238,9 +229,8 @@ const updateRegistroAcademico = async (req, res) => {
       const novaMedia = (
         (notaTeste || registro.notaTeste) + 
         (notaProva || registro.notaProva) + 
-        (notaTrabalho || registro.notaTrabalho) + 
-        (estagioNota || registro.estagioNota)
-      ) / 4;
+        (notaTrabalho || registro.notaTrabalho) 
+      ) / 3;
       
       // Calcula a média final usando a média antiga do registro e a nova média
       const mediaFinal = (novaMedia + registro.media) / 2;

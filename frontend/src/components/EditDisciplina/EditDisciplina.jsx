@@ -11,12 +11,16 @@ const disciplinaSchema = z.object({
   descricao: z
     .string()
     .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
-  carga_horaria: 
+  carga_horaria:
     z.number()
-    .min(1, { message: "A carga horária precisa ser maior que 0" }),
-  duracao: 
+      .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  carga_horaria_estagio:
     z.number()
-    .min(1, { message: "A duração precisa ser maior que 0" }),
+      .min(1, { message: "A carga horária do estágio precisa ser maior que 0" }),
+      estagio_supervisionado: z.boolean(),
+  duracao:
+    z.number()
+      .min(1, { message: "A duração precisa ser maior que 0" }),
   curso_id: z.string().min(1, { message: "Selecione um curso válido" }),
   professor_id: z.string().min(1, { message: "Selecione um professor válido" }),
   semestre: z.string().min(1, { message: "Informe o semestre" }),
@@ -40,6 +44,7 @@ const EditDisciplina = () => {
     nome: "",
     descricao: "",
     carga_horaria: 0,
+    carga_horaria_estagio: 0,
     duracao: 0,
     curso_id: "",
     professor_id: "",
@@ -57,7 +62,7 @@ const EditDisciplina = () => {
       try {
         const response = await api.get(`/disciplinas/${id}`);
         const disciplina = response.data;
-        
+
         setDisciplinaData({
           ...disciplina,
           carga_horaria: Number(disciplina.carga_horaria),
@@ -107,12 +112,12 @@ const EditDisciplina = () => {
 
   const handleChange = (e) => {
     const { name, type, value } = e.target;
-    
+
     let processedValue = value;
     if (type === 'number') {
       processedValue = value === '' ? '' : Number(value);
     }
-    
+
     setDisciplinaData(prev => ({
       ...prev,
       [name]: processedValue
@@ -175,6 +180,19 @@ const EditDisciplina = () => {
           {errors.carga_horaria && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.carga_horaria._errors?.[0]}
+            </p>
+          )}
+
+          <input
+            name="carga_horaria_estagio"
+            type="number"
+            value={disciplinaData.carga_horaria_estagio}
+            onChange={handleChange}
+            placeholder="Carga Horária do Estágio (horas)"
+          />
+          {errors.carga_horaria && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria_estagio._errors?.[0]}
             </p>
           )}
 
