@@ -327,9 +327,9 @@ const AddAluno = () => {
           )}
           <select onChange={(e) => setEstado_civil(e.target.value)}>
             <option value="">Estado civil</option>
-            <option value="solteiro">Solteiro(a)</option>
-            <option value="casado">Casado(a)</option>
-            <option value="viuvo">Viuvo(a)</option>
+            <option value="Solteiro">Solteiro(a)</option>
+            <option value="Casado">Casado(a)</option>
+            <option value="Viuvo">Viuvo(a)</option>
           </select>
           {errors.estado_civil && (
             <p className="error_message" style={{ color: "red" }}>
@@ -550,8 +550,8 @@ const AddAluno = () => {
             onChange={(e) => setCurso(e.target.value)}
           >
             <option value="">Curso</option>
-            <option value="tecnico em enfermagem">Tecnico em enfermagem</option>
-            <option value="tecnico em enfermagem do trabalho">
+            <option value="Tecnico em Enfermagem">Tecnico em enfermagem</option>
+            <option value="Tecnico em Enfermagem do Trabalho">
               Tecnico em enfermagem do trabalho
             </option>
           </select>
