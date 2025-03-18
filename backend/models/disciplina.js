@@ -31,7 +31,7 @@ const Disciplina = db.define('disciplina', {
     },
   },
   estagio_supervisionado: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.STRING,
     allowNull: false,
   },
   duracao: {

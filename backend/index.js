@@ -37,7 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/registroacademico', regsitroAcademicoRoutes)
 
 db
-.sync()
+.sync({force: true})
 .then(() => {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

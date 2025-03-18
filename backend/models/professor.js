@@ -50,11 +50,11 @@ const Professor = db.define('Professor', {
 
 // Relacionamento Many-to-Many entre Professor e Disciplina
 Professor.belongsToMany(Disciplina, { 
-  through: 'professor_disciplinas',
+  through: 'professor_id',
   as: 'disciplinas'
 });
 Disciplina.belongsToMany(Professor, { 
-  through: 'professor_disciplinas',
+  through: 'professor_id',
   as: 'professores'
 });
 

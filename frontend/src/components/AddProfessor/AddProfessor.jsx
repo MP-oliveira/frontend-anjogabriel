@@ -29,7 +29,6 @@ const AddProfessor = () => {
     e.preventDefault();
 
     const professorResult = professorSchema.safeParse(professorData);
-
     if (!professorResult.success) {
       setErrors(professorResult.error.format());
       return;

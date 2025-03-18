@@ -17,6 +17,9 @@ const disciplinaSchema = z.object({
   carga_horaria_estagio: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  estagio_supervisionado: z
+    .string()
+    .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
   duracao: z.number(),
   curso_id: z
     .number()
@@ -117,7 +120,6 @@ const AddDisciplina = () => {
       pre_requisitos,
       modalidade,
     };
-    console.log('disciplina form values', disciplinaFormValues)
 
     const disciplinaresult = disciplinaSchema.safeParse(disciplinaFormValues);
 
@@ -142,7 +144,6 @@ const AddDisciplina = () => {
       });
     } else {
       try {
-        console.log('disciplina result', disciplinaresult.data)
         const response = await api.post("/disciplinas/create", disciplinaresult.data);
         console.log("Disciplina adicionada com sucesso!", response.data);
 
@@ -151,7 +152,7 @@ const AddDisciplina = () => {
         setDescricao("");
         setCarga_horaria("");
         setCarga_horaria_estagio("");
-        estagio_supervisionado(false);
+        setEstagio_supervisionado("");
         setDuracao("");
         setCurso_id("");
         setProfessor_id("");
@@ -273,13 +274,15 @@ const AddDisciplina = () => {
             </p>
           )}
 
-          <input
-            type="number"
+          <select
             value={estagio_supervisionado}
             onChange={(e) => setEstagio_supervisionado(e.target.value)}
-            placeholder="Carga Horária do Estágio (horas)"
-          />
-          {errors.carga_horaria && (
+          >
+            <option value="">Tem Estágio</option>
+            <option value="Sim">Sim</option>
+            <option value="Nao">Não</option>
+          </select>
+          {errors.estagio_supervisionado && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.carga_horaria}
             </p>
