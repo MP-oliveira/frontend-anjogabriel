@@ -7,10 +7,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  /* max-width: 1220px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

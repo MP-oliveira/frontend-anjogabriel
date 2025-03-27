@@ -71,7 +71,7 @@ const Header = () => {
             <img src={Logo} alt="Escola de Enfermagem Anjo Gabriel" />
           </div>
           <div className="logo-text">
-            Anjo Gabriel<span>Escola de Enfermagem</span>
+            <span className='logo-span-anjo'> Anjo Gabriel</span><span className='logo-span-escola'>Escola de Enfermagem</span>
           </div>
         </div>
         <div className="links">
@@ -121,9 +121,9 @@ const Header = () => {
             </Link>
           </li>
           <li className="dropdown">
-            <button className="nav-link dropdown-trigger">
+            <Link className="nav-link dropdown-trigger">
               Dashboard
-            </button>
+            </Link>
             <div className="dropdown-menu">
               <NavLink to="/alunos" className="dropdown-item">Alunos</NavLink>
               <NavLink to="/professores" className="dropdown-item">Professores</NavLink>
@@ -139,15 +139,17 @@ const Header = () => {
         </div>
         <div className="login">
           {user ? (
-            <>
+            <div className='user-container'>
               <div className="icon">
-                <UserCircle size={30} color="#C6D6F3" />
+                <UserCircle size={26} color="#C6D6F3" />
+                <div className="user-text">
+                  <span>{user.nome || user.email}</span>
+                </div>
               </div>
-              <div className="user-text">
-                Bem Vindo <span>{user.nome || user.email}!</span>
+              <div className='login-button-container'>
                 <button onClick={handleLogout} className="logout-button">Logout</button>
               </div>
-            </>
+            </div>
           ) : (
             <button onClick={() => navigate('/login')} className="login-button">Login</button>
           )}
