@@ -70,7 +70,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`header ${isBlurred ? 'blur' : ''}`}>
+    <header className={`header ${isBlurred ? 'blur' : ''} ${menuOpen ? 'menu-open' : ''}`}>
       <div className="header__container">
         <div className="logo">
           <div className="img">
@@ -86,15 +86,20 @@ const Header = () => {
         <div className={`links ${menuOpen ? 'active' : ''}`}>
           <li>
             <Link 
-             activeClass="active"
-             to="sectionOne"
-             spy={true}
-             smooth={true}
-             offset={-70}
-             duration={500}
-             className="nav-link"
-             onClick={() => handleNavigateAndScroll("sectionOne")}
-            >Home</Link>
+              activeClass="active"
+              to="sectionOne"
+              spy={true}
+              smooth={true}
+              offset={-70}
+              duration={500}
+              className="nav-link"
+              onClick={() => {
+                handleNavigateAndScroll("sectionOne");
+                setMenuOpen(false);
+              }}
+            >
+              Home
+            </Link>
           </li>
           <li>
             <Link
@@ -105,7 +110,10 @@ const Header = () => {
               offset={-70}
               duration={500}
               className="nav-link"
-              onClick={() => handleNavigateAndScroll("sectionTwo")}
+              onClick={() => {
+                handleNavigateAndScroll("sectionTwo");
+                setMenuOpen(false);
+              }}
             >
               Nossos Cursos
             </Link>
@@ -119,7 +127,10 @@ const Header = () => {
               offset={-70}
               duration={500}
               className="nav-link"
-              onClick={() => handleNavigateAndScroll("sectionThree")}
+              onClick={() => {
+                handleNavigateAndScroll("sectionThree");
+                setMenuOpen(false);
+              }}
             >
               Nossa Estrutura
             </Link>
@@ -133,25 +144,85 @@ const Header = () => {
               offset={-70}
               duration={500}
               className="nav-link"
-              onClick={() => handleNavigateAndScroll("sectionFour")}
+              onClick={() => {
+                handleNavigateAndScroll("sectionFour");
+                setMenuOpen(false);
+              }}
             >
               Fale Conosco
             </Link>
           </li>
           <li className="dropdown">
-            <Link className="nav-link dropdown-trigger">
+            <Link 
+              className="nav-link dropdown-trigger"
+              onClick={() => setMenuOpen(false)}
+            >
               Dashboard
             </Link>
             <div className="dropdown-menu">
-              <NavLink to="/alunos" className="dropdown-item">Alunos</NavLink>
-              <NavLink to="/professores" className="dropdown-item">Professores</NavLink>
-              <NavLink to="/cursos" className="dropdown-item">Cursos</NavLink>
-              <NavLink to="/disciplinas" className="dropdown-item">Disciplina</NavLink>
-              <NavLink to="/diplomas" className="dropdown-item">Diplomas</NavLink>
-              <NavLink to="/turnos" className="dropdown-item">Turno</NavLink>
-              <NavLink to="/admins" className="dropdown-item">Administrador</NavLink>
-              <NavLink to="/materialeutensilios" className="dropdown-item">Materiais e Utensílios</NavLink>
-              <NavLink to="/registroacademico" className="dropdown-item">Registro Acadêmico</NavLink>
+              <NavLink 
+                to="/alunos" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Alunos
+              </NavLink>
+              <NavLink 
+                to="/professores" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Professores
+              </NavLink>
+              <NavLink 
+                to="/cursos" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Cursos
+              </NavLink>
+              <NavLink 
+                to="/disciplinas" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Disciplina
+              </NavLink>
+              <NavLink 
+                to="/diplomas" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Diplomas
+              </NavLink>
+              <NavLink 
+                to="/turnos" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Turno
+              </NavLink>
+              <NavLink 
+                to="/admins" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Administrador
+              </NavLink>
+              <NavLink 
+                to="/materialeutensilios" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Materiais e Utensílios
+              </NavLink>
+              <NavLink 
+                to="/registroacademico" 
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Registro Acadêmico
+              </NavLink>
             </div>
           </li>
         </div>
