@@ -14,7 +14,6 @@ const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
-
   const handleScroll = () => {
     if (window.scrollY > 0) {
       setIsBlurred(true);
@@ -85,16 +84,7 @@ const Header = () => {
         </button>
         <div className={`links ${menuOpen ? 'active' : ''}`}>
           <li>
-            <Link 
-             activeClass="active"
-             to="sectionOne"
-             spy={true}
-             smooth={true}
-             offset={-70}
-             duration={500}
-             className="nav-link"
-             onClick={() => handleNavigateAndScroll("sectionOne")}
-            >Home</Link>
+            <NavLink to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Home</NavLink>
           </li>
           <li>
             <Link
@@ -105,7 +95,10 @@ const Header = () => {
               offset={-70}
               duration={500}
               className="nav-link"
-              onClick={() => handleNavigateAndScroll("sectionTwo")}
+              onClick={() => {
+                handleNavigateAndScroll("sectionTwo");
+                setMenuOpen(false);
+              }}
             >
               Nossos Cursos
             </Link>
@@ -119,7 +112,10 @@ const Header = () => {
               offset={-70}
               duration={500}
               className="nav-link"
-              onClick={() => handleNavigateAndScroll("sectionThree")}
+              onClick={() => {
+                handleNavigateAndScroll("sectionThree");
+                setMenuOpen(false);
+              }}
             >
               Nossa Estrutura
             </Link>
@@ -133,7 +129,10 @@ const Header = () => {
               offset={-70}
               duration={500}
               className="nav-link"
-              onClick={() => handleNavigateAndScroll("sectionFour")}
+              onClick={() => {
+                handleNavigateAndScroll("sectionFour");
+                setMenuOpen(false);
+              }}
             >
               Fale Conosco
             </Link>

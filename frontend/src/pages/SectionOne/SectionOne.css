@@ -91,6 +91,7 @@
   height: auto;
   border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  margin-top: 50px;
 }
 
 /* Responsividade para MacBook 13" (1280x800) */
@@ -106,6 +107,10 @@
   .sectionOne-right img {
     max-width: 480px;
   }
+}
+
+.sectionOne-img {
+  margin-right: 15px;
 }
 
 /* iPad 10 (820x1180) */
