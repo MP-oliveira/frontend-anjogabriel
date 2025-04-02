@@ -18,16 +18,16 @@ const SectionTwo = () => {
       description: "Preparação específica para emergências e atendimentos urgentes",
       icon: "🚑"
     },
-    {
-      title: "Técnico em Enfermagem de Pronto Socorro",
-      description: "Formação especializada para atendimentos de emergência",
-      icon: "🏨"
-    },
-    {
-      title: "Técnico em Enfermagem de Ambulância",
-      description: "Capacitação para atendimento móvel de urgência",
-      icon: "🚨"
-    }
+    // {
+    //   title: "Técnico em Enfermagem de Pronto Socorro",
+    //   description: "Formação especializada para atendimentos de emergência",
+    //   icon: "🏨"
+    // },
+    // {
+    //   title: "Técnico em Enfermagem de Ambulância",
+    //   description: "Capacitação para atendimento móvel de urgência",
+    //   icon: "🚨"
+    // }
   ];
 
   return (
