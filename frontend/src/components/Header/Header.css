@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 
 .img {
@@ -90,7 +90,7 @@
   flex-direction: column;
   align-items: center;
   font-size: 10px;
-  margin-right: 70px;
+  /* margin-right: 70px; */
 }
 
 .user-container {
@@ -205,6 +205,11 @@
   display: none;
 }
 
+@media screen and (max-width: 1024px) {
+  .logo {
+    margin-left: -20px;
+  }
+}
 /* Ajuste para mobile */
 @media screen and (max-width: 820px) {
   .dropdown-menu {
