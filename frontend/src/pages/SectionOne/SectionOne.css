@@ -171,11 +171,16 @@
 /* iPhone 15 Pro Max (430x932) */
 @media screen and (max-width: 430px) {
   .sectionOne-content {
-    padding: 24px;
+    padding-bottom: 680px;
+  }
+
+
+  .sectionOne-container {
+    flex-wrap: wrap;
   }
 
   .sectionOne-h1 {
-    font-size: 36px;
+    font-size: 38px;
   }
 
   .sectionOne-p {
@@ -184,8 +189,13 @@
 
   .features {
     flex-direction: column;
-    gap: 16px;
+    gap: 5px;
+    align-items: center;
+    margin-top: 10px;
   }
+.sectionOne-right img {
+  margin-top: 0px;
+}
 }
 
 /* iPhone (375x667) */
