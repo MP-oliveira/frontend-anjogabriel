@@ -1,0 +1,169 @@
+.boletim_container {
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.print-btn {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.aluno-btn {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.aluno-btn:hover {
+  background-color: #357bd8;
+}
+
+.boletim_impressao {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.boletim_cabecalho {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 15px;
+}
+
+.logo_escola {
+  margin-right: 20px;
+}
+
+.logo_escola img {
+  width: 80px;
+  height: auto;
+}
+
+.escola_info {
+  width: 100%;
+  text-align: center;
+}
+
+.escola_info h1 {
+  font-size: 20px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.escola_info h2 {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.escola_info p {
+  font-size: 14px;
+  margin: 3px 0;
+}
+
+.boletim_info_disciplina {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.disciplina_linha {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.disciplina_campo {
+  margin-right: 30px;
+  display: flex;
+}
+
+.campo_label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.boletim_tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.tabela_header {
+  display: flex;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #000;
+}
+
+.tabela_linha {
+  display: flex;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.coluna_conteudo {
+  flex: 3;
+  padding: 10px;
+  border-right: 1px solid #000;
+}
+
+.coluna_estrategia {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+.coluna_recursos {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #000;
+}
+
+.coluna_avaliacao {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.conteudo_titulo {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.conteudo_topico {
+  margin-left: 15px;
+  margin-bottom: 3px;
+}
+
+.boletim_aluno_info {
+  margin-top: 30px;
+  border-top: 1px solid #000;
+  padding-top: 15px;
+}
+
+.boletim_aluno_info p {
+  margin: 5px 0;
+}
+
+@media print {
+  .print-btn {
+    display: none;
+  }
+  
+  .boletim_container {
+    box-shadow: none;
+    margin: 0;
+  }
+  
+  .boletim_impressao {
+    border: none;
+  }
+}

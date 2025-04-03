@@ -36,6 +36,7 @@ import AddRegistroAcademico from "./components/AddRegistroAcademico/AddRegistroA
 import EditRegistroAcademico from "./components/EditRegistroAcademico/EditRegistroAcademico";
 import RegistroAcademico from './components/RegistroAcademico/RegistroAcademicoAluno';
 import DetalhesAluno from './components/RegistroAcademico/DestalhesAlunos';
+import Boletim from './components/Boletim/Boletim';
 
 function App() {
   const { user } = useContext(UserContext); // Obter o estado do usuário
@@ -74,6 +75,7 @@ function App() {
           <Route path="/registroacademico/:id" element={user && (role.role === 'aluno' || role.role === 'admin') ? <DetalhesAluno />  : <Navigate to="/login" />} />
 
           <Route path="/diplomas/:id" element={<Diploma />} />
+          <Route path="/boletim/:id" element={<Boletim />} />
           <Route path="/turnos" element={user && role.role === 'admin' ? <AddTurno /> : <Navigate to="/login" />} />
           <Route
             path="/materialeutensilios"

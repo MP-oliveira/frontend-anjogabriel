@@ -153,12 +153,12 @@ const Header = () => {
             </Link>
           </li>
           <li className="dropdown">
-            <Link 
+            <NavLink 
               className="nav-link dropdown-trigger"
               onClick={() => setMenuOpen(false)}
             >
               Dashboard
-            </Link>
+            </NavLink>
             <div className="dropdown-menu">
               <NavLink 
                 to="/alunos" 
@@ -194,6 +194,13 @@ const Header = () => {
                 onClick={() => setMenuOpen(false)}
               >
                 Diplomas
+              </NavLink>
+              <NavLink 
+                to="/boletim/{id}"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Boletins
               </NavLink>
               <NavLink 
                 to="/turnos" 
