@@ -85,6 +85,9 @@ const Alunos = () => {
                     <Link to={`/diplomas/${aluno.id}`}>
                       <button>Diploma</button>
                     </Link>
+                    <Link to={`/boletim/${aluno.id}`}>
+                      <button>Boletim</button>
+                    </Link>
                   </td>
                 </tr>
               ))
