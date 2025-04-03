@@ -35,19 +35,27 @@
 .footer-content {
   display: grid;
   grid-template-columns: 1fr 1fr 1.5fr;
-  gap: 40px;
+  gap: 20px;
   padding: 60px 120px;
   background-color: rgba(0,0,0,0.1);
 }
 
+.footer-brand-header {
+  width: 270px;
+}
+
+.footer-brand-header span {
+  color: #FBD064;
+}
+
 .footer-brand h3 {
   font-size: 24px;
-  margin-bottom: 16px;
 }
 
 .footer-brand p {
   color: rgba(255,255,255,0.8);
   margin-bottom: 24px;
+  font-size: 20px;
 }
 
 .social-icons {
@@ -93,7 +101,10 @@
 .footer-gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 25px;
+  margin-bottom: 10px;
 }
 
 .footer-gallery img {
@@ -138,9 +149,9 @@
 }
 
 /* Responsividade */
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1024px) {
   .footer-content {
-    padding: 60px 80px;
+    padding: 60px 10px;
   }
   
   .footer-bottom {
@@ -150,13 +161,17 @@
 
 @media screen and (max-width: 820px) {
   .footer-content {
-    grid-template-columns: 1fr;
-    padding: 40px 30px;
-    gap: 40px;
+    display: flex;
+    padding: 40px 0px;
+    gap: 10px;
   }
   
   .footer-cta {
     font-size: 32px;
+  }
+
+  .footer-brand {
+    margin-left: 5px;
   }
   
   .footer-bottom {
@@ -170,12 +185,33 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .footer-gallery {
+    gap: 12px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-right: 5px;
+  }
 }
 
 @media screen and (max-width: 430px) {
-  .footer-gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
+ .footer-content {
+  display: flex;
+  flex-direction: column;
+ }
+
+ .footer-brand {
+  margin-left: 10px;
+ }
+
+ .footer-locations {
+  margin-left: 10px;
+ }
+
+ .footer-gallery {
+  margin-left: 10px;
+  margin-right: 10px;
+ }
   
   .footer-cta {
     font-size: 28px;
@@ -186,3 +222,16 @@
     font-size: 16px;
   }
 } 
+
+@media screen and (max-width: 375px) {
+  .footer-bottom {
+    padding: 24px 0px;
+  }
+  .footer-bottom nav {
+    gap: 8px;
+  }
+
+  .footer-bottom p span {
+    color: #FBD064;
+  }
+}

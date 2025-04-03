@@ -17,7 +17,9 @@ const Footer = () => {
 
       <div className="footer-content">
         <div className="footer-brand">
-          <h3>📚 Escola AnjoGabriel</h3>
+          <div className="footer-brand-header">
+            <h3> Escola de Enfermagem <span>Anjo Gabriel</span></h3>
+          </div>
           <p>Formação técnica de excelência em enfermagem</p>
           <div className="social-icons">
             <a href="#" aria-label="Facebook"><FaFacebook /></a>
@@ -46,7 +48,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2024 - Escola Técnica de Enfermagem AnjoGabriel</p>
+        <p>© 2024 - Escola Técnica de Enfermagem <span> Anjo Gabriel</span></p>
         <nav>
           <a href="#sectionOne">Home</a>
           <a href="#sectionTwo">Nossos Cursos</a>
