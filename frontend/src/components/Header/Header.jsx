@@ -85,7 +85,7 @@ const Header = () => {
         </button>
         <div className={`links ${menuOpen ? 'active' : ''}`}>
           <li>
-            <Link 
+            <Link
               activeClass="active"
               to="sectionOne"
               spy={true}
@@ -153,78 +153,85 @@ const Header = () => {
             </Link>
           </li>
           <li className="dropdown">
-            <NavLink 
+            <NavLink
               className="nav-link dropdown-trigger"
               onClick={() => setMenuOpen(false)}
             >
               Dashboard
             </NavLink>
             <div className="dropdown-menu">
-              <NavLink 
-                to="/alunos" 
+              <NavLink
+                to="/alunos"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Alunos
               </NavLink>
-              <NavLink 
-                to="/professores" 
+              <NavLink
+                to="/professores"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Professores
               </NavLink>
-              <NavLink 
-                to="/cursos" 
+              <NavLink
+                to="/cursos"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Cursos
               </NavLink>
-              <NavLink 
-                to="/disciplinas" 
+              <NavLink
+                to="/disciplinas"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Disciplina
               </NavLink>
-              <NavLink 
-                to="/diplomas" 
+              <NavLink
+                to="/diplomas"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Diplomas
               </NavLink>
-              <NavLink 
+              <NavLink
                 to="/boletim/{id}"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Boletins
               </NavLink>
-              <NavLink 
-                to="/turnos" 
+              <NavLink
+                to="/financial"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Relatório Financeiro
+              </NavLink>
+              <NavLink
+                to="/turnos"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Turno
               </NavLink>
-              <NavLink 
-                to="/admins" 
+              <NavLink
+                to="/admins"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Administrador
               </NavLink>
-              <NavLink 
-                to="/materialeutensilios" 
+              <NavLink
+                to="/materialeutensilios"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Materiais e Utensílios
               </NavLink>
-              <NavLink 
-                to="/registroacademico" 
+              <NavLink
+                to="/registroacademico"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
