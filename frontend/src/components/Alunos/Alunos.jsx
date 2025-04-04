@@ -44,7 +44,7 @@ const Alunos = () => {
   };
 
   return (
-    <div className="aluno_container">
+    <div className="form_container">
       <div className="aluno_content">
         <div className="aluno_top">
           <h1 className="aluno_h1">Gerenciamento de Alunos</h1>

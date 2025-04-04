@@ -270,7 +270,7 @@ const AddAluno = () => {
           setTurno("Turno"),
           setData_matricula(""),
           setData_termino_curso("");
-          setPassword("")
+        setPassword("")
         navigate("/alunos");
       } catch (error) {
         console.error("Erro ao adicionar usuário", error);
@@ -282,8 +282,8 @@ const AddAluno = () => {
   };
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Adicionar Aluno</h2>
         <input
           id="nome"
@@ -299,7 +299,7 @@ const AddAluno = () => {
             {errors.nome}
           </p>
         )}
-        <div className="email-dn">
+        <div className="input-three-columns">
           <input
             type="text"
             id="email"
@@ -319,36 +319,41 @@ const AddAluno = () => {
             value={data_nascimento}
             onChange={(e) => setData_nascimento(e.target.value)}
             placeholder="Data de nascimento"
+            className="custom-date-input"
           />
           {errors.data_nascimento && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.data_nascimento}
             </p>
           )}
-          <select onChange={(e) => setEstado_civil(e.target.value)}>
-            <option value="">Estado civil</option>
-            <option value="Solteiro">Solteiro(a)</option>
-            <option value="Casado">Casado(a)</option>
-            <option value="Viuvo">Viuvo(a)</option>
-          </select>
+          <div className="custom-select-wrapper">
+            <select onChange={(e) => setEstado_civil(e.target.value)}>
+              <option value="">Estado civil</option>
+              <option value="Solteiro">Solteiro(a)</option>
+              <option value="Casado">Casado(a)</option>
+              <option value="Viuvo">Viuvo(a)</option>
+            </select>
+          </div>
           {errors.estado_civil && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.estado_civil}
             </p>
           )}
         </div>
-        <div className="gs-n-n">
-          <select onChange={(e) => setGrupo_sanguineo(e.target.value)}>
-            <option value="">Grupo Sanguineo</option>
-            <option value="A-">A-</option>
-            <option value="A+">A+</option>
-            <option value="B-">B-</option>
-            <option value="B+">B+</option>
-            <option value="AB-">AB-</option>
-            <option value="AB+">AB+</option>
-            <option value="O-">O-</option>
-            <option value="O+">O+</option>
-          </select>
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select onChange={(e) => setGrupo_sanguineo(e.target.value)}>
+              <option value="">Grupo Sanguineo</option>
+              <option value="A-">A-</option>
+              <option value="A+">A+</option>
+              <option value="B-">B-</option>
+              <option value="B+">B+</option>
+              <option value="AB-">AB-</option>
+              <option value="AB+">AB+</option>
+              <option value="O-">O-</option>
+              <option value="O+">O+</option>
+            </select>
+          </div>
           <input
             type="text"
             value={naturalidade}
@@ -371,53 +376,6 @@ const AddAluno = () => {
               {errors.nacionalidade}
             </p>
           )}
-        </div>
-        <input
-          type="text"
-          value={pai}
-          onChange={(e) => setPai(e.target.value)}
-          placeholder="Nome do Pai"
-        />
-        <input
-          type="text"
-          value={mae}
-          onChange={(e) => setMae(e.target.value)}
-          placeholder="Nome da Mãe"
-        />
-        <div className="rg-oe-de">
-          <input
-            type="text"
-            value={rg}
-            onChange={(e) => setRg(e.target.value)}
-            placeholder="RG"
-          />
-          {errors.rg && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.rg}
-            </p>
-          )}
-          <input
-            type="text"
-            value={orgao_expedidor_rg}
-            onChange={(e) => setOrgao_expedidor_rg(e.target.value)}
-            placeholder="Orgão Expedidor"
-          />
-          {errors.orgao_expedidor_rg && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.orgao_expedidor_rg}
-            </p>
-          )}
-          <input
-            type="date"
-            value={data_expedicao_rg}
-            onChange={(e) => setData_expedicao_rg(e.target.value)}
-            placeholder="Data de Expedição "
-          />
-          {errors.data_expedicao_rg && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.data_expedicao_rg}
-            </p>
-          )}
           <input
             type="text"
             value={cpf}
@@ -432,11 +390,23 @@ const AddAluno = () => {
         </div>
         <input
           type="text"
+          value={pai}
+          onChange={(e) => setPai(e.target.value)}
+          placeholder="Nome do Pai"
+        />
+        <input
+          type="text"
+          value={mae}
+          onChange={(e) => setMae(e.target.value)}
+          placeholder="Nome da Mãe"
+        />
+        <input
+          type="text"
           value={endereco}
           onChange={(e) => setEndereco(e.target.value)}
           placeholder="Endereço"
         />
-        <div className="nc-b">
+        <div className="input-three-columns">
           <input
             type="text"
             value={n_casa}
@@ -450,7 +420,7 @@ const AddAluno = () => {
             placeholder="Bairro"
           />
         </div>
-        <div className="tel">
+        <div className="input-three-columns">
           <input
             type="text"
             value={tel_res}
@@ -485,7 +455,7 @@ const AddAluno = () => {
             </p>
           )}
         </div>
-        <div className="cep-ci-es">
+        <div className="input-three-columns">
           <input
             type="text"
             value={cep}
@@ -508,74 +478,80 @@ const AddAluno = () => {
               {errors.cidade}
             </p>
           )}
-          <select
-            id="estado"
-            name="estado"
-            onChange={(e) => setEstado(e.target.value)}
-          >
-            <option value="">Selecione o estado</option>
-            <option value="AC">Acre (AC)</option>
-            <option value="AL">Alagoas (AL)</option>
-            <option value="AP">Amapá (AP)</option>
-            <option value="AM">Amazonas (AM)</option>
-            <option value="BA">Bahia (BA)</option>
-            <option value="CE">Ceará (CE)</option>
-            <option value="DF">Distrito Federal (DF)</option>
-            <option value="ES">Espírito Santo (ES)</option>
-            <option value="GO">Goiás (GO)</option>
-            <option value="MA">Maranhão (MA)</option>
-            <option value="MT">Mato Grosso (MT)</option>
-            <option value="MS">Mato Grosso do Sul (MS)</option>
-            <option value="MG">Minas Gerais (MG)</option>
-            <option value="PA">Pará (PA)</option>
-            <option value="PB">Paraíba (PB)</option>
-            <option value="PR">Paraná (PR)</option>
-            <option value="PE">Pernambuco (PE)</option>
-            <option value="PI">Piauí (PI)</option>
-            <option value="RJ">Rio de Janeiro (RJ)</option>
-            <option value="RN">Rio Grande do Norte (RN)</option>
-            <option value="RS">Rio Grande do Sul (RS)</option>
-            <option value="RO">Rondônia (RO)</option>
-            <option value="RR">Roraima (RR)</option>
-            <option value="SC">Santa Catarina (SC)</option>
-            <option value="SP">São Paulo (SP)</option>
-            <option value="SE">Sergipe (SE)</option>
-            <option value="TO">Tocantins (TO)</option>
-          </select>
+          <div className="custom-select-wrapper">
+            <select
+              id="estado"
+              name="estado"
+              onChange={(e) => setEstado(e.target.value)}
+            >
+              <option value="">Selecione o estado</option>
+              <option value="AC">Acre (AC)</option>
+              <option value="AL">Alagoas (AL)</option>
+              <option value="AP">Amapá (AP)</option>
+              <option value="AM">Amazonas (AM)</option>
+              <option value="BA">Bahia (BA)</option>
+              <option value="CE">Ceará (CE)</option>
+              <option value="DF">Distrito Federal (DF)</option>
+              <option value="ES">Espírito Santo (ES)</option>
+              <option value="GO">Goiás (GO)</option>
+              <option value="MA">Maranhão (MA)</option>
+              <option value="MT">Mato Grosso (MT)</option>
+              <option value="MS">Mato Grosso do Sul (MS)</option>
+              <option value="MG">Minas Gerais (MG)</option>
+              <option value="PA">Pará (PA)</option>
+              <option value="PB">Paraíba (PB)</option>
+              <option value="PR">Paraná (PR)</option>
+              <option value="PE">Pernambuco (PE)</option>
+              <option value="PI">Piauí (PI)</option>
+              <option value="RJ">Rio de Janeiro (RJ)</option>
+              <option value="RN">Rio Grande do Norte (RN)</option>
+              <option value="RS">Rio Grande do Sul (RS)</option>
+              <option value="RO">Rondônia (RO)</option>
+              <option value="RR">Roraima (RR)</option>
+              <option value="SC">Santa Catarina (SC)</option>
+              <option value="SP">São Paulo (SP)</option>
+              <option value="SE">Sergipe (SE)</option>
+              <option value="TO">Tocantins (TO)</option>
+            </select>
+          </div>
         </div>
-        <div className="cur-tur-dai-dat">
-          <select
-            name="curso"
-            id="curso"
-            onChange={(e) => setCurso(e.target.value)}
-          >
-            <option value="">Curso</option>
-            <option value="Tecnico em Enfermagem">Tecnico em enfermagem</option>
-            <option value="Tecnico em Enfermagem do Trabalho">
-              Tecnico em enfermagem do trabalho
-            </option>
-          </select>
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select
+              name="curso"
+              id="curso"
+              onChange={(e) => setCurso(e.target.value)}
+            >
+              <option value="">Curso</option>
+              <option value="Tecnico em Enfermagem">Tecnico em enfermagem</option>
+              <option value="Tecnico em Enfermagem do Trabalho">
+                Tecnico em enfermagem do trabalho
+              </option>
+            </select>
+          </div>
           {errors.curso && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.curso}
             </p>
           )}
-          <select
-            name="turno"
-            id="turno"
-            onChange={(e) => setTurno(e.target.value)}
-          >
-            <option value="">Turno</option>
-            <option value="Matutino">Matutino</option>
-            <option value="Vespertino">Vespertino</option>
-            <option value="Noturno">Noturno</option>
-            <option value="Sabado">Sabado</option>
-          </select>
-
+          <div className="custom-select-wrapper">
+            <select
+              name="turno"
+              id="turno"
+              onChange={(e) => setTurno(e.target.value)}
+            >
+              <option value="">Turno</option>
+              <option value="Matutino">Matutino</option>
+              <option value="Vespertino">Vespertino</option>
+              <option value="Noturno">Noturno</option>
+              <option value="Sabado">Sabado</option>
+            </select>
+          </div>
           <input
             type="date"
             value={data_matricula}
             onChange={(e) => setData_matricula(e.target.value)}
+            className="custom-date-input"
           />
           {errors.data_matricula && (
             <p className="error_message" style={{ color: "red" }}>
@@ -586,6 +562,7 @@ const AddAluno = () => {
             type="date"
             value={data_termino_curso}
             onChange={(e) => setData_termino_curso(e.target.value)}
+            className="custom-date-input"
           />
           {errors.data_termino_curso && (
             <p className="error_message" style={{ color: "red" }}>
@@ -593,25 +570,40 @@ const AddAluno = () => {
             </p>
           )}
         </div>
-        <div>
-          <label htmlFor="file">Selecione um arquivo:</label>
-          <input type="file" id="file" name='file' accept="image/*" onChange={handleFileChange} required />
-        </div>
-        <div>
-          <label htmlFor="historico">Selecione um arquivo:</label>
-          <input type="file" id="historico" name="historico" accept="application/pdf" onChange={handleHistoricoChange} required />
-        </div>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Senha"
-        />
-        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+        <div className='input-file'>
+          <div className='input-file input-file-button'>
+            <input
+              type="file"
+              id="file"
+              name='file'
+              accept="image/*"
+              onChange={handleFileChange}
+              required />
+            Adicione sua Foto
+          </div>
+          <div className='input-file input-file-button'>
+            <input
+              type="file"
+              id="historico"
+              name="historico"
+              accept="application/pdf"
+              onChange={handleHistoricoChange}
+              required />
+            Adicione seu Histórico
+          </div>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Senha"
+          />
+          {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
 
-        <div className="aluno-btn-container">
-          <button className="aluno-btn" type="submit">
+        </div>
+
+        <div className="form-btn-container">
+          <button className="form-btn" type="submit">
             Adicionar Usuário
           </button>
         </div>

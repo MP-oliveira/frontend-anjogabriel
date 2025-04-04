@@ -1,7 +1,6 @@
-.addaluno-container {
-  width: 100%;
+.addaluno-container { 
   min-height: 100vh;
-  background-color: #EDF3FC;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,7 +8,7 @@
 }
 
 .form-addaluno {
-  background-color: white;
+  background-color: #EDF3FC;
   border-radius: 20px;
   padding: 40px;
   width: 100%;

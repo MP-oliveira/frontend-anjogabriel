@@ -18,16 +18,234 @@ body {
   scroll-behavior: smooth;
 }
 
-select {
-  border: none;
-  color: #999999;
-  flex:1;
-  border-radius: 10px;
-  padding-left: 10px;
-}
-
 a {
   color: red;
 }
 
+.form-container {
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+}
+
+.form-add {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #EDF3FC;
+  border-radius: 20px;
+  padding: 40px;
+  width: 80%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 100px;
+}
+
+.form-add h2 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+
+input[type=text] {
+  width: 100%;
+  padding: 15px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #C6D6F3;
+  border-radius: 8px;
+  outline-color: #C6D6F3;
+}
+
+input::placeholder {
+  color: #999999;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-select-wrapper select {
+  width: 100%;
+  padding: 16px;
+  color: #999999;
+  border: 1px solid #C6D6F3;
+  border-radius: 8px;
+  appearance: none; /* remove a seta padrão */
+  background-color: white;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%23999999' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* seta com margem-left */
+  background-size: 16px 16px;
+}
+
+.custom-select-wrapper select:focus {
+  outline-color: #c6d6f3ad;
+  border-color: #999999;
+}
+
+.custom-date-input {
+  color: #999999; /* Cor do texto da data */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+}
+
+/* Cor do "placeholder" (o texto tipo 'dd/mm/aaaa') */
+.custom-date-input::-webkit-datetime-edit {
+  color: #999999;
+}
+
+/* Cor do ícone do calendário */
+.custom-date-input::-webkit-calendar-picker-indicator {
+  filter: brightness(0) saturate(100%) invert(70%);
+  opacity: 1;
+}
+
+/* Firefox */
+.custom-date-input::-moz-placeholder {
+  color: #999999;
+}
+
+.input-three-columns {
+  display: flex;
+  width: 81.1vw;
+  gap: 10px
+}
+
+.input-file {
+  width: 103%;
+  display: flex;
+  gap: 10px;
+}
+
+
+.input-file-button {
+  display: flex;
+  background-color: #fff;
+  border: 1px solid #C6D6F3;
+  font-size: 14px;
+  height: 45px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #999999;
+}
+
+.input-file-button input {
+  inset: 0;
+  opacity: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+}
+
+
+.form-btn-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.form-btn {
+  background-color: #FBD064;
+  border: none;
+  padding: 15px 30px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.form-btn:hover {
+  background-color: #f0c55a;
+}
+
+.error_message {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+/* Responsividade */
+@media (max-width: 1280px) {
+
+  /* MacBook 13" */
+  .form-addaluno {
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 834px) {
+
+  /* iPad 10" */
+  .form-addaluno {
+    max-width: 600px;
+    padding: 30px;
+  }
+
+  .email-dn,
+  .gs-n-n,
+  .rg-oe-de,
+  .nc-b,
+  .tel,
+  .cep-ci-es,
+  .cur-tur-dai-dat {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 430px) {
+
+  /* iPhone 15 Pro Max */
+  .form-addaluno {
+    padding: 25px;
+  }
+
+  .email-dn,
+  .gs-n-n,
+  .rg-oe-de,
+  .nc-b,
+  .tel,
+  .cep-ci-es,
+  .cur-tur-dai-dat {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 375px) {
+
+  /* iPhone 15 */
+  .addaluno-container {
+    padding: 15px;
+  }
+
+  .form-addaluno {
+    padding: 20px;
+  }
+
+  input,
+  select {
+    padding: 12px;
+  }
+
+  .form-addaluno h2 {
+    font-size: 24px;
+  }
+}
