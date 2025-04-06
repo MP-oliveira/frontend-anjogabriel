@@ -28,7 +28,6 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .form-add {
@@ -38,7 +37,7 @@ a {
   background-color: #EDF3FC;
   border-radius: 20px;
   padding: 40px;
-  width: 80%;
+  width: 85%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-top: 100px;
 }
@@ -118,7 +117,7 @@ input::placeholder {
 
 .input-three-columns {
   display: flex;
-  width: 76.6vw;
+  width: 81.1vw;
   gap: 10px
 }
 
