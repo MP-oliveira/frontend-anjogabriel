@@ -1,4 +1,4 @@
-import "./AddAluno.css";
+
 import { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
