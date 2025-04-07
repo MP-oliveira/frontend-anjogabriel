@@ -6,10 +6,7 @@ const Curso = db.define('Curso', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  descricao: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
+
   carga_horaria: {
     type: DataTypes.INTEGER,
     allowNull: false,

@@ -10,10 +10,7 @@ const Disciplina = db.define('disciplina', {
       notEmpty: true,
     },
   },
-  descricao: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
+
   carga_horaria: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -46,14 +43,7 @@ const Disciplina = db.define('disciplina', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  semestre: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  status: {
-    type: DataTypes.ENUM('Ativo', 'Inativo'),
-    allowNull: false,
-  },
+
   horario_inicio: {
     type: DataTypes.STRING,
     allowNull: false
@@ -74,14 +64,7 @@ const Disciplina = db.define('disciplina', {
       },
     },
   },
-  pre_requisitos: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  modalidade: {
-    type: DataTypes.ENUM('Presencial', 'Online', 'Híbrido'),
-    allowNull: false,
-  },
+
 }, {
   timestamps: true,
   createdAt: 'criado_em',

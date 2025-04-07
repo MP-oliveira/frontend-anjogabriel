@@ -28,7 +28,6 @@ module.exports = class CursosController {
   static async createCurso(req, res) {
     const {
       nome,
-      descricao,
       carga_horaria,
       duracao,
       valor_total,
@@ -40,7 +39,6 @@ module.exports = class CursosController {
     try {
       const curso = {
         nome,
-        descricao,
         carga_horaria,
         duracao,
         valor_total,

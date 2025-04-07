@@ -8,9 +8,7 @@ const cursoSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  descricao: z
-    .string()
-    .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
+ 
   carga_horaria: 
     z.number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
@@ -35,7 +33,6 @@ const EditCurso = () => {
   const [loading, setLoading] = useState(true);
   const [cursoData, setCursoData] = useState({
     nome: "",
-    descricao: "",
     carga_horaria: 0,
     duracao: 0,
     valor_total: 0,
@@ -150,19 +147,6 @@ const EditCurso = () => {
         {errors.nome && (
           <p className="error_message" style={{ color: "red" }}>
             {errors.nome._errors?.[0]}
-          </p>
-        )}
-
-        <textarea
-          name="descricao"
-          value={cursoData.descricao}
-          onChange={handleChange}
-          placeholder="Descrição do Curso"
-          rows={4}
-        />
-        {errors.descricao && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.descricao._errors?.[0]}
           </p>
         )}
 

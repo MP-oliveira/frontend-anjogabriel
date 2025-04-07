@@ -8,9 +8,7 @@ const cursoSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  descricao: z
-    .string()
-    .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
+
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
@@ -31,7 +29,6 @@ const AddCurso = () => {
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
-  const [descricao, setDescricao] = useState("");
   const [carga_horaria, setCarga_horaria] = useState("");
   const [duracao, setDuracao] = useState("");
   const [valor_total, setValor_total] = useState("");
@@ -45,7 +42,6 @@ const AddCurso = () => {
 
     const cursoFormValues = {
       nome,
-      descricao,
       carga_horaria: Number(carga_horaria),
       duracao: Number(duracao),
       valor_total: Number(valor_total),
@@ -60,7 +56,6 @@ const AddCurso = () => {
       const fieldErrors = cursoresult.error.format();
       setErrors({
         nome: fieldErrors.nome?._errors[0],
-        descricao: fieldErrors.descricao?._errors[0],
         carga_horaria: fieldErrors.carga_horaria?._errors[0],
         duracao: fieldErrors.duracao?._errors[0],
         valor_total: fieldErrors.valor_total?._errors[0],
@@ -75,7 +70,6 @@ const AddCurso = () => {
 
         // Limpar os campos após o sucesso
         setNome("");
-        setDescricao("");
         setCarga_horaria("");
         setDuracao("");
         setValor_total("");
@@ -108,17 +102,7 @@ const AddCurso = () => {
           </p>
         )}
 
-        <textarea
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-          placeholder="Descrição do Curso"
-          rows={4}
-        />
-        {errors.descricao && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.descricao}
-          </p>
-        )}
+       
 
         <div className="curso-info">
           <input

@@ -8,9 +8,7 @@ const disciplinaSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  descricao: z
-    .string()
-    .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
+
   carga_horaria:
     z.number()
       .min(1, { message: "A carga horária precisa ser maior que 0" }),
@@ -42,7 +40,6 @@ const EditDisciplina = () => {
   const [loading, setLoading] = useState(true);
   const [disciplinaData, setDisciplinaData] = useState({
     nome: "",
-    descricao: "",
     carga_horaria: 0,
     carga_horaria_estagio: 0,
     duracao: 0,
@@ -156,19 +153,7 @@ const EditDisciplina = () => {
           </p>
         )}
 
-        <textarea
-          name="descricao"
-          value={disciplinaData.descricao}
-          onChange={handleChange}
-          placeholder="Descrição da Disciplina"
-          rows={4}
-        />
-        {errors.descricao && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.descricao._errors?.[0]}
-          </p>
-        )}
-
+      
         <div className="addaluno-info">
           <input
             name="carga_horaria"

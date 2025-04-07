@@ -8,9 +8,7 @@ const disciplinaSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  descricao: z
-    .string()
-    .min(10, { message: "A descrição precisa ter no mínimo 10 caracteres." }),
+
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
@@ -27,13 +25,7 @@ const disciplinaSchema = z.object({
   professor_id: z
     .number()
     .min(1, { message: "Selecione um professor" }),
-  semestre: z
-    .number()
-    .min(1, { message: "O semestre precisa ser maior que 0" })
-    .max(12, { message: "O semestre não pode ser maior que 12" }),
-  status: z
-    .string()
-    .min(1, { message: "Selecione um status válido" }),
+
   horario_inicio: z
     .string()
     .min(1, { message: "Defina um horário de início" }),
@@ -43,29 +35,24 @@ const disciplinaSchema = z.object({
   dias_semana: z
     .array(z.string())
     .min(1, { message: "Selecione pelo menos um dia da semana" }),
-  pre_requisitos: z.string(),
-  modalidade: z.enum(['Presencial', 'Online', 'Híbrido'],
-    { message: "Modalidade inválida. Escolha entre 'Presencial', 'Online' ou 'Híbrido'." }),
+
 });
 
 const AddDisciplina = () => {
   const navigate = useNavigate();
 
   const [nome, setNome] = useState("");
-  const [descricao, setDescricao] = useState("");
   const [carga_horaria, setCarga_horaria] = useState("");
   const [carga_horaria_estagio, setCarga_horaria_estagio] = useState("");
   const [estagio_supervisionado, setEstagio_supervisionado] = useState("");
   const [duracao, setDuracao] = useState("");
   const [curso_id, setCurso_id] = useState("");
   const [professor_id, setProfessor_id] = useState("");
-  const [semestre, setSemestre] = useState("");
-  const [status, setStatus] = useState("");
+
   const [horario_inicio, setHorario_inicio] = useState("");
   const [horario_fim, setHorario_fim] = useState("");
   const [dias_semana, setDias_semana] = useState([]);
-  const [pre_requisitos, setPre_requisitos] = useState([]);
-  const [modalidade, setModalidade] = useState("");
+
   const [errors, setErrors] = useState({});
 
   // Estados para as listas de cursos e professores
@@ -105,20 +92,17 @@ const AddDisciplina = () => {
     e.preventDefault();
     const disciplinaFormValues = {
       nome,
-      descricao,
       carga_horaria: Number(carga_horaria),
       carga_horaria_estagio: Number(carga_horaria_estagio),
       estagio_supervisionado,
       duracao: Number(duracao),
       curso_id: Number(curso_id),
       professor_id: Number(professor_id),
-      semestre: Number(semestre),
-      status,
+
       horario_inicio,
       horario_fim,
       dias_semana,
-      pre_requisitos,
-      modalidade,
+
     };
 
     const disciplinaresult = disciplinaSchema.safeParse(disciplinaFormValues);
@@ -127,20 +111,17 @@ const AddDisciplina = () => {
       const fieldErrors = disciplinaresult.error.format();
       setErrors({
         nome: fieldErrors.nome?._errors[0],
-        descricao: fieldErrors.descricao?._errors[0],
         carga_horaria: fieldErrors.carga_horaria?._errors[0],
         carga_horaria_estagio: fieldErrors.carga_horaria_estagio?._errors[0],
         estagio_supervisionado: fieldErrors.estagio_supervisionado?._errors[0],
         duracao: fieldErrors.duracao?._errors[0],
         curso_id: fieldErrors.curso_id?._errors[0],
         professor_id: fieldErrors.professor_id?._errors[0],
-        semestre: fieldErrors.semestre?._errors[0],
-        status: fieldErrors.status?._errors[0],
+
         horario_inicio: fieldErrors.horario_inicio?._errors[0],
         horario_fim: fieldErrors.horario_fim?._errors[0],
         dias_semana: fieldErrors.dias_semana?._errors[0],
-        pre_requisitos: fieldErrors.pre_requisitos?._errors[0],
-        modalidade: fieldErrors.modalidade?._errors[0],
+
       });
     } else {
       try {
@@ -149,20 +130,17 @@ const AddDisciplina = () => {
 
         // Limpar os campos após o sucesso
         setNome("");
-        setDescricao("");
         setCarga_horaria("");
         setCarga_horaria_estagio("");
         setEstagio_supervisionado("");
         setDuracao("");
         setCurso_id("");
         setProfessor_id("");
-        setSemestre("");
-        setStatus("");
+
         setHorario_inicio("");
         setHorario_fim("");
         setDias_semana([]);
-        setPre_requisitos([]);
-        setModalidade("");
+
 
         navigate("/disciplinas");
       } catch (error) {
@@ -189,18 +167,7 @@ const AddDisciplina = () => {
           </p>
         )}
 
-        <textarea
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-          placeholder="Descrição da Disciplina"
-          rows={4}
-        />
-        {errors.descricao && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.descricao}
-          </p>
-        )}
-
+       
         <div className="disciplina-curso-prof">
           <select
             value={curso_id}
@@ -241,7 +208,7 @@ const AddDisciplina = () => {
           type="number"
           value={duracao}
           onChange={(e) => setDuracao(e.target.value)}
-          placeholder="Duração do Curso"
+          placeholder="Duração do Disciplina"
         />
         {errors.duracao && (
           <p className="error_message" style={{ color: "red" }}>
@@ -288,33 +255,7 @@ const AddDisciplina = () => {
             </p>
           )}
 
-          <input
-            type="number"
-            value={semestre}
-            onChange={(e) => setSemestre(e.target.value)}
-            placeholder="Semestre"
-            min="1"
-            max="12"
-          />
-          {errors.semestre && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.semestre}
-            </p>
-          )}
 
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="">Selecione o Status</option>
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-          </select>
-          {errors.status && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.status}
-            </p>
-          )}
         </div>
 
         <div className="disciplina-horario">
@@ -385,35 +326,7 @@ const AddDisciplina = () => {
             Sexta-feira
           </label>
         </div>
-        <div>
-          <input type="text"
-            value={pre_requisitos}
-            onChange={(e) => setPre_requisitos(e.target.value)}
-            placeholder='Pré requisitos'
-          />
-          {errors.pre_requisitos && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.pre_requisitos}
-            </p>
-          )}
-        </div>
 
-        <div className="disciplina-modalidade">
-          <select
-            value={modalidade}
-            onChange={(e) => setModalidade(e.target.value)}
-          >
-            <option value="">Selecione a Modalidade</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Online">Online</option>
-            <option value="Híbrido">Híbrido</option>
-          </select>
-          {errors.modalidade && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.modalidade}
-            </p>
-          )}
-        </div>
 
         <div className="form-actions">
           <button type="submit">Adicionar Disciplina</button>
