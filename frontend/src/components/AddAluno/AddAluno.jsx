@@ -8,10 +8,8 @@ import { useNavigate } from "react-router-dom";
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
 
 // Regex para RG com ou sem pontuação
-const rgRegex = /^(\d{1,2}.?\d{3}.?\d{3}-?[A-Za-z0-9]{1})$/;
 
 // Regex para telefone celular e fixo com ou sem pontuação
-const telefoneRegex = /^(\d{2})?\s?\d{4,5}-?\d{4}$/;
 const celularRegex = /^(\d{2})?\s?\d{5}-?\d{4}$/;
 
 // Regex para CEP com ou sem hífen
@@ -35,27 +33,14 @@ const alunoSchema = z.object({
     .min(3, { message: "Digite uma nacionalidade valida" }),
   pai: z.string(),
   mae: z.string(),
-  rg: z.string().refine((value) => rgRegex.test(value), {
-    message: "RG inválido",
-  }),
-  orgao_expedidor_rg: z.string(),
-  data_expedicao_rg: z
-    .date()
-    .max(new Date(), { message: "Digite uma data expedição valida" }),
   cpf: z.string().refine((value) => cpfRegex.test(value), {
     message: "CPF inválido",
   }),
   endereco: z.string(),
   n_casa: z.string(),
   bairro: z.string(),
-  tel_res: z.string().refine((value) => telefoneRegex.test(value), {
-    message: "Telefone inválido",
-  }),
   celular: z.string().refine((value) => celularRegex.test(value), {
     message: "Celular inválido",
-  }),
-  tel_trabalho: z.string().refine((value) => celularRegex.test(value), {
-    message: "Telefone de trabalho inválido",
   }),
   cep: z.string().refine((value) => cepRegex.test(value), {
     message: "CEP inválido",
@@ -86,16 +71,11 @@ const AddAluno = () => {
   const [nacionalidade, setNacionalidade] = useState("");
   const [pai, setPai] = useState("");
   const [mae, setMae] = useState("");
-  const [rg, setRg] = useState("");
-  const [orgao_expedidor_rg, setOrgao_expedidor_rg] = useState("");
-  const [data_expedicao_rg, setData_expedicao_rg] = useState("");
   const [cpf, setCpf] = useState("");
   const [endereco, setEndereco] = useState("");
   const [n_casa, setN_casa] = useState("");
   const [bairro, setBairro] = useState("");
-  const [tel_res, setTel_res] = useState("");
   const [celular, setCelular] = useState("");
-  const [tel_trabalho, setTel_trabalho] = useState("");
   const [cep, setCep] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
@@ -132,16 +112,11 @@ const AddAluno = () => {
       nacionalidade,
       pai,
       mae,
-      rg,
-      orgao_expedidor_rg,
-      data_expedicao_rg: new Date(data_expedicao_rg),
       cpf,
       endereco,
       n_casa,
       bairro,
-      tel_res,
       celular,
-      tel_trabalho,
       cep,
       cidade,
       estado,
@@ -168,16 +143,11 @@ const AddAluno = () => {
         nacionalidade: fieldErrors.nacionalidade?._errors[0],
         pai: fieldErrors.pai?._errors[0],
         mae: fieldErrors.mae?._errors[0],
-        rg: fieldErrors.rg?._errors[0],
-        orgao_expedidor_rg: fieldErrors.orgao_expedidor_rg?._errors[0],
-        data_expedicao_rg: fieldErrors.data_expedicao_rg?._errors[0],
         cpf: fieldErrors.cpf?._errors[0],
         endereco: fieldErrors.endereco?._errors[0],
         n_casa: fieldErrors.n_casa?._errors[0],
         bairro: fieldErrors.bairro?._errors[0],
-        tel_res: fieldErrors.tel_res?._errors[0],
         celular: fieldErrors.celular?._errors[0],
-        tel_trabalho: fieldErrors.tel_trabalho?._errors[0],
         cep: fieldErrors.cep?._errors[0],
         cidade: fieldErrors.cidade?._errors[0],
         estado: fieldErrors.estado?._errors[0],
@@ -199,22 +169,11 @@ const AddAluno = () => {
         formData.append("nacionalidade", alunoresult.data.nacionalidade);
         formData.append("pai", alunoresult.data.pai);
         formData.append("mae", alunoresult.data.mae);
-        formData.append("rg", alunoresult.data.rg);
-        formData.append(
-          "orgao_expedidor_rg",
-          alunoresult.data.orgao_expedidor_rg
-        );
-        formData.append(
-          "data_expedicao_rg",
-          alunoresult.data.data_expedicao_rg
-        );
         formData.append("cpf", alunoresult.data.cpf);
         formData.append("endereco", alunoresult.data.endereco);
         formData.append("n_casa", alunoresult.data.n_casa);
         formData.append("bairro", alunoresult.data.bairro);
-        formData.append("tel_res", alunoresult.data.tel_res);
         formData.append("celular", alunoresult.data.celular);
-        formData.append("tel_trabalho", alunoresult.data.tel_trabalho);
         formData.append("cep", alunoresult.data.cep);
         formData.append("cidade", alunoresult.data.cidade);
         formData.append("estado", alunoresult.data.estado);
@@ -253,16 +212,11 @@ const AddAluno = () => {
           setNacionalidade(""),
           setPai(""),
           setMae(""),
-          setRg(""),
-          setOrgao_expedidor_rg(""),
-          setData_expedicao_rg(""),
           setCpf(""),
           setEndereco(""),
           setN_casa(""),
           setBairro(""),
-          setTel_res(""),
           setCelular(""),
-          setTel_trabalho(""),
           setCep(""),
           setCidade(""),
           setEstado("Selecione o estado"),
@@ -423,17 +377,6 @@ const AddAluno = () => {
         <div className="input-three-columns">
           <input
             type="text"
-            value={tel_res}
-            onChange={(e) => setTel_res(e.target.value)}
-            placeholder="Telefone Residencial"
-          />
-          {errors.tel_res && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.tel_res}
-            </p>
-          )}
-          <input
-            type="text"
             value={celular}
             onChange={(e) => setCelular(e.target.value)}
             placeholder="Celular"
@@ -441,17 +384,6 @@ const AddAluno = () => {
           {errors.celular && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.celular}
-            </p>
-          )}
-          <input
-            type="text"
-            value={tel_trabalho}
-            onChange={(e) => setTel_trabalho(e.target.value)}
-            placeholder="Telefone do Trabalho"
-          />
-          {errors.tel_trabalho && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.tel_trabalho}
             </p>
           )}
         </div>

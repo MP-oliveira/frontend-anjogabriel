@@ -8,8 +8,6 @@ import './Edit.css'
 
 // Regex e validações
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
-const rgRegex = /^(\d{1,2}.?\d{3}.?\d{3}-?[A-Za-z0-9]{1})$/;
-const telefoneRegex = /^(\d{2})?\s?\d{4,5}-?\d{4}$/;
 const celularRegex = /^(\d{2})?\s?\d{5}-?\d{4}$/;
 const cepRegex = /^\d{5}-?\d{3}$/;
 
@@ -23,16 +21,11 @@ const alunoSchema = z.object({
   nacionalidade: z.string().min(3),
   pai: z.string(),
   mae: z.string(),
-  rg: z.string().refine((value) => rgRegex.test(value), { message: "RG inválido" }),
-  orgao_expedidor_rg: z.string(),
-  data_expedicao_rg: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data de expedição inválida" }),
   cpf: z.string().refine((value) => cpfRegex.test(value), { message: "CPF inválido" }),
   endereco: z.string(),
   n_casa: z.string(),
   bairro: z.string(),
-  tel_res: z.string().refine((value) => telefoneRegex.test(value), { message: "Telefone inválido" }),
   celular: z.string().refine((value) => celularRegex.test(value), { message: "Celular inválido" }),
-  tel_trabalho: z.string().refine((value) => celularRegex.test(value), { message: "Telefone de trabalho inválido" }),
   cep: z.string().refine((value) => cepRegex.test(value), { message: "CEP inválido" }),
   cidade: z.string(),
   estado: z.string(),
@@ -58,16 +51,11 @@ const EditAluno = () => {
     nacionalidade: "",
     pai: "",
     mae: "",
-    rg: "",
-    orgao_expedidor_rg: "",
-    data_expedicao_rg: "",
     cpf: "",
     endereco: "",
     n_casa: "",
     bairro: "",
-    tel_res: "",
     celular: "",
-    tel_trabalho: "",
     cep: "",
     cidade: "",
     estado: "",
@@ -86,7 +74,6 @@ const EditAluno = () => {
         setAlunoData({
           ...aluno,
           data_nascimento: aluno.data_nascimento.slice(0, 10),
-          data_expedicao_rg: aluno.data_expedicao_rg.slice(0, 10),
           data_matricula: aluno.data_matricula.slice(0, 10),
           data_termino_curso: aluno.data_termino_curso.slice(0, 10),
         });
@@ -186,33 +173,12 @@ const EditAluno = () => {
         <input name="pai" value={alunoData.pai} onChange={handleChange} placeholder="Nome do Pai" />
 
         <input name="mae" value={alunoData.mae} onChange={handleChange} placeholder="Nome da Mãe" />
-        <div className="rg-oe-de">
-
-          <input name="rg" value={alunoData.rg} onChange={handleChange} placeholder="RG" />
-          {errors.rg && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.rg}
-            </p>
-          )}
-          <input name="orgao_expedidor_rg" value={alunoData.orgao_expedidor_rg} onChange={handleChange} placeholder="Órgão Expedidor" />
-          {errors.orgao_expedidor_rg && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.orgao_expedidor_rg}
-            </p>
-          )}
-          <input type="date" name="data_expedicao_rg" value={alunoData.data_expedicao_rg} onChange={handleChange} />
-          {errors.data_expedicao_rg && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.data_expedicao_rg}
-            </p>
-          )}
           <input name="cpf" value={alunoData.cpf} onChange={handleChange} placeholder="CPF" />
           {errors.cpf && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.cpf}
             </p>
           )}
-        </div>
         <input name="endereco" value={alunoData.endereco} onChange={handleChange} placeholder="Endereço" />
         <div className="nc-b">
 
@@ -220,26 +186,12 @@ const EditAluno = () => {
 
           <input name="bairro" value={alunoData.bairro} onChange={handleChange} placeholder="Bairro" />
         </div>
-        <div className="tel">
-          <input name="tel_res" value={alunoData.tel_res} onChange={handleChange} placeholder="Telefone Residencial" />
-          {errors.tel_res && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.tel_res}
-            </p>
-          )}
           <input name="celular" value={alunoData.celular} onChange={handleChange} placeholder="Celular" />
           {errors.celular && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.celular}
             </p>
           )}
-          <input name="tel_trabalho" value={alunoData.tel_trabalho} onChange={handleChange} placeholder="Telefone de Trabalho" />
-          {errors.tel_trabalho && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.tel_trabalho}
-            </p>
-          )}
-        </div>
         <div className="cep-ci-es">
 
           <input name="cep" value={alunoData.cep} onChange={handleChange} placeholder="CEP" />
