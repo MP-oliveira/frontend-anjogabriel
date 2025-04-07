@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import '../AddAluno/AddAluno.css';
 
@@ -26,6 +26,10 @@ const AddTurno = () => {
       // Enviar os dados para a API
       await api.post("/turnos/create", newTurno);
       alert("Turno adicionada com sucesso!");
+
+      setNome("")
+      setInicio("")
+      setTermino("")
     } catch (error) {
       console.error("Erro ao adicionar Turno", error);
     }
@@ -36,36 +40,37 @@ const AddTurno = () => {
 
   return (
     <>
-      <h2 className="addaluno-container" >Adicionar Turno</h2>
-      <form
-        className="form-addaluno"
-        onSubmit={handleSubmit}
-      >
-        <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          placeholder="Nome"
-        />
-        <input
-          type="text"
-          value={inicio}
-          onChange={(e) => setInicio(e.target.value)}
-          placeholder="Inicio"
-        />
-        <input
-          type="text"
-          value={termino}
-          onChange={(e) => setTermino(e.target.value)}
-          placeholder="Termino"
-        />
-
-        <button
-          className="aluno-btn"
-          type="submit">
-          Adicionar Turno
-        </button>
-      </form>
+      <div className="form-container">
+        <form
+          className="form-add"
+          onSubmit={handleSubmit}
+        >
+        <h2 >Adicionar Turno</h2>
+          <input
+            type="text"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            placeholder="Nome"
+          />
+          <input
+            type="text"
+            value={inicio}
+            onChange={(e) => setInicio(e.target.value)}
+            placeholder="Inicio"
+          />
+          <input
+            type="text"
+            value={termino}
+            onChange={(e) => setTermino(e.target.value)}
+            placeholder="Termino"
+          />
+          <button
+            className="aluno-btn"
+            type="submit">
+            Adicionar Turno
+          </button>
+        </form>
+      </div>
     </>
   );
 };

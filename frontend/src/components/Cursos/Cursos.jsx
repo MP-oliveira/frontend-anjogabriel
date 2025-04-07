@@ -44,22 +44,22 @@ const Cursos = () => {
 
 
   return (
-    <div className="aluno_container">
-      <div className="aluno_content">
-        <div className="aluno_top">
-          <h1 className="aluno_h1">Gerenciamento de Cursos</h1>
-          <Link className="criar_aluno" to="/cursos/add">Adicionar Curso</Link>
+    <div className="form-container">
+      <div className="form-list-content">
+        <div className="form-list-top">
+          <h1 className="form-list-top-h1">Gerenciamento de Cursos</h1>
+          <Link className="form-criar" to="/cursos/add">Adicionar Curso</Link>
         </div>
-        <div className="aluno_input">
+        <div className="form-list-input">
           <input
-            className='aluno_lista_input'
+            className='form-list-input-input'
             type="text"
             placeholder="Buscar por nome do curso"
             value={search}
             onChange={handleSearch}
           />
         </div>
-        <table className="tabela_aluno_lista">
+        <table className="tabela-form-lista">
           <thead>
             <tr>
               <th>Nome</th>
@@ -71,7 +71,7 @@ const Cursos = () => {
               filteredCursos.map((curso) => (
                 <tr key={curso.id}>
                   <td>{curso.nome}</td>
-                  <td className="aluno_acoes">
+                  <td className="for-list-acoes">
                     <Link to={`/cursos/edit/${curso.id}`}>
                       <img src={Edit} alt="" />
                     </Link>

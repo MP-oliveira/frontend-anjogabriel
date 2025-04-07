@@ -86,10 +86,9 @@ const AddCurso = () => {
   };
 
   return (
-    <div className="addcurso-container">
-      <form className="form-addcurso" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Adicionar Curso</h2>
-        
         <input
           type="text"
           value={nome}
@@ -101,11 +100,8 @@ const AddCurso = () => {
             {errors.nome}
           </p>
         )}
-
-       
-
-        <div className="curso-info">
-          <input
+        <div className="input-three-columns">
+        <input
             type="number"
             value={carga_horaria}
             onChange={(e) => setCarga_horaria(e.target.value)}
@@ -116,8 +112,7 @@ const AddCurso = () => {
               {errors.carga_horaria}
             </p>
           )}
-
-          <input
+        <input
             type="number"
             value={duracao}
             onChange={(e) => setDuracao(e.target.value)}
@@ -128,9 +123,6 @@ const AddCurso = () => {
               {errors.duracao_meses}
             </p>
           )}
-        </div>
-
-        <div className="curso-valores">
           <input
             type="number"
             value={valor_total}
@@ -142,7 +134,6 @@ const AddCurso = () => {
               {errors.valor_total}
             </p>
           )}
-
           <input
             type="number"
             value={valor_mensal}
@@ -155,40 +146,43 @@ const AddCurso = () => {
             </p>
           )}
         </div>
-
-        <div className="curso-status-modalidade">
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            <option value="">Selecione o Status</option>
-            <option value="ativo">Ativo</option>
-            <option value="inativo">Inativo</option>
-            <option value="em_breve">Em Breve</option>
-          </select>
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select
+              value={status}
+              className='custom-select-wrapper'
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="">Selecione o Status</option>
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+              <option value="em_breve">Em Breve</option>
+            </select>
+          </div>
           {errors.status && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.status}
             </p>
           )}
-
-          <select
-            value={modalidade}
-            onChange={(e) => setModalidade(e.target.value)}
-          >
-            <option value="">Selecione a Modalidade</option>
-            <option value="presencial">Presencial</option>
-            <option value="ead">EAD</option>
-            <option value="hibrido">Híbrido</option>
-          </select>
+          <div className="custom-select-wrapper">
+            <select
+              value={modalidade}
+              onChange={(e) => setModalidade(e.target.value)}
+            >
+              <option value="">Selecione a Modalidade</option>
+              <option value="presencial">Presencial</option>
+              <option value="ead">EAD</option>
+              <option value="hibrido">Híbrido</option>
+            </select>
+          </div>
           {errors.modalidade && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.modalidade}
             </p>
           )}
         </div>
-        <div className="curso-btn-container">
-          <button className="curso-btn" type="submit">
+        <div className="form-btn-container">
+          <button className="form-btn" type="submit">
             Adicionar Curso
           </button>
         </div>

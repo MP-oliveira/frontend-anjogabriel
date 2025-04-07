@@ -134,13 +134,25 @@ const EditAluno = () => {
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
         <h2>Editar Aluno</h2>
-        <input name="nome" value={alunoData.nome} onChange={handleChange} placeholder="Nome" />
+        <input
+          name="nome"
+          value={alunoData.nome}
+          onChange={handleChange}
+          placeholder="Nome" />
         {errors.nome && <p className="error_message">{errors.nome._errors[0]}</p>}
         <div className="input-three-columns">
-          <input name="email" value={alunoData.email} onChange={handleChange} placeholder="Email" />
+          <input
+            name="email"
+            value={alunoData.email}
+            onChange={handleChange}
+            placeholder="Email" />
           {errors.email && <p className="error_message">{errors.email._errors[0]}</p>}
 
-          <input type="date" name="data_nascimento" value={alunoData.data_nascimento} onChange={handleChange} />
+          <input
+            type="date"
+            name="data_nascimento"
+            value={alunoData.data_nascimento}
+            onChange={handleChange} />
           {errors.data_nascimento && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.data_nascimento}

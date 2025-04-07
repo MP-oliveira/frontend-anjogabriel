@@ -168,6 +168,7 @@ input::placeholder {
   cursor: pointer;
   color: #000;
   font-size: 16px;
+  font-weight: bold;
   transition: background-color 0.3s;
 }
 
@@ -219,6 +220,7 @@ input::placeholder {
   color: #000;
   border-radius: 10px;
   font-size: 14px;
+  font-weight: bold;
   padding: 10px 20px;
   flex:1;
   margin-top: 30px;

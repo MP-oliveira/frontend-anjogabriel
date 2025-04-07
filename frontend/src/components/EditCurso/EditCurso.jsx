@@ -8,13 +8,13 @@ const cursoSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
- 
-  carga_horaria: 
+
+  carga_horaria:
     z.number()
-    .min(1, { message: "A carga horária precisa ser maior que 0" }),
-  duracao: 
+      .min(1, { message: "A carga horária precisa ser maior que 0" }),
+  duracao:
     z.number()
-    .min(1, { message: "A duração precisa ser maior que 0" }),
+      .min(1, { message: "A duração precisa ser maior que 0" }),
   valor_total: z
     .number()
     .min(0, { message: "O valor total não pode ser negativo" }),
@@ -46,7 +46,7 @@ const EditCurso = () => {
       try {
         const response = await api.get(`/cursos/${id}`);
         const curso = response.data;
-        
+
         // Garantir que os valores numéricos sejam do tipo number
         setCursoData({
           ...curso,
@@ -101,7 +101,7 @@ const EditCurso = () => {
 
   const handleChange = (e) => {
     const { name, type, value, checked } = e.target;
-    
+
     // Tratar diferentes tipos de input
     let processedValue;
     if (type === 'checkbox') {
@@ -133,10 +133,9 @@ const EditCurso = () => {
   }
 
   return (
-    <div className="addcurso-container">
-      <form className="form-addcurso" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Editar Curso</h2>
-
         <input
           type="text"
           name="nome"
@@ -149,8 +148,7 @@ const EditCurso = () => {
             {errors.nome._errors?.[0]}
           </p>
         )}
-
-        <div className="curso-info">
+        <div className="input-three-columns">
           <input
             name="carga_horaria"
             type="number"
@@ -163,7 +161,6 @@ const EditCurso = () => {
               {errors.carga_horaria._errors?.[0]}
             </p>
           )}
-
           <input
             name="duracao"
             type="number"
@@ -178,7 +175,7 @@ const EditCurso = () => {
           )}
         </div>
 
-        <div className="curso-valores">
+        <div className="input-three-columns">
           <input
             name="valor_total"
             type="number"
@@ -206,33 +203,36 @@ const EditCurso = () => {
           )}
         </div>
 
-        <div className="curso-status-modalidade">
-          <select
-            name="status"
-            value={cursoData.status}
-            onChange={handleChange}
-          >
-            <option value="">Selecione um status</option>
-            <option value="ativo">Ativo</option>
-            <option value="inativo">Inativo</option>
-            <option value="em_breve">Em Breve</option>
-          </select>
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select
+              name="status"
+              value={cursoData.status}
+              onChange={handleChange}
+            >
+              <option value="">Selecione um status</option>
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+              <option value="em_breve">Em Breve</option>
+            </select>
+          </div>
           {errors.status && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.status._errors?.[0]}
             </p>
           )}
-
-          <select
-            name="modalidade"
-            value={cursoData.modalidade}
-            onChange={handleChange}
-          >
-            <option value="">Selecione uma modalidade</option>
-            <option value="presencial">Presencial</option>
-            <option value="ead">EAD</option>
-            <option value="hibrido">Híbrido</option>
-          </select>
+          <div className="custom-select-wrapper">
+            <select
+              name="modalidade"
+              value={cursoData.modalidade}
+              onChange={handleChange}
+            >
+              <option value="">Selecione uma modalidade</option>
+              <option value="presencial">Presencial</option>
+              <option value="ead">EAD</option>
+              <option value="hibrido">Híbrido</option>
+            </select>
+          </div>
           {errors.modalidade && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.modalidade._errors?.[0]}
