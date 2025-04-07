@@ -307,6 +307,11 @@ const AddAluno = () => {
               <option value="O-">O-</option>
               <option value="O+">O+</option>
             </select>
+            {errors.estado_civil && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.grupo_sanguineo}
+            </p>
+          )}
           </div>
           <input
             type="text"
@@ -374,7 +379,6 @@ const AddAluno = () => {
             placeholder="Bairro"
           />
         </div>
-        <div className="input-three-columns">
           <input
             type="text"
             value={celular}
@@ -386,7 +390,6 @@ const AddAluno = () => {
               {errors.celular}
             </p>
           )}
-        </div>
         <div className="input-three-columns">
           <input
             type="text"

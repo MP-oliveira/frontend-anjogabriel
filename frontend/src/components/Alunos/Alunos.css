@@ -19,7 +19,7 @@
   justify-content: end;
 }
 
-.form-criar {
+/* .form-criar {
   width: 130px;
   text-align: center;
   text-decoration: none;
@@ -30,7 +30,7 @@
   padding: 10px 20px;
   flex:1;
   margin-top: 30px;
-}
+} */
 
 .form-list-top-h1 {
   font-size: 32px;
@@ -91,10 +91,10 @@
   padding-left: 10px;
 }
 
-.tabela-form-lista td {
+/* .tabela-form-lista td {
   font-size: 18px;
   padding-left: 10px;
-}
+} */
 
 .tabela-form-lista tbody tr:nth-child(odd) {
   background-color: #f9f9f9;
@@ -103,11 +103,11 @@
 .tabela-form-lista tbody tr:nth-child(even) {
   background-color: #c6d6f310
 }
-
+/* 
 .for-list-acoes {
   display: flex;
   align-items: center;
   gap: 20px;
   justify-content: left;
   margin-left: 10px;
-}
+} */

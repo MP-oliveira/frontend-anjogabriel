@@ -175,6 +175,14 @@ input::placeholder {
   background-color: #f0c55a;
 }
 
+.edit-btn button{
+  background-color: #1C65D1;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
 .error_message {
   color: #ff4444;
   font-size: 14px;
@@ -210,10 +218,11 @@ input::placeholder {
   background-color: #FBD064;
   color: #000;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 14px;
   padding: 10px 20px;
   flex:1;
   margin-top: 30px;
+  font-weight: bold;
 }
 
 .form-list-top-h1 {
@@ -249,9 +258,8 @@ input::placeholder {
   width: 300px;
   font-size: 18px;
 }
-/* 
-.aluno_content_btn {
-  width: 50px;
+
+.content_btn {
   background-color: #1C65D1;
   border: none;
   padding: 8px;
@@ -261,7 +269,7 @@ input::placeholder {
   color: #fff;
   font-size: 18px;
   border: none;
-} */
+}
 
 
 .tabela-form-lista {
@@ -275,8 +283,8 @@ input::placeholder {
   padding-left: 10px;
 }
 
-.tabela-form-listatd {
-  font-size: 18px;
+.tabela-form-lista td {
+  font-size: 16px;
   padding-left: 10px;
 }
 
@@ -292,8 +300,13 @@ input::placeholder {
   display: flex;
   align-items: center;
   gap: 20px;
-  justify-content: left;
+  justify-content: center;
   margin-left: 10px;
+}
+
+.for-list-acoes a {
+  display: flex;
+  align-items: center;
 }
 
 /* Responsividade */

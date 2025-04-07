@@ -77,10 +77,10 @@ const EditAluno = () => {
           data_matricula: aluno.data_matricula.slice(0, 10),
           data_termino_curso: aluno.data_termino_curso.slice(0, 10),
         });
-      }  catch (error) {
+      } catch (error) {
         console.error("Erro ao carregar os dados do aluno", error);
         setApiError(
-          error.response?.data?.message || 
+          error.response?.data?.message ||
           'Erro ao carregar os dados do aluno. Por favor, tente novamente.'
         );
       } finally {
@@ -115,7 +115,7 @@ const EditAluno = () => {
       ...prev,
       [name]: value
     }));
-    
+
     // Limpa o erro do campo quando ele é editado
     setErrors(prev => ({
       ...prev,
@@ -131,13 +131,12 @@ const EditAluno = () => {
 
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Editar Aluno</h2>
-
         <input name="nome" value={alunoData.nome} onChange={handleChange} placeholder="Nome" />
         {errors.nome && <p className="error_message">{errors.nome._errors[0]}</p>}
-        <div className="email-dn">
+        <div className="input-three-columns">
           <input name="email" value={alunoData.email} onChange={handleChange} placeholder="Email" />
           {errors.email && <p className="error_message">{errors.email._errors[0]}</p>}
 
@@ -147,84 +146,163 @@ const EditAluno = () => {
               {errors.data_nascimento}
             </p>
           )}
-          <input name="estado_civil" value={alunoData.estado_civil} onChange={handleChange} placeholder="Estado Civil" />
+          <div className="custom-select-wrapper">
+            <select onChange={handleChange}>
+              <option value="">Estado civil</option>
+              <option value="Solteiro">Solteiro(a)</option>
+              <option value="Casado">Casado(a)</option>
+              <option value="Viuvo">Viuvo(a)</option>
+            </select>
+          </div>
           {errors.estado_civil && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.estado_civil}
             </p>
           )}
         </div>
-        <div className="gs-n-n">
-          <input name="grupo_sanguineo" value={alunoData.grupo_sanguineo} onChange={handleChange} placeholder="Grupo Sanguíneo" />
-
-          <input name="naturalidade" value={alunoData.naturalidade} onChange={handleChange} placeholder="Naturalidade" />
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select onChange={handleChange}>
+              <option value="">Grupo Sanguineo</option>
+              <option value="A-">A-</option>
+              <option value="A+">A+</option>
+              <option value="B-">B-</option>
+              <option value="B+">B+</option>
+              <option value="AB-">AB-</option>
+              <option value="AB+">AB+</option>
+              <option value="O-">O-</option>
+              <option value="O+">O+</option>
+            </select>
+            {errors.estado_civil && (
+              <p className="error_message" style={{ color: "red" }}>
+                {errors.grupo_sanguineo}
+              </p>
+            )}
+          </div>
+          <input
+            type="text"
+            value={alunoData.naturalidade}
+            onChange={handleChange}
+            placeholder="Naturalidade"
+          />
           {errors.naturalidade && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.naturalidade}
             </p>
           )}
-          <input name="nacionalidade" value={alunoData.nacionalidade} onChange={handleChange} placeholder="Nacionalidade" />
+          <input
+            name="nacionalidade"
+            value={alunoData.nacionalidade}
+            onChange={handleChange}
+            placeholder="Nacionalidade" />
           {errors.nacionalidade && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.nacionalidade}
             </p>
           )}
         </div>
-        <input name="pai" value={alunoData.pai} onChange={handleChange} placeholder="Nome do Pai" />
+        <input
+          name="pai"
+          value={alunoData.pai}
+          onChange={handleChange}
+          placeholder="Nome do Pai" />
 
-        <input name="mae" value={alunoData.mae} onChange={handleChange} placeholder="Nome da Mãe" />
-          <input name="cpf" value={alunoData.cpf} onChange={handleChange} placeholder="CPF" />
-          {errors.cpf && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.cpf}
-            </p>
-          )}
-        <input name="endereco" value={alunoData.endereco} onChange={handleChange} placeholder="Endereço" />
-        <div className="nc-b">
-
-          <input name="n_casa" value={alunoData.n_casa} onChange={handleChange} placeholder="Número da Casa" />
-
-          <input name="bairro" value={alunoData.bairro} onChange={handleChange} placeholder="Bairro" />
+        <input
+          name="mae"
+          value={alunoData.mae}
+          onChange={handleChange}
+          placeholder="Nome da Mãe" />
+        <input
+          name="cpf"
+          value={alunoData.cpf}
+          onChange={handleChange}
+          placeholder="CPF" />
+        {errors.cpf && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.cpf}
+          </p>
+        )}
+        <input
+          name="endereco"
+          value={alunoData.endereco}
+          onChange={handleChange}
+          placeholder="Endereço" />
+        <div className="input-three-columns">
+          <input
+            name="n_casa"
+            value={alunoData.n_casa}
+            onChange={handleChange}
+            placeholder="Número da Casa" />
+          <input
+            name="bairro"
+            value={alunoData.bairro}
+            onChange={handleChange}
+            placeholder="Bairro" />
         </div>
-          <input name="celular" value={alunoData.celular} onChange={handleChange} placeholder="Celular" />
-          {errors.celular && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.celular}
-            </p>
-          )}
-        <div className="cep-ci-es">
-
-          <input name="cep" value={alunoData.cep} onChange={handleChange} placeholder="CEP" />
+        <input
+          name="celular"
+          value={alunoData.celular}
+          onChange={handleChange}
+          placeholder="Celular" />
+        {errors.celular && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.celular}
+          </p>
+        )}
+        <div className="input-three-columns">
+          <input
+            name="cep"
+            value={alunoData.cep}
+            onChange={handleChange}
+            placeholder="CEP" />
           {errors.cep && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.cep}
             </p>
           )}
-          <input name="cidade" value={alunoData.cidade} onChange={handleChange} placeholder="Cidade" />
+          <input
+            name="cidade"
+            value={alunoData.cidade}
+            onChange={handleChange}
+            placeholder="Cidade" />
           {errors.cidade && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.cidade}
             </p>
           )}
-          <input name="estado" value={alunoData.estado} onChange={handleChange} placeholder="Estado" />
+          <input
+            name="estado"
+            value={alunoData.estado}
+            onChange={handleChange}
+            placeholder="Estado" />
         </div>
-        <div className="cur-tur-dai-dat">
-
-          <input name="curso" value={alunoData.curso} onChange={handleChange} placeholder="Curso" />
+        <div className="input-three-columns">
+          <input
+            name="curso"
+            value={alunoData.curso}
+            onChange={handleChange}
+            placeholder="Curso" />
           {errors.curso && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.curso}
             </p>
           )}
-          <input name="turno" value={alunoData.turno} onChange={handleChange} placeholder="Turno" />
-
+          <input
+            name="turno"
+            value={alunoData.turno}
+            onChange={handleChange}
+            placeholder="Turno" />
           <input type="date" name="data_matricula" value={alunoData.data_matricula} onChange={handleChange} />
           {errors.data_matricula && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.data_matricula}
             </p>
           )}
-          <input type="date" name="data_termino_curso" value={alunoData.data_termino_curso} onChange={handleChange} />
+          <input
+            type="date"
+            name="data_termino_curso"
+            value={alunoData.data_termino_curso}
+            onChange={handleChange} />
           {errors.data_termino_curso && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.data_termino_curso}
