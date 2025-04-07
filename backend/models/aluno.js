@@ -34,16 +34,16 @@ const Aluno = db.define('Aluno', {
   mae: {
     type: DataTypes.STRING,
   },
-  rg: {
-    type: DataTypes.STRING(20),
-  },
-  orgao_expedidor_rg: {
-    type: DataTypes.STRING,
-  },
-  data_expedicao_rg: {
-    // mudar para DATE 
-    type: DataTypes.STRING,
-  },
+  // rg: {
+  //   type: DataTypes.STRING(20),
+  // },
+  // orgao_expedidor_rg: {
+  //   type: DataTypes.STRING,
+  // },
+  // data_expedicao_rg: {
+  //   // mudar para DATE 
+  //   type: DataTypes.STRING,
+  // },
   cpf: {
     type: DataTypes.STRING(11),
     // allowNull: false,
@@ -58,15 +58,15 @@ const Aluno = db.define('Aluno', {
   bairro: {
     type: DataTypes.STRING,
   },
-  tel_res: {
-    type: DataTypes.STRING(15),
-  },
+  // tel_res: {
+  //   type: DataTypes.STRING(15),
+  // },
   celular: {
     type: DataTypes.STRING(15),
   },
-  tel_trabalho: {
-    type: DataTypes.STRING(15),
-  },
+  // tel_trabalho: {
+  //   type: DataTypes.STRING(15),
+  // },
   cep: {
     type: DataTypes.STRING(10),
   },
