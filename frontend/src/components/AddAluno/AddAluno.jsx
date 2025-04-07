@@ -601,7 +601,6 @@ const AddAluno = () => {
           {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
 
         </div>
-
         <div className="form-btn-container">
           <button className="form-btn" type="submit">
             Adicionar Usuário

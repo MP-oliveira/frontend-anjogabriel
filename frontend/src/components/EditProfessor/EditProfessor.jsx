@@ -128,15 +128,16 @@ const EditProfessor = () => {
           placeholder="Telefone"
         />
         {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
-
-        <select name="status" value={professorData.status} onChange={handleChange}>
-          <option value="">Selecione um status</option>
-          <option value="Ativo">Ativo</option>
-          <option value="Inativo">Inativo</option>
-        </select>
+        <div className="custom-select-wrapper">
+          <select name="status" value={professorData.status} onChange={handleChange}>
+            <option value="">Selecione um status</option>
+            <option value="Ativo">Ativo</option>
+            <option value="Inativo">Inativo</option>
+          </select>
+        </div>
         {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
 
-        <button className="professor-btn" type="submit">Salvar</button>
+        <button className="form-btn" type="submit">Salvar</button>
       </form>
     </div>
   );
