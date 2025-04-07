@@ -10,7 +10,7 @@ const professorSchema = z.object({
   email: z.string().email({ message: "Email inválido." }),
   telefone: z.string().min(10, { message: "Telefone inválido." }),
   status: z.string().nonempty({ message: "Selecione um status válido." }),
-  password:z.string().min(6, {message: "Senha Invalida. A senha de ter pelo menos 6 caracteres."})
+  password: z.string().min(6, { message: "Senha Invalida. A senha de ter pelo menos 6 caracteres." })
 });
 
 const AddProfessor = () => {
@@ -57,10 +57,9 @@ const AddProfessor = () => {
   };
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Adicionar Professor</h2>
-
         <input
           type="text"
           name="nome"
@@ -69,7 +68,6 @@ const AddProfessor = () => {
           placeholder="Nome do Professor"
         />
         {errors.nome && <p className="error_message" style={{ color: "red" }}>{errors.nome._errors?.[0]}</p>}
-
         <input
           type="text"
           name="especialidade"
@@ -78,32 +76,32 @@ const AddProfessor = () => {
           placeholder="Especialidade"
         />
         {errors.especialidade && <p className="error_message" style={{ color: "red" }}>{errors.especialidade._errors?.[0]}</p>}
-
-        <input
-          type="email"
-          name="email"
-          value={professorData.email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        {errors.email && <p className="error_message" style={{ color: "red" }}>{errors.email._errors?.[0]}</p>}
-
-        <input
-          type="text"
-          name="telefone"
-          value={professorData.telefone}
-          onChange={handleChange}
-          placeholder="Telefone"
-        />
-        {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
-
-        <select name="status" value={professorData.status} onChange={handleChange}>
-          <option value="">Selecione um status</option>
-          <option value="Ativo">Ativo</option>
-          <option value="Inativo">Inativo</option>
-        </select>
-        {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
-
+        <div className="input-three-columns">
+          <input
+            type="email"
+            name="email"
+            value={professorData.email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+          {errors.email && <p className="error_message" style={{ color: "red" }}>{errors.email._errors?.[0]}</p>}
+          <input
+            type="text"
+            name="telefone"
+            value={professorData.telefone}
+            onChange={handleChange}
+            placeholder="Telefone"
+          />
+          {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
+          <div className="custom-select-wrapper">
+            <select name="status" value={professorData.status} onChange={handleChange}>
+              <option value="">Selecione um status</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+            </select>
+          </div>
+          {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
+        </div>
         <input
           type="password"
           name="password"
@@ -112,7 +110,7 @@ const AddProfessor = () => {
           placeholder="Senha"
         />
         {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
-        
+
         <button className="aluno-btn" type="submit">Salvar</button>
       </form>
     </div>

@@ -47,7 +47,7 @@ const Professores = () => {
       <div className="form-list-content">
         <div className="form-list-top">
           <h1 className="form-list-top-h1">Gerenciamento de Professores</h1>
-          <Link className="form-criar" to="/professores/add">Adicionar Professor</Link>
+          <Link className="form-criar" to="/professores/add">Add Professor</Link>
         </div>
         <div className="form-list-input">
           <input

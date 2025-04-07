@@ -89,10 +89,9 @@ const EditProfessor = () => {
   }
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Editar Professor</h2>
-
         <input
           type="text"
           name="nome"
@@ -110,32 +109,41 @@ const EditProfessor = () => {
           placeholder="Especialidade"
         />
         {errors.especialidade && <p className="error_message" style={{ color: "red" }}>{errors.especialidade._errors?.[0]}</p>}
+        <div className="input-three-columns">
+          <input
+            type="email"
+            name="email"
+            value={professorData.email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
+          {errors.email && <p className="error_message" style={{ color: "red" }}>{errors.email._errors?.[0]}</p>}
 
-        <input
-          type="email"
-          name="email"
-          value={professorData.email}
-          onChange={handleChange}
-          placeholder="Email"
-        />
-        {errors.email && <p className="error_message" style={{ color: "red" }}>{errors.email._errors?.[0]}</p>}
-
-        <input
-          type="text"
-          name="telefone"
-          value={professorData.telefone}
-          onChange={handleChange}
-          placeholder="Telefone"
-        />
-        {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
-        <div className="custom-select-wrapper">
-          <select name="status" value={professorData.status} onChange={handleChange}>
-            <option value="">Selecione um status</option>
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-          </select>
+          <input
+            type="text"
+            name="telefone"
+            value={professorData.telefone}
+            onChange={handleChange}
+            placeholder="Telefone"
+          />
+          {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
+          <div className="custom-select-wrapper">
+            <select name="status" value={professorData.status} onChange={handleChange}>
+              <option value="">Selecione um status</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Inativo">Inativo</option>
+            </select>
+          </div>
+          {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
         </div>
-        {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
+        <input
+          type="password"
+          name="password"
+          value={professorData.password}
+          onChange={handleChange}
+          placeholder="Senha"
+        />
+        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
 
         <button className="form-btn" type="submit">Salvar</button>
       </form>
