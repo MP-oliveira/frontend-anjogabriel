@@ -15,21 +15,17 @@ const disciplinaSchema = z.object({
   carga_horaria_estagio:
     z.number()
       .min(1, { message: "A carga horária do estágio precisa ser maior que 0" }),
-      estagio_supervisionado: z.boolean(),
+  estagio_supervisionado: z.boolean(),
   duracao:
     z.number()
       .min(1, { message: "A duração precisa ser maior que 0" }),
   curso_id: z.string().min(1, { message: "Selecione um curso válido" }),
   professor_id: z.string().min(1, { message: "Selecione um professor válido" }),
-  semestre: z.string().min(1, { message: "Informe o semestre" }),
-  status: z.string().min(1, { message: "Selecione um status válido" }),
   horario_inicio: z.string().min(1, { message: "Informe o horário de início" }),
   horario_fim: z.string().min(1, { message: "Informe o horário de fim" }),
   dias_semana: z
     .array(z.string())
     .min(1, { message: "Selecione pelo menos um dia da semana" }),
-  pre_requisitos: z.string().min(1, { message: "Informe os pré-requisitos" }),
-  modalidade: z.string().min(1, { message: "Selecione uma modalidade" }),
 });
 
 const EditDisciplina = () => {
@@ -45,13 +41,9 @@ const EditDisciplina = () => {
     duracao: 0,
     curso_id: "",
     professor_id: "",
-    semestre: "",
-    status: "",
     horario_inicio: "",
     horario_fim: "",
     dias_semana: "",
-    pre_requisitos: "",
-    modalidade: "",
   });
 
   useEffect(() => {
@@ -134,7 +126,7 @@ const EditDisciplina = () => {
   if (apiError) {
     return <div className="error">{apiError}</div>;
   }
-
+ console.log('dados da disciplina', disciplinaData)
   return (
     <div className="addaluno-container">
       <form className="form-addaluno" onSubmit={handleSubmit}>
@@ -152,9 +144,58 @@ const EditDisciplina = () => {
             {errors.nome._errors?.[0]}
           </p>
         )}
+        <div className="custom-select-wrapper">
+          <select
+            value={disciplinaData.curso_id}
+            onChange={handleChange}
+          >
+            <option value="">Selecione o Curso</option>
+            {disciplinaData.cursos.map(curso => (
+              <option key={curso.curso_id} value={curso.curso_id}>
+                {curso.nome}
+              </option>
+            ))}
+          </select>
+        </div>
+        {errors.curso_id && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.curso_id}
+          </p>
+        )}
 
-      
-        <div className="addaluno-info">
+        <div className="custom-select-wrapper">
+          <select
+            value={disciplinaData.professor_id}
+            onChange={handleChange}
+          >
+            <option value="">Selecione o Professor</option>
+            {disciplinaData.professores.map(professor => (
+              <option key={professor.id} value={professor.id}>
+                {professor.nome}
+              </option>
+            ))}
+          </select>
+        </div>
+        {errors.professor_id && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.professor_id}
+          </p>
+        )}
+
+        <input
+          name="duracao"
+          type="number"
+          value={disciplinaData.duracao}
+          onChange={handleChange}
+          placeholder="Duração da Disciplina em Meses"
+        />
+        {errors.duracao && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.duracao._errors?.[0]}
+          </p>
+        )}
+
+        <div className="input-three-columns">
           <input
             name="carga_horaria"
             type="number"
@@ -181,50 +222,26 @@ const EditDisciplina = () => {
             </p>
           )}
 
-          <input
-            name="duracao"
-            type="number"
-            value={disciplinaData.duracao}
-            onChange={handleChange}
-            placeholder="Duração (meses)"
-          />
-          {errors.duracao && (
+          <div className="custom-select-wrapper">
+            <select
+              value={disciplinaData.estagio_supervisionado}
+              onChange={handleChange}
+            >
+              <option value="">Tem Estágio</option>
+              <option value="Sim">Sim</option>
+              <option value="Nao">Não</option>
+            </select>
+          </div>
+          {errors.estagio_supervisionado && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.duracao._errors?.[0]}
+              {errors.carga_horaria}
             </p>
           )}
+
+
         </div>
 
-        <div className="disciplina-status">
-          <input
-            name="semestre"
-            value={disciplinaData.semestre}
-            onChange={handleChange}
-            placeholder="Semestre"
-          />
-          {errors.semestre && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.semestre._errors?.[0]}
-            </p>
-          )}
-
-          <select
-            name="status"
-            value={disciplinaData.status}
-            onChange={handleChange}
-          >
-            <option value="">Selecione um status</option>
-            <option value="ativo">Ativo</option>
-            <option value="inativo">Inativo</option>
-          </select>
-          {errors.status && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.status._errors?.[0]}
-            </p>
-          )}
-        </div>
-
-        <div className="disciplina-horarios">
+        <div className="input-three-columns">
           <input
             name="horario_inicio"
             value={disciplinaData.horario_inicio}
@@ -250,49 +267,56 @@ const EditDisciplina = () => {
           )}
         </div>
 
-        <div className="disciplina-dias">
-          <input
-            name="dias_semana"
-            value={disciplinaData.dias_semana}
-            onChange={handleChange}
-            placeholder="Dias da Semana"
-          />
-          {errors.dias_semana && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.dias_semana._errors?.[0]}
-            </p>
-          )}
-
-          <textarea
-            name="pre_requisitos"
-            value={disciplinaData.pre_requisitos}
-            onChange={handleChange}
-            placeholder="Pré-Requisitos"
-            rows={3}
-          />
-          {errors.pre_requisitos && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.pre_requisitos._errors?.[0]}
-            </p>
-          )}
-
-          <select
-            name="modalidade"
-            value={disciplinaData.modalidade}
-            onChange={handleChange}
-          >
-            <option value="">Selecione a Modalidade</option>
-            <option value="presencial">Presencial</option>
-            <option value="online">Online</option>
-            <option value="híbrido">Híbrido</option>
-          </select>
-          {errors.modalidade && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.modalidade._errors?.[0]}
-            </p>
-          )}
+        <div className="input-three-columns label-margin">
+          <label className='label-input'>
+            <input
+              type="checkbox"
+              value="Segunda"
+              onChange={handleChange}
+            />
+            Segunda-feira
+          </label>
+          <label  className='label-input' >
+            <input
+              type="checkbox"
+              value="Terça"
+              onChange={handleChange}
+            />
+            Terça-feira
+          </label>
+          <label className='label-input'>
+            <input
+              type="checkbox"
+              value="Quarta"
+              onChange={handleChange}
+            />
+            Quarta-feira
+          </label>
+          <label  className='label-input'>
+            <input
+              type="checkbox"
+              value="Quinta"
+              onChange={handleChange}
+            />
+            Quinta-feira
+          </label>
+          <label  className='label-input'>
+            <input
+              type="checkbox"
+              value="Sexta"
+              onChange={handleChange}
+            />
+            Sexta-feira
+          </label>
+          <label  className='label-input'>
+            <input
+              type="checkbox"
+              value="Sabado"
+              onChange={handleChange}
+            />
+            Sábado
+          </label>
         </div>
-
         <button className="aluno-btn" type="submit">Salvar</button>
       </form>
     </div>

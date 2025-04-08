@@ -5,6 +5,7 @@ import Delete from '../../assets/trash.svg';
 import Edit from '../../assets/pencil.svg';
 import '../Alunos/Alunos.css';
 
+
 const Disciplinas = () => {
   const [disciplinas, setDisciplinas] = useState([]);
   const [filteredDisciplinas, setFilteredDisciplinas] = useState([]);
@@ -44,22 +45,22 @@ const Disciplinas = () => {
   };
 
   return (
-    <div className="aluno_container">
-      <div className="aluno_content">
-        <div className="aluno_top">
-          <h1 className="aluno_h1">Gerenciamento de Disciplinas</h1>
-          <Link className="criar_aluno" to="/disciplinas/add">Adicionar Disciplina</Link>
+    <div className="form-container">
+      <div className="form-list-content">
+        <div className="form-list-top">
+          <h1 className="form-list-top-h1">Gerenciamento de Disciplinas</h1>
+          <Link className="form-criar" to="/disciplinas/add">Add Disciplina</Link>
         </div>
-        <div className="aluno_input">
+        <div className="form-list-input">
           <input
-            className='aluno_lista_input'
+            className='form-list-input-input'
             type="text"
             placeholder="Buscar por nome do disciplina"
             value={search}
             onChange={handleSearch}
           />
         </div>
-        <table className="tabela_aluno_lista">
+        <table className="tabela-form-lista">
           <thead>
             <tr>
               <th>Nome</th>
@@ -77,7 +78,7 @@ const Disciplinas = () => {
                   <td>{disciplina.carga_horaria}</td>
                   <td>{disciplina.horario_inicio}</td>
                   <td>{disciplina.dias_semana}</td>
-                  <td className="aluno_acoes">
+                  <td className="for-list-acoes">
                     <Link to={`/disciplinas/edit/${disciplina.id}`}>
                       <img src={Edit} alt="Editar" />
                     </Link>

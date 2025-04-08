@@ -151,8 +151,8 @@ const AddDisciplina = () => {
   };
 
   return (
-    <div className="adddisciplina-container">
-      <form className="form-adddisciplina" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Adicionar Disciplina</h2>
 
         <input
@@ -166,37 +166,38 @@ const AddDisciplina = () => {
             {errors.nome}
           </p>
         )}
-
-       
-        <div className="disciplina-curso-prof">
-          <select
-            value={curso_id}
-            onChange={(e) => setCurso_id(e.target.value)}
-          >
-            <option value="">Selecione o Curso</option>
-            {cursos.map(curso => (
-              <option key={curso.id} value={curso.id}>
-                {curso.nome}
-              </option>
-            ))}
-          </select>
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select
+              value={curso_id}
+              onChange={(e) => setCurso_id(e.target.value)}
+            >
+              <option value="">Selecione o Curso</option>
+              {cursos.map(curso => (
+                <option key={curso.id} value={curso.id}>
+                  {curso.nome}
+                </option>
+              ))}
+            </select>
+          </div>
           {errors.curso_id && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.curso_id}
             </p>
           )}
-
-          <select
-            value={professor_id}
-            onChange={(e) => setProfessor_id(e.target.value)}
-          >
-            <option value="">Selecione o Professor</option>
-            {professores.map(professor => (
-              <option key={professor.id} value={professor.id}>
-                {professor.nome}
-              </option>
-            ))}
-          </select>
+          <div className="custom-select-wrapper">
+            <select
+              value={professor_id}
+              onChange={(e) => setProfessor_id(e.target.value)}
+            >
+              <option value="">Selecione o Professor</option>
+              {professores.map(professor => (
+                <option key={professor.id} value={professor.id}>
+                  {professor.nome}
+                </option>
+              ))}
+            </select>
+          </div>
           {errors.professor_id && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.professor_id}
@@ -208,7 +209,7 @@ const AddDisciplina = () => {
           type="number"
           value={duracao}
           onChange={(e) => setDuracao(e.target.value)}
-          placeholder="Duração do Disciplina"
+          placeholder="Duração do Disciplina em Meses"
         />
         {errors.duracao && (
           <p className="error_message" style={{ color: "red" }}>
@@ -216,7 +217,7 @@ const AddDisciplina = () => {
           </p>
         )}
 
-        <div className="disciplina-info">
+        <div className="input-three-columns">
           <input
             type="number"
             value={carga_horaria}
@@ -240,15 +241,16 @@ const AddDisciplina = () => {
               {errors.carga_horaria}
             </p>
           )}
-
-          <select
-            value={estagio_supervisionado}
-            onChange={(e) => setEstagio_supervisionado(e.target.value)}
-          >
-            <option value="">Tem Estágio</option>
-            <option value="Sim">Sim</option>
-            <option value="Nao">Não</option>
-          </select>
+          <div className="custom-select-wrapper">
+            <select
+              value={estagio_supervisionado}
+              onChange={(e) => setEstagio_supervisionado(e.target.value)}
+            >
+              <option value="">Tem Estágio</option>
+              <option value="Sim">Sim</option>
+              <option value="Nao">Não</option>
+            </select>
+          </div>
           {errors.estagio_supervisionado && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.carga_horaria}
@@ -258,7 +260,7 @@ const AddDisciplina = () => {
 
         </div>
 
-        <div className="disciplina-horario">
+        <div className="input-three-columns">
           <input
             type="time"
             value={horario_inicio}
@@ -284,8 +286,8 @@ const AddDisciplina = () => {
           )}
         </div>
 
-        <div className="dias-semana">
-          <label>
+        <div className="input-three-columns label-margin">
+          <label className='label-input'>
             <input
               type="checkbox"
               value="Segunda"
@@ -293,7 +295,7 @@ const AddDisciplina = () => {
             />
             Segunda-feira
           </label>
-          <label>
+          <label  className='label-input' >
             <input
               type="checkbox"
               value="Terça"
@@ -301,7 +303,7 @@ const AddDisciplina = () => {
             />
             Terça-feira
           </label>
-          <label>
+          <label className='label-input'>
             <input
               type="checkbox"
               value="Quarta"
@@ -309,7 +311,7 @@ const AddDisciplina = () => {
             />
             Quarta-feira
           </label>
-          <label>
+          <label  className='label-input'>
             <input
               type="checkbox"
               value="Quinta"
@@ -317,7 +319,7 @@ const AddDisciplina = () => {
             />
             Quinta-feira
           </label>
-          <label>
+          <label  className='label-input'>
             <input
               type="checkbox"
               value="Sexta"
@@ -325,11 +327,17 @@ const AddDisciplina = () => {
             />
             Sexta-feira
           </label>
+          <label  className='label-input'>
+            <input
+              type="checkbox"
+              value="Sabado"
+              onChange={handleDiasSemanaChange}
+            />
+            Sábado
+          </label>
         </div>
-
-
-        <div className="form-actions">
-          <button type="submit">Adicionar Disciplina</button>
+        <div className="form-btn-container">
+          <button  className="form-btn" type="submit">Adicionar Disciplina</button>
         </div>
       </form>
     </div>
