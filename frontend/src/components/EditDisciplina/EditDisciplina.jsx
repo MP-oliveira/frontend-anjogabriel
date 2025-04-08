@@ -34,6 +34,8 @@ const EditDisciplina = () => {
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cursos, setCursos] = useState([]);
+  const [professores, setProfessores] = useState([]);
   const [disciplinaData, setDisciplinaData] = useState({
     nome: "",
     carga_horaria: 0,
@@ -43,25 +45,42 @@ const EditDisciplina = () => {
     professor_id: "",
     horario_inicio: "",
     horario_fim: "",
-    dias_semana: "",
+    dias_semana: [],
+    estagio_supervisionado: ""
   });
 
   useEffect(() => {
-    const fetchDisciplina = async () => {
+    const fetchData = async () => {
       try {
-        const response = await api.get(`/disciplinas/${id}`);
-        const disciplina = response.data;
+        // Carregar dados da disciplina
+        const disciplinaResponse = await api.get(`/disciplinas/${id}`);
+        const disciplina = disciplinaResponse.data;
+
+        // Converter dias da semana para array se vier como string
+        const diasSemana = Array.isArray(disciplina.dias_semana) ?
+          disciplina.dias_semana :
+          (disciplina.dias_semana ? disciplina.dias_semana.split(',') : []);
 
         setDisciplinaData({
           ...disciplina,
           carga_horaria: Number(disciplina.carga_horaria),
+          carga_horaria_estagio: Number(disciplina.carga_horaria_estagio),
           duracao: Number(disciplina.duracao),
+          dias_semana: diasSemana
         });
+
+        // Carregar lista de cursos
+        const cursosResponse = await api.get('/cursos');
+        setCursos(cursosResponse.data);
+
+        // Carregar lista de professores
+        const professoresResponse = await api.get('/professores');
+        setProfessores(professoresResponse.data);
       } catch (error) {
-        console.error("Erro ao carregar os dados da disciplina", error);
+        console.error("Erro ao carregar os dados", error);
         setApiError(
           error.response?.data?.message ||
-          'Erro ao carregar os dados da disciplina. Por favor, tente novamente.'
+          'Erro ao carregar os dados. Por favor, tente novamente.'
         );
       } finally {
         setLoading(false);
@@ -69,7 +88,7 @@ const EditDisciplina = () => {
     };
 
     if (id) {
-      fetchDisciplina();
+      fetchData();
     }
   }, [id]);
 
@@ -80,7 +99,9 @@ const EditDisciplina = () => {
     const dataToValidate = {
       ...disciplinaData,
       carga_horaria: Number(disciplinaData.carga_horaria),
+      carga_horaria_estagio: Number(disciplinaData.carga_horaria_estagio),
       duracao: Number(disciplinaData.duracao),
+      estagio_supervisionado: disciplinaData.estagio_supervisionado === "Sim"
     };
 
     const disciplinaResult = disciplinaSchema.safeParse(dataToValidate);
@@ -100,7 +121,29 @@ const EditDisciplina = () => {
   };
 
   const handleChange = (e) => {
-    const { name, type, value } = e.target;
+    const { name, type, value, checked } = e.target;
+
+    // Tratamento especial para checkboxes (dias da semana)
+    if (type === 'checkbox') {
+      const dia = value;
+      let diasAtualizados = [...disciplinaData.dias_semana];
+
+      if (checked) {
+        // Adicionar dia se não existir
+        if (!diasAtualizados.includes(dia)) {
+          diasAtualizados.push(dia);
+        }
+      } else {
+        // Remover dia
+        diasAtualizados = diasAtualizados.filter(d => d !== dia);
+      }
+
+      setDisciplinaData(prev => ({
+        ...prev,
+        dias_semana: diasAtualizados
+      }));
+      return;
+    }
 
     let processedValue = value;
     if (type === 'number') {
@@ -126,10 +169,10 @@ const EditDisciplina = () => {
   if (apiError) {
     return <div className="error">{apiError}</div>;
   }
- console.log('dados da disciplina', disciplinaData)
+
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Editar Disciplina</h2>
 
         <input
@@ -144,44 +187,48 @@ const EditDisciplina = () => {
             {errors.nome._errors?.[0]}
           </p>
         )}
-        <div className="custom-select-wrapper">
-          <select
-            value={disciplinaData.curso_id}
-            onChange={handleChange}
-          >
-            <option value="">Selecione o Curso</option>
-            {disciplinaData.cursos.map(curso => (
-              <option key={curso.curso_id} value={curso.curso_id}>
-                {curso.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        {errors.curso_id && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.curso_id}
-          </p>
-        )}
 
-        <div className="custom-select-wrapper">
-          <select
-            value={disciplinaData.professor_id}
-            onChange={handleChange}
-          >
-            <option value="">Selecione o Professor</option>
-            {disciplinaData.professores.map(professor => (
-              <option key={professor.id} value={professor.id}>
-                {professor.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        {errors.professor_id && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.professor_id}
-          </p>
-        )}
+        <div className="input-three-columns">
+          <div className="custom-select-wrapper">
+            <select
+              name="curso_id"
+              value={disciplinaData.curso_id}
+              onChange={handleChange}
+            >
+              <option value="">Selecione o Curso</option>
+              {cursos.map(curso => (
+                <option key={curso.id} value={curso.id}>
+                  {curso.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+          {errors.curso_id && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.curso_id._errors?.[0]}
+            </p>
+          )}
 
+          <div className="custom-select-wrapper">
+            <select
+              name="professor_id"
+              value={disciplinaData.professor_id}
+              onChange={handleChange}
+            >
+              <option value="">Selecione o Professor</option>
+              {professores.map(professor => (
+                <option key={professor.id} value={professor.id}>
+                  {professor.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+          {errors.professor_id && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.professor_id._errors?.[0]}
+            </p>
+          )}
+        </div>
         <input
           name="duracao"
           type="number"
@@ -216,7 +263,7 @@ const EditDisciplina = () => {
             onChange={handleChange}
             placeholder="Carga Horária do Estágio (horas)"
           />
-          {errors.carga_horaria && (
+          {errors.carga_horaria_estagio && (
             <p className="error_message" style={{ color: "red" }}>
               {errors.carga_horaria_estagio._errors?.[0]}
             </p>
@@ -224,6 +271,7 @@ const EditDisciplina = () => {
 
           <div className="custom-select-wrapper">
             <select
+              name="estagio_supervisionado"
               value={disciplinaData.estagio_supervisionado}
               onChange={handleChange}
             >
@@ -234,11 +282,9 @@ const EditDisciplina = () => {
           </div>
           {errors.estagio_supervisionado && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.carga_horaria}
+              {errors.estagio_supervisionado._errors?.[0]}
             </p>
           )}
-
-
         </div>
 
         <div className="input-three-columns">
@@ -271,15 +317,19 @@ const EditDisciplina = () => {
           <label className='label-input'>
             <input
               type="checkbox"
+              name="dias_semana"
               value="Segunda"
+              checked={disciplinaData.dias_semana.includes("Segunda")}
               onChange={handleChange}
             />
             Segunda-feira
           </label>
-          <label  className='label-input' >
+          <label className='label-input' >
             <input
               type="checkbox"
+              name="dias_semana"
               value="Terça"
+              checked={disciplinaData.dias_semana.includes("Terça")}
               onChange={handleChange}
             />
             Terça-feira
@@ -287,31 +337,39 @@ const EditDisciplina = () => {
           <label className='label-input'>
             <input
               type="checkbox"
+              name="dias_semana"
               value="Quarta"
+              checked={disciplinaData.dias_semana.includes("Quarta")}
               onChange={handleChange}
             />
             Quarta-feira
           </label>
-          <label  className='label-input'>
+          <label className='label-input'>
             <input
               type="checkbox"
+              name="dias_semana"
               value="Quinta"
+              checked={disciplinaData.dias_semana.includes("Quinta")}
               onChange={handleChange}
             />
             Quinta-feira
           </label>
-          <label  className='label-input'>
+          <label className='label-input'>
             <input
               type="checkbox"
+              name="dias_semana"
               value="Sexta"
+              checked={disciplinaData.dias_semana.includes("Sexta")}
               onChange={handleChange}
             />
             Sexta-feira
           </label>
-          <label  className='label-input'>
+          <label className='label-input'>
             <input
               type="checkbox"
+              name="dias_semana"
               value="Sabado"
+              checked={disciplinaData.dias_semana.includes("Sabado")}
               onChange={handleChange}
             />
             Sábado
