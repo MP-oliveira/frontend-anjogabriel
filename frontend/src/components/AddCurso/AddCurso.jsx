@@ -3,6 +3,7 @@ import { useState } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const cursoSchema = z.object({
   nome: z
@@ -88,6 +89,9 @@ const AddCurso = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+
+        <VoltarButton url='/cursos' />
+
         <h2>Adicionar Curso</h2>
         <input
           type="text"
@@ -101,7 +105,7 @@ const AddCurso = () => {
           </p>
         )}
         <div className="input-three-columns">
-        <input
+          <input
             type="number"
             value={carga_horaria}
             onChange={(e) => setCarga_horaria(e.target.value)}
@@ -112,7 +116,7 @@ const AddCurso = () => {
               {errors.carga_horaria}
             </p>
           )}
-        <input
+          <input
             type="number"
             value={duracao}
             onChange={(e) => setDuracao(e.target.value)}

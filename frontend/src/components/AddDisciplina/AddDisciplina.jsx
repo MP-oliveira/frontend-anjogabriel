@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const disciplinaSchema = z.object({
   nome: z
@@ -153,6 +154,9 @@ const AddDisciplina = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+
+        <VoltarButton url='/disciplinas' />
+
         <h2>Adicionar Disciplina</h2>
 
         <input
@@ -295,7 +299,7 @@ const AddDisciplina = () => {
             />
             Segunda-feira
           </label>
-          <label  className='label-input' >
+          <label className='label-input' >
             <input
               type="checkbox"
               value="Terça"
@@ -311,7 +315,7 @@ const AddDisciplina = () => {
             />
             Quarta-feira
           </label>
-          <label  className='label-input'>
+          <label className='label-input'>
             <input
               type="checkbox"
               value="Quinta"
@@ -319,7 +323,7 @@ const AddDisciplina = () => {
             />
             Quinta-feira
           </label>
-          <label  className='label-input'>
+          <label className='label-input'>
             <input
               type="checkbox"
               value="Sexta"
@@ -327,7 +331,7 @@ const AddDisciplina = () => {
             />
             Sexta-feira
           </label>
-          <label  className='label-input'>
+          <label className='label-input'>
             <input
               type="checkbox"
               value="Sabado"
@@ -337,7 +341,7 @@ const AddDisciplina = () => {
           </label>
         </div>
         <div className="form-btn-container">
-          <button  className="form-btn" type="submit">Adicionar Disciplina</button>
+          <button className="form-btn" type="submit">Adicionar Disciplina</button>
         </div>
       </form>
     </div>

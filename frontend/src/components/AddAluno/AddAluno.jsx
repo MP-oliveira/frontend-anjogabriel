@@ -3,6 +3,8 @@ import { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
+import VoltarButton from '../VoltarButton/VoltarButton';
+
 
 // Regex para CPF com ou sem pontuação
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
@@ -238,6 +240,9 @@ const AddAluno = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+
+      <VoltarButton url= '/alunos'  />
+
         <h2>Adicionar Aluno</h2>
         <input
           id="nome"
@@ -308,10 +313,10 @@ const AddAluno = () => {
               <option value="O+">O+</option>
             </select>
             {errors.estado_civil && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.grupo_sanguineo}
-            </p>
-          )}
+              <p className="error_message" style={{ color: "red" }}>
+                {errors.grupo_sanguineo}
+              </p>
+            )}
           </div>
           <input
             type="text"
@@ -379,17 +384,17 @@ const AddAluno = () => {
             placeholder="Bairro"
           />
         </div>
-          <input
-            type="text"
-            value={celular}
-            onChange={(e) => setCelular(e.target.value)}
-            placeholder="Celular"
-          />
-          {errors.celular && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.celular}
-            </p>
-          )}
+        <input
+          type="text"
+          value={celular}
+          onChange={(e) => setCelular(e.target.value)}
+          placeholder="Celular"
+        />
+        {errors.celular && (
+          <p className="error_message" style={{ color: "red" }}>
+            {errors.celular}
+          </p>
+        )}
         <div className="input-three-columns">
           <input
             type="text"

@@ -44,6 +44,8 @@ import AdicionarTransacao from './components/AddTransacao/AddTransacao';
 import AdicionarConta from './components/AdicionarConta/AdicionarConta';
 import Turnos from './components/Turnos/Turnos';
 import AddTurnos from './components/Addturnos/AddTurnos';
+import MaterialEUtensilio from './components/MaterialEUtensilio/MaterialEUtensilio';
+import EditMaterialEUtensilio from './components/EditMaterialEUtensilio/EditMaterialEUtensilio';
 
 
 function App() {
@@ -69,9 +71,9 @@ function App() {
           <Route path="/disciplinas/edit/:id" element={user && (role.role === 'professor' || role.role === 'admin') ? <EditDisciplina /> : <Navigate to="/login" />} />
           <Route path="/disciplinas" element={user && (role.role === 'professor' || role.role === 'admin' || role.role === 'aluno') ? <Disciplinas /> : <Navigate to="/login" />} />
 
-          <Route path="/admins/create" element={<AddAdmin /> } />
+          <Route path="/admins/create" element={<AddAdmin />} />
           <Route path="/admins/edit/:id" element={user && role.role === 'admin' ? <EditAdmin /> : <Navigate to="/login" />} />
-          <Route path="/admins" element={ <Admins /> } />
+          <Route path="/admins" element={<Admins />} />
 
           <Route path="/professores/add" element={user && role.role === 'admin' ? <AddProfessor /> : <Navigate to="/login" />} />
           <Route path="/professores/edit/:id" element={user && role.role === 'admin' ? <EditProfessor /> : <Navigate to="/login" />} />
@@ -80,7 +82,7 @@ function App() {
           <Route path="/registroacademico" element={user && (role.role === 'aluno' || role.role === 'admin' || role.role === 'professor') ? <RegistroAcademico /> : <Navigate to="/login" />} />
           <Route path="/registroacademico/create" element={user && role.role === 'admin' ? <AddRegistroAcademico /> : <Navigate to="/login" />} />
           <Route path="/registroacademico/edit/:id" element={user && (role.role === 'professor' || role.role === 'admin') ? <EditRegistroAcademico /> : <Navigate to="/login" />} />
-          <Route path="/registroacademico/:id" element={user && (role.role === 'aluno' || role.role === 'admin') ? <DetalhesAluno />  : <Navigate to="/login" />} />
+          <Route path="/registroacademico/:id" element={user && (role.role === 'aluno' || role.role === 'admin') ? <DetalhesAluno /> : <Navigate to="/login" />} />
 
           <Route path="/diplomas/:id" element={<Diploma />} />
           <Route path="/boletim/:id" element={<Boletim />} />
@@ -89,8 +91,17 @@ function App() {
 
           <Route
             path="/materialeutensilios"
+            element={user && role.role === 'admin' ? <MaterialEUtensilio /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/materialeutensilios/add"
             element={user && role.role === 'admin' ? <AddMaterialEUtensilio /> : <Navigate to="/login" />}
           />
+          <Route
+            path="/materialeutensilios/edit/:id"
+            element={user && role.role === 'admin' ? <EditMaterialEUtensilio /> : <Navigate to="/login" />}
+          />
+
           <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
           <Route path="/transacoes" element={<Transacoes />} />
           <Route path="/adicionar-transacao" element={<AdicionarTransacao />} />

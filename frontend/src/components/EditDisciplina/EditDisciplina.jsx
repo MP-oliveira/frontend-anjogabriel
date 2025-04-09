@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const disciplinaSchema = z.object({
   nome: z
@@ -173,6 +174,9 @@ const EditDisciplina = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+
+        <VoltarButton url='/disciplinas' />
+
         <h2>Editar Disciplina</h2>
 
         <input

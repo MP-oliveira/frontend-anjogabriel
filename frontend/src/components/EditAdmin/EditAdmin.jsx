@@ -3,6 +3,7 @@ import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 import '../AddAluno/AddAluno.css';
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const adminSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
@@ -89,6 +90,8 @@ const EditAdmin = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+       <VoltarButton url= '/admins'  />
+       
         <h2>Editar Admin</h2>
 
         <input

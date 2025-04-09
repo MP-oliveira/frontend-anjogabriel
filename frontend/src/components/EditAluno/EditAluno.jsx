@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 
 import './Edit.css'
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 // Regex e validações
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
@@ -133,6 +134,10 @@ const EditAluno = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+
+        <VoltarButton url='/alunos' />
+
+
         <h2>Editar Aluno</h2>
         <input
           name="nome"

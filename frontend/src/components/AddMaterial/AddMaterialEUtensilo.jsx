@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const AddMaterialEUtensilio = () => {
   const [nome, setNome] = useState("");
@@ -34,6 +35,15 @@ const AddMaterialEUtensilio = () => {
       // Enviar os dados para a API
       await api.post("/materialeutensilios/create", newMaterialEUtensilio);
       alert("Material adicionada com sucesso!");
+
+      setNome("")
+      setCategoria("")
+      setQuantidade("")
+      setUnidade("")
+      setValor_unitario("")
+      setUltimo_pedido("")
+      setStatus_material("")
+
     } catch (error) {
       console.error("Erro ao adicionar Material", error);
     }
@@ -42,8 +52,11 @@ const AddMaterialEUtensilio = () => {
 
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
+
+        <VoltarButton url='/materialeutensilios' />
+
         <h2>Adicionar Materiais e Utensilios</h2>
         <input
           type="text"
@@ -51,43 +64,46 @@ const AddMaterialEUtensilio = () => {
           onChange={(e) => setNome(e.target.value)}
           placeholder="Nome"
         />
-        <input
-          type="text"
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-          placeholder="Categoria"
-        />
-        <input
-          type="text"
-          value={quantidade}
-          onChange={(e) => setQuantidade(e.target.value)}
-          placeholder="Quantidade"
-        />
-        <input
-          type="text"
-          value={unidade}
-          onChange={(e) => setUnidade(e.target.value)}
-          placeholder="Unidade"
-        />
-        <input
-          type="text"
-          value={valor_unitario}
-          onChange={(e) => setValor_unitario(e.target.value)}
-          placeholder="Valor Unitário"
-        />
-        <input
-          type="text"
-          value={ultimo_pedido}
-          onChange={(e) => setUltimo_pedido(e.target.value)}
-          placeholder=" Último Pedido"
-        />   <input
-          type="text"
-          value={status_material}
-          onChange={(e) => setStatus_material(e.target.value)}
-          placeholder="Estatos de Materiais e Ultensilios"
-        />
-
-<div className="aluno-btn-container">
+        <div className="input-three-columns">
+          <input
+            type="text"
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+            placeholder="Categoria"
+          />
+          <input
+            type="text"
+            value={quantidade}
+            onChange={(e) => setQuantidade(e.target.value)}
+            placeholder="Quantidade"
+          />
+          <input
+            type="text"
+            value={unidade}
+            onChange={(e) => setUnidade(e.target.value)}
+            placeholder="Unidade"
+          />
+        </div>
+        <div className="input-three-columns">
+          <input
+            type="text"
+            value={valor_unitario}
+            onChange={(e) => setValor_unitario(e.target.value)}
+            placeholder="Valor Unitário"
+          />
+          <input
+            type="date"
+            value={ultimo_pedido}
+            onChange={(e) => setUltimo_pedido(e.target.value)}
+            placeholder=" Último Pedido"
+          />   <input
+            type="text"
+            value={status_material}
+            onChange={(e) => setStatus_material(e.target.value)}
+            placeholder="Estatos de Materiais e Ultensilios"
+          />
+        </div>
+        <div className="aluno-btn-container">
           <button className="aluno-btn" type="submit">
             Adicionar Material ou Utensílio
           </button>
