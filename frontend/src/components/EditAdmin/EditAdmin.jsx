@@ -127,7 +127,16 @@ const EditAdmin = () => {
             </select>
           </div>
           {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
+          <input
+            type="password"
+            name="password"
+            value={adminData.password}
+            onChange={handleChange}
+            placeholder="Senha"
+          />
+          {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
         </div>
+
         <button className="aluno-btn" type="submit">Salvar</button>
       </form>
     </div>

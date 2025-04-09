@@ -9,7 +9,7 @@ const adminSchema = z.object({
   email: z.string().email({ message: "Email inválido." }),
   telefone: z.string().min(10, { message: "Telefone inválido." }),
   role: z.string().nonempty({ message: "Selecione um status válido." }),
-  password: z.string().min(6,{message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. "})
+  password: z.string().min(6, { message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. " })
 });
 
 const AddAdmin = () => {
@@ -56,8 +56,8 @@ const AddAdmin = () => {
   };
 
   return (
-    <div className="addaluno-container">
-      <form className="form-addaluno" onSubmit={handleSubmit}>
+    <div className="form-container">
+      <form className="form-add" onSubmit={handleSubmit}>
         <h2>Adicionar Admin</h2>
 
         <input
@@ -77,29 +77,33 @@ const AddAdmin = () => {
           placeholder="Email"
         />
         {errors.email && <p className="error_message" style={{ color: "red" }}>{errors.email._errors?.[0]}</p>}
+        <div className="input-three-columns">
+          <input
+            type="text"
+            name="telefone"
+            value={adminData.telefone}
+            onChange={handleChange}
+            placeholder="Telefone"
+          />
+          {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
 
-        <input
-          type="text"
-          name="telefone"
-          value={adminData.telefone}
-          onChange={handleChange}
-          placeholder="Telefone"
-        />
-        {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
+          <input
+            type="password"
+            name="password"
+            value={adminData.password}
+            onChange={handleChange}
+            placeholder="Senha"
+          />
+          {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+          <div className="custom-select-wrapper">
 
-        <input
-          type="password"
-          name="password"
-          value={adminData.password}
-          onChange={handleChange}
-          placeholder="Senha"
-        />
-        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+            <select name="role" value={adminData.role} onChange={handleChange}>
+              <option value="">Selecione um status</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+        </div>
 
-        <select name="role" value={adminData.role} onChange={handleChange}>
-          <option value="">Selecione um status</option>
-          <option value="admin">Administrador</option>
-        </select>
         {errors.role && <p className="error_message" style={{ color: "red" }}>{errors.role._errors?.[0]}</p>}
 
         <button className="aluno-btn" type="submit">Salvar</button>
