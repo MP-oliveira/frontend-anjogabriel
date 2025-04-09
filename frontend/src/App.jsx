@@ -8,7 +8,6 @@ import Login from "./pages/Login/Login";
 import EsqueciASenha from "./components/EsqueciASenha/EsqueciASenha";
 
 import AddMaterialEUtensilio from "./components/AddMaterial/AddMaterialEUtensilo";
-import AddTurno from "./components/Addturno/AddTurno";
 import Diploma from "./components/Diploma/Diploma"
 import Header from "./components/Header/Header";
 
@@ -43,6 +42,8 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Transacoes from './components/Transacoes/Transacoes';
 import AdicionarTransacao from './components/AddTransacao/AddTransacao';
 import AdicionarConta from './components/AdicionarConta/AdicionarConta';
+import Turnos from './components/Turnos/Turnos';
+import AddTurnos from './components/Addturnos/AddTurnos';
 
 
 function App() {
@@ -83,7 +84,9 @@ function App() {
 
           <Route path="/diplomas/:id" element={<Diploma />} />
           <Route path="/boletim/:id" element={<Boletim />} />
-          <Route path="/turnos" element={user && role.role === 'admin' ? <AddTurno /> : <Navigate to="/login" />} />
+          <Route path="/turnos/" element={user && role.role === 'admin' ? <Turnos /> : <Navigate to="/login" />} />
+          <Route path="/turnos/add" element={user && role.role === 'admin' ? <AddTurnos /> : <Navigate to="/login" />} />
+
           <Route
             path="/materialeutensilios"
             element={user && role.role === 'admin' ? <AddMaterialEUtensilio /> : <Navigate to="/login" />}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Transacoes.css'; // Certifique-se de que o CSS está correto
 import { Link } from 'react-router-dom';
@@ -31,6 +31,7 @@ function Transacoes() {
   const handleFilterSubmit = (e) => {
     e.preventDefault();
     // Lógica para filtrar transações com base nas datas
+    // Você pode implementar a lógica de filtragem aqui
   };
 
   if (loading) {
@@ -38,42 +39,48 @@ function Transacoes() {
   }
 
   return (
-    <div className="transacoes-container">
-      <h1>Transações Financeiras</h1>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleFilterSubmit}>
-        <input type="date" value={filtroData.dataInicio} onChange={(e) => setFiltroData({...filtroData, dataInicio: e.target.value})} />
-        <input type="date" value={filtroData.dataFim} onChange={(e) => setFiltroData({...filtroData, dataFim: e.target.value})} />
-        <button type="submit">Filtrar</button>
-      </form>
-      {transacoes.length === 0 ? (
-        <p>Nenhuma transação encontrada.</p>
-      ) : (
-        <table className="transacoes-table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Descrição</th>
-              <th>Categoria</th>
-              <th>Valor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transacoes.map(transacao => (
-              <tr key={transacao.id}>
-                <td>{new Date(transacao.data).toLocaleDateString('pt-BR')}</td>
-                <td>{transacao.descricao}</td>
-                <td>{transacao.categoria}</td>
-                <td>{transacao.valor}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-      <div className="action-buttons">
-        <Link to="/adicionar-transacao" className="btn-action">Adicionar Transação</Link>
+    <>
+      <div className="form-container">
+        <div className="form-add">
+          <h1 className='transaction-h1'>Transações Financeiras</h1>
+          {error && <div className="error-message">{error}</div>}
+
+          {/* Formulário de filtro */}
+          <form onSubmit={handleFilterSubmit} className="filter-form">
+            <div className="input-three-columns">
+              <input
+                type="date"
+                value={filtroData.dataInicio}
+                onChange={(e) => setFiltroData({ ...filtroData, dataInicio: e.target.value })}
+              />
+              <input
+                type="date"
+                value={filtroData.dataFim}
+                onChange={(e) => setFiltroData({ ...filtroData, dataFim: e.target.value })}
+              />
+              <button className='filter' type="submit">Filtrar</button>
+            </div>
+          </form>
+
+          {transacoes.length === 0 ? (
+            <p>Nenhuma transação encontrada.</p>
+          ) : (
+            <ul className="transacoes-list">
+              {transacoes.map(transacao => (
+                <li key={transacao.id} className="transacao-item">
+                  <span className="transacao-descricao">{transacao.descricao}</span>
+                  <span className="transacao-data">{new Date(transacao.data).toLocaleDateString('pt-BR')}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="action-buttons">
+            <Link to="/adicionar-transacao" className="btn-action">Adicionar Transação</Link>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

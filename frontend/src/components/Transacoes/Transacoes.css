@@ -1,12 +1,18 @@
 .transacoes-container {
   padding: 20px;
-  margin-top: 120px; /* Adiciona espaço acima do conteúdo */
-  background-color: #f9f9f9; /* Cor de fundo clara */
+  margin-top: 80px;
+  /* Espaço abaixo do cabeçalho */
+  background-color: #f9f9f9;
+  /* Cor de fundo clara */
 }
 
 .transacoes-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.transaction-h1 {
+  font-size: 32px;
 }
 
 .transacoes-table th,
@@ -19,4 +25,64 @@
 .transacoes-table th {
   background-color: #1a53a2;
   color: white;
-} 
+}
+
+.filter-form {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter {
+  height: 46px;
+  border: none;
+  background-color: #1a53a2;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 20px;
+}
+
+.transacoes-list {
+  list-style-type: none;
+  /* Remove os marcadores da lista */
+  padding: 0;
+  /* Remove o padding padrão */
+  max-height: 400px;
+  /* Altura máxima para a lista */
+  overflow-y: auto;
+  /* Adiciona scroll se a lista for grande */
+}
+
+.transacao-item {
+  display: flex;
+  /* Alinha os itens na mesma linha */
+  justify-content: space-between;
+  /* Espaço entre descrição e data */
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  /* Linha separadora */
+}
+
+.transacao-descricao {
+  flex: 1;
+  /* Permite que a descrição ocupe o espaço disponível */
+}
+
+.transacao-data {
+  margin-left: 10px;
+  /* Espaço entre descrição e data */
+}
+
+.error-message {
+  color: rgba(255, 0, 0, 0.747);
+  margin-bottom: 20px;
+}

@@ -7,7 +7,8 @@ module.exports = class TurnosController {
       const turnos = await Turno.findAll();
       res.status(200).json(turnos);
     } catch (error) {
-      res.status(500).json({ error: 'Erro ao buscar turnos' });
+      console.error('Erro ao buscar turnos:', error);
+      res.status(500).json({ erro: 'Erro ao buscar turnos' });
     }
   }
 

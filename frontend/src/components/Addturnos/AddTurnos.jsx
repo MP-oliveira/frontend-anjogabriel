@@ -3,7 +3,7 @@ import api from "../../services/api"; // Importando o serviço de API
 import '../AddAluno/AddAluno.css';
 
 
-const AddTurno = () => {
+const AddTurnos = () => {
   const [nome, setNome] = useState("")
   const [inicio, setInicio] = useState("")
   const [termino, setTermino] = useState("")
@@ -34,8 +34,6 @@ const AddTurno = () => {
       console.error("Erro ao adicionar Turno", error);
     }
   };
-
-
 
 
   return (
@@ -75,4 +73,4 @@ const AddTurno = () => {
   );
 };
 
-export default AddTurno;
+export default AddTurnos;
