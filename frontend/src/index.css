@@ -77,11 +77,13 @@ input::placeholder {
   color: #999999;
   border: 1px solid #C6D6F3;
   border-radius: 8px;
-  appearance: none; /* remove a seta padrão */
+  appearance: none;
+  /* remove a seta padrão */
   background-color: white;
   background-image: url("data:image/svg+xml;utf8,<svg fill='%23999999' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 10px center; /* seta com margem-left */
+  background-position: right 10px center;
+  /* seta com margem-left */
   background-size: 16px 16px;
 }
 
@@ -91,7 +93,8 @@ input::placeholder {
 }
 
 .custom-date-input {
-  color: #999999; /* Cor do texto da data */
+  color: #999999;
+  /* Cor do texto da data */
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -176,7 +179,7 @@ input::placeholder {
   background-color: #f0c55a;
 }
 
-.edit-btn button{
+.edit-btn button {
   background-color: #1C65D1;
   color: #fff;
   border: none;
@@ -205,7 +208,7 @@ input::placeholder {
   margin-top: 100px;
 }
 
-.form-list-top{
+.form-list-top {
   display: flex;
   width: 100%;
   align-items: center;
@@ -222,7 +225,7 @@ input::placeholder {
   font-size: 14px;
   font-weight: bold;
   padding: 10px 20px;
-  flex:1;
+  flex: 1;
   margin-top: 30px;
   font-weight: bold;
 }
@@ -230,7 +233,7 @@ input::placeholder {
 .form-list-top-h1 {
   font-size: 32px;
   text-align: center;
-  flex:6;
+  flex: 6;
   margin-left: 10.4rem;
 }
 
@@ -329,6 +332,13 @@ input::placeholder {
   margin-top: 20px;
   margin-left: 55px;
 }
+
+.admin-input {
+  padding-left: 10px;
+  min-width: 400px;
+}
+
+
 
 /* Responsividade */
 @media (max-width: 1280px) {
