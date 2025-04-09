@@ -203,13 +203,6 @@ const Header = () => {
                 Boletins
               </NavLink>
               <NavLink
-                to="/financial"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Relatório Financeiro
-              </NavLink>
-              <NavLink
                 to="/dashboard"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
