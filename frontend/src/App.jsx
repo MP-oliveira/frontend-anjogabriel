@@ -39,6 +39,11 @@ import DetalhesAluno from './components/RegistroAcademico/DestalhesAlunos';
 import Boletim from './components/Boletim/Boletim';
 import FinancialDashboard from './components/Financial/FinancialDashboard';
 
+import Dashboard from './components/Dashboard/Dashboard';
+import Transacoes from './components/Transacoes/Transacoes';
+import AdicionarTransacao from './components/AddTransacao/AddTransacao';
+
+
 function App() {
   const { user } = useContext(UserContext); // Obter o estado do usuário
   const role = user
@@ -83,6 +88,9 @@ function App() {
             element={user && role.role === 'admin' ? <AddMaterialEUtensilio /> : <Navigate to="/login" />}
           />
           <Route path="/financial" element={<FinancialDashboard />} />
+          <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/transacoes" element={<Transacoes />} />
+          <Route path="/adicionar-transacao" element={<AdicionarTransacao />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>

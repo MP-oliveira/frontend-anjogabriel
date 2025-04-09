@@ -1,0 +1,22 @@
+.transacoes-container {
+  padding: 20px;
+  margin-top: 120px; /* Adiciona espaço acima do conteúdo */
+  background-color: #f9f9f9; /* Cor de fundo clara */
+}
+
+.transacoes-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transacoes-table th,
+.transacoes-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.transacoes-table th {
+  background-color: #1a53a2;
+  color: white;
+} 
