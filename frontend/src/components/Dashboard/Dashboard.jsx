@@ -212,6 +212,7 @@ function Dashboard() {
       <div className="action-buttons">
         <Link to="/transacoes" className="btn-action">Visualizar Transações</Link>
         <Link to="/adicionar-transacao" className="btn-action">Adicionar Transação</Link>
+        <Link to="/adicionar-conta" className="btn-action">Adicionar Conta</Link>
       </div>
       
       {isFilterOpen && (

@@ -42,6 +42,7 @@ import FinancialDashboard from './components/Financial/FinancialDashboard';
 import Dashboard from './components/Dashboard/Dashboard';
 import Transacoes from './components/Transacoes/Transacoes';
 import AdicionarTransacao from './components/AddTransacao/AddTransacao';
+import AdicionarConta from './components/AdicionarConta/AdicionarConta';
 
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
           <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
           <Route path="/transacoes" element={<Transacoes />} />
           <Route path="/adicionar-transacao" element={<AdicionarTransacao />} />
+          <Route path="/adicionar-conta" element={<AdicionarConta />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
