@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Transacoes.css'; // Certifique-se de que o CSS está correto
 import { Link } from 'react-router-dom';
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 function Transacoes() {
   const [transacoes, setTransacoes] = useState([]);
@@ -42,6 +43,7 @@ function Transacoes() {
     <>
       <div className="form-container">
         <div className="form-add">
+          <VoltarButton url='/dashboard' />
           <h1 className='transaction-h1'>Transações Financeiras</h1>
           {error && <div className="error-message">{error}</div>}
 

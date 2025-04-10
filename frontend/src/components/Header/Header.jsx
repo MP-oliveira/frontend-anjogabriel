@@ -70,7 +70,7 @@ const Header = () => {
   };
 
   return (
-    <header className={`header ${isBlurred ? 'blur' : ''} ${menuOpen ? 'menu-open' : ''}`}>
+    <header className={`header  no-print ${isBlurred ? 'blur' : ''} ${menuOpen ? 'menu-open' : ''}`}>
       <div className="header__container">
         <div className="logo">
           <div className="img">
