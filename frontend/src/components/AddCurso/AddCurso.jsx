@@ -120,7 +120,7 @@ const AddCurso = () => {
             type="number"
             value={duracao}
             onChange={(e) => setDuracao(e.target.value)}
-            placeholder="Duração (meses)"
+            placeholder="Duração meses"
           />
           {errors.duracao_meses && (
             <p className="error_message" style={{ color: "red" }}>
@@ -160,7 +160,6 @@ const AddCurso = () => {
               <option value="">Selecione o Status</option>
               <option value="ativo">Ativo</option>
               <option value="inativo">Inativo</option>
-              <option value="em_breve">Em Breve</option>
             </select>
           </div>
           {errors.status && (
@@ -175,7 +174,6 @@ const AddCurso = () => {
             >
               <option value="">Selecione a Modalidade</option>
               <option value="presencial">Presencial</option>
-              <option value="ead">EAD</option>
               <option value="hibrido">Híbrido</option>
             </select>
           </div>

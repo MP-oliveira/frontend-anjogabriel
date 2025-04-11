@@ -217,7 +217,6 @@ const EditCurso = () => {
               <option value="">Selecione um status</option>
               <option value="ativo">Ativo</option>
               <option value="inativo">Inativo</option>
-              <option value="em_breve">Em Breve</option>
             </select>
           </div>
           {errors.status && (
@@ -233,7 +232,6 @@ const EditCurso = () => {
             >
               <option value="">Selecione uma modalidade</option>
               <option value="presencial">Presencial</option>
-              <option value="ead">EAD</option>
               <option value="hibrido">Híbrido</option>
             </select>
           </div>
