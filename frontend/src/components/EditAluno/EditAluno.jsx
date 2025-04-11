@@ -42,6 +42,8 @@ const EditAluno = () => {
   // eslint-disable-next-line no-unused-vars
   const [apiError, setApiError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [cursos, setCursos] = useState([]);
+  const [turnos, setTurnos] = useState([]);
   const [alunoData, setAlunoData] = useState({
     nome: "",
     email: "",
@@ -61,7 +63,9 @@ const EditAluno = () => {
     cidade: "",
     estado: "",
     curso: "",
+    curso_id: "",
     turno: "",
+    turno_id: "",
     data_matricula: "",
     data_termino_curso: "",
   });
@@ -78,6 +82,13 @@ const EditAluno = () => {
           data_matricula: aluno.data_matricula.slice(0, 10),
           data_termino_curso: aluno.data_termino_curso.slice(0, 10),
         });
+
+        const cursosResponse = await api.get('/cursos');
+        setCursos(cursosResponse.data);
+
+        const turnosResponse = await api.get('/turnos');
+        setTurnos(turnosResponse.data);
+
       } catch (error) {
         console.error("Erro ao carregar os dados do aluno", error);
         setApiError(
@@ -136,7 +147,6 @@ const EditAluno = () => {
       <form className="form-add" onSubmit={handleSubmit}>
 
         <VoltarButton url='/alunos' />
-
 
         <h2>Editar Aluno</h2>
         <input
@@ -294,27 +304,45 @@ const EditAluno = () => {
             placeholder="Estado" />
         </div>
         <div className="input-three-columns">
-          <input
-            name="curso"
-            value={alunoData.curso}
-            onChange={handleChange}
-            placeholder="Curso" />
-          {errors.curso && (
+          <div className="custom-select-wrapper">
+            <select
+              name="curso_id"
+              value={alunoData.curso_id}
+              onChange={handleChange}
+            >
+              <option value="">Selecione o Curso</option>
+              {cursos.map(curso => (
+                <option key={curso.id} value={curso.id}>
+                  {curso.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+          {errors.curso_id && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.curso}
+              {errors.curso_id._errors?.[0]}
             </p>
           )}
-          <input
-            name="turno"
-            value={alunoData.turno}
-            onChange={handleChange}
-            placeholder="Turno" />
-          <input type="date" name="data_matricula" value={alunoData.data_matricula} onChange={handleChange} />
-          {errors.data_matricula && (
+          <div className="custom-select-wrapper">
+            <select
+              name="turno_id"
+              value={alunoData.turno_id}
+              onChange={handleChange}
+            >
+              <option value="">Selecione o Turno</option>
+              {turnos.map(turno => (
+                <option key={turno.id} value={turno.id}>
+                  {turno.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+          {errors.turno_id && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.data_matricula}
+              {errors.turno_id._errors?.[0]}
             </p>
           )}
+
           <input
             type="date"
             name="data_termino_curso"

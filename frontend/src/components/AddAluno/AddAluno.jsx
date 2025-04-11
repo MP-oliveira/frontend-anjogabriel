@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
@@ -88,9 +88,29 @@ const AddAluno = () => {
   const [file, setFile] = useState(null);
   const [historico, setHistorico] = useState(null);
   const [password, setPassword] = useState("");
-
-  // Estado para armazenar os erros de validação
   const [errors, setErrors] = useState({});
+  const [cursos, setCursos] = useState([]);
+  const [curso_id, setCurso_id] = useState("");
+  const [turno_id, setTurno_id] = useState("");
+  const [turnos, setTurnos] = useState([])
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [cursosResponse, turnosResponse] = await Promise.all([
+          api.get("/cursos"),
+          api.get("/turnos")
+        ]);
+        setCursos(cursosResponse.data);
+        setTurnos(turnosResponse.data);
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -241,7 +261,7 @@ const AddAluno = () => {
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
 
-      <VoltarButton url= '/alunos'  />
+        <VoltarButton url='/alunos' />
 
         <h2>Adicionar Aluno</h2>
         <input
@@ -458,34 +478,21 @@ const AddAluno = () => {
         <div className="input-three-columns">
           <div className="custom-select-wrapper">
             <select
-              name="curso"
-              id="curso"
-              onChange={(e) => setCurso(e.target.value)}
-            >
-              <option value="">Curso</option>
-              <option value="Tecnico em Enfermagem">Tecnico em enfermagem</option>
-              <option value="Tecnico em Enfermagem do Trabalho">
-                Tecnico em enfermagem do trabalho
+            value={turno_id}
+            onChange={(e) => setTurno_id(e.target.value)}
+          >
+            <option value="">Selecione o Turno</option>
+            {turnos.map(turno => (
+              <option key={turno.id} value={turno.id}>
+                {turno.nome}
               </option>
-            </select>
-          </div>
-          {errors.curso && (
+            ))}
+          </select>
+          {errors.turnos_id && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.curso}
+              {errors.turno_id}
             </p>
           )}
-          <div className="custom-select-wrapper">
-            <select
-              name="turno"
-              id="turno"
-              onChange={(e) => setTurno(e.target.value)}
-            >
-              <option value="">Turno</option>
-              <option value="Matutino">Matutino</option>
-              <option value="Vespertino">Vespertino</option>
-              <option value="Noturno">Noturno</option>
-              <option value="Sabado">Sabado</option>
-            </select>
           </div>
           <input
             type="date"
@@ -498,15 +505,22 @@ const AddAluno = () => {
               {errors.data_matricula}
             </p>
           )}
-          <input
-            type="date"
-            value={data_termino_curso}
-            onChange={(e) => setData_termino_curso(e.target.value)}
-            className="custom-date-input"
-          />
-          {errors.data_termino_curso && (
+          <div className="custom-select-wrapper">
+            <select
+              value={curso_id}
+              onChange={(e) => setCurso_id(e.target.value)}
+            >
+              <option value="">Selecione o Curso</option>
+              {cursos.map(curso => (
+                <option key={curso.id} value={curso.id}>
+                  {curso.nome}
+                </option>
+              ))}
+            </select>
+          </div>
+          {errors.curso_id && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.data_termino_curso}
+              {errors.curso_id}
             </p>
           )}
         </div>
