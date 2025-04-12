@@ -22,19 +22,17 @@ const Mensalidade = () => {
   useEffect(() => {
     const fetchDados = async () => {
       try {
-        // Buscando os dados do aluno
+
         const alunoResponse = await api.get(`/alunos/${id}`);
         if (!alunoResponse.data) {
           throw new Error('Nenhum dado retornado pela API.');
         }
         setAluno(alunoResponse.data);
-        
-        // Determinar o ano de início com base na data de inscrição do aluno
+
         if (alunoResponse.data.data_matricula) {
           const dataMatricula_ = new Date(alunoResponse.data.data_matricula);
           setAnoAtual(dataMatricula_.getFullYear());
 
-          // Gerar os meses para as duas páginas usando a data de matrícula
           gerarMeses(alunoResponse.data.data_matricula);
         } else {
           throw new Error('Data de matrícula não encontrada.');
@@ -54,14 +52,14 @@ const Mensalidade = () => {
   const gerarMeses = (dataInscricao) => {
     const mesInicio = dataInscricao ? new Date(dataInscricao).getMonth() : 0;
     const anoInicio = dataInscricao ? new Date(dataInscricao).getFullYear() : new Date().getFullYear();
-    
+
     let mesesPrimeiraPagina = [];
     let mesesSegundaPagina = [];
-    
+
     for (let i = 0; i < 24; i++) {
       const mesIndex = (mesInicio + i) % 12;
       const ano = anoInicio + Math.floor((mesInicio + i) / 12);
-      
+
       // Define o dia de vencimento como o dia 5
       const diaVencimento = 5;
       const mes = {
@@ -72,26 +70,55 @@ const Mensalidade = () => {
         desconto: 20.00,
         valorComDesconto: 260.00
       };
-      
+
       if (i < 12) {
         mesesPrimeiraPagina.push(mes);
       } else {
         mesesSegundaPagina.push(mes);
       }
     }
-    
+
     setMesesPage1(mesesPrimeiraPagina);
     setMesesPage2(mesesSegundaPagina);
   };
 
-  const handlePrint = () => {
-    window.print();
+  const handlePrintPage1 = () => {
+    if (mensalidadePage2Ref.current) {
+      mensalidadePage2Ref.current.style.display = 'none';
+    }
+    setTimeout(() => {
+      window.print();
+      if (mensalidadePage2Ref.current) {
+        mensalidadePage2Ref.current.style.display = 'block';
+      }
+    }, 100);
   };
+  ;
 
 
-  const handlePrintPage1 = () => handlePrint(mensalidadePage1Ref);
-  const handlePrintPage2 = () => handlePrint(mensalidadePage2Ref);
-  const handlePrintAll = () => window.print();
+  const handlePrintPage2 = () => {
+    if (mensalidadePage1Ref.current) {
+      mensalidadePage1Ref.current.style.display = 'none';
+    }
+    setTimeout(() => {
+      window.print();
+      if (mensalidadePage1Ref.current) {
+        mensalidadePage1Ref.current.style.display = 'block';
+      }
+    }, 100);
+  };
+  
+  const handlePrintAll = () => {
+    if (mensalidadePage1Ref.current) {
+      mensalidadePage1Ref.current.style.display = 'block';
+    }
+    if (mensalidadePage2Ref.current) {
+      mensalidadePage2Ref.current.style.display = 'block';
+    }
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -110,7 +137,7 @@ const Mensalidade = () => {
 
   return (
     <div className="mensalidade-page-container">
-      <h2 className= 'no-print'>MENSALIDADES DO ALUNO - ANO {anoAtual}</h2>
+      <h2 className='no-print'>MENSALIDADES DO ALUNO - ANO {anoAtual}</h2>
       <div className='print-btn no-print'>
         <button onClick={handlePrintAll} className="mensalidade-btn">
           Imprimir Todas Mensalidades
@@ -122,9 +149,11 @@ const Mensalidade = () => {
           Imprimir Segundo Ano
         </button>
       </div>
-      
-      {/* Página 1 - Primeiros 12 meses */}
-      <div className='mensalidade-carnets print-content page-break' ref={mensalidadePage1Ref}>
+
+
+      <div className='mensalidade-carnets print-content page-break'
+        id="mensalidadePage1"
+        ref={mensalidadePage1Ref}>
         <div className="carnets-grid">
           {mesesPage1.map((mes, index) => (
             <div key={index} className="carnet-card">
@@ -176,8 +205,10 @@ const Mensalidade = () => {
         </div>
       </div>
 
-      {/* Página 2 - Últimos 12 meses */}
-      <div className='mensalidade-carnets print-content' ref={mensalidadePage2Ref}>
+
+      <div className='mensalidade-carnets print-content'
+        id="mensalidadePage2"
+        ref={mensalidadePage2Ref}>
         <div className="carnets-grid">
           {mesesPage2.map((mes, index) => (
             <div key={index} className="carnet-card">
@@ -196,8 +227,8 @@ const Mensalidade = () => {
                   <tr>
                     <td className="left-col">
                       Cedente<br />
-                      <strong>Escola de Enfermagem Anjo Gabriel 
-                      <em>Vespertino</em></strong> <br />
+                      <strong>Escola de Enfermagem Anjo Gabriel <br />
+                        <em>Vespertino</em></strong>
                     </td>
                     <td className="right-col">
                       Valor da Cota<br />

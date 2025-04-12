@@ -147,111 +147,61 @@
   background-color: #d32f2f;
 }
 
+/* Adicione ou modifique estas regras ao seu CSS */
 @media print {
-  /* Esconder elementos que não devem ser impressos */
-  .no-print {
-    display: none !important;
-  }
-  
-  /* Redefinir alguns estilos para garantir boa impressão */
-  body, html {
-    width: 100%;
-    height: 100%;
+  .mensalidade-carnets {
+    max-width: 210mm;
     margin: 0;
-    padding: 0;
-    background-color: white;
-  }
-  
-  .page-container {
-    width: 100%;
-    height: auto;
-    margin-top: 0; /* Remover margem superior para evitar espaço em branco */
-    page-break-after: avoid; /* Evitar quebra de página após o contêiner */
-  }
-  
-  .boletim_container {
-    width: 100%;
-    height: auto;
-    margin: 0;
-    padding: 10mm; /* Aumentar o padding para ocupar mais espaço */
-    border: none;
+    padding: 2mm;
     box-shadow: none;
-    font-size: 12px; /* Aumentar o tamanho da fonte na impressão */
-    page-break-inside: avoid; /* Evitar quebra de página dentro do contêiner */
   }
   
-  /* Garantir que o conteúdo caiba em uma página */
-  .boletim_impressao {
-    max-height: 270mm; /* Altura aproximada de uma página A4 com margens */
-    overflow: hidden; /* Evitar quebras de página desnecessárias */
+  .carnets-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, auto); /* Força 6 linhas */
+    gap: 2mm;
+    page-break-inside: avoid;
   }
   
-  /* Reduzir espaçamento entre módulos */
-  .modulo_container {
-    margin-bottom: 5px;
-    page-break-inside: avoid; /* Evitar quebra de página dentro de módulos */
+  .carnet-card {
+    margin-bottom: 0;
+    /* Reduzir levemente a altura de cada cartão */
+    max-height: 46mm;
   }
   
-  /* Reduzir espaço do cabeçalho */
-  .boletim_cabecalho {
-    margin-bottom: 5px;
-    padding-bottom: 5px;
+  /* Garantir que cada página de mensalidades fique em uma página */
+  #mensalidadePage1 {
+    page-break-after: always;
+    page-break-before: auto;
   }
   
-  /* Reduzir espaço da info do aluno */
-  .boletim_aluno_info {
-    margin-bottom: 5px;
+  #mensalidadePage2 {
+    page-break-before: always;
+    page-break-after: auto;
+  }
+  
+  /* Reduzir levemente os tamanhos de fonte e espaçamentos */
+  .carnet-table td {
+    padding: 1px;
+    font-size: 8px;
+  }
+  
+  .bold {
+    font-size: 10px;
+  }
+  
+  .small-text {
+    font-size: 7px;
+  }
+  
+  .multi-line div {
+    margin: 0;
   }
   
   /* Configuração de página específica */
   @page {
-    size: A4 portrait;
-    margin: 5mm; /* Reduzir margem da página */
-  }
-  
-  /* Ajuste para cores de impressão */
-  .modulo_tabela th {
-    background-color: #f2f2f2 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  
-  /* Garantir que os textos sejam impressos em preto */
-  * {
-    color: black !important;
-  }
-  
-  /* Reduzir tamanho das células da tabela */
-  .modulo_tabela th, .modulo_tabela td {
-    padding: 5.3px 5px; /* Aumentar o padding para aumentar a altura das células */
-    font-size: 10px; /* Tamanho da fonte */
-  }
-  
-  /* Reduzir tamanho das observações */
-  .observacoes_conteudo {
-    display: flex;
-    flex-direction: row;
-    min-height: 30px;;
-  }
-  
-  /* Reduzir espaço do rodapé */
-  .rodape_boletim {
-    display: flex;
-    flex-direction: row;
-    margin-top: 5px;
-  }
-  
-  .assinaturas {
-    margin-top: 10px;
-  }
-  
-  .error-container, .loading-container {
-    display: none !important;
-  }
-  
-  /* Garantir que toda a página seja impressa em uma folha só */
-  .boletim_impressao {
-    page-break-after: avoid;
-    page-break-before: avoid;
+    size: A4;
+    margin: 5mm;
   }
 }
