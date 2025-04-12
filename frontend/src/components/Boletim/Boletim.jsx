@@ -3,6 +3,7 @@ import LogoAnjo from '../../assets/logoAnjo.png';
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const Boletim = () => {
   const { id } = useParams();
@@ -70,14 +71,17 @@ const Boletim = () => {
           Imprimir Boletim
         </button>
       </div>
-      
+
       <div className='boletim_container print-content' ref={boletimRef}>
+        <div className="no-print">
+          <VoltarButton url='/alunos' />
+        </div>
         <div className="boletim_impressao">
           <div className='boletim_cabecalho'>
+            <div className="escola_info">
             <div className="logo_escola">
               <img src={LogoAnjo} alt="Logo da Escola" />
             </div>
-            <div className="escola_info">
               <h1>ESCOLA DE ENFERMAGEM ANJO GABRIEL LTDA.</h1>
               <h2>CURSO TÉCNICO DE ENFERMAGEM</h2>
               <p>Avenida Altamirando de Araújo Ramos, nº 278, 1º andar, Centro,</p>
@@ -85,7 +89,7 @@ const Boletim = () => {
               <h2 className="boletim_titulo">BOLETIM DO ALUNO</h2>
             </div>
           </div>
-          
+
           {aluno && (
             <div className="boletim_aluno_info">
               <p><strong>Aluno:</strong> {aluno.nome || ''}</p>

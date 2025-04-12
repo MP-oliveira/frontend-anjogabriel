@@ -4,6 +4,7 @@
   margin-top: 120px;
 }
 
+
 .boletim_container {
   width: 100%;
   max-width: 210mm; /* Tamanho A4 largura */
@@ -25,6 +26,12 @@
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
+}
+
+.print-btn button {
+  border: none;
+  background-color: #4480e0;
+  width: 200px;
 }
 
 .aluno-btn, .retry-button {
@@ -91,6 +98,9 @@
 .escola_info {
   flex: 1;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .escola_info h1 {
