@@ -3,6 +3,7 @@ import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 import '../AddAluno/AddAluno.css';
+import InputPassword from '../InputPassword/InputPassword';
 
 const professorSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
@@ -100,16 +101,16 @@ const EditProfessor = () => {
           placeholder="Nome do Professor"
         />
         {errors.nome && <p className="error_message" style={{ color: "red" }}>{errors.nome._errors?.[0]}</p>}
-
-        <input
-          type="text"
-          name="especialidade"
-          value={professorData.especialidade}
-          onChange={handleChange}
-          placeholder="Especialidade"
-        />
-        {errors.especialidade && <p className="error_message" style={{ color: "red" }}>{errors.especialidade._errors?.[0]}</p>}
         <div className="input-three-columns">
+
+          <input
+            type="text"
+            name="especialidade"
+            value={professorData.especialidade}
+            onChange={handleChange}
+            placeholder="Especialidade"
+          />
+          {errors.especialidade && <p className="error_message" style={{ color: "red" }}>{errors.especialidade._errors?.[0]}</p>}
           <input
             type="email"
             name="email"
@@ -118,6 +119,8 @@ const EditProfessor = () => {
             placeholder="Email"
           />
           {errors.email && <p className="error_message" style={{ color: "red" }}>{errors.email._errors?.[0]}</p>}
+        </div>
+        <div className="input-three-columns">
 
           <input
             type="text"
@@ -135,16 +138,12 @@ const EditProfessor = () => {
             </select>
           </div>
           {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
-        </div>
-        <input
-          type="password"
-          name="password"
-          value={professorData.password}
-          onChange={handleChange}
-          placeholder="Senha"
-        />
-        {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
 
+          <InputPassword />
+          {errors.password &&
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.password._errors?.[0]}</p>}
+        </div>
         <button className="form-btn" type="submit">Salvar</button>
       </form>
     </div>
