@@ -49,18 +49,14 @@ const AddDisciplina = () => {
   const [duracao, setDuracao] = useState("");
   const [curso_id, setCurso_id] = useState("");
   const [professor_id, setProfessor_id] = useState("");
-
   const [horario_inicio, setHorario_inicio] = useState("");
   const [horario_fim, setHorario_fim] = useState("");
   const [dias_semana, setDias_semana] = useState([]);
-
   const [errors, setErrors] = useState({});
-
-  // Estados para as listas de cursos e professores
   const [cursos, setCursos] = useState([]);
   const [professores, setProfessores] = useState([]);
 
-  // Carregar cursos e professores quando o componente montar
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -99,7 +95,6 @@ const AddDisciplina = () => {
       duracao: Number(duracao),
       curso_id: Number(curso_id),
       professor_id: Number(professor_id),
-
       horario_inicio,
       horario_fim,
       dias_semana,
@@ -137,7 +132,6 @@ const AddDisciplina = () => {
         setDuracao("");
         setCurso_id("");
         setProfessor_id("");
-
         setHorario_inicio("");
         setHorario_fim("");
         setDias_semana([]);
@@ -260,8 +254,6 @@ const AddDisciplina = () => {
               {errors.carga_horaria}
             </p>
           )}
-
-
         </div>
 
         <div className="input-three-columns">

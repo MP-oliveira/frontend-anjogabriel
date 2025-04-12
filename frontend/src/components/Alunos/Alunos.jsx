@@ -76,16 +76,19 @@ const Alunos = () => {
                   <td>{aluno.cpf}</td>
                   <td className="for-list-acoes">
                     <Link to={`/alunos/edit/${aluno.id}`}>
-                      <img src={Edit} alt="" />
+                      <img src={Edit} alt="Editar" />
                     </Link>
                     <Link onClick={() => handleDelete(aluno.id)}>
-                      <img src={Delete} alt="" />
+                      <img src={Delete} alt="Deletar" />
                     </Link>
-                    <Link className='edit-btn' to={`/diplomas/${aluno.id}`}>
-                      <button>Diploma</button>
+                    <Link className='edit-btn' to={`/mensalidade/${aluno.id}`}>
+                      <button>Mensalidade</button>
                     </Link>
                     <Link className='edit-btn' to={`/boletim/${aluno.id}`}>
                       <button>Boletim</button>
+                    </Link>
+                    <Link className='edit-btn' to={`/diplomas/${aluno.id}`}>
+                      <button>Diploma</button>
                     </Link>
                   </td>
                 </tr>

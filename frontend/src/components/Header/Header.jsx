@@ -161,18 +161,18 @@ const Header = () => {
             </NavLink>
             <div className="dropdown-menu">
               <NavLink
+                to="/admins"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Administrador
+              </NavLink>
+              <NavLink
                 to="/alunos"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Alunos
-              </NavLink>
-              <NavLink
-                to="/professores"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Professores
               </NavLink>
               <NavLink
                 to="/cursos"
@@ -182,46 +182,18 @@ const Header = () => {
                 Cursos
               </NavLink>
               <NavLink
+                to="/dashboard"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Dashboard
+              </NavLink>
+              <NavLink
                 to="/disciplinas"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Disciplina
-              </NavLink>
-              <NavLink
-                to="/diplomas"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Diplomas
-              </NavLink>
-              <NavLink
-                to="/boletim/{id}"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Boletins
-              </NavLink>
-              <NavLink
-                to="/dashboard"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-               Dashboard
-              </NavLink>
-              <NavLink
-                to="/turnos"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Turno
-              </NavLink>
-              <NavLink
-                to="/admins"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Administrador
               </NavLink>
               <NavLink
                 to="/materialeutensilios"
@@ -231,11 +203,25 @@ const Header = () => {
                 Materiais e Utensílios
               </NavLink>
               <NavLink
+                to="/professores"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Professores
+              </NavLink>
+              <NavLink
                 to="/registroacademico"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
               >
                 Registro Acadêmico
+              </NavLink>
+              <NavLink
+                to="/turnos"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Turno
               </NavLink>
             </div>
           </li>

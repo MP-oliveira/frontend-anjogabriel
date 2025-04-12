@@ -46,6 +46,7 @@ import Turnos from './components/Turnos/Turnos';
 import AddTurnos from './components/Addturnos/AddTurnos';
 import MaterialEUtensilio from './components/MaterialEUtensilio/MaterialEUtensilio';
 import EditMaterialEUtensilio from './components/EditMaterialEUtensilio/EditMaterialEUtensilio';
+import Mensalidade from './components/Mensalidade/Mensalidade';
 
 
 function App() {
@@ -106,6 +107,7 @@ function App() {
           <Route path="/transacoes" element={<Transacoes />} />
           <Route path="/adicionar-transacao" element={<AdicionarTransacao />} />
           <Route path="/adicionar-conta" element={<AdicionarConta />} />
+          <Route path="/mensalidade/:id" element={<Mensalidade />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
