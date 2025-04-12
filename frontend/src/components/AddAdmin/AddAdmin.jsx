@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import '../AddAluno/AddAluno.css';
 import VoltarButton from '../VoltarButton/VoltarButton';
+import InputPassword from '../InputPassword/InputPassword';
 
 
 const adminSchema = z.object({
@@ -91,16 +92,12 @@ const AddAdmin = () => {
           />
           {errors.telefone && <p className="error_message" style={{ color: "red" }}>{errors.telefone._errors?.[0]}</p>}
 
-          <input
-            type="password"
-            name="password"
-            value={adminData.password}
-            onChange={handleChange}
-            placeholder="Senha"
-          />
-          {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
-          <div className="custom-select-wrapper">
+          <InputPassword />
+          {errors.password &&
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.password._errors?.[0]}</p>}
 
+          <div className="custom-select-wrapper">
             <select name="role" value={adminData.role} onChange={handleChange}>
               <option value="">Selecione um status</option>
               <option value="admin">Administrador</option>

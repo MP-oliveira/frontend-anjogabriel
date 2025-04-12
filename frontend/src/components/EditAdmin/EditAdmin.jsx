@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 import '../AddAluno/AddAluno.css';
 import VoltarButton from '../VoltarButton/VoltarButton';
+import InputPassword from '../InputPassword/InputPassword';
 
 const adminSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
@@ -130,14 +131,10 @@ const EditAdmin = () => {
             </select>
           </div>
           {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
-          <input
-            type="password"
-            name="password"
-            value={adminData.password}
-            onChange={handleChange}
-            placeholder="Senha"
-          />
-          {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+          <InputPassword />
+          {errors.password &&
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.password._errors?.[0]}</p>}
         </div>
 
         <button className="aluno-btn" type="submit">Salvar</button>
