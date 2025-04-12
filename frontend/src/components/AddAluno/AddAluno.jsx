@@ -1,9 +1,10 @@
-
 import { useEffect, useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import VoltarButton from '../VoltarButton/VoltarButton';
+// import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import InputPassword from '../InputPassword/InputPassword'; // Importando o componente de senha
 
 
 // Regex para CPF com ou sem pontuação
@@ -478,21 +479,21 @@ const AddAluno = () => {
         <div className="input-three-columns">
           <div className="custom-select-wrapper">
             <select
-            value={turno_id}
-            onChange={(e) => setTurno_id(e.target.value)}
-          >
-            <option value="">Selecione o Turno</option>
-            {turnos.map(turno => (
-              <option key={turno.id} value={turno.id}>
-                {turno.nome}
-              </option>
-            ))}
-          </select>
-          {errors.turnos_id && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.turno_id}
-            </p>
-          )}
+              value={turno_id}
+              onChange={(e) => setTurno_id(e.target.value)}
+            >
+              <option value="">Selecione o Turno</option>
+              {turnos.map(turno => (
+                <option key={turno.id} value={turno.id}>
+                  {turno.nome}
+                </option>
+              ))}
+            </select>
+            {errors.turnos_id && (
+              <p className="error_message" style={{ color: "red" }}>
+                {errors.turno_id}
+              </p>
+            )}
           </div>
           <input
             type="date"
@@ -545,15 +546,8 @@ const AddAluno = () => {
               required />
             Adicione seu Histórico
           </div>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Senha"
-          />
+          <InputPassword />
           {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
-
         </div>
         <div className="form-btn-container">
           <button className="form-btn" type="submit">

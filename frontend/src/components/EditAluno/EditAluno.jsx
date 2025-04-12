@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import './Edit.css'
 import VoltarButton from '../VoltarButton/VoltarButton';
+import InputPassword from '../InputPassword/InputPassword';
 
 // Regex e validações
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
@@ -342,17 +343,10 @@ const EditAluno = () => {
               {errors.turno_id._errors?.[0]}
             </p>
           )}
-
-          <input
-            type="date"
-            name="data_termino_curso"
-            value={alunoData.data_termino_curso}
-            onChange={handleChange} />
-          {errors.data_termino_curso && (
+          <InputPassword />
+          {errors.password &&
             <p className="error_message" style={{ color: "red" }}>
-              {errors.data_termino_curso}
-            </p>
-          )}
+              {errors.password._errors?.[0]}</p>}
         </div>
         <button className="aluno-btn" type="submit">Salvar</button>
       </form>
