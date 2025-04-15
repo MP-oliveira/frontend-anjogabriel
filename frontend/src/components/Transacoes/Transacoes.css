@@ -145,7 +145,7 @@
 }
 
 /* Estilos para o formulário de filtro */
-.input-three-columns {
+/* .input-three-columns {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
@@ -156,7 +156,7 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
-}
+} */
 
 .input-three-columns button {
   padding: 10px 20px;
