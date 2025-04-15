@@ -1,16 +1,13 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import api from "../../services/api";
 import "./Login.css";
 import { UserContext } from "../../context/UseContext";
-import { useNavigate } from 'react-router-dom';
-import InputPassword from '../../components/InputPassword/InputPassword';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const { setUser } = useContext(UserContext)
-  const navigate = useNavigate();
   
 
   const handleLogin = async (e) => {
@@ -33,13 +30,13 @@ function Login() {
       // Redirecionar baseado no papel
       switch (role) {
         case "admin":
-          navigate("/");
+          window.location.href = "/";
           break;
         case "professor":
-          navigate("/professor/dashboard");
+          window.location.href = "/professor/dashboard";
           break;
         case "aluno":
-          navigate("/aluno/dashboard");
+          window.location.href = "/aluno/dashboard";
           break;
       }
     } catch (error) {
@@ -59,10 +56,12 @@ function Login() {
           required
           className='form-input'
         />
-        <InputPassword
+        <input
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Senha"
+          required
         />
         <select value={role} onChange={(e) => setRole(e.target.value)} required>
           <option value="">Selecione seu papel</option>
