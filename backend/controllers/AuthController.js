@@ -19,7 +19,6 @@ module.exports = class AuthController {
 
       // Obter o user_id do usuário autenticado
       const userId = data.user.id;
-      console.log(data)
 
 
       // Verificar em qual tabela o user_id está presente
@@ -47,7 +46,6 @@ module.exports = class AuthController {
           .json({ message: "Usuário não encontrado em nenhuma tabela" });
       }
 
-      console.log('roler:', roler);
       // Retornar o papel do usuário e o token de sessão
       res.status(200).json({
         message: "Login bem-sucedido",

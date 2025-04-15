@@ -103,7 +103,7 @@ function App() {
             element={user && role.role === 'admin' ? <EditMaterialEUtensilio /> : <Navigate to="/login" />}
           />
 
-          <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+          <Route path="/dashboard" element={<Dashboard /> } />
           <Route path="/transacoes" element={<Transacoes />} />
           <Route path="/adicionar-transacao" element={<AdicionarTransacao />} />
           <Route path="/adicionar-conta" element={<AdicionarConta />} />

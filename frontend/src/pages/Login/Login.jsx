@@ -2,35 +2,37 @@ import { useState, useContext } from "react";
 import api from "../../services/api";
 import "./Login.css";
 import { UserContext } from "../../context/UseContext";
+import { useNavigate } from "react-router-dom";
+import InputPassword from "../../components/InputPassword/InputPassword";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const { setUser } = useContext(UserContext)
-  
+  const { setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Iniciando login...'); // Log de depuração
+    console.log("Iniciando login..."); // Log de depuração
+
     try {
       const response = await api.post("/auth/login", {
         email,
         password,
         role,
       });
-      console.log('response data', response.data)
 
       // Salvar token e informações do usuário
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data));
-      const newUser = JSON.stringify(localStorage.getItem('user'))
-      console.log("newUseer",newUser)
-      setUser(JSON.stringify(localStorage.getItem('user'))); // Defina o usuário no contexto
+      const newUser = JSON.stringify(localStorage.getItem("user"));
+      console.log("newUseer", newUser);
+      setUser(JSON.stringify(localStorage.getItem("user"))); // Defina o usuário no contexto
       // Redirecionar baseado no papel
       switch (role) {
         case "admin":
-          window.location.href = "/";
+          window.location.href = "/admins";
           break;
         case "professor":
           window.location.href = "/professor/dashboard";
@@ -40,7 +42,7 @@ function Login() {
           break;
       }
     } catch (error) {
-      console.error('Erro no login:', error); // Log de erro detalhado
+      console.error("Erro no login:", error); // Log de erro detalhado
       alert(error.response?.data?.error || "Erro no login");
     }
   };
@@ -54,14 +56,14 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
           required
-          className='form-input'
+          className="form-input"
         />
         <input
           type="password"
+          name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Senha"
-          required
+          placeholder="Password"
         />
         <select value={role} onChange={(e) => setRole(e.target.value)} required>
           <option value="">Selecione seu papel</option>
@@ -69,7 +71,9 @@ function Login() {
           <option value="professor">Professor</option>
           <option value="aluno">Aluno</option>
         </select>
-        <button type="submit" className='aluno-btn'>Entrar</button>
+        <button type="submit" className="aluno-btn">
+          Entrar
+        </button>
       </form>
     </div>
   );
