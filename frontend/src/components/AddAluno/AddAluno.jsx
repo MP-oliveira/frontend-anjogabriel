@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import VoltarButton from '../VoltarButton/VoltarButton';
+import VoltarButton from "../VoltarButton/VoltarButton";
 // import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import InputPassword from '../InputPassword/InputPassword'; // Importando o componente de senha
-
+import InputPassword from "../InputPassword/InputPassword"; // Importando o componente de senha
 
 // Regex para CPF com ou sem pontuação
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
@@ -58,8 +57,11 @@ const alunoSchema = z.object({
   data_termino_curso: z
     .date()
     .max(new Date(), { message: "Digite uma data termino valida" }),
-  password: z.string().min(6, { message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. " })
-
+  password: z
+    .string()
+    .min(6, {
+      message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. ",
+    }),
 });
 
 const AddAluno = () => {
@@ -93,15 +95,14 @@ const AddAluno = () => {
   const [cursos, setCursos] = useState([]);
   const [curso_id, setCurso_id] = useState("");
   const [turno_id, setTurno_id] = useState("");
-  const [turnos, setTurnos] = useState([])
-
+  const [turnos, setTurnos] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [cursosResponse, turnosResponse] = await Promise.all([
           api.get("/cursos"),
-          api.get("/turnos")
+          api.get("/turnos"),
         ]);
         setCursos(cursosResponse.data);
         setTurnos(turnosResponse.data);
@@ -119,7 +120,7 @@ const AddAluno = () => {
 
   const handleHistoricoChange = (event) => {
     setHistorico(event.target.files[0]);
-  }
+  };
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
@@ -150,8 +151,10 @@ const AddAluno = () => {
       password,
     };
 
+
     // Validando os dados com o esquema do Zod
     const alunoresult = alunoSchema.safeParse(alunoFormValues);
+
 
     // Se houver erros, eles serão exibidos
     if (!alunoresult.success) {
@@ -180,6 +183,7 @@ const AddAluno = () => {
         data_termino_curso: fieldErrors.data_termino_curso?._errors[0],
         password: fieldErrors.password?._errors[0],
       });
+      
     } else {
       try {
         const formData = new FormData();
@@ -211,7 +215,6 @@ const AddAluno = () => {
         formData.append("historico", historico);
         formData.append("password", alunoresult.data.password);
 
-        console.log(formData, " form Data");
         // Enviar os dados para a API
         // const response = await api.post("/alunos/create", alunoFormValues);
         const response = await api.post("/alunos/create", formData, {
@@ -247,7 +250,7 @@ const AddAluno = () => {
           setTurno("Turno"),
           setData_matricula(""),
           setData_termino_curso("");
-        setPassword("")
+        setPassword("");
         navigate("/alunos");
       } catch (error) {
         console.error("Erro ao adicionar usuário", error);
@@ -261,8 +264,7 @@ const AddAluno = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
-
-        <VoltarButton url='/alunos' />
+        <VoltarButton url="/alunos" />
 
         <h2>Adicionar Aluno</h2>
         <input
@@ -483,7 +485,7 @@ const AddAluno = () => {
               onChange={(e) => setTurno_id(e.target.value)}
             >
               <option value="">Selecione o Turno</option>
-              {turnos.map(turno => (
+              {turnos.map((turno) => (
                 <option key={turno.id} value={turno.id}>
                   {turno.nome}
                 </option>
@@ -506,13 +508,24 @@ const AddAluno = () => {
               {errors.data_matricula}
             </p>
           )}
+                    <input
+            type="date"
+            value={data_termino_curso}
+            onChange={(e) => setData_termino_curso(e.target.value)}
+            className="custom-date-input"
+          />
+          {errors.data_termino_curso && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.data_termino_curso}
+            </p>
+          )}
           <div className="custom-select-wrapper">
             <select
               value={curso_id}
               onChange={(e) => setCurso_id(e.target.value)}
             >
               <option value="">Selecione o Curso</option>
-              {cursos.map(curso => (
+              {cursos.map((curso) => (
                 <option key={curso.id} value={curso.id}>
                   {curso.nome}
                 </option>
@@ -525,29 +538,39 @@ const AddAluno = () => {
             </p>
           )}
         </div>
-        <div className='input-file'>
-          <div className='input-file input-file-button'>
+        <div className="input-file">
+          <div className="input-file input-file-button">
             <input
               type="file"
               id="file"
-              name='file'
+              name="file"
               accept="image/*"
               onChange={handleFileChange}
-              required />
+              required
+            />
             Adicione sua Foto
           </div>
-          <div className='input-file input-file-button'>
+          <div className="input-file input-file-button">
             <input
               type="file"
               id="historico"
               name="historico"
               accept="application/pdf"
               onChange={handleHistoricoChange}
-              required />
+            />
             Adicione seu Histórico
           </div>
-          <InputPassword />
-          {errors.password && <p className="error_message" style={{ color: "red" }}>{errors.password._errors?.[0]}</p>}
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Digite a senha"
+          />
+          {errors.password && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.password._errors?.[0]}
+            </p>
+          )}
         </div>
         <div className="form-btn-container">
           <button className="form-btn" type="submit">
