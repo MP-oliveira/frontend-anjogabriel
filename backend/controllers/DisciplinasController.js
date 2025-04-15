@@ -27,6 +27,7 @@ module.exports = class DisciplinasController {
   static async createDisciplina(req, res) {
     const {
       nome,
+      modulo,
       carga_horaria,
       carga_horaria_estagio,
       estagio_supervisionado,
@@ -41,6 +42,7 @@ module.exports = class DisciplinasController {
     try {
       const disciplina = {
         nome,
+        modulo,
         carga_horaria,
         carga_horaria_estagio,
         estagio_supervisionado,

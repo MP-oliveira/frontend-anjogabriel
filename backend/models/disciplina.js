@@ -10,7 +10,10 @@ const Disciplina = db.define('disciplina', {
       notEmpty: true,
     },
   },
-
+  modulo: {
+    type: DataTypes.ENUM('Modulo 1', 'Modulo 2', 'Modulo 3', 'Modulo 4'),
+    allowNull: false,
+  },
   carga_horaria: {
     type: DataTypes.INTEGER,
     allowNull: false,

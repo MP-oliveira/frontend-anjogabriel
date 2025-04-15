@@ -131,7 +131,10 @@ const EditAdmin = () => {
             </select>
           </div>
           {errors.status && <p className="error_message" style={{ color: "red" }}>{errors.status._errors?.[0]}</p>}
-          <InputPassword />
+          <InputPassword
+            value={adminData.password}
+            onChange={(e) => handleChange({ target: { name: 'password', value: e.target.value } })}
+          />
           {errors.password &&
             <p className="error_message" style={{ color: "red" }}>
               {errors.password._errors?.[0]}</p>}

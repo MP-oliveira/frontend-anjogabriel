@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importando ícones para mostrar/ocultar
 import PropTypes from 'prop-types'; // Importando PropTypes
 
-const InputPassword = () => {
+const InputPassword = ({ value, onChange, placeholder = "Digite sua senha" }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [ password, setPassword ] = useState()
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -15,9 +14,9 @@ const InputPassword = () => {
       <div style={{ display: 'flex', alignItems: 'center', position: 'relative', width: '100%' }}>
             <input
               type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Digite sua senha"
+              value={value}
+              onChange={onChange}
+              placeholder={placeholder}
               style={{ flex: 1, paddingRight: '3px', minWidth: '190px'}}
             />
             <button

@@ -9,7 +9,9 @@ const disciplinaSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-
+  modulo: z
+    .string()
+    .min(1, { message: "Selecione um módulo" }),
   carga_horaria:
     z.number()
       .min(1, { message: "A carga horária precisa ser maior que 0" }),
@@ -39,6 +41,7 @@ const EditDisciplina = () => {
   const [professores, setProfessores] = useState([]);
   const [disciplinaData, setDisciplinaData] = useState({
     nome: "",
+    modulo: "",
     carga_horaria: 0,
     carga_horaria_estagio: 0,
     duracao: 0,
@@ -233,19 +236,39 @@ const EditDisciplina = () => {
             </p>
           )}
         </div>
-        <input
-          name="duracao"
-          type="number"
-          value={disciplinaData.duracao}
-          onChange={handleChange}
-          placeholder="Duração da Disciplina em Meses"
-        />
-        {errors.duracao && (
-          <p className="error_message" style={{ color: "red" }}>
-            {errors.duracao._errors?.[0]}
-          </p>
-        )}
+        <div className="input-three-columns">
+          <input
+            name="duracao"
+            type="number"
+            value={disciplinaData.duracao}
+            onChange={handleChange}
+            placeholder="Duração da Disciplina em Meses"
+          />
+          {errors.duracao && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.duracao._errors?.[0]}
+            </p>
+          )}
 
+          <div className="custom-select-wrapper">
+            <select
+              name="modulo"
+              value={disciplinaData.modulo}
+              onChange={handleChange}
+            >
+              <option value="">Módulo</option>
+              <option value="Modulo 1">Modulo 1</option>
+              <option value="Modulo 2">Modulo 2</option>
+              <option value="Modulo 3">Modulo 3</option>
+              <option value="Modulo 4">Modulo 4</option>
+            </select>
+          </div>
+          {errors.modulo && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.modulo._errors?.[0]}
+            </p>
+          )}
+        </div>
         <div className="input-three-columns">
           <input
             name="carga_horaria"

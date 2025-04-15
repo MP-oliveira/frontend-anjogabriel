@@ -10,7 +10,8 @@ const MaterialEUtensilio = db.define('MaterialEUtensilio', {
     allowNull: false,
   },
   categoria: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM('Material Hospitalar / Material Técnico', 'Material Didático / Escolar',
+      'Material de Escritório / Administrativo', 'Material de Limpeza e Higiene', 'Equipamentos de Manutenção'),
     allowNull: false,
   },
   quantidade: {
@@ -25,8 +26,8 @@ const MaterialEUtensilio = db.define('MaterialEUtensilio', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-    ultimo_pedido: {
-    type: DataTypes.DATE,
+  ultimo_pedido: {
+    type: DataTypes.DATEONLY,
     allowNull: false,
   },
   status_material: {

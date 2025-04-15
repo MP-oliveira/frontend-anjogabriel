@@ -46,8 +46,8 @@ const MaterialEUtensilio = () => {
     <div className="form-container">
       <div className="form-list-content">
         <div className="form-list-top">
-          <h1 className="form-list-top-h1">Gerenciamento de Materiais e Utensílios</h1>
-          <Link className="form-criar" to="/materialeutensilios/add">Adicionar Material</Link>
+          <h1 className="form-list-top-h1"> Materiais e Utensílios</h1>
+          <Link className="form-criar" to="/materialeutensilios/add">Add Material</Link>
         </div>
         <div className="form-list-input">
           <input

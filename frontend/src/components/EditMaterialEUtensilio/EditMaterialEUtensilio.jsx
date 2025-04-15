@@ -7,8 +7,12 @@ import VoltarButton from '../VoltarButton/VoltarButton';
 
 const materialSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  quantidade: z.number().min(1, { message: "A quantidade precisa ser maior que 0" }),
-  tipo: z.string().min(1, { message: "Selecione um tipo válido" }),
+  categoria: z.string().min(1, { message: "Selecione uma categoria válida" }),
+  quantidade: z.string().min(1, { message: "A quantidade é obrigatória" }),
+  unidade: z.string().min(1, { message: "A unidade é obrigatória" }),
+  valor_unitario: z.string().min(1, { message: "O valor unitário é obrigatório" }),
+  ultimo_pedido: z.string().min(1, { message: "A data do último pedido é obrigatória" }),
+  status_material: z.string().min(1, { message: "O status do material é obrigatório" }),
 });
 
 const EditMaterialEUtensilio = () => {
@@ -19,8 +23,12 @@ const EditMaterialEUtensilio = () => {
   const [loading, setLoading] = useState(true);
   const [materialData, setMaterialData] = useState({
     nome: "",
-    quantidade: 0,
-    tipo: "",
+    categoria: "",
+    quantidade: "",
+    unidade: "",
+    valor_unitario: "",
+    ultimo_pedido: "",
+    status_material: "",
   });
 
   useEffect(() => {
@@ -30,9 +38,13 @@ const EditMaterialEUtensilio = () => {
         const materialResponse = await api.get(`/materialeutensilios/${id}`);
         const material = materialResponse.data;
 
+        // Formatar a data para o formato esperado pelo input date (YYYY-MM-DD)
+        const dataFormatada = material.ultimo_pedido ? 
+          new Date(material.ultimo_pedido).toISOString().split('T')[0] : '';
+
         setMaterialData({
           ...material,
-          quantidade: Number(material.quantidade),
+          ultimo_pedido: dataFormatada,
         });
       } catch (error) {
         console.error("Erro ao carregar os dados", error);
@@ -52,35 +64,50 @@ const EditMaterialEUtensilio = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});
 
     // Validar os dados
     const materialResult = materialSchema.safeParse(materialData);
 
     if (!materialResult.success) {
-      setErrors(materialResult.error.format());
+      const formattedErrors = {};
+      materialResult.error.errors.forEach((error) => {
+        formattedErrors[error.path[0]] = error.message;
+      });
+      setErrors(formattedErrors);
       return;
     }
 
     try {
-      await api.put(`/materialeutensilios/edit/${id}`, materialData);
-      navigate("/materiaiseutensilios");
+      // Formatar a data para o formato esperado pelo backend
+      const dataFormatada = materialData.ultimo_pedido ? 
+        new Date(materialData.ultimo_pedido).toISOString().split('T')[0] : '';
+
+      const dataToSend = {
+        ...materialData,
+        ultimo_pedido: dataFormatada,
+      };
+
+      await api.put(`/materialeutensilios/edit/${id}`, dataToSend);
+      alert("Material atualizado com sucesso!");
+      navigate("/materialeutensilios");
     } catch (error) {
       console.error("Erro ao atualizar material", error);
-      setApiError("Erro ao atualizar material. Por favor, tente novamente.");
+      
+      if (error.response && error.response.data && error.response.data.error) {
+        alert(`Erro: ${error.response.data.error}`);
+      } else {
+        alert("Erro ao atualizar material. Verifique os dados e tente novamente.");
+      }
     }
   };
 
   const handleChange = (e) => {
-    const { name, type, value } = e.target;
-
-    let processedValue = value;
-    if (type === 'number') {
-      processedValue = value === '' ? '' : Number(value);
-    }
+    const { name, value } = e.target;
 
     setMaterialData(prev => ({
       ...prev,
-      [name]: processedValue
+      [name]: value
     }));
 
     // Limpar erro do campo quando editado
@@ -115,25 +142,31 @@ const EditMaterialEUtensilio = () => {
         />
         {errors.nome && (
           <p className="error_message" style={{ color: "red" }}>
-            {errors.nome._errors?.[0]}
+            {errors.nome}
           </p>
         )}
         <div className="input-three-columns">
-
-          <input
-            type="text"
-            name="categoria"
-            value={materialData.categoria}
-            onChange={handleChange}
-            placeholder="Nome do Material"
-          />
-          {errors.nome && (
+          <div className="custom-select-wrapper">
+            <select
+              name="categoria"
+              value={materialData.categoria}
+              onChange={handleChange}
+            >
+              <option value="">Selecione a categoria</option>
+              <option value="Material Hospitalar / Material Técnico">Material Hospitalar / Material Técnico</option>
+              <option value="Material Didático / Escolar">Material Didático / Escolar</option>
+              <option value="Material de Escritório / Administrativo">Material de Escritório / Administrativo</option>
+              <option value="Material de Limpeza e Higiene">Material de Limpeza e Higiene</option>
+              <option value="Equipamentos de Manutenção">Equipamentos de Manutenção</option>
+            </select>
+          </div>
+          {errors.categoria && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.categoria._errors?.[0]}
+              {errors.categoria}
             </p>
           )}
           <input
-            type="number"
+            type="text"
             name="quantidade"
             value={materialData.quantidade}
             onChange={handleChange}
@@ -141,7 +174,7 @@ const EditMaterialEUtensilio = () => {
           />
           {errors.quantidade && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.quantidade._errors?.[0]}
+              {errors.quantidade}
             </p>
           )}
           <input
@@ -151,14 +184,13 @@ const EditMaterialEUtensilio = () => {
             onChange={handleChange}
             placeholder="Unidade"
           />
-          {errors.quantidade && (
+          {errors.unidade && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.unidade._errors?.[0]}
+              {errors.unidade}
             </p>
           )}
         </div>
         <div className="input-three-columns">
-
           <input
             type="text"
             name="valor_unitario"
@@ -166,9 +198,9 @@ const EditMaterialEUtensilio = () => {
             onChange={handleChange}
             placeholder="Valor Unitário"
           />
-          {errors.quantidade && (
+          {errors.valor_unitario && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.valor_unitarior._errors?.[0]}
+              {errors.valor_unitario}
             </p>
           )}
           <input
@@ -176,24 +208,29 @@ const EditMaterialEUtensilio = () => {
             name="ultimo_pedido"
             value={materialData.ultimo_pedido}
             onChange={handleChange}
-            placeholder="Ultimo Pedido"
+            placeholder="Último Pedido"
           />
-          {errors.quantidade && (
+          {errors.ultimo_pedido && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.ultimo_pedido._errors?.[0]}
+              {errors.ultimo_pedido}
             </p>
           )}
-
-          <input
-            type="text"
-            name="status_material"
-            value={materialData.status_material}
-            onChange={handleChange}
-            placeholder="Estatos de Materiais e Ultensilios"
-          />
-          {errors.quantidade && (
+          <div className="custom-select-wrapper">
+            <select
+              name="status_material"
+              value={materialData.status_material}
+              onChange={handleChange}
+            >
+              <option value="">Status do Material</option>
+              <option value="Disponível">Disponível</option>
+              <option value="Em Estoque Baixo">Em Estoque Baixo</option>
+              <option value="Esgotado">Esgotado</option>
+              <option value="Em Manutenção">Em Manutenção</option>
+            </select>
+          </div>
+          {errors.status_material && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.status_material._errors?.[0]}
+              {errors.status_material}
             </p>
           )}
         </div>
