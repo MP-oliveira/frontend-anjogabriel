@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './SectionFour.css';
-import { FaMapMarkerAlt, FaPhone, FaClock, FaWhatsapp, FaInstagram, FaFacebook, FaEnvelope, FaCheck } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaPhone, FaClock, FaWhatsapp, FaInstagram, FaEnvelope, FaCheck } from 'react-icons/fa';
 
 const SectionFour = () => {
   const [formData, setFormData] = useState({
@@ -38,7 +38,6 @@ const SectionFour = () => {
             <FaWhatsapp /> WhatsApp
           </a>
           <a href="#" className="social-link"><FaInstagram /> Instagram</a>
-          <a href="#" className="social-link"><FaFacebook /> Facebook</a>
         </div>
       </div>
       

@@ -82,7 +82,111 @@
   /* Espaço entre descrição e data */
 }
 
+.transacao-valor {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.transacao-valor.positivo {
+  color: #28a745;
+}
+
+.transacao-valor.negativo {
+  color: #dc3545;
+}
+
 .error-message {
   color: rgba(255, 0, 0, 0.747);
   margin-bottom: 20px;
+}
+
+/* Estilos para as contas bancárias */
+.contas-container {
+  margin-bottom: 20px;
+}
+
+.contas-container h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #1a53a2;
+}
+
+.contas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.conta-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.conta-card h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.saldo {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.saldo.positivo {
+  color: #28a745;
+}
+
+.saldo.negativo {
+  color: #dc3545;
+}
+
+/* Estilos para o formulário de filtro */
+.input-three-columns {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-three-columns input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.input-three-columns button {
+  padding: 10px 20px;
+  background-color: #1a53a2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.input-three-columns button:hover {
+  background-color: #0d3b7d;
+}
+
+/* Estilos para os botões de ação */
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-action {
+  background-color: #1a53a2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-action:hover {
+  background-color: #0d3b7d;
 }

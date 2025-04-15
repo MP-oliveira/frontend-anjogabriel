@@ -28,7 +28,7 @@ function AddTransacao() {
 
   const fetchContas = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/contas');
+      const response = await axios.get('http://localhost:3001/api/financeiro/contas');
       setContas(response.data);
       if (response.data.length > 0) {
         setFormData(prev => ({
@@ -90,7 +90,12 @@ function AddTransacao() {
     setLoading(true);
     
     try {
-      await axios.post('http://localhost:3000/api/transacoes/create', formData);
+      // Criar a transação
+      await axios.post('http://localhost:3001/api/financeiro/create', formData);
+      
+      // Buscar os dados atualizados da conta
+      await fetchContas();
+      
       setLoading(false);
       navigate('/transacoes');
     } catch (error) {

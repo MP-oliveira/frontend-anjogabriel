@@ -46,19 +46,17 @@ function Dashboard() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const url = `http://localhost:3000/api/transacoes?dataInicio=${filtroData.dataInicio}&dataFim=${filtroData.dataFim}`;
+      // Buscar transações
+      const url = `http://localhost:3001/api/financeiro?dataInicio=${filtroData.dataInicio}&dataFim=${filtroData.dataFim}`;
       const responseTransacoes = await axios.get(url);
-      let responseContas;
-      try {
-        responseContas = await axios.get('http://localhost:3000/api/contas');
-        setContas(responseContas.data);
-      } catch (contasError) {
-        console.error('Erro ao buscar contas:', contasError);
-        setContas([]);
-      }
-      processarDados(responseTransacoes.data, responseContas?.data || []);
+      
+      // Buscar contas
+      const responseContas = await axios.get('http://localhost:3001/api/financeiro/contas');
+      setContas(responseContas.data);
+      
+      processarDados(responseTransacoes.data, responseContas.data);
     } catch (error) {
-      console.error('Erro ao buscar transações:', error);
+      console.error('Erro ao buscar dados:', error);
       setStats({
         saldoTotal: 0,
         totalReceitas: 0,
@@ -138,15 +136,27 @@ function Dashboard() {
 
   const handlePeriodoChange = (novoPeriodo) => {
     setPeriodo(novoPeriodo);
+    
     const hoje = new Date();
     let dataInicio = new Date();
+    
     switch (novoPeriodo) {
-      case 'semana': dataInicio.setDate(hoje.getDate() - 7); break;
-      case 'mes': dataInicio.setMonth(hoje.getMonth() - 1); break;
-      case 'trimestre': dataInicio.setMonth(hoje.getMonth() - 3); break;
-      case 'ano': dataInicio.setFullYear(hoje.getFullYear() - 1); break;
-      default: dataInicio.setMonth(hoje.getMonth() - 1);
+      case 'semana':
+        dataInicio.setDate(hoje.getDate() - 7);
+        break;
+      case 'mes':
+        dataInicio.setMonth(hoje.getMonth() - 1);
+        break;
+      case 'trimestre':
+        dataInicio.setMonth(hoje.getMonth() - 3);
+        break;
+      case 'ano':
+        dataInicio.setFullYear(hoje.getFullYear() - 1);
+        break;
+      default:
+        break;
     }
+    
     setFiltroData({
       dataInicio: dataInicio.toISOString().split('T')[0],
       dataFim: hoje.toISOString().split('T')[0]
@@ -156,7 +166,6 @@ function Dashboard() {
   const handleFilterSubmit = (e) => {
     e.preventDefault();
     fetchData();
-    setIsFilterOpen(false);
   };
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -350,114 +359,82 @@ function Dashboard() {
             <div className="tab-content">
               {activeTab === 'visaoGeral' && (
                 <div className="tab-panel">
-                  <div className="chart-row">
-                    <div className="chart-container large">
-                      <h3>Fluxo Financeiro</h3>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <AreaChart data={stats.transacoesPorDia}>
-                          <defs>
-                            <linearGradient id="colorReceita" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#28a745" stopOpacity={0.8}/>
-                              <stop offset="95%" stopColor="#28a745" stopOpacity={0.1}/>
-                            </linearGradient>
-                            <linearGradient id="colorDespesa" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#dc3545" stopOpacity={0.8}/>
-                              <stop offset="95%" stopColor="#dc3545" stopOpacity={0.1}/>
-                            </linearGradient>
-                          </defs>
-                          <XAxis 
-                            dataKey="data" 
-                            tickFormatter={(tick) => new Date(tick).toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit'})}
-                          />
-                          <YAxis tickFormatter={(tick) => `R$${tick}`} />
-                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                          <Tooltip content={<CustomTooltip />} />
-                          <Legend />
-                          <Area 
-                            type="monotone" 
-                            dataKey="receitas" 
-                            name="Receitas"
-                            stroke="#28a745" 
-                            fillOpacity={1} 
-                            fill="url(#colorReceita)" 
-                          />
-                          <Area 
-                            type="monotone" 
-                            dataKey="despesas" 
-                            name="Despesas"
-                            stroke="#dc3545" 
-                            fillOpacity={1} 
-                            fill="url(#colorDespesa)" 
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    </div>
+                  <div className="chart-container">
+                    <h3>Fluxo de Caixa</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                      <AreaChart
+                        data={stats.transacoesPorDia}
+                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="data" tickFormatter={(value) => new Date(value).toLocaleDateString('pt-BR')} />
+                        <YAxis />
+                        <Tooltip 
+                          formatter={(value) => formatarValor(value)}
+                          labelFormatter={(label) => new Date(label).toLocaleDateString('pt-BR')}
+                        />
+                        <Legend />
+                        <Area type="monotone" dataKey="receitas" stackId="1" stroke="#28a745" fill="#28a745" name="Receitas" />
+                        <Area type="monotone" dataKey="despesas" stackId="1" stroke="#dc3545" fill="#dc3545" name="Despesas" />
+                      </AreaChart>
+                    </ResponsiveContainer>
                   </div>
                   
-                  <div className="chart-row">
-                    <div className="chart-container">
-                      <h3>Despesas por Categoria</h3>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <PieChart>
-                          <Pie
-                            data={stats.categoriasDespesas}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            outerRadius={100}
-                            dataKey="value"
-                            label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                          >
-                            {stats.categoriasDespesas.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                          </Pie>
-                          <Tooltip content={<CustomTooltip />} />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
-                    
-                    <div className="chart-container">
-                      <h3>Receitas por Categoria</h3>
-                      <ResponsiveContainer width="100%" height={300}>
-                        <PieChart>
-                          <Pie
-                            data={stats.categoriasReceitas}
-                            cx="50%"
-                            cy="50%"
-                            labelLine={false}
-                            outerRadius={100}
-                            dataKey="value"
-                            label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                          >
-                            {stats.categoriasReceitas.map((entry, index) => (
-                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                            ))}
-                          </Pie>
-                          <Tooltip content={<CustomTooltip />} />
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
+                  <div className="table-container">
+                    <h3>Últimas Transações</h3>
+                    <table className="dashboard-table">
+                      <thead>
+                        <tr>
+                          <th>Data</th>
+                          <th>Descrição</th>
+                          <th>Categoria</th>
+                          <th>Valor</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {stats.ultimasTransacoes.map(transacao => (
+                          <tr key={transacao.id}>
+                            <td>{formatarData(transacao.data)}</td>
+                            <td>{transacao.descricao || '-'}</td>
+                            <td>{transacao.categoria || '-'}</td>
+                            <td className={transacao.tipo === 'receita' ? 'valor-positivo' : 'valor-negativo'}>
+                              {formatarValor(transacao.valor)}
+                            </td>
+                          </tr>
+                        ))}
+                        {stats.ultimasTransacoes.length === 0 && (
+                          <tr>
+                            <td colSpan="4" className="no-data">Nenhuma transação encontrada no período</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               )}
               
               {activeTab === 'despesas' && (
                 <div className="tab-panel">
-                  <div className="chart-container large">
-                    <h3>Análise de Despesas</h3>
+                  <div className="chart-container">
+                    <h3>Despesas por Categoria</h3>
                     <ResponsiveContainer width="100%" height={300}>
-                      <BarChart data={stats.categoriasDespesas}>
-                        <XAxis dataKey="name" />
-                        <YAxis tickFormatter={(tick) => `R$${tick}`} />
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Bar dataKey="value" name="Valor" fill="#dc3545">
+                      <PieChart>
+                        <Pie
+                          data={stats.categoriasDespesas}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          dataKey="value"
+                        >
                           {stats.categoriasDespesas.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
-                        </Bar>
-                      </BarChart>
+                        </Pie>
+                        <Tooltip formatter={(value) => formatarValor(value)} />
+                      </PieChart>
                     </ResponsiveContainer>
                   </div>
                   
@@ -496,20 +473,26 @@ function Dashboard() {
               
               {activeTab === 'receitas' && (
                 <div className="tab-panel">
-                  <div className="chart-container large">
-                    <h3>Análise de Receitas</h3>
+                  <div className="chart-container">
+                    <h3>Receitas por Categoria</h3>
                     <ResponsiveContainer width="100%" height={300}>
-                      <BarChart data={stats.categoriasReceitas}>
-                        <XAxis dataKey="name" />
-                        <YAxis tickFormatter={(tick) => `R$${tick}`} />
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                        <Tooltip content={<CustomTooltip />} />
-                        <Bar dataKey="value" name="Valor" fill="#28a745">
+                      <PieChart>
+                        <Pie
+                          data={stats.categoriasReceitas}
+                          cx="50%"
+                          cy="50%"
+                          labelLine={false}
+                          label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          dataKey="value"
+                        >
                           {stats.categoriasReceitas.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
-                        </Bar>
-                      </BarChart>
+                        </Pie>
+                        <Tooltip formatter={(value) => formatarValor(value)} />
+                      </PieChart>
                     </ResponsiveContainer>
                   </div>
                   

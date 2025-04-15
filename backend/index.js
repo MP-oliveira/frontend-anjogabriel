@@ -13,6 +13,7 @@ const materialEUtensilioRoutes = require('./routes/materialEUtensilio');
 const turnoRoutes = require('./routes/turnoRoutes');
 const authRoutes = require('./routes/authRoutes');
 const regsitroAcademicoRoutes = require('./routes/registroAcademicoRoutes')
+const transacaoFinanceiraRoutes = require('./routes/transacaoFinanceiraRoutes');
 const cors = require('cors')
 const db = require("./db/db");
 
@@ -35,16 +36,19 @@ app.use('/api/materialeutensilios', materialEUtensilioRoutes);
 app.use('/api/turnos', turnoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/registroacademico', regsitroAcademicoRoutes)
+app.use('/api/financeiro', transacaoFinanceiraRoutes);
 
 db
+// .sync({ force: true, alter: true })
 .sync()
 .then(() => {
+  console.log('Banco de dados sincronizado com sucesso');
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
 })
 .catch(err => {
-  console.error(err);
+  console.error('Erro ao sincronizar o banco de dados:', err);
 });
 
 module.exports = { supabase };

@@ -5,36 +5,22 @@ const SectionTwo = () => {
   const courses = [
     {
       title: "Técnico em Enfermagem",
-      description: "Formação completa para atuar em hospitais, clínicas e postos de saúde",
-      icon: "🏥"
+      description: "Formação completa e prática para atuar em diversos ambientes de saúde. Aprenda procedimentos essenciais, cuidados com pacientes e gestão de equipes. Ideal para quem busca uma carreira dinâmica e gratificante na área da saúde.",
+      icon: "🩺"
     },
     {
-      title: "Técnico em Enfermagem do Trabalho",
-      description: "Especialização para atuar em medicina ocupacional e empresarial",
+      title: "Técnico em Saúde do Trabalhador",
+      description: "Especialização para formação de profissionais capacitados para atuar na promoção, prevenção e recuperação da saúde de colaboradores em empresas, indústrias e ambientes corporativos.",
       icon: "⚕️"
-    },
-    {
-      title: "Técnico em Pronto Atendimento",
-      description: "Preparação específica para emergências e atendimentos urgentes",
-      icon: "🚑"
-    },
-    // {
-    //   title: "Técnico em Enfermagem de Pronto Socorro",
-    //   description: "Formação especializada para atendimentos de emergência",
-    //   icon: "🏨"
-    // },
-    // {
-    //   title: "Técnico em Enfermagem de Ambulância",
-    //   description: "Capacitação para atendimento móvel de urgência",
-    //   icon: "🚨"
-    // }
+    }
+
   ];
 
   return (
     <div id='sectionTwo' className="services-section">
       <div className="services-header">
         <h2>Nossos Cursos</h2>
-        <p>Oferecemos uma ampla gama de cursos para atender a todas as suas necessidades.</p>
+        <p>Formação especializada em Enfermagem e Saúde do Trabalhador, preparando profissionais qualificados para o mercado de trabalho.</p>
       </div>
       <div className="services-grid">
         {courses.map((service, index) => (

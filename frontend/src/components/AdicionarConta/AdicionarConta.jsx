@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/api';
 import './AdicionarConta.css'; // Crie um arquivo CSS para estilizar o componente
 
 function AdicionarConta() {
@@ -27,7 +27,7 @@ function AdicionarConta() {
     setError('');
 
     try {
-      await axios.post('http://localhost:3000/api/contas', formData);
+      await api.post('/financeiro/contas', formData);
       navigate('/transacoes'); // Redireciona para a página de transações após adicionar a conta
     } catch (err) {
       console.error('Erro ao adicionar conta:', err);

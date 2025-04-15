@@ -6,6 +6,7 @@ import VoltarButton from '../VoltarButton/VoltarButton';
 
 function Transacoes() {
   const [transacoes, setTransacoes] = useState([]);
+  const [contas, setContas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filtroData, setFiltroData] = useState({
@@ -14,20 +15,25 @@ function Transacoes() {
   });
 
   useEffect(() => {
-    const fetchTransacoes = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/transacoes');
-        setTransacoes(response.data);
-      } catch (error) {
-        console.error('Erro ao buscar transações:', error);
-        setError('Erro ao buscar transações.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTransacoes();
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      // Buscar transações
+      const transacoesResponse = await axios.get('http://localhost:3001/api/financeiro');
+      setTransacoes(transacoesResponse.data);
+      
+      // Buscar contas
+      const contasResponse = await axios.get('http://localhost:3001/api/financeiro/contas');
+      setContas(contasResponse.data);
+    } catch (error) {
+      console.error('Erro ao buscar dados:', error);
+      setError('Erro ao buscar dados.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleFilterSubmit = (e) => {
     e.preventDefault();
@@ -64,6 +70,21 @@ function Transacoes() {
             </div>
           </form>
 
+          {/* Exibir contas e seus saldos */}
+          <div className="contas-container">
+            <h2>Contas Bancárias</h2>
+            <div className="contas-grid">
+              {contas.map(conta => (
+                <div key={conta.id} className="conta-card">
+                  <h3>{conta.nome}</h3>
+                  <p className={`saldo ${parseFloat(conta.saldo_atual) >= 0 ? 'positivo' : 'negativo'}`}>
+                    Saldo: R$ {parseFloat(conta.saldo_atual).toFixed(2)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {transacoes.length === 0 ? (
             <p>Nenhuma transação encontrada.</p>
           ) : (
@@ -72,6 +93,9 @@ function Transacoes() {
                 <li key={transacao.id} className="transacao-item">
                   <span className="transacao-descricao">{transacao.descricao}</span>
                   <span className="transacao-data">{new Date(transacao.data).toLocaleDateString('pt-BR')}</span>
+                  <span className={`transacao-valor ${transacao.tipo === 'receita' ? 'positivo' : 'negativo'}`}>
+                    R$ {parseFloat(transacao.valor).toFixed(2)}
+                  </span>
                 </li>
               ))}
             </ul>

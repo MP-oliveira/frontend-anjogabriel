@@ -28,7 +28,7 @@ const TransacaoFinanceira = db.define('TransacaoFinanceira', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'ContasBancarias',
+      model: 'contas_bancarias',
       key: 'id'
     }
   }
@@ -71,7 +71,7 @@ const SaldoDiario = db.define('SaldoDiario', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'ContasBancarias',
+      model: 'contas_bancarias',
       key: 'id'
     }
   }
@@ -112,7 +112,7 @@ const ContaPagar = db.define('ContaPagar', {
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
-      model: 'ContasBancarias',
+      model: 'contas_bancarias',
       key: 'id'
     }
   }

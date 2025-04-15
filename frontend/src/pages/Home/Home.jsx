@@ -11,7 +11,7 @@ const Home = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Verifica se há uma seção para rolar automaticamente ao carregar a página
+
     if (location.state?.scrollTo) {
       const section = document.getElementById(location.state.scrollTo);
       if (section) {
