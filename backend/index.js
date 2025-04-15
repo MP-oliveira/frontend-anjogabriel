@@ -39,8 +39,8 @@ app.use('/api/registroacademico', regsitroAcademicoRoutes)
 app.use('/api/financeiro', transacaoFinanceiraRoutes);
 
 db
-.sync({ force: true, alter: true })
-// .sync()
+//.sync({ force: true, alter: true })
+.sync()
 .then(() => {
   console.log('Banco de dados sincronizado com sucesso');
   app.listen(port, () => {

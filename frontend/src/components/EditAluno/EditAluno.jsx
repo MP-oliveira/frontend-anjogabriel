@@ -343,7 +343,13 @@ const EditAluno = () => {
               {errors.turno_id._errors?.[0]}
             </p>
           )}
-          <InputPassword />
+          {/* <InputPassword /> */}
+          <input
+            type="password"
+            value={alunoData.password}
+            onChange={handleChange}
+            placeholder="Digite a senha"
+          />
           {errors.password &&
             <p className="error_message" style={{ color: "red" }}>
               {errors.password._errors?.[0]}</p>}
