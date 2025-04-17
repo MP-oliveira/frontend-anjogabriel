@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
@@ -6,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import './Edit.css'
 import VoltarButton from '../VoltarButton/VoltarButton';
-import InputPassword from '../InputPassword/InputPassword';
+
 
 // Regex e validações
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;
@@ -31,8 +30,8 @@ const alunoSchema = z.object({
   cep: z.string().refine((value) => cepRegex.test(value), { message: "CEP inválido" }),
   cidade: z.string(),
   estado: z.string(),
-  curso: z.string(),
-  turno: z.string(),
+  curso_id: z.string(),
+  turno_id: z.string(),
   data_matricula: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
   // data_termino_curso: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
 });
@@ -63,9 +62,7 @@ const EditAluno = () => {
     cep: "",
     cidade: "",
     estado: "",
-    curso: "",
     curso_id: "",
-    turno: "",
     turno_id: "",
     data_matricula: "",
     // data_termino_curso: "",
@@ -77,18 +74,43 @@ const EditAluno = () => {
       try {
         const response = await api.get(`/alunos/${id}`);
         const aluno = response.data;
+        
+        console.log("Dados do aluno:", aluno);
+        
+        // Buscar cursos e turnos primeiro
+        const cursosResponse = await api.get('/cursos');
+        const turnosResponse = await api.get('/turnos');
+        
+        setCursos(cursosResponse.data);
+        setTurnos(turnosResponse.data);
+        
+        // Se o aluno tem o nome do curso/turno em vez do ID, encontra o ID correspondente
+        let curso_id = aluno.curso_id || "";
+        let turno_id = aluno.turno_id || "";
+        
+        if (!curso_id && aluno.curso) {
+          // Procura o curso pelo nome
+          const cursoEncontrado = cursosResponse.data.find(c => c.nome === aluno.curso);
+          if (cursoEncontrado) {
+            curso_id = cursoEncontrado.id;
+          }
+        }
+        
+        if (!turno_id && aluno.turno) {
+          // Procura o turno pelo nome
+          const turnoEncontrado = turnosResponse.data.find(t => t.nome === aluno.turno);
+          if (turnoEncontrado) {
+            turno_id = turnoEncontrado.id;
+          }
+        }
+        
         setAlunoData({
           ...aluno,
           data_nascimento: aluno.data_nascimento.slice(0, 10),
           data_matricula: aluno.data_matricula.slice(0, 10),
-          // data_termino_curso: aluno.data_termino_curso.slice(0, 10),
+          curso_id: curso_id,
+          turno_id: turno_id
         });
-
-        const cursosResponse = await api.get('/cursos');
-        setCursos(cursosResponse.data);
-
-        const turnosResponse = await api.get('/turnos');
-        setTurnos(turnosResponse.data);
 
       } catch (error) {
         console.error("Erro ao carregar os dados do aluno", error);
@@ -108,13 +130,37 @@ const EditAluno = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Dados a serem enviados:", alunoData);
+    
+    // Preparar dados para envio, incluindo curso e turno para compatibilidade
+    const dadosParaEnvio = {
+      ...alunoData
+    };
+    
+    // Se temos curso_id e turno_id, adicionar também os nomes de curso e turno
+    if (alunoData.curso_id) {
+      const cursoSelecionado = cursos.find(c => c.id === alunoData.curso_id);
+      if (cursoSelecionado) {
+        dadosParaEnvio.curso = cursoSelecionado.nome;
+      }
+    }
+    
+    if (alunoData.turno_id) {
+      const turnoSelecionado = turnos.find(t => t.id === alunoData.turno_id);
+      if (turnoSelecionado) {
+        dadosParaEnvio.turno = turnoSelecionado.nome;
+      }
+    }
+
     const alunoResult = alunoSchema.safeParse(alunoData);
 
     if (!alunoResult.success) {
+      console.log("Erros de validação:", alunoResult.error.format());
       setErrors(alunoResult.error.format());
     } else {
       try {
-        await api.put(`/alunos/edit/${id}`, alunoData);
+        const response = await api.put(`/alunos/edit/${id}`, dadosParaEnvio);
+        console.log("Resposta do servidor:", response.data);
         navigate("/alunos");
       } catch (error) {
         console.error("Erro ao atualizar alunos", error);
@@ -175,7 +221,11 @@ const EditAluno = () => {
             </p>
           )}
           <div className="custom-select-wrapper">
-            <select onChange={handleChange}>
+            <select 
+              name="estado_civil"
+              value={alunoData.estado_civil}
+              onChange={handleChange}
+            >
               <option value="">Estado civil</option>
               <option value="Solteiro">Solteiro(a)</option>
               <option value="Casado">Casado(a)</option>
@@ -190,7 +240,11 @@ const EditAluno = () => {
         </div>
         <div className="input-three-columns">
           <div className="custom-select-wrapper">
-            <select onChange={handleChange}>
+            <select 
+              name="grupo_sanguineo"
+              value={alunoData.grupo_sanguineo}
+              onChange={handleChange}
+            >
               <option value="">Grupo Sanguineo</option>
               <option value="A-">A-</option>
               <option value="A+">A+</option>
@@ -201,9 +255,9 @@ const EditAluno = () => {
               <option value="O-">O-</option>
               <option value="O+">O+</option>
             </select>
-            {errors.estado_civil && (
+            {errors.grupo_sanguineo && (
               <p className="error_message" style={{ color: "red" }}>
-                {errors.grupo_sanguineo}
+                {errors.grupo_sanguineo._errors?.[0]}
               </p>
             )}
           </div>
@@ -307,32 +361,32 @@ const EditAluno = () => {
         <div className="input-three-columns">
           <div className="custom-select-wrapper">
             <select
-              name="curso_id"
-              value={alunoData.curso_id}
+              name="curso"
+              value={alunoData.curso}
               onChange={handleChange}
             >
-              <option value="">Selecione o Curso</option>
+              <option value="curso">{alunoData.curso}</option>
               {cursos.map(curso => (
-                <option key={curso.id} value={curso.id}>
+                <option key={curso.id} value={curso.nome}>
                   {curso.nome}
                 </option>
               ))}
             </select>
           </div>
-          {errors.curso_id && (
+          {errors.curso && (
             <p className="error_message" style={{ color: "red" }}>
-              {errors.curso_id._errors?.[0]}
+              {errors.curso._errors?.[0]}
             </p>
           )}
           <div className="custom-select-wrapper">
-            <select
-              name="turno_id"
-              value={alunoData.turno_id}
+              <select 
+              name="turno"
+              value={alunoData.turno}
               onChange={handleChange}
             >
-              <option value="">Selecione o Turno</option>
+              <option value="turno">{alunoData.turno}</option>
               {turnos.map(turno => (
-                <option key={turno.id} value={turno.id}>
+                <option key={turno.id} value={turno.nome}>
                   {turno.nome}
                 </option>
               ))}
