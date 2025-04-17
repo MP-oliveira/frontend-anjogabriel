@@ -34,7 +34,7 @@ const alunoSchema = z.object({
   curso: z.string(),
   turno: z.string(),
   data_matricula: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
-  data_termino_curso: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
+  // data_termino_curso: z.string().refine((value) => !isNaN(Date.parse(value)), { message: "Data inválida" }),
 });
 
 const EditAluno = () => {
@@ -68,7 +68,7 @@ const EditAluno = () => {
     turno: "",
     turno_id: "",
     data_matricula: "",
-    data_termino_curso: "",
+    // data_termino_curso: "",
   });
   const [errors, setErrors] = useState({});
 
@@ -81,7 +81,7 @@ const EditAluno = () => {
           ...aluno,
           data_nascimento: aluno.data_nascimento.slice(0, 10),
           data_matricula: aluno.data_matricula.slice(0, 10),
-          data_termino_curso: aluno.data_termino_curso.slice(0, 10),
+          // data_termino_curso: aluno.data_termino_curso.slice(0, 10),
         });
 
         const cursosResponse = await api.get('/cursos');

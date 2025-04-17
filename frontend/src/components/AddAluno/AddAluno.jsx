@@ -54,14 +54,12 @@ const alunoSchema = z.object({
   data_matricula: z
     .date()
     .max(new Date(), { message: "Digite uma data matricula valida" }),
-  data_termino_curso: z
-    .date()
-    .max(new Date(), { message: "Digite uma data termino valida" }),
-  password: z
-    .string()
-    .min(6, {
-      message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. ",
-    }),
+  // data_termino_curso: z
+  //   .date()
+  //   .max(new Date(), { message: "Digite uma data termino valida" }),
+  password: z.string().min(6, {
+    message: "Senha Invalida. A senha de ter pelo menos 6 caracteres. ",
+  }),
 });
 
 const AddAluno = () => {
@@ -87,7 +85,7 @@ const AddAluno = () => {
   const [curso, setCurso] = useState("");
   const [turno, setTurno] = useState("");
   const [data_matricula, setData_matricula] = useState("");
-  const [data_termino_curso, setData_termino_curso] = useState("");
+  // const [data_termino_curso, setData_termino_curso] = useState("");
   const [file, setFile] = useState(null);
   const [historico, setHistorico] = useState(null);
   const [password, setPassword] = useState("");
@@ -147,14 +145,12 @@ const AddAluno = () => {
       curso,
       turno,
       data_matricula: new Date(data_matricula),
-      data_termino_curso: new Date(data_termino_curso),
+      // data_termino_curso: new Date(data_termino_curso),
       password,
     };
 
-
     // Validando os dados com o esquema do Zod
     const alunoresult = alunoSchema.safeParse(alunoFormValues);
-
 
     // Se houver erros, eles serão exibidos
     if (!alunoresult.success) {
@@ -180,10 +176,9 @@ const AddAluno = () => {
         curso: fieldErrors.curso?._errors[0],
         turno: fieldErrors.turno?._errors[0],
         data_matricula: fieldErrors.data_matricula?._errors[0],
-        data_termino_curso: fieldErrors.data_termino_curso?._errors[0],
+        // data_termino_curso: fieldErrors.data_termino_curso?._errors[0],
         password: fieldErrors.password?._errors[0],
       });
-      
     } else {
       try {
         const formData = new FormData();
@@ -207,10 +202,10 @@ const AddAluno = () => {
         formData.append("curso", alunoresult.data.curso);
         formData.append("turno", alunoresult.data.turno);
         formData.append("data_matricula", alunoresult.data.data_matricula);
-        formData.append(
-          "data_termino_curso",
-          alunoresult.data.data_termino_curso
-        );
+        // formData.append(
+        //   "data_termino_curso",
+        //   alunoresult.data.data_termino_curso
+        // );
         formData.append("file", file);
         formData.append("historico", historico);
         formData.append("password", alunoresult.data.password);
@@ -249,8 +244,8 @@ const AddAluno = () => {
           setCurso("Curso"),
           setTurno("Turno"),
           setData_matricula(""),
-          setData_termino_curso("");
-        setPassword("");
+          // setData_termino_curso("");
+          setPassword("");
         navigate("/alunos");
       } catch (error) {
         console.error("Erro ao adicionar usuário", error);
@@ -508,7 +503,7 @@ const AddAluno = () => {
               {errors.data_matricula}
             </p>
           )}
-                    <input
+          {/* <input
             type="date"
             value={data_termino_curso}
             onChange={(e) => setData_termino_curso(e.target.value)}
@@ -518,7 +513,7 @@ const AddAluno = () => {
             <p className="error_message" style={{ color: "red" }}>
               {errors.data_termino_curso}
             </p>
-          )}
+          )} */}
           <div className="custom-select-wrapper">
             <select
               value={curso_id}

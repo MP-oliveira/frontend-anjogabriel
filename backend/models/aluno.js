@@ -78,10 +78,10 @@ const Aluno = db.define('Aluno', {
     // quando colocar curso pra funcionar mudar para date
     type: DataTypes.STRING,
   },
-  data_termino_curso: {
-    // quando colocar curso pra funcionar mudar para date
-    type: DataTypes.STRING,
-  },
+  // data_termino_curso: {
+  //   // quando colocar curso pra funcionar mudar para date
+  //   type: DataTypes.STRING,
+  // },
   password: {
     type: DataTypes.STRING,
     allowNull: false,

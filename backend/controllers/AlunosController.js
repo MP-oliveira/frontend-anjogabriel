@@ -83,7 +83,7 @@ module.exports = class AlunosController {
       curso,
       turno,
       data_matricula,
-      data_termino_curso,
+      // data_termino_curso,
       password
     } = req.body;
 
@@ -158,7 +158,7 @@ module.exports = class AlunosController {
         curso,
         turno,
         data_matricula,
-        data_termino_curso,
+        // data_termino_curso,
         foto_url: imagePublicUrl,
         historico_url: historicoPublicUrl,
         password
