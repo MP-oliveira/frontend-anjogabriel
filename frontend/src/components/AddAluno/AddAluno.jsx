@@ -521,7 +521,7 @@ const AddAluno = () => {
             >
               <option value="">Selecione o Curso</option>
               {cursos.map((curso) => (
-                <option key={curso.id} value={curso.id}>
+                <option key={curso.id} value={curso.nome}>
                   {curso.nome}
                 </option>
               ))}
