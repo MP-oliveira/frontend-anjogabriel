@@ -225,10 +225,12 @@ const FundoDiploma = () => {
                   </table>
                 </td>
                 <td rowSpan="8" className="autenticacao-cell">
-                  <div className="linha-assinatura"></div>
-                  <p>Autenticação da Escola</p>
-                  <p className="codigo">CM CS:58/2018BA</p>
-                  <p>Campo Reservado ao COREN</p>
+                  <div className="autenticacao-content">
+                    <div className="linha-assinatura"></div>
+                    <p>Autenticação da Escola</p>
+                    <p className="codigo">CM CS:58/2018BA</p>
+                    <p>Campo Reservado ao COREN</p>
+                  </div>
                 </td>
               </tr>
 
