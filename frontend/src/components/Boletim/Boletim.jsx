@@ -23,8 +23,8 @@ const Boletim = () => {
         }
         setAluno(alunoResponse.data);
 
-        // Buscando as disciplinas do aluno
-        const disciplinasResponse = await api.get(`/disciplinas?alunoId=${id}`);
+        // Buscando todas as disciplinas
+        const disciplinasResponse = await api.get('/disciplinas');
         if (!disciplinasResponse.data) {
           throw new Error('Nenhum dado de disciplinas retornado pela API.');
         }
@@ -45,7 +45,8 @@ const Boletim = () => {
   };
 
   // Organizar as disciplinas por módulo
-  const getModuloDisciplinas = (modulo) => {
+  const getModuloDisciplinas = (moduloNumero) => {
+    const modulo = `Modulo ${moduloNumero}`;
     return disciplinas.filter(disciplina => disciplina.modulo === modulo) || [];
   };
 
@@ -102,11 +103,6 @@ const Boletim = () => {
           {/* MÓDULO I */}
           <div className="modulo_container">
             <h3 className="modulo_titulo">MODULO I</h3>
-            {/* {aluno && (
-              <div className="info_modulo">
-                <p>Aluno: {aluno.nome || ''} | Turno: {aluno.turno || ''} | Curso: {aluno.curso || 'TÉCNICO DE ENFERMAGEM'}</p>
-              </div>
-            )} */}
             <table className="modulo_tabela">
               <thead>
                 <tr>
@@ -116,31 +112,23 @@ const Boletim = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>ANATOMIA E FISIOLOGIA HUMANAS</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'ANATOMIA E FISIOLOGIA HUMANAS')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'ANATOMIA E FISIOLOGIA HUMANAS')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>MICROBIOLOGIA E PARASITOLOGIA</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'MICROBIOLOGIA E PARASITOLOGIA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'MICROBIOLOGIA E PARASITOLOGIA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>HIGIENE E PROFILAXIA</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'HIGIENE E PROFILAXIA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'HIGIENE E PROFILAXIA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>NUTRIÇÃO E DIETÉTICA</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'NUTRIÇÃO E DIETÉTICA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'NUTRIÇÃO E DIETÉTICA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>PSICOLOGIA APLICADA E ÉTICA PROFISSIONAL</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'PSICOLOGIA APLICADA E ÉTICA PROFISSIONAL')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(1).find(d => d.nome === 'PSICOLOGIA APLICADA E ÉTICA PROFISSIONAL')?.nota_pratica || ''}</td>
-                </tr>
+                {getModuloDisciplinas(1).length > 0 ? (
+                  getModuloDisciplinas(1).map((disciplina) => (
+                    <tr key={disciplina.id}>
+                      <td>{disciplina.nome}</td>
+                      <td>{disciplina.nota_teorica || ''}</td>
+                      <td>{disciplina.nota_pratica || ''}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <>
+                    <tr><td>Sem disciplinas cadastradas</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                  </>
+                )}
               </tbody>
             </table>
           </div>
@@ -148,11 +136,6 @@ const Boletim = () => {
           {/* MÓDULO II */}
           <div className="modulo_container">
             <h3 className="modulo_titulo">MODULO II</h3>
-            {/* {aluno && (
-              <div className="info_modulo">
-                <p>Aluno: {aluno.nome || ''} | Turno: {aluno.turno || ''} | Curso: {aluno.curso || 'TÉCNICO DE ENFERMAGEM'}</p>
-              </div>
-            )} */}
             <table className="modulo_tabela">
               <thead>
                 <tr>
@@ -162,26 +145,22 @@ const Boletim = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>FARMACOLOGIA</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'FARMACOLOGIA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'FARMACOLOGIA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>INTRODUÇÃO À ENFERMAGEM</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'INTRODUÇÃO À ENFERMAGEM')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'INTRODUÇÃO À ENFERMAGEM')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>NOÇÕES DE ADMINISTRAÇÃO NA UNIDADE DE ENFERMAGEM</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'NOÇÕES DE ADMINISTRAÇÃO NA UNIDADE DE ENFERMAGEM')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'NOÇÕES DE ADMINISTRAÇÃO NA UNIDADE DE ENFERMAGEM')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>BIOSSEGURANÇA</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'BIOSSEGURANÇA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(2).find(d => d.nome === 'BIOSSEGURANÇA')?.nota_pratica || ''}</td>
-                </tr>
+                {getModuloDisciplinas(2).length > 0 ? (
+                  getModuloDisciplinas(2).map((disciplina) => (
+                    <tr key={disciplina.id}>
+                      <td>{disciplina.nome}</td>
+                      <td>{disciplina.nota_teorica || ''}</td>
+                      <td>{disciplina.nota_pratica || ''}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <>
+                    <tr><td>Sem disciplinas cadastradas</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                  </>
+                )}
               </tbody>
             </table>
           </div>
@@ -189,11 +168,6 @@ const Boletim = () => {
           {/* MÓDULO III */}
           <div className="modulo_container">
             <h3 className="modulo_titulo">MODULO III</h3>
-            {/* {aluno && (
-              <div className="info_modulo">
-                <p>Aluno: {aluno.nome || ''} | Turno: {aluno.turno || ''} | Curso: {aluno.curso || 'TÉCNICO DE ENFERMAGEM'}</p>
-              </div>
-            )} */}
             <table className="modulo_tabela">
               <thead>
                 <tr>
@@ -203,26 +177,22 @@ const Boletim = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>ENFERMAGEM NAS EMERGÊNCIAS</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM NAS EMERGÊNCIAS')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM NAS EMERGÊNCIAS')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>ENFERMAGEM EM CLÍNICA MÉDICA</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM EM CLÍNICA MÉDICA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM EM CLÍNICA MÉDICA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>ENFERMAGEM EM CLÍNICA CIRÚRGICA</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM EM CLÍNICA CIRÚRGICA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM EM CLÍNICA CIRÚRGICA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>ENFERMAGEM MATERNO INFANTIL</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM MATERNO INFANTIL')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(3).find(d => d.nome === 'ENFERMAGEM MATERNO INFANTIL')?.nota_pratica || ''}</td>
-                </tr>
+                {getModuloDisciplinas(3).length > 0 ? (
+                  getModuloDisciplinas(3).map((disciplina) => (
+                    <tr key={disciplina.id}>
+                      <td>{disciplina.nome}</td>
+                      <td>{disciplina.nota_teorica || ''}</td>
+                      <td>{disciplina.nota_pratica || ''}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <>
+                    <tr><td>Sem disciplinas cadastradas</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                  </>
+                )}
               </tbody>
             </table>
           </div>
@@ -230,11 +200,6 @@ const Boletim = () => {
           {/* MÓDULO IV */}
           <div className="modulo_container">
             <h3 className="modulo_titulo">MODULO IV</h3>
-            {/* {aluno && (
-              <div className="info_modulo">
-                <p>Aluno: {aluno.nome || ''} | Turno: {aluno.turno || ''} | Curso: {aluno.curso || 'TÉCNICO DE ENFERMAGEM'}</p>
-              </div>
-            )} */}
             <table className="modulo_tabela">
               <thead>
                 <tr>
@@ -244,26 +209,22 @@ const Boletim = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>ENFERMAGEM PEDIÁTRICA</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM PEDIÁTRICA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM PEDIÁTRICA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>ENFERMAGEM EM SAÚDE PÚBLICA</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM EM SAÚDE PÚBLICA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM EM SAÚDE PÚBLICA')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>ENFERMAGEM EM SAÚDE MENTAL</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM EM SAÚDE MENTAL')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM EM SAÚDE MENTAL')?.nota_pratica || ''}</td>
-                </tr>
-                <tr>
-                  <td>ENFERMAGEM EM GERIATRIA</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM EM GERIATRIA')?.nota_teorica || ''}</td>
-                  <td>{getModuloDisciplinas(4).find(d => d.nome === 'ENFERMAGEM EM GERIATRIA')?.nota_pratica || ''}</td>
-                </tr>
+                {getModuloDisciplinas(4).length > 0 ? (
+                  getModuloDisciplinas(4).map((disciplina) => (
+                    <tr key={disciplina.id}>
+                      <td>{disciplina.nome}</td>
+                      <td>{disciplina.nota_teorica || ''}</td>
+                      <td>{disciplina.nota_pratica || ''}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <>
+                    <tr><td>Sem disciplinas cadastradas</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td></td></tr>
+                  </>
+                )}
               </tbody>
             </table>
           </div>
