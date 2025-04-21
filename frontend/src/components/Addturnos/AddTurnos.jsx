@@ -1,12 +1,14 @@
 import { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import '../AddAluno/AddAluno.css';
+import { useNavigate } from "react-router-dom";
 
 
 const AddTurnos = () => {
   const [nome, setNome] = useState("")
   const [inicio, setInicio] = useState("")
   const [termino, setTermino] = useState("")
+  const navigate = useNavigate();
 
 
   // Função para lidar com o envio do formulário
@@ -25,11 +27,15 @@ const AddTurnos = () => {
     try {
       // Enviar os dados para a API
       await api.post("/turnos/create", newTurno);
-      alert("Turno adicionada com sucesso!");
+      alert("Turno adicionado com sucesso!");
 
+      // Resetar campos
       setNome("")
       setInicio("")
       setTermino("")
+      
+      // Redirecionar para a página de turnos
+      navigate("/turnos");
     } catch (error) {
       console.error("Erro ao adicionar Turno", error);
     }
