@@ -27,7 +27,7 @@ const Disciplina = db.define('disciplina', {
     allowNull: false,
     validate: {
       isInt: true,
-      min: 1,
+      min: 0,
     },
   },
   estagio_supervisionado: {

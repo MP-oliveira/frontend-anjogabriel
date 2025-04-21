@@ -77,7 +77,7 @@ const Disciplinas = () => {
                   <td>{disciplina.nome}</td>
                   <td>{disciplina.carga_horaria}</td>
                   <td>{disciplina.horario_inicio}</td>
-                  <td>{disciplina.dias_semana}</td>
+                  <td>{Array.isArray(disciplina.dias_semana) ? disciplina.dias_semana.join(', ') : disciplina.dias_semana}</td>
                   <td className="for-list-acoes">
                     <Link to={`/disciplinas/edit/${disciplina.id}`}>
                       <img src={Edit} alt="Editar" />
