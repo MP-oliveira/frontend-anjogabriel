@@ -103,12 +103,12 @@
 /* Definindo larguras específicas para as colunas */
 .tabela-form-lista th:nth-child(1),
 .tabela-form-lista td:nth-child(1) {
-  width: 18%;
+  width: 30%;
 }
 
 .tabela-form-lista th:nth-child(2),
 .tabela-form-lista td:nth-child(2) {
-  width: 18%;
+  width: 25%;
 }
 
 .tabela-form-lista th:nth-child(3),
@@ -118,7 +118,7 @@
 
 .tabela-form-lista th:nth-child(4),
 .tabela-form-lista td:nth-child(4) {
-  width: 50%;
+  width: 40%;
   white-space: nowrap;
   overflow: visible;
   padding-right: 0;
