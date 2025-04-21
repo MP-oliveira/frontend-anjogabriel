@@ -180,13 +180,22 @@ input::placeholder {
   background-color: #f0c55a;
 }
 
+.edit-btn {
+  margin-right: 0;
+}
+
 .edit-btn button {
   background-color: #1C65D1;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  padding: 5px 8px;
   border-radius: 4px;
   cursor: pointer;
+  margin: 0;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -webkit-text-fill-color: #fff;
+  text-shadow: none;
 }
 
 .error_message {
@@ -307,14 +316,35 @@ input::placeholder {
 .for-list-acoes {
   display: flex;
   align-items: center;
-  gap: 20px;
-  justify-content: center;
-  margin-left: 10px;
+  gap: 6px;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  width: fit-content;
+  margin-right: -80px;
+  padding-right: 0;
 }
 
 .for-list-acoes a {
   display: flex;
   align-items: center;
+  margin-right: 0;
+  text-decoration: none;
+}
+
+.for-list-acoes a:last-child {
+  margin-right: 0;
+}
+
+.for-list-acoes .edit-btn button {
+  font-size: 10px;
+  padding: 7px 13px;
+  white-space: nowrap;
+  min-width: auto;
+  margin: 0;
+  text-decoration: none;
+  -webkit-text-decoration: none;
+  -webkit-text-fill-color: #fff;
+  text-shadow: none;
 }
 
 .label-input {

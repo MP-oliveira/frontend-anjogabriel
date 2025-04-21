@@ -42,6 +42,18 @@ const Alunos = () => {
     }
   };
 
+  // Função para formatar nomes longos
+  const formatarNome = (nomeCompleto) => {
+    const partesNome = nomeCompleto.split(' ');
+    if (partesNome.length <= 2) {
+      return nomeCompleto;
+    } else if (partesNome.length === 3) {
+      return `${partesNome[0]} ${partesNome[1]} ${partesNome[2]}`;
+    } else {
+      return `${partesNome[0]} ${partesNome[1]}...`;
+    }
+  };
+
   return (
     <div className="form-container">
       <div className="form-list-content">
@@ -71,15 +83,18 @@ const Alunos = () => {
             {filteredAlunos.length > 0 ? (
               filteredAlunos.map((aluno) => (
                 <tr key={aluno.id}>
-                  <td>{aluno.nome}</td>
+                  <td title={aluno.nome}>{formatarNome(aluno.nome)}</td>
                   <td>{aluno.email}</td>
                   <td>{aluno.cpf}</td>
-                  <td className="for-list-acoes">
+                  <td className="for-list-acoes acoes-coluna-sem-espacamento">
                     <Link to={`/alunos/edit/${aluno.id}`}>
                       <img src={Edit} alt="Editar" />
                     </Link>
                     <Link onClick={() => handleDelete(aluno.id)}>
                       <img src={Delete} alt="Deletar" />
+                    </Link>
+                    <Link className='edit-btn' to={`/registroacademico/${aluno.id}`}>
+                      <button>Reg Aca</button>
                     </Link>
                     <Link className='edit-btn' to={`/mensalidade/${aluno.id}`}>
                       <button>Mensalidade</button>

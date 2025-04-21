@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from "../../services/api";
 import Delete from '../../assets/trash.svg';
 import Edit from '../../assets/pencil.svg';
+import '../Alunos/Alunos.css'; // Importando o CSS da tabela de alunos
 
 const RegistroAcademicoAluno = () => {
   const [registros, setRegistros] = useState([]);
@@ -71,6 +72,18 @@ const RegistroAcademicoAluno = () => {
     }
   };
 
+  // Função para formatar nomes longos
+  const formatarNome = (nomeCompleto) => {
+    const partesNome = nomeCompleto.split(' ');
+    if (partesNome.length <= 2) {
+      return nomeCompleto;
+    } else if (partesNome.length === 3) {
+      return `${partesNome[0]} ${partesNome[1]} ${partesNome[2]}`;
+    } else {
+      return `${partesNome[0]} ${partesNome[1]}...`;
+    }
+  };
+
   return (
     <div className="addaluno-container">
       <div className="form-addaluno">
@@ -101,7 +114,7 @@ const RegistroAcademicoAluno = () => {
           />
         </div>
 
-        <table className="tabela_registro_lista">
+        <table className="tabela-form-lista">
           <thead>
             <tr>
               <th>Aluno</th>
@@ -118,13 +131,14 @@ const RegistroAcademicoAluno = () => {
                     <Link 
                     to={`/registroacademico/${registro.id}`} 
                       className="aluno-link"
+                      title={registro.aluno}
                     >
-                      {registro.aluno}
+                      {formatarNome(registro.aluno)}
                     </Link>
                   </td>
                   <td>{registro.curso}</td>
                   <td>{registro.disciplinas}</td>
-                  <td className="registro_acoes">
+                  <td className="for-list-acoes">
                     <Link to={`/registroacademico/edit/${registro.id}`}>
                       <img src={Edit} alt="Editar" />
                     </Link>

@@ -31,6 +31,19 @@ const DetalhesAluno = () => {
     fetchDetalhesAluno();
   }, [id]);
 
+  // Função para formatar nomes longos
+  const formatarNome = (nomeCompleto) => {
+    if (!nomeCompleto) return '';
+    const partesNome = nomeCompleto.split(' ');
+    if (partesNome.length <= 2) {
+      return nomeCompleto;
+    } else if (partesNome.length === 3) {
+      return `${partesNome[0]} ${partesNome[1]} ${partesNome[2]}`;
+    } else {
+      return `${partesNome[0]} ${partesNome[1]}...`;
+    }
+  };
+
   const calcularPresenca = (faltas, diasAula) => {
     const totalAulas = diasAula || 20; // Usando 20 como padrão se não houver diasAula
     if (totalAulas === 0) return 100;
@@ -52,7 +65,7 @@ const DetalhesAluno = () => {
           Voltar para lista
         </Link>
         <div className="aluno-info">
-          <h1>{registroAluno.aluno}</h1>
+          <h1 title={registroAluno.aluno}>{registroAluno.aluno}</h1>
           <p className="curso-nome">{registroAluno.disciplina}</p>
         </div>
       </div>
@@ -63,7 +76,7 @@ const DetalhesAluno = () => {
           <div>
             <div className="disciplina-card-content">
               <div className="disciplina-icon">
-                <h3>aluno: {registroAluno.aluno}</h3>
+                <h3 title={registroAluno.aluno}>aluno: {formatarNome(registroAluno.aluno)}</h3>
                 <Button
                   variant="contained"
                   sx={{
