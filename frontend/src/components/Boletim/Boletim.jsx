@@ -9,6 +9,7 @@ const Boletim = () => {
   const { id } = useParams();
   const [aluno, setAluno] = useState(null);
   const [disciplinas, setDisciplinas] = useState([]);
+  const [registrosAcademicos, setRegistrosAcademicos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const boletimRef = useRef(null);
@@ -29,6 +30,9 @@ const Boletim = () => {
           throw new Error('Nenhum dado de disciplinas retornado pela API.');
         }
         setDisciplinas(disciplinasResponse.data);
+        
+        // Buscando registros acadêmicos do aluno
+        await fetchRegistrosAcademicos(alunoResponse.data.id);
       } catch (error) {
         console.error('Erro ao buscar dados do aluno ou disciplinas:', error);
         setError('Erro ao carregar os dados do aluno ou disciplinas.');
@@ -39,15 +43,108 @@ const Boletim = () => {
 
     fetchDados();
   }, [id]);
+  
+  // Função para buscar os registros acadêmicos do aluno
+  const fetchRegistrosAcademicos = async (alunoId) => {
+    try {
+      // Tentativa 1: Buscar do endpoint específico de aluno (se existir)
+      try {
+        console.log("Buscando registros acadêmicos do aluno ID:", alunoId);
+        const registrosResponse = await api.get(`/registroacademico/aluno/${alunoId}`);
+        
+        if (registrosResponse.data && Array.isArray(registrosResponse.data) && registrosResponse.data.length > 0) {
+          console.log("Registros acadêmicos encontrados:", registrosResponse.data);
+          setRegistrosAcademicos(registrosResponse.data);
+          return;
+        }
+      } catch (endpointError) {
+        console.warn("Endpoint específico de aluno falhou, tentando alternativa:", endpointError);
+      }
+      
+      // Tentativa 2: Buscar da listagem completa e filtrar
+      const registrosResponse = await api.get('/registroacademico');
+      console.log("Todos os registros acadêmicos:", registrosResponse.data);
+      
+      if (registrosResponse.data && Array.isArray(registrosResponse.data)) {
+        // Filtrar registros pelo ID do aluno
+        const registrosDoAluno = registrosResponse.data.filter(reg => 
+          reg.alunoId === alunoId || (reg.aluno && reg.aluno.toLowerCase().includes(aluno.nome.toLowerCase()))
+        );
+        
+        console.log("Registros filtrados para o aluno:", registrosDoAluno);
+        setRegistrosAcademicos(registrosDoAluno);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar registros acadêmicos:", error);
+    }
+  };
 
   const handlePrint = () => {
     window.print();
   };
 
-  // Organizar as disciplinas por módulo
+  // Organizar as disciplinas por módulo e adicionar notas dos registros acadêmicos
   const getModuloDisciplinas = (moduloNumero) => {
     const modulo = `Modulo ${moduloNumero}`;
-    return disciplinas.filter(disciplina => disciplina.modulo === modulo) || [];
+    const disciplinasModulo = disciplinas.filter(disciplina => disciplina.modulo === modulo) || [];
+    
+    // Adicionar notas dos registros acadêmicos às disciplinas
+    return disciplinasModulo.map(disciplina => {
+      // Procurar o registro acadêmico correspondente a esta disciplina
+      const registro = registrosAcademicos.find(reg => 
+        reg.disciplinaId === disciplina.id || 
+        (reg.disciplina && reg.disciplina.toLowerCase() === disciplina.nome.toLowerCase())
+      );
+      
+      // Se encontrou um registro acadêmico, adiciona as notas
+      if (registro) {
+        return {
+          ...disciplina,
+          nota_teorica: calcularNotaTeorica(registro),
+          nota_pratica: registro.estagioNota !== undefined && registro.estagioNota !== null ? 
+                        registro.estagioNota.toFixed(1) : ''
+        };
+      }
+      
+      return disciplina;
+    });
+  };
+  
+  // Função para calcular a nota teórica com base nas notas de prova, teste e trabalho
+  const calcularNotaTeorica = (registro) => {
+    if (!registro) return '';
+    
+    // Verificar se pelo menos uma das notas está disponível
+    const temNotas = (
+      (registro.notaProva !== undefined && registro.notaProva !== null) ||
+      (registro.notaTeste !== undefined && registro.notaTeste !== null) ||
+      (registro.notaTrabalho !== undefined && registro.notaTrabalho !== null)
+    );
+    
+    if (!temNotas) return '';
+    
+    // Calcular a média das notas disponíveis
+    let soma = 0;
+    let quantidade = 0;
+    
+    if (registro.notaProva !== undefined && registro.notaProva !== null) {
+      soma += registro.notaProva;
+      quantidade++;
+    }
+    
+    if (registro.notaTeste !== undefined && registro.notaTeste !== null) {
+      soma += registro.notaTeste;
+      quantidade++;
+    }
+    
+    if (registro.notaTrabalho !== undefined && registro.notaTrabalho !== null) {
+      soma += registro.notaTrabalho;
+      quantidade++;
+    }
+    
+    if (quantidade === 0) return '';
+    
+    return (soma / quantidade).toFixed(1);
   };
 
   if (loading) {

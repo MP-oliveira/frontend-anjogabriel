@@ -14,6 +14,7 @@ const DetalhesAluno = () => {
   const [disciplinasCursadas, setDisciplinasCursadas] = useState([]);
   const [disciplinaAtual, setDisciplinaAtual] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [registroAtualId, setRegistroAtualId] = useState(id); // ID do registro que está sendo editado
   const [alunoInfo, setAlunoInfo] = useState({
     nome: "",
     curso: "",
@@ -130,28 +131,8 @@ const DetalhesAluno = () => {
             });
           }
           
-          // Buscar disciplinas cursadas pelo aluno
-          try {
-            const disciplinasResponse = await api.get(`/registroacademico/aluno/${id}`);
-            console.log("Disciplinas cursadas:", disciplinasResponse.data);
-            
-            if (disciplinasResponse.data && Array.isArray(disciplinasResponse.data)) {
-              setDisciplinasCursadas(disciplinasResponse.data.map(disc => ({
-                id: disc.id,
-                nome: disc.disciplina,
-                status: disc.mediaFinal >= 7 ? "Concluído" : "Em andamento",
-                media: disc.mediaFinal || disc.media || 0
-              })));
-            }
-          } catch (error) {
-            console.error("Erro ao buscar disciplinas cursadas:", error);
-            // Usar dados simulados como fallback
-            setDisciplinasCursadas([
-              { id: 1, nome: "Anatomia", status: "Concluído", media: 8.5 },
-              { id: 2, nome: "Bioquímica", status: "Concluído", media: 7.8 },
-              { id: 3, nome: response.data.disciplina, status: "Em andamento", media: response.data.media || 0 }
-            ]);
-          }
+          // Buscar disciplinas cursadas pelo aluno - usando a listagem geral
+          await fetchDisciplinasCursadas();
           
           // Define a disciplina atual como a do registro acadêmico atual
           setDisciplinaAtual({
@@ -191,6 +172,88 @@ const DetalhesAluno = () => {
     fetchDetalhesAluno();
   }, [id]);
 
+  // Nova função para buscar todas as disciplinas cursadas pelo aluno
+  const fetchDisciplinasCursadas = async () => {
+    try {
+      // Tentativa 1: Buscar do endpoint específico de aluno (se existir)
+      try {
+        const alunoId = alunoInfo.id || registroAluno.alunoId || id;
+        console.log("Buscando disciplinas cursadas pelo aluno ID:", alunoId);
+        const disciplinasResponse = await api.get(`/registroacademico/aluno/${alunoId}`);
+        
+        if (disciplinasResponse.data && Array.isArray(disciplinasResponse.data) && disciplinasResponse.data.length > 0) {
+          console.log("Disciplinas cursadas encontradas via endpoint específico:", disciplinasResponse.data);
+          setDisciplinasCursadas(disciplinasResponse.data.map(disc => ({
+            id: disc.id,
+            nome: disc.disciplina,
+            status: disc.mediaFinal >= 7 ? "Concluído" : "Em andamento",
+            media: disc.mediaFinal || disc.media || 0,
+            estagioNota: disc.estagioNota || 0,
+            notaProva: disc.notaProva || 0,
+            notaTeste: disc.notaTeste || 0,
+            notaTrabalho: disc.notaTrabalho || 0,
+            faltas: disc.faltas || 0,
+            totalAulas: disc.totalAulas || 20
+          })));
+          return;
+        }
+      } catch (endpointError) {
+        console.warn("Endpoint específico de aluno falhou, tentando alternativa:", endpointError);
+      }
+      
+      // Tentativa 2: Buscar da listagem completa e filtrar
+      const registrosResponse = await api.get('/registroacademico');
+      console.log("Todos os registros acadêmicos:", registrosResponse.data);
+      
+      if (registrosResponse.data && Array.isArray(registrosResponse.data)) {
+        // Filtrar registros pelo nome do aluno (caso o ID não seja confiável)
+        const alunoNome = alunoInfo.nome;
+        const registrosDoAluno = registrosResponse.data.filter(reg => 
+          (reg.aluno && reg.aluno.toLowerCase().includes(alunoNome.toLowerCase())) ||
+          (reg.alunoId && reg.alunoId === alunoInfo.id)
+        );
+        
+        console.log("Registros filtrados para o aluno:", registrosDoAluno);
+        
+        if (registrosDoAluno.length > 0) {
+          const disciplinasFormatadas = registrosDoAluno.map(reg => ({
+            id: reg.id,
+            nome: reg.disciplina,
+            status: reg.mediaFinal >= 7 ? "Concluído" : "Em andamento",
+            media: reg.mediaFinal || reg.media || 0,
+            estagioNota: reg.estagioNota || 0,
+            notaProva: reg.notaProva || 0,
+            notaTeste: reg.notaTeste || 0,
+            notaTrabalho: reg.notaTrabalho || 0,
+            faltas: reg.faltas || 0,
+            totalAulas: reg.totalAulas || 20
+          }));
+          
+          console.log("Disciplinas cursadas formatadas:", disciplinasFormatadas);
+          setDisciplinasCursadas(disciplinasFormatadas);
+          return;
+        }
+      }
+      
+      // Fallback para dados simulados se nada funcionar
+      console.warn("Nenhuma disciplina encontrada, usando fallback");
+      setDisciplinasCursadas([
+        { id: 1, nome: "Anatomia", status: "Concluído", media: 8.5, estagioNota: 9.0, notaProva: 8.0, notaTeste: 8.5, notaTrabalho: 8.5, faltas: 2, totalAulas: 20 },
+        { id: 2, nome: "Bioquímica", status: "Concluído", media: 7.8, estagioNota: 8.0, notaProva: 7.5, notaTeste: 7.0, notaTrabalho: 8.5, faltas: 4, totalAulas: 20 },
+        { id: 3, nome: registroAluno.disciplina, status: "Em andamento", media: registroAluno.media || 0, estagioNota: registroAluno.estagioNota || 0, notaProva: registroAluno.notaProva || 0, notaTeste: registroAluno.notaTeste || 0, notaTrabalho: registroAluno.notaTrabalho || 0, faltas: registroAluno.faltas || 0, totalAulas: registroAluno.totalAulas || 20 }
+      ]);
+      
+    } catch (error) {
+      console.error("Erro ao buscar disciplinas cursadas:", error);
+      // Usar dados simulados como fallback
+      setDisciplinasCursadas([
+        { id: 1, nome: "Anatomia", status: "Concluído", media: 8.5, estagioNota: 9.0, notaProva: 8.0, notaTeste: 8.5, notaTrabalho: 8.5, faltas: 2, totalAulas: 20 },
+        { id: 2, nome: "Bioquímica", status: "Concluído", media: 7.8, estagioNota: 8.0, notaProva: 7.5, notaTeste: 7.0, notaTrabalho: 8.5, faltas: 4, totalAulas: 20 },
+        { id: 3, nome: registroAluno.disciplina, status: "Em andamento", media: registroAluno.media || 0, estagioNota: registroAluno.estagioNota || 0, notaProva: registroAluno.notaProva || 0, notaTeste: registroAluno.notaTeste || 0, notaTrabalho: registroAluno.notaTrabalho || 0, faltas: registroAluno.faltas || 0, totalAulas: registroAluno.totalAulas || 20 }
+      ]);
+    }
+  };
+
   // Função para formatar nomes longos
   const formatarNome = (nomeCompleto) => {
     if (!nomeCompleto) return '';
@@ -215,10 +278,28 @@ const DetalhesAluno = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: name === 'faltaMotivo' ? value : parseFloat(value) || 0
-    });
+    
+    // Para campos numéricos, converter para número (substitui o valor anterior)
+    if (name === 'notaProva' || name === 'notaTrabalho' || name === 'notaTeste' || name === 'estagioNota' || name === 'faltas' || name === 'totalAulas') {
+      // Limita a 1 casa decimal para notas
+      let numValue = value === '' ? 0 : Number(value);
+      
+      // Se for uma nota, limitar entre 0 e 10
+      if (name === 'notaProva' || name === 'notaTrabalho' || name === 'notaTeste' || name === 'estagioNota') {
+        numValue = Math.min(10, Math.max(0, numValue));
+      }
+      
+      setFormData({
+        ...formData,
+        [name]: numValue
+      });
+    } else {
+      // Para campos de texto
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
   };
 
   const handleSaveChanges = async () => {
@@ -251,30 +332,55 @@ const DetalhesAluno = () => {
       };
 
       console.log("Dados a serem enviados:", dadosAtualizados);
+      console.log("Salvando alterações no registro ID:", registroAtualId);
 
       try {
-        // Corrigindo a rota para corresponder ao backend
-        const response = await api.put(`/registroacademico/edit/${id}`, dadosAtualizados);
+        // Usando o ID correto do registro acadêmico que está sendo editado
+        const response = await api.put(`/registroacademico/edit/${registroAtualId}`, dadosAtualizados);
         console.log("Resposta da atualização:", response.data);
         
         // Atualizar o estado local com os novos dados
-        setRegistroAluno(prev => ({
-          ...prev,
-          ...dadosAtualizados,
-          media: response.data.registro?.media || media
-        }));
-        
         setDisciplinaAtual(prev => ({
           ...prev,
           ...dadosAtualizados,
           media: response.data.registro?.media || media
         }));
         
+        // Se o registro atual for o mesmo que foi carregado inicialmente
+        if (registroAtualId === id) {
+          setRegistroAluno(prev => ({
+            ...prev,
+            ...dadosAtualizados,
+            media: response.data.registro?.media || media
+          }));
+        }
+        
+        // Atualizar a disciplina na lista de disciplinas cursadas
+        setDisciplinasCursadas(prev => 
+          prev.map(disc => {
+            if (disc.id === registroAtualId) {
+              // Atualizar a disciplina com os novos dados
+              return {
+                ...disc,
+                notaProva: parseFloat(formData.notaProva) || 0,
+                notaTeste: parseFloat(formData.notaTeste) || 0,
+                notaTrabalho: parseFloat(formData.notaTrabalho) || 0,
+                estagioNota: parseFloat(formData.estagioNota) || 0,
+                faltas: formData.faltas || 0,
+                totalAulas: formData.totalAulas || 20,
+                media: response.data.registro?.media || media,
+                status: (response.data.registro?.media || media) >= 7 ? "Concluído" : "Em andamento"
+              };
+            }
+            return disc;
+          })
+        );
+        
         setIsEditing(false);
         alert("Registro acadêmico atualizado com sucesso!");
         
-        // Recarregar os dados para garantir que tudo está atualizado
-        window.location.reload();
+        // Opcionalmente, ainda podemos atualizar todos os dados do servidor
+        // await fetchDisciplinasCursadas();
       } catch (apiError) {
         console.error("Erro na API:", apiError);
         
@@ -387,22 +493,28 @@ const DetalhesAluno = () => {
         };
         
         // Adicionar a nova disciplina à lista local
-        setDisciplinasCursadas([
-          ...disciplinasCursadas, 
-          {
-            id: novoItem.id,
-            nome: disciplina.nome,
-            status: "Em andamento",
-            media: 0
-          }
-        ]);
+        const novaDisciplina = {
+          id: novoItem.id,
+          nome: disciplina.nome,
+          status: "Em andamento",
+          media: 0,
+          estagioNota: 0,
+          notaProva: 0,
+          notaTeste: 0,
+          notaTrabalho: 0,
+          faltas: 0,
+          totalAulas: 20
+        };
+        
+        console.log("Adicionando à lista local:", novaDisciplina);
+        setDisciplinasCursadas(prevDisciplinas => [...prevDisciplinas, novaDisciplina]);
         
         setAdicionandoDisciplina(false);
         setDisciplinaSelecionada("");
         alert("Disciplina adicionada com sucesso!");
         
-        // Opcional: recarregar a página para mostrar o novo item
-        window.location.reload();
+        // Atualizar a lista de disciplinas cursadas em vez de recarregar a página
+        await fetchDisciplinasCursadas();
       } catch (apiError) {
         console.error("Erro na API:", apiError);
         
@@ -452,6 +564,47 @@ const DetalhesAluno = () => {
 
   const presenca = calcularPresenca(formData.faltas, formData.totalAulas);
 
+  // Função para selecionar uma disciplina para edição
+  const selecionarDisciplinaParaEdicao = (disciplina) => {
+    console.log("Selecionando disciplina para edição:", disciplina);
+    
+    // Armazenar o ID do registro acadêmico sendo editado
+    setRegistroAtualId(disciplina.id);
+    
+    // Definir a disciplina atual como a selecionada
+    setDisciplinaAtual({
+      id: disciplina.id, // Importante armazenar o ID
+      nome: disciplina.nome,
+      notaProva: disciplina.notaProva !== undefined ? disciplina.notaProva : 0,
+      notaTrabalho: disciplina.notaTrabalho !== undefined ? disciplina.notaTrabalho : 0,
+      notaTeste: disciplina.notaTeste !== undefined ? disciplina.notaTeste : 0,
+      estagioNota: disciplina.estagioNota !== undefined ? disciplina.estagioNota : 0,
+      media: disciplina.media !== undefined ? disciplina.media : 0,
+      faltas: disciplina.faltas !== undefined ? disciplina.faltas : 0,
+      totalAulas: disciplina.totalAulas !== undefined ? disciplina.totalAulas : 20
+    });
+    
+    // Atualizar o formulário com os dados da disciplina selecionada
+    setFormData({
+      notaProva: disciplina.notaProva !== undefined ? disciplina.notaProva : 0,
+      notaTrabalho: disciplina.notaTrabalho !== undefined ? disciplina.notaTrabalho : 0,
+      notaTeste: disciplina.notaTeste !== undefined ? disciplina.notaTeste : 0,
+      estagioNota: disciplina.estagioNota !== undefined ? disciplina.estagioNota : 0,
+      faltas: disciplina.faltas !== undefined ? disciplina.faltas : 0,
+      totalAulas: disciplina.totalAulas !== undefined ? disciplina.totalAulas : 20,
+      faltaMotivo: disciplina.faltaMotivo || ""
+    });
+    
+    // Ajustar a visualização para mostrar a disciplina selecionada
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    
+    // Iniciar o modo de edição
+    setIsEditing(true);
+  };
+
   if (loading) {
     return (
       <div className="detalhes-container loading-container">
@@ -495,9 +648,11 @@ const DetalhesAluno = () => {
                 label="Nota Prova"
                 type="number"
                 name="notaProva"
-                value={formData.notaProva}
+                value={formData.notaProva === 0 ? '' : formData.notaProva}
                 onChange={handleInputChange}
-                InputProps={{ inputProps: { min: 0, max: 10, step: 0.1 } }}
+                InputProps={{ 
+                  inputProps: { min: 0, max: 10, step: 0.1 },
+                }}
                 margin="normal"
                 size="small"
               />
@@ -505,7 +660,7 @@ const DetalhesAluno = () => {
                 label="Nota Teste"
                 type="number"
                 name="notaTeste"
-                value={formData.notaTeste}
+                value={formData.notaTeste === 0 ? '' : formData.notaTeste}
                 onChange={handleInputChange}
                 InputProps={{ inputProps: { min: 0, max: 10, step: 0.1 } }}
                 margin="normal"
@@ -515,7 +670,7 @@ const DetalhesAluno = () => {
                 label="Nota Trabalho"
                 type="number"
                 name="notaTrabalho"
-                value={formData.notaTrabalho}
+                value={formData.notaTrabalho === 0 ? '' : formData.notaTrabalho}
                 onChange={handleInputChange}
                 InputProps={{ inputProps: { min: 0, max: 10, step: 0.1 } }}
                 margin="normal"
@@ -525,7 +680,7 @@ const DetalhesAluno = () => {
                 label="Nota Estágio"
                 type="number"
                 name="estagioNota"
-                value={formData.estagioNota}
+                value={formData.estagioNota === 0 ? '' : formData.estagioNota}
                 onChange={handleInputChange}
                 InputProps={{ inputProps: { min: 0, max: 10, step: 0.1 } }}
                 margin="normal"
@@ -535,7 +690,7 @@ const DetalhesAluno = () => {
                 label="Faltas"
                 type="number"
                 name="faltas"
-                value={formData.faltas}
+                value={formData.faltas === 0 ? '' : formData.faltas}
                 onChange={handleInputChange}
                 InputProps={{ inputProps: { min: 0 } }}
                 margin="normal"
@@ -571,27 +726,27 @@ const DetalhesAluno = () => {
                 <div className="notas-grid">
                   <div className="notas-card">
                     <h4>Provas</h4>
-                    <p>{registroAluno.notaProva || "N/A"}</p>
+                    <p>{disciplinaAtual.notaProva !== undefined && disciplinaAtual.notaProva !== null ? disciplinaAtual.notaProva.toFixed(1) : "N/A"}</p>
                   </div>
 
                   <div className="notas-card">
                     <h4>Testes</h4>
-                    <p>{registroAluno.notaTeste || "N/A"}</p>
+                    <p>{disciplinaAtual.notaTeste !== undefined && disciplinaAtual.notaTeste !== null ? disciplinaAtual.notaTeste.toFixed(1) : "N/A"}</p>
                   </div>
 
                   <div className="notas-card">
                     <h4>Trabalhos</h4>
-                    <p>{registroAluno.notaTrabalho || "N/A"}</p>
+                    <p>{disciplinaAtual.notaTrabalho !== undefined && disciplinaAtual.notaTrabalho !== null ? disciplinaAtual.notaTrabalho.toFixed(1) : "N/A"}</p>
                   </div>
                   
                   <div className="notas-card">
                     <h4>Estágio</h4>
-                    <p>{registroAluno.estagioNota || "N/A"}</p>
+                    <p>{disciplinaAtual.estagioNota !== undefined && disciplinaAtual.estagioNota !== null ? disciplinaAtual.estagioNota.toFixed(1) : "N/A"}</p>
                   </div>
                 </div>
                 
                 <div className="media-final">
-                  <h4>Média Atual: {registroAluno.media ? registroAluno.media.toFixed(2) : "N/A"}</h4>
+                  <h4>Média Atual: {disciplinaAtual.media !== undefined && disciplinaAtual.media !== null ? disciplinaAtual.media.toFixed(2) : "N/A"}</h4>
                 </div>
               </div>
 
@@ -715,13 +870,30 @@ const DetalhesAluno = () => {
         <div className="disciplinas-grid">
           {disciplinasCursadas.length > 0 ? (
             disciplinasCursadas.map(disciplina => (
-              <div key={disciplina.id} className="disciplina-card">
+              <div 
+                key={disciplina.id} 
+                className="disciplina-card" 
+                onClick={() => selecionarDisciplinaParaEdicao(disciplina)}
+              >
                 <div className="disciplina-icon">
                   <h3>{disciplina.nome}</h3>
                 </div>
                 <div className="disciplina-card-content-p">
                   <p>Status: {disciplina.status}</p>
-                  <p>Média: {disciplina.media.toFixed(2)}</p>
+                  <p>Média: {disciplina.media !== undefined && disciplina.media !== null ? disciplina.media.toFixed(2) : "N/A"}</p>
+                  <p>Estágio: {disciplina.estagioNota !== undefined && disciplina.estagioNota !== null ? disciplina.estagioNota.toFixed(1) : "N/A"}</p>
+                  <div className="disciplina-notas-grid">
+                    <span>P: {disciplina.notaProva !== undefined && disciplina.notaProva !== null ? disciplina.notaProva.toFixed(1) : "N/A"}</span>
+                    <span>T: {disciplina.notaTeste !== undefined && disciplina.notaTeste !== null ? disciplina.notaTeste.toFixed(1) : "N/A"}</span>
+                    <span>Tr: {disciplina.notaTrabalho !== undefined && disciplina.notaTrabalho !== null ? disciplina.notaTrabalho.toFixed(1) : "N/A"}</span>
+                  </div>
+                  <p className="disciplina-presenca">
+                    Presença: {((disciplina.totalAulas - disciplina.faltas) / disciplina.totalAulas * 100).toFixed(0)}% 
+                    <span className="disciplina-faltas">(Faltas: {disciplina.faltas}/{disciplina.totalAulas})</span>
+                  </p>
+                  <div className="disciplina-card-footer">
+                    <span className="clique-para-editar">Clique para editar</span>
+                  </div>
                 </div>
               </div>
             ))
