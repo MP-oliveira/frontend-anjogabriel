@@ -85,7 +85,7 @@ const RegistroAcademicoAluno = () => {
   };
 
   return (
-    <div className="addaluno-container">
+    <div className="addaluno-container registro-academico-container">
       <div className="form-addaluno">
         <div className="registro_top">
           <h1 className="registro_h1">Registros Acadêmicos</h1>

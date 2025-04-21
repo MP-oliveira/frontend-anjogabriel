@@ -440,3 +440,12 @@ input::placeholder {
     font-size: 24px;
   }
 }
+
+.addaluno-container {
+  padding: 15px;
+  padding-top: 100px; /* Espaço para o header fixo */
+}
+
+.registro-academico-container {
+  padding-top: 120px !important; /* Garante que o conteúdo fique abaixo do header */
+}
