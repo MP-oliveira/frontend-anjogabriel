@@ -1,8 +1,67 @@
-
-
 import './FundoDiploma.css';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import api from '../../services/api';
 
 const FundoDiploma = () => {
+  const { id } = useParams();
+  const [aluno, setAluno] = useState(null);
+  const [disciplinas, setDisciplinas] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDados = async () => {
+      try {
+        // Buscando os dados do aluno
+        if (id) {
+          const alunoResponse = await api.get(`/alunos/${id}`);
+          if (!alunoResponse.data) {
+            throw new Error('Nenhum dado de aluno retornado pela API.');
+          }
+          setAluno(alunoResponse.data);
+        }
+
+        // Buscando todas as disciplinas
+        const disciplinasResponse = await api.get('/disciplinas');
+        if (!disciplinasResponse.data) {
+          throw new Error('Nenhum dado de disciplinas retornado pela API.');
+        }
+        setDisciplinas(disciplinasResponse.data);
+      } catch (error) {
+        console.error('Erro ao buscar dados para o diploma:', error);
+        setError('Erro ao carregar os dados necessários para o diploma.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDados();
+  }, [id]);
+
+  // Organizar as disciplinas por módulo
+  const getModuloDisciplinas = (moduloNumero) => {
+    const modulo = `Modulo ${moduloNumero}`;
+    return disciplinas.filter(disciplina => disciplina.modulo === modulo) || [];
+  };
+
+  // Função para obter a carga horária teórica de uma disciplina
+  const getCargaHoraria = (disciplina) => {
+    return disciplina?.carga_horaria || '';
+  };
+
+  // Função para obter a carga horária de estágio de uma disciplina
+  const getCargaHorariaEstagio = (disciplina) => {
+    return disciplina?.carga_horaria_estagio || '';
+  };
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div className="error-container">{error}</div>;
+  }
 
   return (
     <div className="diploma-container">
@@ -37,7 +96,7 @@ const FundoDiploma = () => {
           <div className="dates-row">
             <div className="info-row">
               <span className="label">INICIO DO CURSO:</span>
-              <span className="value"></span>
+              <span className="value">{aluno?.data_matricula ? new Date(aluno.data_matricula).toLocaleDateString('pt-BR') : ''}</span>
             </div>
             <div className="info-row">
               <span className="label">TERMINO:</span>
@@ -67,7 +126,6 @@ const FundoDiploma = () => {
         </section>
 
         {/* Tabelas de Módulos */}
-        {/* Tabelas de Módulos */}
         <section className="modulos-section">
           <table className="modulo-table">
             <tbody>
@@ -86,11 +144,19 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td>Anatomia e Fisiologia Humanas</td></tr>
-                      <tr><td>Microbiologia e Parasitologia</td></tr>
-                      <tr><td>Higiene e Profilaxia</td></tr>
-                      <tr><td>Nutrição e Dietética</td></tr>
-                      <tr><td>Psicologia Aplicada e Ética Profissional</td></tr>
+                      {getModuloDisciplinas(1).length > 0 ? (
+                        getModuloDisciplinas(1).map((disciplina) => (
+                          <tr key={disciplina.id}><td>{disciplina.nome}</td></tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr><td>Anatomia e Fisiologia Humanas</td></tr>
+                          <tr><td>Microbiologia e Parasitologia</td></tr>
+                          <tr><td>Higiene e Profilaxia</td></tr>
+                          <tr><td>Nutrição e Dietética</td></tr>
+                          <tr><td>Psicologia Aplicada e Ética Profissional</td></tr>
+                        </>
+                      )}
                       <tr><td className="subtotal-row">Sub - Total</td></tr>
                     </tbody>
                   </table>
@@ -106,41 +172,54 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody className='body-flex'>
-                      <tr>
-                        <td>100</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>80</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
+                      {getModuloDisciplinas(1).length > 0 ? (
+                        getModuloDisciplinas(1).map((disciplina) => (
+                          <tr key={disciplina.id}>
+                            <td>{getCargaHoraria(disciplina)}</td>
+                            <td>{disciplina.nota_teorica || ''}</td>
+                            <td>{getCargaHorariaEstagio(disciplina) > 0 ? getCargaHorariaEstagio(disciplina) : '-'}</td>
+                            <td>{disciplina.nota_pratica || '-'}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr>
+                            <td>100</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>80</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>50</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>50</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>50</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                        </>
+                      )}
                       <tr className="subtotal-row">
-                        <td>330</td>
+                        <td>{getModuloDisciplinas(1).reduce((total, disciplina) => total + (Number(getCargaHoraria(disciplina)) || 0), 0) || 330}</td>
                         <td></td>
-                        <td>-</td>
-                        <td>-</td>
+                        <td>{getModuloDisciplinas(1).reduce((total, disciplina) => total + (Number(getCargaHorariaEstagio(disciplina)) || 0), 0) || '-'}</td>
+                        <td></td>
                       </tr>
                     </tbody>
                   </table>
@@ -166,10 +245,18 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td>Farmacologia</td></tr>
-                      <tr><td>Introdução a Enfermagem</td></tr>
-                      <tr><td>Noções de Administração na Unidade de Enfermagem</td></tr>
-                      <tr><td>Biossegurança</td></tr>
+                      {getModuloDisciplinas(2).length > 0 ? (
+                        getModuloDisciplinas(2).map((disciplina) => (
+                          <tr key={disciplina.id}><td>{disciplina.nome}</td></tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr><td>Farmacologia</td></tr>
+                          <tr><td>Introdução a Enfermagem</td></tr>
+                          <tr><td>Noções de Administração na Unidade de Enfermagem</td></tr>
+                          <tr><td>Biossegurança</td></tr>
+                        </>
+                      )}
                       <tr><td className="subtotal-row">Sub - Total</td></tr>
                     </tbody>
                   </table>
@@ -185,34 +272,47 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody className='body-flex'>
-                      <tr>
-                        <td>60</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>100</td>
-                        <td></td>
-                        <td>100</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td></td>
-                        <td>40</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
+                      {getModuloDisciplinas(2).length > 0 ? (
+                        getModuloDisciplinas(2).map((disciplina) => (
+                          <tr key={disciplina.id}>
+                            <td>{getCargaHoraria(disciplina)}</td>
+                            <td>{disciplina.nota_teorica || ''}</td>
+                            <td>{getCargaHorariaEstagio(disciplina) > 0 ? getCargaHorariaEstagio(disciplina) : '-'}</td>
+                            <td>{disciplina.nota_pratica || '-'}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr>
+                            <td>60</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>100</td>
+                            <td></td>
+                            <td>100</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>50</td>
+                            <td></td>
+                            <td>40</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>50</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                        </>
+                      )}
                       <tr className="subtotal-row">
-                        <td>260</td>
+                        <td>{getModuloDisciplinas(2).reduce((total, disciplina) => total + (Number(getCargaHoraria(disciplina)) || 0), 0) || 260}</td>
                         <td></td>
-                        <td>140</td>
+                        <td>{getModuloDisciplinas(2).reduce((total, disciplina) => total + (Number(getCargaHorariaEstagio(disciplina)) || 0), 0) || 140}</td>
                         <td></td>
                       </tr>
                     </tbody>
@@ -235,10 +335,18 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td>Enfermagem nas Emergências</td></tr>
-                      <tr><td>Enfermagem em Clínica Médica</td></tr>
-                      <tr><td>Enfermagem em Clínica Cirúrgica</td></tr>
-                      <tr><td>Enfermagem Materno Infantil</td></tr>
+                      {getModuloDisciplinas(3).length > 0 ? (
+                        getModuloDisciplinas(3).map((disciplina) => (
+                          <tr key={disciplina.id}><td>{disciplina.nome}</td></tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr><td>Enfermagem nas Emergências</td></tr>
+                          <tr><td>Enfermagem em Clínica Médica</td></tr>
+                          <tr><td>Enfermagem em Clínica Cirúrgica</td></tr>
+                          <tr><td>Enfermagem Materno Infantil</td></tr>
+                        </>
+                      )}
                       <tr><td className="subtotal-row">Sub - Total</td></tr>
                     </tbody>
                   </table>
@@ -254,34 +362,47 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody className='body-flex'>
-                      <tr>
-                        <td>70</td>
-                        <td></td>
-                        <td>70</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>100</td>
-                        <td></td>
-                        <td>100</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>60</td>
-                        <td></td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                      <tr>
-                        <td>70</td>
-                        <td></td>
-                        <td>50</td>
-                        <td></td>
-                      </tr>
+                      {getModuloDisciplinas(3).length > 0 ? (
+                        getModuloDisciplinas(3).map((disciplina) => (
+                          <tr key={disciplina.id}>
+                            <td>{getCargaHoraria(disciplina)}</td>
+                            <td>{disciplina.nota_teorica || ''}</td>
+                            <td>{getCargaHorariaEstagio(disciplina) > 0 ? getCargaHorariaEstagio(disciplina) : '-'}</td>
+                            <td>{disciplina.nota_pratica || '-'}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr>
+                            <td>70</td>
+                            <td></td>
+                            <td>70</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>100</td>
+                            <td></td>
+                            <td>100</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>60</td>
+                            <td></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <td>70</td>
+                            <td></td>
+                            <td>50</td>
+                            <td></td>
+                          </tr>
+                        </>
+                      )}
                       <tr className="subtotal-row">
-                        <td>300</td>
+                        <td>{getModuloDisciplinas(3).reduce((total, disciplina) => total + (Number(getCargaHoraria(disciplina)) || 0), 0) || 300}</td>
                         <td></td>
-                        <td>220</td>
+                        <td>{getModuloDisciplinas(3).reduce((total, disciplina) => total + (Number(getCargaHorariaEstagio(disciplina)) || 0), 0) || 220}</td>
                         <td></td>
                       </tr>
                     </tbody>
@@ -304,10 +425,18 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td>Enfermagem Pediátrica</td></tr>
-                      <tr><td>Enfermagem em Saúde Publica</td></tr>
-                      <tr><td>Enfermagem em Saúde Mental</td></tr>
-                      <tr><td>Enfermagem em Geriatria</td></tr>
+                      {getModuloDisciplinas(4).length > 0 ? (
+                        getModuloDisciplinas(4).map((disciplina) => (
+                          <tr key={disciplina.id}><td>{disciplina.nome}</td></tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr><td>Enfermagem Pediátrica</td></tr>
+                          <tr><td>Enfermagem em Saúde Publica</td></tr>
+                          <tr><td>Enfermagem em Saúde Mental</td></tr>
+                          <tr><td>Enfermagem em Geriatria</td></tr>
+                        </>
+                      )}
                       <tr><td className="subtotal-row">Sub-Total</td></tr>
                     </tbody>
                   </table>
@@ -323,34 +452,47 @@ const FundoDiploma = () => {
                       </tr>
                     </thead>
                     <tbody className='body-flex'>
-                      <tr>
-                        <td>70</td>
-                        <td></td>
-                        <td>50</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>100</td>
-                        <td></td>
-                        <td>90</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>70</td>
-                        <td></td>
-                        <td>50</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>70</td>
-                        <td></td>
-                        <td>50</td>
-                        <td></td>
-                      </tr>
+                      {getModuloDisciplinas(4).length > 0 ? (
+                        getModuloDisciplinas(4).map((disciplina) => (
+                          <tr key={disciplina.id}>
+                            <td>{getCargaHoraria(disciplina)}</td>
+                            <td>{disciplina.nota_teorica || ''}</td>
+                            <td>{getCargaHorariaEstagio(disciplina) > 0 ? getCargaHorariaEstagio(disciplina) : '-'}</td>
+                            <td>{disciplina.nota_pratica || '-'}</td>
+                          </tr>
+                        ))
+                      ) : (
+                        <>
+                          <tr>
+                            <td>70</td>
+                            <td></td>
+                            <td>50</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>100</td>
+                            <td></td>
+                            <td>90</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>70</td>
+                            <td></td>
+                            <td>50</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td>70</td>
+                            <td></td>
+                            <td>50</td>
+                            <td></td>
+                          </tr>
+                        </>
+                      )}
                       <tr className="subtotal-row">
-                        <td>310</td>
+                        <td>{getModuloDisciplinas(4).reduce((total, disciplina) => total + (Number(getCargaHoraria(disciplina)) || 0), 0) || 310}</td>
                         <td></td>
-                        <td>240</td>
+                        <td>{getModuloDisciplinas(4).reduce((total, disciplina) => total + (Number(getCargaHorariaEstagio(disciplina)) || 0), 0) || 240}</td>
                         <td></td>
                       </tr>
                     </tbody>
@@ -373,9 +515,13 @@ const FundoDiploma = () => {
                   <table className="inner-table">
                     <tbody className='tbody-total'>
                       <tr className="total-row">
-                        <td>1200</td>
+                        <td>
+                          {disciplinas.reduce((total, disciplina) => total + (Number(getCargaHoraria(disciplina)) || 0), 0) || 1200}
+                        </td>
                         <td></td>
-                        <td>600</td>
+                        <td>
+                          {disciplinas.reduce((total, disciplina) => total + (Number(getCargaHorariaEstagio(disciplina)) || 0), 0) || 600}
+                        </td>
                         <td></td>
                       </tr>
                     </tbody>
