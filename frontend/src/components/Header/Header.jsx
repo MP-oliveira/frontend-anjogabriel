@@ -1,11 +1,11 @@
-import { useEffect, useState, useContext } from 'react';
-import { UserCircle, List, X } from 'phosphor-react';
+import { useEffect, useState, useContext } from "react";
+import { UserCircle, List, X } from "phosphor-react";
 import { UserContext } from "../../context/UseContext";
-import { Link } from 'react-scroll';
+import { Link } from "react-scroll";
 
-import Logo from '../../assets/Logo.png';
+import Logo from "../../assets/Logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import './Header.css';
+import "./Header.css";
 
 const Header = () => {
   const { user, setUser } = useContext(UserContext);
@@ -13,7 +13,6 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -24,15 +23,15 @@ const Header = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userLog = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem("token");
+    const userLog = JSON.parse(localStorage.getItem("user"));
 
     if (userLog) {
       setUser(userLog.role);
@@ -45,12 +44,12 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setUser(null);
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      console.error('Erro ao fazer logout:', err);
+      console.error("Erro ao fazer logout:", err);
     }
   };
 
@@ -70,20 +69,25 @@ const Header = () => {
   };
 
   return (
-    <header className={`header  no-print ${isBlurred ? 'blur' : ''} ${menuOpen ? 'menu-open' : ''}`}>
+    <header
+      className={`header  no-print ${isBlurred ? "blur" : ""} ${
+        menuOpen ? "menu-open" : ""
+      }`}
+    >
       <div className="header__container">
         <div className="logo">
           <div className="img">
             <img src={Logo} alt="Escola de Enfermagem Anjo Gabriel" />
           </div>
           <div className="logo-text">
-            <span className='logo-span-anjo'> Anjo Gabriel</span><span className='logo-span-escola'>Escola de Enfermagem</span>
+            <span className="logo-span-anjo"> Anjo Gabriel</span>
+            <span className="logo-span-escola">Escola de Enfermagem</span>
           </div>
         </div>
         <button className="menu-toggle" onClick={toggleMenu}>
           {menuOpen ? <X size={24} /> : <List size={24} />}
         </button>
-        <div className={`links ${menuOpen ? 'active' : ''}`}>
+        <div className={`links ${menuOpen ? "active" : ""}`}>
           <li>
             <Link
               activeClass="active"
@@ -181,13 +185,7 @@ const Header = () => {
               >
                 Cursos
               </NavLink>
-              <NavLink
-                to="/dashboard"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Dashboard
-              </NavLink>
+
               <NavLink
                 to="/disciplinas"
                 className="dropdown-item"
@@ -228,19 +226,23 @@ const Header = () => {
         </div>
         <div className="login">
           {user ? (
-            <div className='user-container'>
+            <div className="user-container">
               <div className="icon">
                 <UserCircle size={26} color="#C6D6F3" />
                 <div className="user-text">
                   <span>{user.nome || user.email}</span>
                 </div>
               </div>
-              <div className='login-button-container'>
-                <button onClick={handleLogout} className="logout-button">Logout</button>
+              <div className="login-button-container">
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
               </div>
             </div>
           ) : (
-            <button onClick={() => navigate('/login')} className="login-button">Login</button>
+            <button onClick={() => navigate("/login")} className="login-button">
+              Login
+            </button>
           )}
         </div>
       </div>

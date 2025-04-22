@@ -1,162 +1,82 @@
-.form-list-content {
-  width: 78.4%;
-  background-color: #EDF3FC;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 20px;
-  gap: 12px;
-  padding: 20px 50px 20px 50px;
-  margin-bottom: 30px;
-  margin-top: 100px;
-}
-
-.form-list-top{
-  display: flex;
+/* Aplica grid nas linhas da tabela */
+.tabela-form-lista-aluno {
   width: 100%;
+  border-collapse: collapse; /* importante para unir as bordas */
+}
+.tabela-form-lista-aluno tbody tr,
+.tabela-form-lista-aluno thead tr {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr; /* Nome | Email | CPF | Ações */
   align-items: center;
-  justify-content: end;
-}
-
-/* .form-criar {
-  width: 130px;
-  text-align: center;
-  text-decoration: none;
-  background-color: #FBD064;
-  color: #000;
-  border-radius: 10px;
-  font-size: 18px;
-  padding: 10px 20px;
-  flex:1;
-  margin-top: 30px;
-} */
-
-.form-list-top-h1 {
-  font-size: 32px;
-  text-align: center;
-  flex:6;
-  margin-left: 10.4rem;
-}
-
-.form-list-input {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-.form-list-input input {
-  padding: 12px;
-  font-size: 14px;
-  background-color: #fff;
-  color: #a6a7a9;
-  border: none;
-  outline-color: #C6D6F3;
-  padding: opx;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: row;
-}
-
-
-.form-list-input-input {
-  width: 300px;
-  font-size: 18px;
-}
-/* 
-.aluno_content_btn {
-  width: 50px;
-  background-color: #1C65D1;
-  border: none;
-  padding: 8px;
-  width: 120px;
-  border-radius: 10px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 18px;
-  border: none;
-} */
-
-
-.tabela-form-lista {
-  width: 100%;
-  table-layout: fixed;
-}
-
-.tabela-form-lista th {
-  background-color: #3875d616;
   text-align: left;
-  font-size: 20px;
-  padding-left: 10px;
 }
 
-.tabela-form-lista td {
-  font-size: 18px;
-  padding-left: 10px;
-  padding-right: 0;
+.tabela-form-lista-aluno thead tr {
+  background-color: #d1e1fa;
+}
+
+.tabela-form-lista-aluno tbody tr:nth-child(even) {
+  background-color: #dee8f8; /* Cor clara para linhas pares */
+}
+
+.tabela-form-lista-aluno tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Cor padrão para linhas ímpares */
+}
+
+/* Ajuste nos cabeçalhos */
+.tabela-form-lista-aluno thead th {
+  padding: 4px;
+  border-right: 2px solid #d8d8d8; /* linha entre colunas */
+  font-weight: bold;
+}
+.tabela-form-lista-aluno tbody td {
+  border-right: 2px solid #d8d8d8; /* linha entre colunas */
+}
+
+.tabela-form-lista-aluno th:last-child,
+.tabela-form-lista-aluno td:last-child {
+  border-right: none;
+}
+
+/* Ajuste nas células */
+.tabela-form-lista-aluno td {
+  padding: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* Definindo larguras específicas para as colunas */
-.tabela-form-lista th:nth-child(1),
-.tabela-form-lista td:nth-child(1) {
-  width: 27%;
+/* Ações alinhadas e organizadas */
+.for-list-acoes-aluno {
+  display: flex;
+  flex-direction: row; /* <-- de coluna para linha */
+  align-items: center;
+  justify-content: space-around;
+  gap: 16px;
 }
 
-.tabela-form-lista th:nth-child(2),
-.tabela-form-lista td:nth-child(2) {
-  width: 20%;
+/* Ícones bem espaçados */
+.for-list-acoes-aluno-icons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.tabela-form-lista th:nth-child(3),
-.tabela-form-lista td:nth-child(3) {
-  width: 14%;
-}
-
-.tabela-form-lista th:nth-child(4),
-.tabela-form-lista td:nth-child(4) {
-  width: 40%;
-  white-space: nowrap;
-  overflow: visible;
-  padding-right: 0;
-}
-
-.tabela-form-lista tbody tr:nth-child(odd) {
-  background-color: #f9f9f9;
-}
-
-.tabela-form-lista tbody tr:nth-child(even) {
-  background-color: #c6d6f310
-}
-/* 
-.for-list-acoes {
+.for-list-acoes-aluno-icons a,
+.for-list-acoes-aluno-buttons a {
   display: flex;
   align-items: center;
-  gap: 10px;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  width: fit-content;
-  margin-right: -80px;
-  padding-right: 0;
-} */
-
-for-list-acoes button {
-  font-size: 10px;
-  padding: 20px 10px;
-  white-space: nowrap;
-  min-width: auto;
-  margin: 0;
-} */
-
-.edit-btn {
-  margin-right: 0;
 }
 
-.edit-btn button {
-  font-size: 10px;
-  padding: 1px 3px;
-  margin: 0;
+/* Botões distribuídos lado a lado */
+.for-list-acoes-aluno-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.for-list-acoes-aluno-buttons button {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  white-space: nowrap;
 }
