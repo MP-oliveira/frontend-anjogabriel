@@ -253,8 +253,9 @@
 
 .autenticacao-cell {
   text-align: center;
-  vertical-align: bottom !important;
+  vertical-align: middle !important;
   padding-bottom: 20px !important;
+  padding-top: 180px !important; /* Adicionando padding-top para empurrar o conteúdo mais para cima */
 }
 
 .linha-assinatura {
@@ -312,4 +313,9 @@
   bottom: 5mm;
   border: 1px solid black;
   pointer-events: none;
+}
+
+.autenticacao-content {
+  display: block;
+  width: 100%;
 }

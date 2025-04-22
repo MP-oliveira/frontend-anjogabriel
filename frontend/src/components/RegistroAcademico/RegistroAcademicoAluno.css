@@ -1,5 +1,6 @@
 .registro-container {
     padding: 20px;
+    padding-top: 120px; /* Ajuste para o header fixo */
     max-width: 1200px;
     margin: 0 auto;
   }
@@ -74,3 +75,8 @@
       padding: 10px;
     }
   }
+
+.registro_top {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}

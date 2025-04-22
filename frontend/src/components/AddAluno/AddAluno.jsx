@@ -3,8 +3,8 @@ import api from "../../services/api"; // Importando o serviço de API
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import VoltarButton from "../VoltarButton/VoltarButton";
-// import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import InputPassword from "../InputPassword/InputPassword"; // Importando o componente de senha
+
+
 
 // Regex para CPF com ou sem pontuação
 const cpfRegex = /^(\d{3}.?\d{3}.?\d{3}-?\d{2})$/;

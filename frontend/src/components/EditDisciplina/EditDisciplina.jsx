@@ -17,13 +17,13 @@ const disciplinaSchema = z.object({
       .min(1, { message: "A carga horária precisa ser maior que 0" }),
   carga_horaria_estagio:
     z.number()
-      .min(1, { message: "A carga horária do estágio precisa ser maior que 0" }),
+      .min(0, { message: "A carga horária do estágio não pode ser negativa" }),
   estagio_supervisionado: z.boolean(),
   duracao:
     z.number()
       .min(1, { message: "A duração precisa ser maior que 0" }),
-  curso_id: z.string().min(1, { message: "Selecione um curso válido" }),
-  professor_id: z.string().min(1, { message: "Selecione um professor válido" }),
+  curso_id: z.union([z.string(), z.number()]).transform(val => String(val)),
+  professor_id: z.union([z.string(), z.number()]).transform(val => String(val)),
   horario_inicio: z.string().min(1, { message: "Informe o horário de início" }),
   horario_fim: z.string().min(1, { message: "Informe o horário de fim" }),
   dias_semana: z
@@ -70,6 +70,9 @@ const EditDisciplina = () => {
           carga_horaria: Number(disciplina.carga_horaria),
           carga_horaria_estagio: Number(disciplina.carga_horaria_estagio),
           duracao: Number(disciplina.duracao),
+          // Converter IDs para string para garantir consistência
+          curso_id: String(disciplina.curso_id),
+          professor_id: String(disciplina.professor_id),
           dias_semana: diasSemana
         });
 
@@ -105,18 +108,30 @@ const EditDisciplina = () => {
       carga_horaria: Number(disciplinaData.carga_horaria),
       carga_horaria_estagio: Number(disciplinaData.carga_horaria_estagio),
       duracao: Number(disciplinaData.duracao),
+      curso_id: String(disciplinaData.curso_id),
+      professor_id: String(disciplinaData.professor_id),
       estagio_supervisionado: disciplinaData.estagio_supervisionado === "Sim"
     };
+
+    console.log("Dados para validação:", dataToValidate);
 
     const disciplinaResult = disciplinaSchema.safeParse(dataToValidate);
 
     if (!disciplinaResult.success) {
+      console.log("Erros:", disciplinaResult.error.format());
       setErrors(disciplinaResult.error.format());
       return;
     }
 
     try {
-      await api.put(`/disciplinas/edit/${id}`, dataToValidate);
+      const dadosParaEnvio = {
+        ...dataToValidate,
+        // Converter IDs para número para o backend
+        curso_id: Number(dataToValidate.curso_id),
+        professor_id: Number(dataToValidate.professor_id)
+      };
+      
+      await api.put(`/disciplinas/edit/${id}`, dadosParaEnvio);
       navigate("/disciplinas");
     } catch (error) {
       console.error("Erro ao atualizar disciplina", error);
@@ -204,7 +219,7 @@ const EditDisciplina = () => {
             >
               <option value="">Selecione o Curso</option>
               {cursos.map(curso => (
-                <option key={curso.id} value={curso.id}>
+                <option key={curso.id} value={String(curso.id)}>
                   {curso.nome}
                 </option>
               ))}
@@ -224,7 +239,7 @@ const EditDisciplina = () => {
             >
               <option value="">Selecione o Professor</option>
               {professores.map(professor => (
-                <option key={professor.id} value={professor.id}>
+                <option key={professor.id} value={String(professor.id)}>
                   {professor.nome}
                 </option>
               ))}
@@ -395,8 +410,8 @@ const EditDisciplina = () => {
             <input
               type="checkbox"
               name="dias_semana"
-              value="Sabado"
-              checked={disciplinaData.dias_semana.includes("Sabado")}
+              value="Sábado"
+              checked={disciplinaData.dias_semana.includes("Sábado") || disciplinaData.dias_semana.includes("Sabado")}
               onChange={handleChange}
             />
             Sábado

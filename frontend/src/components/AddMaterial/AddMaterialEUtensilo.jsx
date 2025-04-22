@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import VoltarButton from '../VoltarButton/VoltarButton';
 import { z } from "zod";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const materialSchema = z.object({
   nome: z.string().min(1, { message: "O nome é obrigatório" }),
@@ -16,6 +16,7 @@ const materialSchema = z.object({
 
 const AddMaterialEUtensilio = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [nome, setNome] = useState("");
   const [categoria, setCategoria] = useState("");
   const [quantidade, setQuantidade] = useState("");
@@ -24,6 +25,16 @@ const AddMaterialEUtensilio = () => {
   const [ultimo_pedido, setUltimo_pedido] = useState("");
   const [status_material, setStatus_material] = useState("");
   const [errors, setErrors] = useState({});
+
+  // Obter a categoria da URL, se disponível
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const categoriaParam = params.get('categoria');
+    
+    if (categoriaParam) {
+      setCategoria(decodeURIComponent(categoriaParam));
+    }
+  }, [location]);
 
   console.log(nome)
 

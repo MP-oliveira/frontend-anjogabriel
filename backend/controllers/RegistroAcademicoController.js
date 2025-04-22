@@ -290,6 +290,60 @@ const testeRegistroAcademico = (req, res) => {
   res.status(200).json({ message: "Teste de conexão bem-sucedido" });
 };
 
+// Função para obter registros acadêmicos por ID do aluno
+const getRegistrosByAlunoId = async (req, res) => {
+  const { alunoId } = req.params;
+
+  try {
+    const registros = await RegistroAcademico.findAll({
+      where: { alunoId: alunoId },
+      include: [
+        { model: Aluno, as: "alunos" },
+        { model: Disciplina, as: "disciplinas" },
+        { model: Curso, as: "cursos" },
+      ],
+    });
+
+    if (registros.length === 0) {
+      return res.status(404).json({ error: "Nenhum registro acadêmico encontrado para este aluno" });
+    }
+
+    const registrosFormatados = registros.map((registro) => ({
+      id: registro.id,
+      alunoId: registro.alunoId,
+      disciplinaId: registro.disciplinaId,
+      aluno: registro.alunos.nome,
+      disciplina: registro.disciplinas.nome,
+      curso: registro.cursos.nome,
+      faltaData: registro.faltaData,
+      faltaMotivo: registro.faltaMotivo,
+      notaTeste: registro.notaTeste,
+      media: registro.media,
+      mediaFinal: registro.mediaFinal,
+      notaProva: registro.notaProva,
+      provaData: registro.provaData,
+      provaDescricao: registro.provaDescricao,
+      testeData: registro.testeData,
+      testeDescricao: registro.testeDescricao,
+      notaTrabalho: registro.notaTrabalho,
+      trabalhoData: registro.trabalhoData,
+      trabalhoDescricao: registro.trabalhoDescricao,
+      estagioNota: registro.estagioNota,
+      estagioData: registro.estagioData,
+      estagioDescricao: registro.estagioDescricao,
+      faltas: registro.faltas,
+      totalAulas: registro.totalAulas,
+      createdAt: registro.createdAt,
+      updatedAt: registro.updatedAt,
+    }));
+
+    res.status(200).json(registrosFormatados);
+  } catch (error) {
+    console.error("Erro ao buscar registros acadêmicos por ID do aluno:", error.message);
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   createRegistroAcademico,
   listRegistrosAcademicos,
@@ -297,4 +351,5 @@ module.exports = {
   updateRegistroAcademico,
   deleteRegistroAcademico,
   testeRegistroAcademico,
+  getRegistrosByAlunoId
 };

@@ -17,7 +17,20 @@ const disciplinaSchema = z.object({
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
   carga_horaria_estagio: z
     .number()
-    .min(1, { message: "A carga horária precisa ser maior que 0" }),
+    .min(0)
+    .superRefine((val, ctx) => {
+      // Verificamos se há um objeto pai 'data' antes de acessá-lo
+      if (ctx.path && ctx.path.length > 0) {
+        const parentData = ctx.parent;
+        // Se tem estágio supervisionado, a carga horária deve ser maior que 0
+        if (parentData && parentData.estagio_supervisionado === "Sim" && val <= 0) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "A carga horária de estágio precisa ser maior que 0 quando há estágio supervisionado",
+          });
+        }
+      }
+    }),
   estagio_supervisionado: z
     .string()
     .min(1, { message: "Selecione se tem estágio supervisionado" }),
@@ -92,7 +105,7 @@ const AddDisciplina = () => {
       nome,
       modulo,
       carga_horaria: Number(carga_horaria),
-      carga_horaria_estagio: Number(carga_horaria_estagio),
+      carga_horaria_estagio: estagio_supervisionado === "Sim" ? Number(carga_horaria_estagio) : 0,
       estagio_supervisionado,
       duracao: Number(duracao),
       curso_id: Number(curso_id),
@@ -236,126 +249,126 @@ const AddDisciplina = () => {
             </p>
           )}
         </div>
-          <div className="input-three-columns">
-            <input
-              type="number"
-              value={carga_horaria}
-              onChange={(e) => setCarga_horaria(e.target.value)}
-              placeholder="Carga Horária (horas)"
-            />
-            {errors.carga_horaria && (
-              <p className="error_message" style={{ color: "red" }}>
-                {errors.carga_horaria}
-              </p>
-            )}
-
-            <input
-              type="number"
-              value={carga_horaria_estagio}
-              onChange={(e) => setCarga_horaria_estagio(e.target.value)}
-              placeholder="Carga Horária do Estágio (horas)"
-            />
-            {errors.carga_horaria && (
-              <p className="error_message" style={{ color: "red" }}>
-                {errors.carga_horaria}
-              </p>
-            )}
-            <div className="custom-select-wrapper">
-              <select
-                value={estagio_supervisionado}
-                onChange={(e) => setEstagio_supervisionado(e.target.value)}
-              >
-                <option value="">Tem Estágio</option>
-                <option value="Sim">Sim</option>
-                <option value="Nao">Não</option>
-              </select>
-            </div>
-            {errors.estagio_supervisionado && (
-              <p className="error_message" style={{ color: "red" }}>
-                {errors.estagio_supervisionado}
-              </p>
-            )}
+        <div className="input-three-columns">
+          <input
+            type="number"
+            value={carga_horaria}
+            onChange={(e) => setCarga_horaria(e.target.value)}
+            placeholder="Carga Horária (horas)"
+          />
+          {errors.carga_horaria && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria}
+            </p>
+          )}
+          <div className="custom-select-wrapper">
+            <select
+              value={estagio_supervisionado}
+              onChange={(e) => setEstagio_supervisionado(e.target.value)}
+            >
+              <option value="">Tem Estágio</option>
+              <option value="Sim">Sim</option>
+              <option value="Nao">Não</option>
+            </select>
           </div>
+          {errors.estagio_supervisionado && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.estagio_supervisionado}
+            </p>
+          )}
+          <input
+            type="number"
+            value={carga_horaria_estagio}
+            onChange={(e) => setCarga_horaria_estagio(e.target.value)}
+            placeholder="Carga Horária do Estágio (horas)"
+            disabled={estagio_supervisionado !== "Sim"}
+          />
+          {errors.carga_horaria_estagio && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.carga_horaria_estagio}
+            </p>
+          )}
+        </div>
 
-          <div className="input-three-columns">
+        <div className="input-three-columns">
+          <input
+            type="time"
+            value={horario_inicio}
+            onChange={(e) => setHorario_inicio(e.target.value)}
+            placeholder="Horário de Início"
+          />
+          {errors.horario_inicio && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.horario_inicio}
+            </p>
+          )}
+
+          <input
+            type="time"
+            value={horario_fim}
+            onChange={(e) => setHorario_fim(e.target.value)}
+            placeholder="Horário de Fim"
+          />
+          {errors.horario_fim && (
+            <p className="error_message" style={{ color: "red" }}>
+              {errors.horario_fim}
+            </p>
+          )}
+        </div>
+
+        <div className="input-three-columns label-margin">
+          <label className='label-input'>
             <input
-              type="time"
-              value={horario_inicio}
-              onChange={(e) => setHorario_inicio(e.target.value)}
-              placeholder="Horário de Início"
+              type="checkbox"
+              value="Segunda"
+              onChange={handleDiasSemanaChange}
             />
-            {errors.horario_inicio && (
-              <p className="error_message" style={{ color: "red" }}>
-                {errors.horario_inicio}
-              </p>
-            )}
-
+            Segunda-feira
+          </label>
+          <label className='label-input' >
             <input
-              type="time"
-              value={horario_fim}
-              onChange={(e) => setHorario_fim(e.target.value)}
-              placeholder="Horário de Fim"
+              type="checkbox"
+              value="Terça"
+              onChange={handleDiasSemanaChange}
             />
-            {errors.horario_fim && (
-              <p className="error_message" style={{ color: "red" }}>
-                {errors.horario_fim}
-              </p>
-            )}
-          </div>
-
-          <div className="input-three-columns label-margin">
-            <label className='label-input'>
-              <input
-                type="checkbox"
-                value="Segunda"
-                onChange={handleDiasSemanaChange}
-              />
-              Segunda-feira
-            </label>
-            <label className='label-input' >
-              <input
-                type="checkbox"
-                value="Terça"
-                onChange={handleDiasSemanaChange}
-              />
-              Terça-feira
-            </label>
-            <label className='label-input'>
-              <input
-                type="checkbox"
-                value="Quarta"
-                onChange={handleDiasSemanaChange}
-              />
-              Quarta-feira
-            </label>
-            <label className='label-input'>
-              <input
-                type="checkbox"
-                value="Quinta"
-                onChange={handleDiasSemanaChange}
-              />
-              Quinta-feira
-            </label>
-            <label className='label-input'>
-              <input
-                type="checkbox"
-                value="Sexta"
-                onChange={handleDiasSemanaChange}
-              />
-              Sexta-feira
-            </label>
-            <label className='label-input'>
-              <input
-                type="checkbox"
-                value="Sabado"
-                onChange={handleDiasSemanaChange}
-              />
-              Sábado
-            </label>
-          </div>
-          <div className="form-btn-container">
-            <button className="form-btn" type="submit">Adicionar Disciplina</button>
-          </div>
+            Terça-feira
+          </label>
+          <label className='label-input'>
+            <input
+              type="checkbox"
+              value="Quarta"
+              onChange={handleDiasSemanaChange}
+            />
+            Quarta-feira
+          </label>
+          <label className='label-input'>
+            <input
+              type="checkbox"
+              value="Quinta"
+              onChange={handleDiasSemanaChange}
+            />
+            Quinta-feira
+          </label>
+          <label className='label-input'>
+            <input
+              type="checkbox"
+              value="Sexta"
+              onChange={handleDiasSemanaChange}
+            />
+            Sexta-feira
+          </label>
+          <label className='label-input'>
+            <input
+              type="checkbox"
+              value="Sábado"
+              onChange={handleDiasSemanaChange}
+            />
+            Sábado
+          </label>
+        </div>
+        <div className="form-btn-container">
+          <button className="form-btn" type="submit">Adicionar Disciplina</button>
+        </div>
       </form>
     </div>
   );
