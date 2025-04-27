@@ -9,6 +9,8 @@
   grid-template-columns: 2fr 1fr 1fr 2fr; /* Nome | Email | CPF | Ações */
   align-items: center;
   text-align: left;
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .tabela-form-lista-aluno thead tr {
