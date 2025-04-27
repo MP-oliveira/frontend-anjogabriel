@@ -2,7 +2,7 @@ import { useState } from "react";
 import api from "../../services/api"; // Importando o serviço de API
 import '../AddAluno/AddAluno.css';
 import { useNavigate } from "react-router-dom";
-
+import VoltarButton from "../VoltarButton/VoltarButton";
 
 const AddTurnos = () => {
   const [nome, setNome] = useState("")
@@ -49,6 +49,7 @@ const AddTurnos = () => {
           className="form-add"
           onSubmit={handleSubmit}
         >
+          <VoltarButton url="/turnos" />
         <h2 >Adicionar Turno</h2>
           <input
             type="text"
