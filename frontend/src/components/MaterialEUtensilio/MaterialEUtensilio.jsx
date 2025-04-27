@@ -7,7 +7,6 @@ import './MaterialEUtensilio.css'; // Vamos criar este arquivo em seguida
 
 const MaterialEUtensilio = () => {
   const [materiais, setMateriais] = useState([]);
-  const [filteredMateriais, setFilteredMateriais] = useState([]);
   const [search, setSearch] = useState('');
   const [materiaisPorCategoria, setMateriaisPorCategoria] = useState({});
   const [expandedCategories, setExpandedCategories] = useState({});
@@ -26,11 +25,11 @@ const MaterialEUtensilio = () => {
     const fetchMateriais = async () => {
       try {
         const response = await api.get('/materialeutensilios');
-        setMateriais(response.data);
-        setFilteredMateriais(response.data);
+        const data = response.data;
+        setMateriais(data);
         
         // Agrupar materiais por categoria
-        agruparPorCategoria(response.data);
+        agruparPorCategoria(data);
         
         // Inicializar todas as categorias como expandidas
         const initialExpandedState = {};
@@ -47,11 +46,11 @@ const MaterialEUtensilio = () => {
   }, []);
 
   // Função para agrupar os materiais por categoria
-  const agruparPorCategoria = (materiais) => {
+  const agruparPorCategoria = (materiaisData) => {
     const agrupados = {};
     
     categorias.forEach(categoria => {
-      agrupados[categoria] = materiais.filter(
+      agrupados[categoria] = materiaisData.filter(
         material => material.categoria === categoria
       );
     });
@@ -68,10 +67,8 @@ const MaterialEUtensilio = () => {
         material.nome.toLowerCase().includes(value.toLowerCase()) ||
         material.categoria.toLowerCase().includes(value.toLowerCase())
       );
-      setFilteredMateriais(filtered);
       agruparPorCategoria(filtered);
     } else {
-      setFilteredMateriais(materiais);
       agruparPorCategoria(materiais);
     }
   };
@@ -81,7 +78,6 @@ const MaterialEUtensilio = () => {
       await api.delete(`/materialeutensilios/${id}`);
       const materiaisAtualizados = materiais.filter((material) => material.id !== id);
       setMateriais(materiaisAtualizados);
-      setFilteredMateriais(materiaisAtualizados);
       agruparPorCategoria(materiaisAtualizados);
     } catch (error) {
       console.error('Erro ao deletar material:', error);
@@ -114,8 +110,7 @@ const MaterialEUtensilio = () => {
     <div className="form-container">
       <div className="form-list-content">
         <div className="form-list-top">
-          <h1 className="form-list-top-h1">Materiais e Utensílios</h1>
-          <Link className="form-criar" to="/materialeutensilios/add">Add Material</Link>
+          <h1 className="form-list-top-h1 form-list-top-h1-materialeutensilio">Materiais e Utensílios</h1>
         </div>
         <div className="form-list-input">
           <input
