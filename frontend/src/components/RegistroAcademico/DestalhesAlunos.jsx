@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from "../../services/api";
 import "./DetalhesAlunos.css";
-
+import VoltarButton from "../VoltarButton/VoltarButton";
 import Button from "@mui/material/Button";
-import PersonIcon from "@mui/icons-material/Person";
 import StarIcon from "@mui/icons-material/Star";
 import { TextField, MenuItem, Select, FormControl, InputLabel, CircularProgress } from "@mui/material";
 
@@ -255,17 +254,17 @@ const DetalhesAluno = () => {
   };
 
   // Função para formatar nomes longos
-  const formatarNome = (nomeCompleto) => {
-    if (!nomeCompleto) return '';
-    const partesNome = nomeCompleto.split(' ');
-    if (partesNome.length <= 2) {
-      return nomeCompleto;
-    } else if (partesNome.length === 3) {
-      return `${partesNome[0]} ${partesNome[1]} ${partesNome[2]}`;
-    } else {
-      return `${partesNome[0]} ${partesNome[1]}...`;
-    }
-  };
+  // const formatarNome = (nomeCompleto) => {
+  //   if (!nomeCompleto) return '';
+  //   const partesNome = nomeCompleto.split(' ');
+  //   if (partesNome.length <= 2) {
+  //     return nomeCompleto;
+  //   } else if (partesNome.length === 3) {
+  //     return `${partesNome[0]} ${partesNome[1]} ${partesNome[2]}`;
+  //   } else {
+  //     return `${partesNome[0]} ${partesNome[1]}...`;
+  //   }
+  // };
 
   const calcularPresenca = (faltas, totalAulas) => {
     if (totalAulas === 0) return { valor: 100, abaixoMinimo: false };
@@ -615,10 +614,8 @@ const DetalhesAluno = () => {
 
   return (
     <div className="detalhes-container">
+        <VoltarButton url="/alunos" />
       <div className="detalhes-header">
-        <Link to="/registroacademico" className="voltar-btn">
-          Voltar para lista
-        </Link>
         <div className="aluno-info">
           <h1 title={alunoInfo.nome}>{alunoInfo.nome}</h1>
           <p className="curso-nome">Curso: {alunoInfo.curso}</p>
