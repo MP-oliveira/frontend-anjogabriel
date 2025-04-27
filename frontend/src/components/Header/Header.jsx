@@ -208,13 +208,6 @@ const Header = () => {
                 Professores
               </NavLink>
               <NavLink
-                to="/registroacademico"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Registro Acadêmico
-              </NavLink>
-              <NavLink
                 to="/turnos"
                 className="dropdown-item"
                 onClick={() => setMenuOpen(false)}
