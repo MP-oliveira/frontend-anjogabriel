@@ -375,6 +375,19 @@ input::placeholder {
 }
 
 /* Responsividade */
+
+@media (max-width: 1440px) {
+  .form-add {
+    max-width: 1400px;
+  }
+  .form-list-content {
+    max-width: 1400px;
+  }
+  .tabela-form-lista-aluno{
+    max-width: 1400px;
+  }
+}
+
 @media (max-width: 1280px) {
 
   /* MacBook 13" */
