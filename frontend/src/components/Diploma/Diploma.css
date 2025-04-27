@@ -216,12 +216,12 @@
   
   /* Movendo o conteúdo um pouco para a esquerda para evitar corte na borda direita */
   .diploma_impressao {
-    width: 95% !important;
+    width: 88% !important;
     height: 95% !important;
-    max-width: 95% !important;
+    max-width: 88% !important;
     max-height: 95% !important;
     margin: auto !important;
-    transform: translateX(-2%) !important; /* Move ligeiramente para a esquerda */
+    transform: translateX(-5%) !important; /* Move ligeiramente para a esquerda */
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
