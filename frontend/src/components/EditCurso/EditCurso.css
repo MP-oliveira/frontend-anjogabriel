@@ -27,6 +27,10 @@
   margin-top: 50px;
 }
 
+select {
+  color: #999999;
+}
+
 input {
   padding: 10px;
   font-size: 14px;
@@ -36,6 +40,7 @@ input {
   outline-color: #C6D6F3;
   padding: 15px;
   border-radius: 8px;
+  color: #999999;
 }
 
 input::placeholder {
