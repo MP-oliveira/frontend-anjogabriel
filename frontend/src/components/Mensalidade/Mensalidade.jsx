@@ -2,6 +2,7 @@ import './Mensalidade.css';
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const Mensalidade = () => {
   const { id } = useParams();
@@ -138,6 +139,8 @@ const Mensalidade = () => {
   return (
     <div className="mensalidade-page-container">
       <h2 className='no-print'>MENSALIDADES DO ALUNO - ANO {anoAtual}</h2>
+          <VoltarButton url='/alunos' />
+
       <div className='print-btn no-print'>
         <button onClick={handlePrintAll} className="mensalidade-btn">
           Imprimir Todas Mensalidades
