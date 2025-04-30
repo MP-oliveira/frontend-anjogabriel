@@ -149,59 +149,86 @@
 
 /* Adicione ou modifique estas regras ao seu CSS */
 @media print {
-  .mensalidade-carnets {
-    max-width: 210mm;
-    margin: 0;
-    padding: 2mm;
-    box-shadow: none;
+
+  @page {
+    size: A4 portraite;
+    margin: 5mm;
+    /* Margem mínima */
   }
-  
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Redefinir estilos para impressão */
+  body,
+  html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+  }
+
+  .mensalidade-page-container {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .mensalidade-carnets {
+    transform: rotate(-90deg) translate(2mm, -37mm);
+    width:68% !important;
+    margin: 0;
+    height: 100vh;
+
+  }
+
   .carnets-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, auto); /* Força 6 linhas */
-    gap: 2mm;
+    grid-template-rows: repeat(6, auto);
     page-break-inside: avoid;
   }
-  
+
   .carnet-card {
     margin-bottom: 0;
     /* Reduzir levemente a altura de cada cartão */
-    max-height: 46mm;
+    max-height: 96mm;
   }
-  
+
   /* Garantir que cada página de mensalidades fique em uma página */
   #mensalidadePage1 {
     page-break-after: always;
     page-break-before: auto;
   }
-  
+
   #mensalidadePage2 {
     page-break-before: always;
     page-break-after: auto;
   }
-  
+
   /* Reduzir levemente os tamanhos de fonte e espaçamentos */
   .carnet-table td {
-    padding: 1px;
+    padding: 6px;
     font-size: 8px;
   }
-  
+
   .bold {
     font-size: 10px;
   }
-  
+
   .small-text {
     font-size: 7px;
   }
-  
+
   .multi-line div {
     margin: 0;
-  }
-  
-  /* Configuração de página específica */
-  @page {
-    size: A4;
-    margin: 5mm;
   }
 }
