@@ -91,7 +91,7 @@ const AddAluno = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [cursos, setCursos] = useState([]);
-  const [curso_id, setCurso_id] = useState("");
+  const [curso_id, setCurso_id] = useState(0);
   const [turno_id, setTurno_id] = useState("");
   const [turnos, setTurnos] = useState([]);
 
@@ -542,7 +542,7 @@ const AddAluno = () => {
               accept="application/pdf"
               onChange={handleHistoricoChange}
             />
-            Adicione seu Histórico
+            Adicione seu Histórico (.pdf até 10Mb)
           </div>
           <input
             type="password"
