@@ -503,17 +503,6 @@ const AddAluno = () => {
               {errors.data_matricula}
             </p>
           )}
-          {/* <input
-            type="date"
-            value={data_termino_curso}
-            onChange={(e) => setData_termino_curso(e.target.value)}
-            className="custom-date-input"
-          />
-          {errors.data_termino_curso && (
-            <p className="error_message" style={{ color: "red" }}>
-              {errors.data_termino_curso}
-            </p>
-          )} */}
           <div className="custom-select-wrapper">
             <select
               value={curso_id}
