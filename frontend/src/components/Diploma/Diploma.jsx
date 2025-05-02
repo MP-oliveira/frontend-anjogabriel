@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../services/api';
 import FundoDiploma from './FundoDiploma';
+import VoltarButton from '../VoltarButton/VoltarButton';
+
 
 const Diploma = () => {
   const { id } = useParams();
@@ -102,12 +104,16 @@ const Diploma = () => {
         <button onClick={handlePrint} className="aluno-btn">
           Imprimir Diploma
         </button>
+
       </div>
       
       {/* Frente do Diploma */}
       <div className='diploma_container print-page'>
         <div className="diploma_impressao">
           <div className='diploma_borda'>
+            <div className='no-print'>
+              <VoltarButton url='/alunos' />
+            </div>
             <div className="diploma_headers">
               <div className="logo_anjo">
                 <img className="bandeira" src={LogoBandeira} alt="Bandeira" />
