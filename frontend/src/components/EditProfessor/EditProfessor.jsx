@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useNavigate, useParams } from "react-router-dom";
 import '../AddAluno/AddAluno.css';
 import InputPassword from '../InputPassword/InputPassword';
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 const professorSchema = z.object({
   nome: z.string().min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
@@ -92,6 +93,7 @@ const EditProfessor = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
+        <VoltarButton url='/professores' />
         <h2>Editar Professor</h2>
         <input
           type="text"
