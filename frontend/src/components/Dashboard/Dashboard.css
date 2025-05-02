@@ -15,6 +15,10 @@
   margin-bottom: 20px;
 }
 
+.dashboard-header td {
+  font-size: 20px;
+}
+
 .header-title h1 {
   color: #ffc107;
   font-size: 28px;
@@ -331,9 +335,10 @@
 
 .dashboard-table th,
 .dashboard-table td {
-  padding: 10px;
+  padding: 3px;
   text-align: left;
   border-bottom: 1px solid #eee;
+  font-size: 20px;
 }
 
 .dashboard-table th {

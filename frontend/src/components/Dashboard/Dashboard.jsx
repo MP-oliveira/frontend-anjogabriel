@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { 
-  BarChart, Bar, PieChart, Pie, AreaChart, Area,
+  PieChart, Pie, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell
 } from 'recharts';
 import PropTypes from 'prop-types';
@@ -220,8 +220,8 @@ function Dashboard() {
       {/* Novos Botões para Adicionar e Visualizar Transações */}
       <div className="action-buttons">
         <Link to="/transacoes" className="btn-action">Visualizar Transações</Link>
-        <Link to="/adicionar-transacao" className="btn-action">Adicionar Transação</Link>
         <Link to="/adicionar-conta" className="btn-action">Adicionar Conta</Link>
+        <Link to="/adicionar-transacao" className="btn-action">Adicionar Transação</Link>
       </div>
       
       {isFilterOpen && (

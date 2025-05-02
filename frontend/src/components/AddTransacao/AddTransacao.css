@@ -94,6 +94,7 @@
 
 .form-group label {
   font-size: 14px;
+  margin-left: 10px;
   margin-bottom: 6px;
   color: #555;
 }
@@ -122,11 +123,12 @@
 .currency-symbol {
   position: absolute;
   left: 12px;
+  top: 0px;
   color: #555;
 }
 
 .valor-input input {
-  padding-left: 30px;
+  margin-left: 50px;
   width: 100%;
 }
 

@@ -214,6 +214,13 @@ const Header = () => {
               >
                 Turno
               </NavLink>
+              <NavLink
+                to="/dashboard"
+                className="dropdown-item"
+                onClick={() => setMenuOpen(false)}
+              >
+                Financeiro
+              </NavLink>
             </div>
           </li>
         </div>

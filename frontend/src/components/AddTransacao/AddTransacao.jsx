@@ -8,9 +8,8 @@ function AddTransacao() {
   const [contas, setContas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categorias, setCategorias] = useState([
-    'Salário', 'Investimentos', 'Vendas', 'Freelance', 'Outros', // Receitas
-    'Moradia', 'Alimentação', 'Transporte', 'Saúde', 'Educação', 
-    'Lazer', 'Vestuário', 'Serviços', 'Impostos', 'Diversos'     // Despesas
+    'Salário professor', 'Salário funcionário', 'Darf','Mensalidade Aluno','Camisa', // Receitas
+    'Aluguel', 'Alimentação', 'Transporte', 'Saúde', 'Serviços', 'Água', 'Luz', 'Internet', 'Outros'     // Despesas
   ]);
   const [formData, setFormData] = useState({
     tipo: 'despesa',

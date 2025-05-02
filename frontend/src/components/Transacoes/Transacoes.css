@@ -74,17 +74,18 @@
 
 .transacao-descricao {
   flex: 1;
-  /* Permite que a descrição ocupe o espaço disponível */
+  font-size: 20px;
 }
 
 .transacao-data {
-  margin-left: 10px;
-  /* Espaço entre descrição e data */
+  margin-left: 300px;
+  font-size: 20px;
 }
 
 .transacao-valor {
   margin-left: 10px;
   font-weight: bold;
+  font-size: 20px;
 }
 
 .transacao-valor.positivo {
