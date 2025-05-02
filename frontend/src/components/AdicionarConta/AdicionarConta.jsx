@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
-import './AdicionarConta.css'; // Crie um arquivo CSS para estilizar o componente
+import './AdicionarConta.css'; 
+import VoltarButton from '../VoltarButton/VoltarButton';
 
 function AdicionarConta() {
   const navigate = useNavigate();
@@ -39,7 +40,8 @@ function AdicionarConta() {
 
   return (
     <div className="adicionar-conta-container">
-      <h1>Adicionar Conta</h1>
+      <VoltarButton url='/dashboard' />
+      <h1 className='adicionar-conta-h1'>Adicionar Conta</h1>
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -73,7 +75,7 @@ function AdicionarConta() {
             min="0"
           />
         </div>
-        <button type="submit" disabled={loading}>
+        <button className='edit-btn' type="submit" disabled={loading}>
           {loading ? 'Adicionando...' : 'Adicionar Conta'}
         </button>
       </form>
