@@ -51,20 +51,25 @@ module.exports = class DisciplinasController {
         professor_id,
         horario_inicio,
         horario_fim,
-        dias_semana,
-      }
-        console.log('disciplina', disciplina)
+        dias_semana: Array.isArray(dias_semana) ? dias_semana.join(',') : dias_semana,
+      };
+      console.log('disciplina', disciplina)
       const createDisciplina = await Disciplina.create(disciplina)
       res.status(200).json(createDisciplina)
     } catch (error) {
-      console.error("Erro ao criar disciplina", error)
-      res.status(500).json({ message: "Erro ao criar disciplina" });
+      console.error("Erro ao criar disciplina", error);
+      res.status(500).json({ message: "Erro ao criar disciplina", error: error.message, stack: error.stack });
     }
   }
 
   static async updateDisciplina(req, res) {
     const { id } = req.params
-    const updatedData = req.body
+    const updatedData = { ...req.body };
+    if (updatedData.dias_semana) {
+      updatedData.dias_semana = Array.isArray(updatedData.dias_semana)
+        ? updatedData.dias_semana.join(',')
+        : updatedData.dias_semana;
+    }
 
     try {
       const disciplina = await Disciplina.findByPk(id)
@@ -74,7 +79,7 @@ module.exports = class DisciplinasController {
       await disciplina.update(updatedData)
       res.status(200).json({ message: "Dados da disciplina atualizados com sucesso" })
     } catch (error) {
-      res.status(500).json({ error: "Erro ao atualizar disciplina" })
+      res.status(500).json({ error: "Erro ao atualizar disciplina", details: error.message, stack: error.stack });
     }
   }
 
@@ -89,7 +94,7 @@ module.exports = class DisciplinasController {
       await disciplina.destroy()
       res.status(200).json({ message: "Disciplina deletada com sucesso" })
     } catch (error) {
-      res.status(500).json({ error: "Erro ao deletar disciplina" })
+      res.status(500).json({ error: "Erro ao deletar disciplina", details: error.message, stack: error.stack });
     }
   }
 }
