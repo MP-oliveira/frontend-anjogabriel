@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "../../context/UseContext";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 import Delete from "../../assets/trash.svg";
 import Edit from "../../assets/pencil.svg";
 
 const Alunos = () => {
+  const { user } = useContext(UserContext); // Obter o estado do usuário
+  const role = user;
   const [alunos, setAlunos] = useState([]);
   const [filteredAlunos, setFilteredAlunos] = useState([]);
   const [search, setSearch] = useState("");
@@ -105,18 +109,53 @@ const Alunos = () => {
                       >
                         <button>Reg Aca</button>
                       </Link>
-                      <Link
-                        className="edit-btn-aluno"
-                        to={`/mensalidade/${aluno.id}`}
-                      >
-                        <button>Mensalidade</button>
-                      </Link>
-                      <Link className="edit-btn-aluno" to={`/boletim/${aluno.id}`}>
-                        <button>Boletim</button>
-                      </Link>
-                      <Link className="edit-btn-aluno" to={`/diplomas/${aluno.id}`}>
-                        <button>Diploma</button>
-                      </Link>
+
+                      {user && role.role === "admin" ? (
+                        <>
+                          <Link
+                            className="edit-btn-aluno"
+                            to={`/mensalidade/${aluno.id}`}
+                          >
+                            <button>Mensalidade</button>
+                          </Link>
+                          <Link
+                            className="edit-btn-aluno"
+                            to={`/boletim/${aluno.id}`}
+                          >
+                            <button>Boletim</button>
+                          </Link>
+                          <Link
+                            className="edit-btn-aluno"
+                            to={`/diplomas/${aluno.id}`}
+                          >
+                            <button>Diploma</button>
+                          </Link>{" "}
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            disabled
+                            className="edit-btn-aluno"
+                            to={`/mensalidade/${aluno.id}`}
+                          >
+                            <button>Mensalidade</button>
+                          </Link>
+                          <Link
+                            disabled
+                            className="edit-btn-aluno"
+                            to={`/boletim/${aluno.id}`}
+                          >
+                            <button>Boletim</button>
+                          </Link>
+                          <Link
+                            disabled
+                            className="edit-btn-aluno"
+                            to={`/diplomas/${aluno.id}`}
+                          >
+                            <button>Diploma</button>
+                          </Link>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>
