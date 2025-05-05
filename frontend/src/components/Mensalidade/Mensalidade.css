@@ -210,7 +210,7 @@
   }
 
   #mensalidadePage2 {
-    page-break-before: always;
+    page-break-before: never;
     page-break-after: auto;
   }
 
