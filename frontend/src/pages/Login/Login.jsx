@@ -66,7 +66,6 @@ function Login() {
           <option value="">Selecione seu papel</option>
           <option value="admin">Admin</option>
           <option value="professor">Professor</option>
-          <option value="aluno">Aluno</option>
         </select>
         <button type="submit" className="aluno-btn">
           Entrar
