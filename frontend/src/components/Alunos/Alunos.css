@@ -28,12 +28,9 @@
 /* Ajuste nos cabeçalhos */
 .tabela-form-lista-aluno thead th {
   padding: 4px;
-  border-right: 2px solid #d8d8d8; /* linha entre colunas */
   font-weight: bold;
 }
-.tabela-form-lista-aluno tbody td {
-  border-right: 2px solid #d8d8d8; /* linha entre colunas */
-}
+
 
 .tabela-form-lista-aluno th:last-child,
 .tabela-form-lista-aluno td:last-child {

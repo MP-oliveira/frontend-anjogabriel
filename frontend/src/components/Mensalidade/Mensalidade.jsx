@@ -1,8 +1,7 @@
-import './Mensalidade.css';
-import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import api from '../../services/api';
-
+import "./Mensalidade.css";
+import { useEffect, useState, useRef } from "react";
+import { Link, useParams } from "react-router-dom";
+import api from "../../services/api";
 
 const Mensalidade = () => {
   const { id } = useParams();
@@ -16,17 +15,26 @@ const Mensalidade = () => {
   const mensalidadePage2Ref = useRef(null);
 
   const mesesNomes = [
-    'JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
-    'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'
+    "JANEIRO",
+    "FEVEREIRO",
+    "MARÇO",
+    "ABRIL",
+    "MAIO",
+    "JUNHO",
+    "JULHO",
+    "AGOSTO",
+    "SETEMBRO",
+    "OUTUBRO",
+    "NOVEMBRO",
+    "DEZEMBRO",
   ];
 
   useEffect(() => {
     const fetchDados = async () => {
       try {
-
         const alunoResponse = await api.get(`/alunos/${id}`);
         if (!alunoResponse.data) {
-          throw new Error('Nenhum dado retornado pela API.');
+          throw new Error("Nenhum dado retornado pela API.");
         }
         setAluno(alunoResponse.data);
 
@@ -36,12 +44,11 @@ const Mensalidade = () => {
 
           gerarMeses(alunoResponse.data.data_matricula);
         } else {
-          throw new Error('Data de matrícula não encontrada.');
+          throw new Error("Data de matrícula não encontrada.");
         }
-
       } catch (error) {
-        console.error('Erro ao buscar dados do aluno:', error);
-        setError('Erro ao carregar os dados do aluno: ' + error.message);
+        console.error("Erro ao buscar dados do aluno:", error);
+        setError("Erro ao carregar os dados do aluno: " + error.message);
       } finally {
         setLoading(false);
       }
@@ -52,7 +59,9 @@ const Mensalidade = () => {
 
   const gerarMeses = (dataInscricao) => {
     const mesInicio = dataInscricao ? new Date(dataInscricao).getMonth() : 0;
-    const anoInicio = dataInscricao ? new Date(dataInscricao).getFullYear() : new Date().getFullYear();
+    const anoInicio = dataInscricao
+      ? new Date(dataInscricao).getFullYear()
+      : new Date().getFullYear();
 
     let mesesPrimeiraPagina = [];
     let mesesSegundaPagina = [];
@@ -66,10 +75,13 @@ const Mensalidade = () => {
       const mes = {
         nome: mesesNomes[mesIndex],
         ano: ano,
-        vencimento: `${diaVencimento}/` + String(mesIndex + 1).padStart(2, '0') + `/${ano}`,
-        valor: 280.00,
-        desconto: 20.00,
-        valorComDesconto: 260.00
+        vencimento:
+          `${diaVencimento}/` +
+          String(mesIndex + 1).padStart(2, "0") +
+          `/${ano}`,
+        valor: 280.0,
+        desconto: 20.0,
+        valorComDesconto: 260.0,
       };
 
       if (i < 12) {
@@ -85,36 +97,33 @@ const Mensalidade = () => {
 
   const handlePrintPage1 = () => {
     if (mensalidadePage2Ref.current) {
-      mensalidadePage2Ref.current.style.display = 'none';
+      mensalidadePage2Ref.current.style.display = "none";
     }
     setTimeout(() => {
       window.print();
       if (mensalidadePage2Ref.current) {
-        mensalidadePage2Ref.current.style.display = 'block';
+        mensalidadePage2Ref.current.style.display = "block";
       }
     }, 100);
   };
-  ;
-
-
   const handlePrintPage2 = () => {
     if (mensalidadePage1Ref.current) {
-      mensalidadePage1Ref.current.style.display = 'none';
+      mensalidadePage1Ref.current.style.display = "none";
     }
     setTimeout(() => {
       window.print();
       if (mensalidadePage1Ref.current) {
-        mensalidadePage1Ref.current.style.display = 'block';
+        mensalidadePage1Ref.current.style.display = "block";
       }
     }, 100);
   };
-  
+
   const handlePrintAll = () => {
     if (mensalidadePage1Ref.current) {
-      mensalidadePage1Ref.current.style.display = 'block';
+      mensalidadePage1Ref.current.style.display = "block";
     }
     if (mensalidadePage2Ref.current) {
-      mensalidadePage2Ref.current.style.display = 'block';
+      mensalidadePage2Ref.current.style.display = "block";
     }
     setTimeout(() => {
       window.print();
@@ -129,7 +138,10 @@ const Mensalidade = () => {
     return (
       <div className="error-container">
         <div className="error-message">{error}</div>
-        <button onClick={() => window.location.reload()} className="retry-button">
+        <button
+          onClick={() => window.location.reload()}
+          className="retry-button"
+        >
           Tentar Novamente
         </button>
       </div>
@@ -138,12 +150,10 @@ const Mensalidade = () => {
 
   return (
     <div className="mensalidade-page-container">
-      <h2 className='no-print'>MENSALIDADES DO ALUNO - ANO {anoAtual}</h2>
+      <h2 className="no-print">MENSALIDADES DO ALUNO - ANO {anoAtual}</h2>
 
-      <div className='print-btn no-print'>
-        <button onClick={handlePrintAll} className="mensalidade-btn">
-          Imprimir Todas Mensalidades
-        </button>
+      <div className="print-btn no-print">
+        <Link to="/alunos" className="mensalidade-btn">Voltar</Link>
         <button onClick={handlePrintPage1} className="mensalidade-btn">
           Imprimir Primeiro Ano
         </button>
@@ -152,10 +162,11 @@ const Mensalidade = () => {
         </button>
       </div>
 
-
-      <div className='mensalidade-carnets print-content page-break'
+      <div
+        className="mensalidade-carnets print-content page-break"
         id="mensalidadePage1"
-        ref={mensalidadePage1Ref}>
+        ref={mensalidadePage1Ref}
+      >
         <div className="carnets-grid">
           {mesesPage1.map((mes, index) => (
             <div key={index} className="carnet-card">
@@ -163,40 +174,59 @@ const Mensalidade = () => {
                 <tbody>
                   <tr>
                     <td className="left-col">
-                      Local de Pagamento<br />
+                      Local de Pagamento
+                      <br />
                       <strong>PAGÁVEL NA SECRETARIA DA ESCOLA</strong>
                     </td>
                     <td className="right-col">
-                      Vencimento<br />
+                      Vencimento
+                      <br />
                       <strong>{mes.vencimento}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="left-col">
-                      Cedente<br />
-                      <strong>Escola de Enfermagem Anjo Gabriel <br />
-                        <em>Vespertino</em></strong>
+                      Cedente
+                      <br />
+                      <strong>
+                        Escola de Enfermagem Anjo Gabriel <br />
+                        <em>Vespertino</em>
+                      </strong>
                     </td>
                     <td className="right-col">
-                      Valor da Cota<br />
-                      <strong>{mes.valor.toFixed(2).replace('.', ',')}</strong>
+                      Valor da Cota
+                      <br />
+                      <strong>{mes.valor.toFixed(2).replace(".", ",")}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="left-col multi-line">
-                      <div><strong>Mensalidade ref. {mes.nome}</strong></div>
-                      <div className="obs-text"><strong>OBS: PAGAMENTO ATÉ O DIA {mes.vencimento.substring(0, 2)} DESCONTO DE {mes.desconto.toFixed(2).replace('.', ',')}</strong></div>
-                      <div className="small-text">Após vencimento: Multa 2,00% = R$ 5,20 Juros 0,033% a.d = R$ 0,08 / dia</div>
+                      <div>
+                        <strong>Mensalidade ref. {mes.nome}</strong>
+                      </div>
+                      <div className="obs-text">
+                        <strong>
+                          OBS: PAGAMENTO ATÉ O DIA{" "}
+                          {mes.vencimento.substring(0, 2)} DESCONTO DE{" "}
+                          {mes.desconto.toFixed(2).replace(".", ",")}
+                        </strong>
+                      </div>
+                      <div className="small-text">
+                        Após vencimento: Multa 2,00% = R$ 5,20 Juros 0,033% a.d
+                        = R$ 0,08 / dia
+                      </div>
                     </td>
                     <td className="right-col">JUROS / MULTA</td>
                   </tr>
                   <tr>
                     <td className="left-col">
-                      Nome do Aluno<br />
-                      <strong>{aluno?.nome || ''}</strong>
+                      Nome do Aluno
+                      <br />
+                      <strong>{aluno?.nome || ""}</strong>
                     </td>
                     <td className="right-col">
-                      Total Cobrado<br />
+                      Total Cobrado
+                      <br />
                       <strong></strong>
                     </td>
                   </tr>
@@ -207,10 +237,11 @@ const Mensalidade = () => {
         </div>
       </div>
 
-
-      <div className='mensalidade-carnets print-content'
+      <div
+        className="mensalidade-carnets print-content"
         id="mensalidadePage2"
-        ref={mensalidadePage2Ref}>
+        ref={mensalidadePage2Ref}
+      >
         <div className="carnets-grid">
           {mesesPage2.map((mes, index) => (
             <div key={index} className="carnet-card">
@@ -218,40 +249,59 @@ const Mensalidade = () => {
                 <tbody>
                   <tr>
                     <td className="left-col">
-                      Local de Pagamento<br />
+                      Local de Pagamento
+                      <br />
                       <strong>PAGÁVEL NA SECRETARIA DA ESCOLA</strong>
                     </td>
                     <td className="right-col">
-                      Vencimento<br />
+                      Vencimento
+                      <br />
                       <strong>{mes.vencimento}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="left-col">
-                      Cedente<br />
-                      <strong>Escola de Enfermagem Anjo Gabriel <br />
-                        <em>Vespertino</em></strong>
+                      Cedente
+                      <br />
+                      <strong>
+                        Escola de Enfermagem Anjo Gabriel <br />
+                        <em>Vespertino</em>
+                      </strong>
                     </td>
                     <td className="right-col">
-                      Valor da Cota<br />
-                      <strong>{mes.valor.toFixed(2).replace('.', ',')}</strong>
+                      Valor da Cota
+                      <br />
+                      <strong>{mes.valor.toFixed(2).replace(".", ",")}</strong>
                     </td>
                   </tr>
                   <tr>
                     <td className="left-col multi-line">
-                      <div><strong>Mensalidade ref. {mes.nome}</strong></div>
-                      <div className="obs-text"><strong>OBS: PAGAMENTO ATÉ O DIA {mes.vencimento.substring(0, 2)} DESCONTO DE {mes.desconto.toFixed(2).replace('.', ',')}</strong></div>
-                      <div className="small-text">Após vencimento: Multa 2,00% = R$ 5,20 Juros 0,033% a.d = R$ 0,08 / dia</div>
+                      <div>
+                        <strong>Mensalidade ref. {mes.nome}</strong>
+                      </div>
+                      <div className="obs-text">
+                        <strong>
+                          OBS: PAGAMENTO ATÉ O DIA{" "}
+                          {mes.vencimento.substring(0, 2)} DESCONTO DE{" "}
+                          {mes.desconto.toFixed(2).replace(".", ",")}
+                        </strong>
+                      </div>
+                      <div className="small-text">
+                        Após vencimento: Multa 2,00% = R$ 5,20 Juros 0,033% a.d
+                        = R$ 0,08 / dia
+                      </div>
                     </td>
                     <td className="right-col">JUROS / MULTA</td>
                   </tr>
                   <tr>
                     <td className="left-col">
-                      Nome do Aluno<br />
-                      <strong>{aluno?.nome || ''}</strong>
+                      Nome do Aluno
+                      <br />
+                      <strong>{aluno?.nome || ""}</strong>
                     </td>
                     <td className="right-col">
-                      Total Cobrado<br />
+                      Total Cobrado
+                      <br />
                       <strong></strong>
                     </td>
                   </tr>
