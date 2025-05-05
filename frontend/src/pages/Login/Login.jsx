@@ -32,13 +32,10 @@ function Login() {
       // Redirecionar baseado no papel
       switch (role) {
         case "admin":
-          window.location.href = "/admins";
+          window.location.href = "/";
           break;
         case "professor":
-          window.location.href = "/professor/dashboard";
-          break;
-        case "aluno":
-          window.location.href = "/aluno/dashboard";
+          window.location.href = "/";
           break;
       }
     } catch (error) {
