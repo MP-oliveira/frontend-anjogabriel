@@ -1,4 +1,8 @@
 /* Aplica grid nas linhas da tabela */
+.disable button{
+  display: none;
+}
+
 .tabela-form-lista-aluno {
   width: 100%;
 }

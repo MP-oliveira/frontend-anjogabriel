@@ -72,7 +72,7 @@ function App() {
           <Route path="/disciplinas/edit/:id" element={user &&  role.role === 'admin' ? <EditDisciplina /> : <Navigate to="/login" />} />
           <Route path="/disciplinas" element={user &&  role.role === 'admin'  ? <Disciplinas /> : <Navigate to="/login" />} />
 
-          <Route path="/admins/create" element={<AddAdmin />} />
+          <Route path="/admins/create" element={user && role.role === 'admin' ? <AddAdmin /> : <Navigate to="/login" />} />
           <Route path="/admins/edit/:id" element={user && role.role === 'admin' ? <EditAdmin /> : <Navigate to="/login" />} />
           <Route path="/admins" element={<Admins />} />
 
@@ -104,7 +104,7 @@ function App() {
           />
 
           {/* Dashboard refere-se ao financeiro */}
-          <Route path="/dashboard" element={<Dashboard /> } /> 
+          <Route path="/dashboard" element={user && role.role === 'admin' ? <Dashboard /> : <Navigate to="/login" />} /> 
 
           <Route path="/transacoes" element={user && role.role === 'admin' ? <Transacoes /> : <Navigate to="/" />} />
           <Route path="/adicionar-transacao" element={user && role.role === 'admin' ?<AdicionarTransacao /> : <Navigate to="/" />} />

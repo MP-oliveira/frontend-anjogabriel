@@ -2,13 +2,13 @@ import { useEffect, useState, useContext } from "react";
 import { UserCircle, List, X } from "phosphor-react";
 import { UserContext } from "../../context/UseContext";
 import { Link } from "react-scroll";
-
 import Logo from "../../assets/Logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
   const { user, setUser } = useContext(UserContext);
+  const role = user;
   const [isBlurred, setIsBlurred] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -164,63 +164,82 @@ const Header = () => {
               Dashboard
             </NavLink>
             <div className="dropdown-menu">
-              <NavLink
-                to="/admins"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Administrador
-              </NavLink>
-              <NavLink
-                to="/alunos"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Alunos
-              </NavLink>
-              <NavLink
-                to="/cursos"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Cursos
-              </NavLink>
+              {user && user.role === "admin" ? (
+                <>
+                  <NavLink
+                    to="/admins"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Administrador
+                  </NavLink>
+                  <NavLink
+                    to="/alunos"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Alunos
+                  </NavLink>
+                  <NavLink
+                    to="/cursos"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Cursos
+                  </NavLink>
 
-              <NavLink
-                to="/disciplinas"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Disciplina
-              </NavLink>
-              <NavLink
-                to="/materialeutensilios"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Materiais e Utensílios
-              </NavLink>
-              <NavLink
-                to="/professores"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Professores
-              </NavLink>
-              <NavLink
-                to="/turnos"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Turno
-              </NavLink>
-              <NavLink
-                to="/dashboard"
-                className="dropdown-item"
-                onClick={() => setMenuOpen(false)}
-              >
-                Financeiro
-              </NavLink>
+                  <NavLink
+                    to="/disciplinas"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Disciplina
+                  </NavLink>
+                  <NavLink
+                    to="/materialeutensilios"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Materiais e Utensílios
+                  </NavLink>
+                  <NavLink
+                    to="/professores"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Professores
+                  </NavLink>
+                  <NavLink
+                    to="/turnos"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Turno
+                  </NavLink>
+                  <NavLink
+                    to="/dashboard"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Financeiro
+                  </NavLink>
+                </>
+              ) : user && user.role === "professor" ? (
+                <>
+                  <NavLink
+                    to="/alunos"
+                    className="dropdown-item"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    Alunos
+                  </NavLink>
+                </>
+              ) : (
+                // Outros usuários - sem acesso (ou pode mostrar uma mensagem)
+                <div className="dropdown-item disabled">
+                  Acesso não autorizado
+                </div>
+              )}
             </div>
           </li>
         </div>
