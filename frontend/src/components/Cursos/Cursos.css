@@ -1,0 +1,131 @@
+.curso_container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: 100vw;
+  height: 120vh;
+  overflow: hidden;
+  gap: 20px;
+}
+
+
+.curso_content {
+  width: 80%;
+  background-color: #EDF3FC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  gap: 12px;
+  padding: 20px 50px 20px 50px;
+  margin-bottom: 30px;
+  margin-top: 50px;
+}
+
+.curso_top {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: end;
+  /* background-color: red; */
+  /* position: relative; */
+}
+
+.criar_curso {
+  width: 130px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #FBD064;
+  color: #000;
+  border-radius: 10px;
+  font-size: 18px;
+  padding: 10px 20px;
+  flex:1;
+  margin-top: 30px;
+  /* position: absolute; */
+  /* left: 800px; */
+  /* top: 34px */
+}
+
+
+.curso_h1 {
+  font-size: 32px;
+  text-align: center;
+  flex:6;
+  margin-left: 10.4rem;
+  
+}
+
+.curso_input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.curso_input input {
+  padding: 12px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #a6a7a9;
+  border: none;
+  outline-color: #C6D6F3;
+  padding: opx;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+
+.curso_lista_input {
+  width: 300px;
+  font-size: 18px;
+}
+
+.curso_content_btn {
+  width: 50px;
+  background-color: #1C65D1;
+  border: none;
+  padding: 8px;
+  width: 120px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+}
+
+
+.tabela_curso_lista {
+  width: 100%;
+}
+
+.tabela_curso_lista th {
+  background-color: #3875d616;
+  text-align: left;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.tabela_curso_lista td {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.tabela_curso_lista tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.tabela_curso_lista tbody tr:nth-child(even) {
+  background-color: #c6d6f310
+}
+
+.curso_acoes {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: left;
+  margin-left: 10px;
+}

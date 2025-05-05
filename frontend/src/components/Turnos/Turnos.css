@@ -1,0 +1,53 @@
+.form-container {
+  padding: 20px;
+}
+
+.form-list-content {
+  margin-top: 20px;
+}
+
+.form-list-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-list-top-h1 {
+  font-size: 24px;
+}
+
+.form-criar {
+  background-color: #1a53a2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.form-list-input {
+  margin: 20px 0;
+}
+
+.form-list-input-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabela-form-lista {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-form-lista th,
+.tabela-form-lista td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.for-list-acoes img {
+  cursor: pointer;
+  margin-left: 10px;
+} 

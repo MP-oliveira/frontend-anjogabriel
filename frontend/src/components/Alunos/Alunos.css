@@ -1,0 +1,90 @@
+/* Aplica grid nas linhas da tabela */
+.tabela-form-lista-aluno {
+  width: 100%;
+}
+.tabela-form-lista-aluno tbody tr,
+.tabela-form-lista-aluno thead tr {
+  text-align: left;
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tabela-form-lista-aluno thead tr {
+  background-color: #d1e1fa;
+}
+
+.tabela-form-lista-aluno tbody tr:nth-child(even) {
+  background-color: #dee8f8; /* Cor clara para linhas pares */
+}
+
+.tabela-form-lista-aluno tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Cor padrão para linhas ímpares */
+}
+
+/* Ajuste nos cabeçalhos */
+.tabela-form-lista-aluno thead th {
+  padding: 4px;
+  border-right: 2px solid #d8d8d8; /* linha entre colunas */
+  font-weight: bold;
+}
+.tabela-form-lista-aluno tbody td {
+  border-right: 2px solid #d8d8d8; /* linha entre colunas */
+}
+
+.tabela-form-lista-aluno th:last-child,
+.tabela-form-lista-aluno td:last-child {
+  border-right: none;
+}
+
+/* Ajuste nas células */
+.tabela-form-lista-aluno td {
+  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.for-list-acoes-aluno {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.for-list-acoes-aluno-icons {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+
+.for-list-acoes-aluno-buttons  {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn-aluno button {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.edit-btn-aluno button:hover {
+  background-color: #0570e3;
+}
+
+
+@media (max-width: 1280px) {
+  .edit-btn-aluno button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+}
+
+

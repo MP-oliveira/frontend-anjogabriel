@@ -1,0 +1,367 @@
+.page-container {
+  width: 100%;
+  height: 100%;
+  margin-top: 120px;
+}
+
+
+.boletim_container {
+  width: 100%;
+  max-width: 210mm;
+  /* Tamanho A4 largura */
+  margin: 10px auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  font-size: 12px;
+  /* Reduzir tamanho base da fonte */
+}
+
+.boletim_impressao {
+  width: 100%;
+}
+
+.print-btn {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.print-btn button {
+  border: none;
+  background-color: #4480e0;
+  width: 200px;
+}
+
+.aluno-btn,
+.retry-button {
+  background-color: #0066cc;
+  color: white;
+  border: 1px solid white;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.aluno-btn:hover,
+.retry-button:hover {
+  background-color: #0055aa;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  font-size: 16px;
+  color: #666;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  border: 1px solid #ff6666;
+  border-radius: 5px;
+  background-color: #ffeeee;
+}
+
+.error-message {
+  color: #cc0000;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.boletim_cabecalho {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 8px;
+}
+
+.logo_escola {
+  width: 60px;
+  margin-right: 10px;
+}
+
+.logo_escola img {
+  width: 100%;
+  height: auto;
+}
+
+.escola_info {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.escola_info h1 {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 0 2px 0;
+}
+
+.escola_info h2 {
+  font-size: 12px;
+  margin: 2px 0;
+}
+
+.escola_info p {
+  font-size: 10px;
+  margin: 1px 0;
+}
+
+.boletim_titulo {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.boletim_aluno_info {
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.boletim_aluno_info p {
+  margin: 2px 10px 2px 0;
+  font-size: 12px;
+}
+
+.modulo_container {
+  margin-bottom: 8px;
+  page-break-inside: avoid;
+}
+
+.modulo_titulo {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 5px 0;
+  text-align: left;
+}
+
+.info_modulo {
+  margin-bottom: 5px;
+  font-size: 11px;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 2px 5px;
+  border-radius: 2px;
+  border-left: 2px solid #0066cc;
+}
+
+.modulo_tabela {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+}
+
+.modulo_tabela th,
+.modulo_tabela td {
+  border: 1px solid #000;
+  padding: 3px 5px;
+  font-size: 11px;
+}
+
+.modulo_tabela th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: center;
+}
+
+.coluna_materia {
+  width: 60%;
+  text-align: left;
+}
+
+.coluna_nota {
+  width: 20%;
+  text-align: center;
+}
+
+.modulo_tabela td:nth-child(2),
+.modulo_tabela td:nth-child(3) {
+  text-align: center;
+}
+
+.observacoes_container {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.observacoes_titulo {
+  font-weight: bold;
+  margin-bottom: 2px;
+  font-size: 11px;
+}
+
+.observacoes_conteudo {
+  min-height: 30px;
+  border: 1px solid #000;
+  padding: 3px;
+}
+
+.rodape_boletim {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.assinaturas {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 15px;
+  gap: 60px;
+}
+
+.assinatura_campo {
+  text-align: center;
+  width: 160px;
+}
+
+.linha_assinatura {
+  border-bottom: 1px solid #000;
+  margin-bottom: 3px;
+}
+
+@media print {
+
+  @page {
+    size: A4 portraite;
+    margin: 5mm;
+    /* Margem mínima */
+  }
+  /* Esconder elementos que não devem ser impressos */
+  .no-print {
+    display: none !important;
+  }
+
+  /* Redefinir estilos para impressão */
+  body,
+  html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+  }
+
+  .page-container {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  .boletim_container {
+    width: 100%;
+    /* Após rotação, a largura será a altura da página A4 */
+    height: 100vh;
+    /* Após rotação, a altura será a largura da página A4 */
+    margin: 0;
+    border: none;
+    box-shadow: none;
+    font-size: 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Evitar transbordo */
+  }
+
+  /* Aplicar rotação de 90 graus e ajustar posição */
+  .boletim_impressao {
+    transform: rotate(-90deg) translate(-200mm, 20mm);
+    transform-origin: 0 0;
+    width: 96% !important;
+    height: 297mm;
+  }
+
+  /* Garantir que o conteúdo caiba em uma página */
+  .modulo_container {
+    margin-bottom: 5px;
+    page-break-inside: avoid;
+    /* Evitar quebra dentro de módulos */
+  }
+
+  /* Ajustar o cabeçalho */
+  .boletim_cabecalho {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+  }
+
+  /* Ajustar informações do aluno */
+  .boletim_aluno_info {
+    margin-bottom: 5px;
+  }
+
+  /* Ajustar a tabela para ocupar menos espaço */
+  .modulo_tabela th,
+  .modulo_tabela td {
+    padding: 2px 5px;
+    /* Reduzir padding para economizar espaço */
+    font-size: 10px;
+    /* Reduzir fonte para caber mais conteúdo */
+  }
+
+  /* Garantir que a seção de observações não quebre */
+  .observacoes_container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    page-break-inside: avoid;
+    /* Evitar quebra dentro das observações */
+  }
+
+  .observacoes_conteudo {
+    min-height: 20px;
+    /* Reduzir altura mínima para economizar espaço */
+    padding: 2px;
+  }
+
+  /* Ajustar o rodapé */
+  .rodape_boletim {
+    margin-top: 5px;
+  }
+
+  .assinaturas {
+    margin-top: 5px;
+    gap: 40px;
+    /* Reduzir o espaço entre assinaturas */
+  }
+
+  .assinatura_campo {
+    width: 140px;
+    /* Reduzir largura para economizar espaço */
+  }
+
+  /* Garantir que toda a página seja impressa em uma folha só */
+  .boletim_impressao {
+    page-break-after: avoid;
+    page-break-before: avoid;
+  }
+
+  /* Garantir cores na impressão */
+  .modulo_tabela th {
+    background-color: #f2f2f2 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Esconder mensagens de erro ou loading na impressão */
+  .error-container,
+  .loading-container {
+    display: none !important;
+  }
+}

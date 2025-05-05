@@ -1,0 +1,275 @@
+.diploma_container {
+  width: 1169px;
+  height: 827px;
+  background-color: white;
+  margin: 0 auto;
+  color: #1C65D1;
+}
+
+.diploma_impressao {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Ajustes no cabeçalho */
+.diploma_headers h1,
+.diploma_headers h2 {
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  color: #1C65D1;
+}
+
+.diploma_headers h1 {
+  margin-bottom: 10px;
+}
+
+.diploma_headers p {
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.diploma_headers h3 {
+  font-size: 28px;
+}
+
+/* Logo e imagens - ajustados conforme a imagem de referência */
+.logo_anjo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1000px; /* Limitando largura para manter proporções */
+}
+
+.logo_anjo_text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo_anjo img {
+  width: 100px;
+  height: auto;
+}
+
+.logo_anjo .bandeira {
+  width: 100px;
+  height: auto;
+  margin-right: 20px;
+}
+
+.anjo2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.2;
+  z-index: -1;
+  width: 300px;
+}
+
+/* Conteúdo do diploma */
+.diploma_content {
+  margin-top: 30px;
+  padding: 0 20px;
+  text-align: justify;
+}
+
+.diploma_content p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Classes com sufixo -frente */
+.assinaturas-frente {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.diploma_assinatura_top-frente {
+  margin-bottom: 40px;
+  text-align: center;
+  padding-left: 60px;
+}
+
+.assinaturas_bottom-frente {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.assinaturas_bottom-frente > div {
+  width: 220px;
+  text-align: center;
+}
+
+.assinaturas_line-frente {
+  width: 250px;
+  border-bottom: 1px solid #1C65D1;
+  margin: 0 auto;
+}
+
+.assinaturas-frente p {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+/* Borda do diploma */
+.diploma_borda {
+  border: 50px solid transparent;
+  border-image: url("../../assets/fundoazul.png") 150;
+  padding: 40px;
+  position: relative;
+  background-color: white;
+}
+
+/* Botão de impressão */
+.print-btn {
+  margin: 120px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.aluno-btn {
+  background-color: #1C65D1;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.aluno-btn:hover {
+  background-color: #154da0;
+}
+
+/* Classes para gerenciar impressão */
+.no-print {
+  display: block;
+}
+
+.print-page {
+  display: block;
+  margin-bottom: 50px;
+}
+
+.diploma-wrapper {
+  width: 100%;
+}
+
+/* Estilos para impressão - COM CENTRALIZAÇÃO AJUSTADA */
+@media print {
+  /* Configuração da orientação paisagem */
+  @page {
+    size: landscape !important;
+    margin: 0 !important;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* Hide non-printable elements */
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Ajuste para evitar corte na borda direita */
+  .diploma-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* Ensure each diploma part fills and centers on the page */
+  .diploma_container, 
+  .print-page {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100vh !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Movendo o conteúdo um pouco para a esquerda para evitar corte na borda direita */
+  .diploma_impressao {
+    width: 88% !important;
+    height: 95% !important;
+    max-width: 88% !important;
+    max-height: 95% !important;
+    margin: auto !important;
+    transform: translateX(-5%) !important; /* Move ligeiramente para a esquerda */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .diploma_borda {
+    border-width: 30px !important;
+    padding: 20px !important;
+    margin: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  
+  /* Ensure images print correctly */
+  .logo_anjo img, 
+  .logo_anjo .bandeira, 
+  .anjo2 {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  /* Adjust content sizes for print */
+  .diploma_headers h1 {
+    font-size: 22px !important;
+  }
+  
+  .diploma_headers h2 {
+    font-size: 20px !important;
+  }
+  
+  .diploma_headers p {
+    font-size: 14px !important;
+  }
+  
+  .diploma_content p {
+    font-size: 14px !important;
+  }
+  
+  /* Ensure each part prints on a new page with proper centering */
+  .fundo_diploma_container {
+    page-break-before: always !important;
+    break-before: page !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transform: translateX(-2%) !important; /* Move ligeiramente para a esquerda */
+  }
+}

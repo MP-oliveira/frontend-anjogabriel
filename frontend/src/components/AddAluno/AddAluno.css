@@ -1,0 +1,142 @@
+.addaluno-container { 
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.form-addaluno {
+  background-color: #EDF3FC;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-addaluno h2 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+input, select {
+  width: 100%;
+  padding: 15px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #C6D6F3;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  outline-color: #C6D6F3;
+}
+
+input::placeholder {
+  color: #999999;
+}
+
+.email-dn,
+.gs-n-n,
+.rg-oe-de,
+.nc-b,
+.tel,
+.cep-ci-es,
+.cur-tur-dai-dat {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.aluno-btn-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.aluno-btn {
+  background-color: #FBD064;
+  border: none;
+  padding: 15px 30px;
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.aluno-btn:hover {
+  background-color: #f0c55a;
+}
+
+.error_message {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+}
+
+/* Responsividade */
+@media (max-width: 1280px) { /* MacBook 13" */
+  .form-addaluno {
+    max-width: 700px;
+  }
+}
+
+@media (max-width: 834px) { /* iPad 10" */
+  .form-addaluno {
+    max-width: 600px;
+    padding: 30px;
+  }
+
+  .email-dn,
+  .gs-n-n,
+  .rg-oe-de,
+  .nc-b,
+  .tel,
+  .cep-ci-es,
+  .cur-tur-dai-dat {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 430px) { /* iPhone 15 Pro Max */
+  .form-addaluno {
+    padding: 25px;
+  }
+
+  .email-dn,
+  .gs-n-n,
+  .rg-oe-de,
+  .nc-b,
+  .tel,
+  .cep-ci-es,
+  .cur-tur-dai-dat {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 375px) { /* iPhone 15 */
+  .addaluno-container {
+    padding: 15px;
+  }
+
+  .form-addaluno {
+    padding: 20px;
+  }
+
+  input, select {
+    padding: 12px;
+  }
+
+  .form-addaluno h2 {
+    font-size: 24px;
+  }
+}
+

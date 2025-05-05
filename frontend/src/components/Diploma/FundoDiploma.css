@@ -1,0 +1,321 @@
+/* FundoDiploma.css */
+.diploma-container {
+  width: 1169px;
+  height: 827px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 5mm;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  position: relative;
+  margin-top: 50px;
+}
+
+.diploma-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.curso-info {
+  width: 100%;
+  border-bottom: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Informações do Curso */
+.curso-info {
+  margin-bottom: 8px;
+}
+
+.info-row-top,
+.info-row-bottom {
+  width: 100%;
+  display: flex;
+  padding: 1px 0;
+  margin-left: 18px;
+  min-height: 14px;
+  margin-bottom: 5px;
+}
+
+
+.label-local {
+  font-weight: bold;
+  margin-right: 5px;
+  white-space: nowrap;
+  margin-right: 80px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 5px;
+  white-space: nowrap;
+}
+
+.value {
+  flex: 1;
+}
+
+.curso-atual {
+  margin-top: -15px;
+  padding-left: 15px;
+  border-bottom: 1px solid black;
+}
+
+.curso-atual,
+.dates-row {
+  display: flex;
+  gap: 100px;
+}
+
+.dates-row .info-row {
+  flex: 1;
+}
+
+/* Seções de Texto */
+.perfil-section,
+.competencia-section {
+  margin-top: -5px;
+  padding-left: 15px;
+}
+
+
+
+
+.section-title {
+  font-weight: bold;
+  margin-bottom: 3px;
+  display: inline;
+}
+
+.section-text {
+  text-align: justify;
+  line-height: 1.2;
+  font-size: 9px;
+  margin-bottom: 5px;
+  display: inline;
+  /* Mantém o texto na mesma linha */
+  margin-left: 5px;
+  /* Pequeno espaçamento após os dois pontos */
+}
+
+.competencias-section {
+  margin-bottom: 8px;
+}
+
+/* Tabelas */
+.modulos-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.modulo {
+  margin-bottom: 8px;
+}
+
+.modulo-title {
+  font-weight: bold;
+  margin-bottom: 2px;
+  font-size: 10px;
+}
+
+.modulo-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.modulo-table th,
+.modulo-table td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.modulo-table th {
+  width: 33.33%;
+}
+
+.modulo-table td {
+  width: 33.33%;
+}
+
+
+/* Remove a borda inferior da célula que contém "Autenticação da Escola" */
+.autenticacao-cell {
+  border-bottom: none;
+}
+
+.subtotal-row,
+.total-row {
+  background-color: white;
+  font-weight: bold;
+}
+
+/* Rodapé */
+.diploma-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+  margin-top: auto;
+}
+
+.autenticacao,
+.coren {
+  flex: 1;
+  max-width: 200px;
+  text-align: center;
+}
+
+.linha-assinatura {
+  border-top: 1px solid black;
+  margin-bottom: 3px;
+  width: 150px;
+  margin: 0 auto 3px;
+}
+
+.codigo {
+  font-size: 8px;
+  margin-top: 2px;
+}
+
+.modulos-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.modulo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9px;
+}
+
+.modulo-table td {
+  border: 1px solid black;
+  vertical-align: top;
+}
+
+.body-flex tr {
+  display: flex;
+}
+
+.inner-table {
+  width: 100%;
+  border-collapse: collapse;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inner-table th,
+.inner-table td {
+  border: none;
+  padding: 2px 4px;
+  text-align: center;
+}
+
+.inner-table th {
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+
+.inner-table td {
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+/* Ajuste das larguras das colunas internas */
+.inner-table td:first-child {
+  width: 25%;
+}
+
+.inner-table td:nth-child(2),
+.inner-table td:nth-child(3),
+.inner-table td:nth-child(4) {
+  width: 25%;
+  text-align: center;
+}
+
+.thead-teoria tr, .body-flex tr, .tbody-total tr {
+ display: flex;
+}
+
+.thead-teoria th, .body-flex td, .subtotal-row td, .total-row td {
+  border-right: 1px solid black;
+  text-align: center;
+}
+
+.subtotal-row,
+.total-row {
+  font-weight: bold;
+}
+
+.autenticacao-cell {
+  text-align: center;
+  vertical-align: middle !important;
+  padding-bottom: 20px !important;
+  padding-top: 180px !important; /* Adicionando padding-top para empurrar o conteúdo mais para cima */
+}
+
+.linha-assinatura {
+  width: 80%;
+  margin: 0 auto 5px;
+  border-top: 1px solid black;
+}
+
+.codigo {
+  font-size: 8px;
+  margin-top: 10px;
+}
+
+/* Ajustes dos cabeçalhos principais */
+
+.header-row td {
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.no-border {
+  border-bottom: none;
+}
+
+
+.tbody-footer tbody{
+  width: 100%;
+}
+
+.tbody-footer td {
+  text-align: center;
+}
+
+
+/* Ajustes de Impressão */
+@media print {
+  .diploma-container {
+    margin: 0;
+    padding: 15mm;
+  }
+
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+}
+
+/* Bordas da página */
+.page-border {
+  position: absolute;
+  top: 5mm;
+  left: 5mm;
+  right: 5mm;
+  bottom: 5mm;
+  border: 1px solid black;
+  pointer-events: none;
+}
+
+.autenticacao-content {
+  display: block;
+  width: 100%;
+}

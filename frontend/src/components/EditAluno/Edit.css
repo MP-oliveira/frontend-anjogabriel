@@ -1,0 +1,84 @@
+.addaluno-container {
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.form-addaluno h2 {
+  font-size: 32px;
+  text-align: center; 
+}
+
+.form-addaluno {
+  background-color: #EDF3FC;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  gap: 12px;
+  padding: 20px 50px 20px 50px;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+input {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #a6a7a9;
+  border: none;
+  outline-color: #C6D6F3;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+input::placeholder {
+  color: #999999;
+  font-weight: normal;
+}
+
+.email-dn,
+.gs-n-n,
+.rg-oe-de,
+.nc-b,
+.tel,
+.cep-ci-es,
+.cur-tur-dai-dat {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.email-dn input,
+.gs-n-n input,
+.nc-b input,
+.tel input,
+.cep-ci-es input {
+  flex: 1
+}
+
+.aluno-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.aluno-btn {
+  background-color: #FBD064;
+  border: none;
+  padding: 15px;
+  width: 300px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-size: 18px;
+  text-align: center;
+  margin: 0 auto;
+}
+

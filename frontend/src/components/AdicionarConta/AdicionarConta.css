@@ -1,0 +1,49 @@
+.adicionar-conta-container {
+  max-width: 1000px;
+  margin: 80px auto; /* Espaço abaixo do cabeçalho */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: flex;
+  align-items: start;
+  margin-bottom: 5px;
+}
+
+.adicionar-conta-h1 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group input {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+} 
+
+.edit-btn {
+  margin-top: 10px;
+  margin-left: 45%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,82 @@
+.registro-container {
+    padding: 20px;
+    padding-top: 120px; /* Ajuste para o header fixo */
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .registro-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .registro-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .registro-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+  }
+  
+  .registro-table th,
+  .registro-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .registro-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  .registro-table tr:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .nota-aprovado {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .nota-atencao {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+  
+  .error {
+    text-align: center;
+    padding: 20px;
+    color: #dc3545;
+    background-color: #f8d7da;
+    border-radius: 4px;
+    margin: 20px;
+  }
+  
+  @media (max-width: 800px) {
+    .registro-content {
+      overflow-x: auto;
+    }
+    
+    .registro-container {
+      padding: 10px;
+    }
+  }
+
+.registro_top {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
