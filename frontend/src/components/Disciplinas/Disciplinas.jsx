@@ -36,7 +36,7 @@ const Disciplinas = () => {
 
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/api/disciplinas/${id}`);
+      await api.delete(`/disciplinas/${id}`);
       setDisciplinas(disciplinas.filter((disciplina) => disciplina.id !== id));
       setFilteredDisciplinas(filteredDisciplinas.filter((disciplina) => disciplina.id !== id));
     } catch (error) {
