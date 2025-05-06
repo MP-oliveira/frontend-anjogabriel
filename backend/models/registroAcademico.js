@@ -4,7 +4,7 @@ const Aluno = require("./aluno");
 const Disciplina = require("./disciplina");
 const Curso = require("./curso");
 
-// Modelo RegistroAcademico
+// Modelo RegistroAcademico atualizado para usar arrays em faltas
 const RegistroAcademico = sequelize.define("registroAcademico", {
   id: {
     type: DataTypes.INTEGER,
@@ -27,7 +27,6 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
       key: "id",
     },
   },
-
   cursoId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -36,21 +35,23 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
       key: "id",
     },
   },
-
   faltaData: {
-    type: DataTypes.DATE,
+    type: DataTypes.ARRAY(DataTypes.DATE),
     allowNull: true,
+    defaultValue: [],
   },
   faltaMotivo: {
-    type: DataTypes.STRING,
+    type: DataTypes.ARRAY(DataTypes.STRING),
     allowNull: true,
+    defaultValue: [],
+  },
+  faltaQuantidade: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
+    allowNull: true,
+    defaultValue: [],
   },
   testeData: {
     type: DataTypes.DATE,
-    allowNull: true,
-  },
-  testeDescricao: {
-    type: DataTypes.STRING,
     allowNull: true,
   },
   notaTeste: {
@@ -61,10 +62,6 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
     type: DataTypes.DATE,
     allowNull: true,
   },
-  provaDescricao: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   notaProva: {
     type: DataTypes.FLOAT,
     allowNull: true,
@@ -73,20 +70,13 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
     type: DataTypes.DATE,
     allowNull: true,
   },
-  trabalhoDescricao: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
+
   notaTrabalho: {
     type: DataTypes.FLOAT,
     allowNull: true,
   },
   estagioData: {
     type: DataTypes.DATE,
-    allowNull: true,
-  },
-  estagioDescricao: {
-    type: DataTypes.STRING,
     allowNull: true,
   },
   estagioNota: {
@@ -102,9 +92,9 @@ const RegistroAcademico = sequelize.define("registroAcademico", {
     allowNull: true,
   },
 },
-  {
-    tableName: "registroAcademico"
-  });
+{
+  tableName: "registroAcademico"
+});
 
 RegistroAcademico.belongsTo(Aluno, { foreignKey: "alunoId", as: "alunos" });
 RegistroAcademico.belongsTo(Curso, { foreignKey: "cursoId", as: "cursos" });
