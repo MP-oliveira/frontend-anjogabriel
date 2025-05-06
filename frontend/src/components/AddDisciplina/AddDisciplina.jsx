@@ -3,15 +3,13 @@ import { useState, useEffect } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import VoltarButton from '../VoltarButton/VoltarButton';
+import VoltarButton from "../VoltarButton/VoltarButton";
 
 const disciplinaSchema = z.object({
   nome: z
     .string()
     .min(3, { message: "O nome precisa ter no mínimo 3 caracteres." }),
-  modulo: z
-    .string()
-    .min(1, { message: "Selecione um módulo" }),
+  modulo: z.string().min(1, { message: "Selecione um módulo" }),
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
@@ -23,10 +21,15 @@ const disciplinaSchema = z.object({
       if (ctx.path && ctx.path.length > 0) {
         const parentData = ctx.parent;
         // Se tem estágio supervisionado, a carga horária deve ser maior que 0
-        if (parentData && parentData.estagio_supervisionado === "Sim" && val <= 0) {
+        if (
+          parentData &&
+          parentData.estagio_supervisionado === "Sim" &&
+          val <= 0
+        ) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: "A carga horária de estágio precisa ser maior que 0 quando há estágio supervisionado",
+            message:
+              "A carga horária de estágio precisa ser maior que 0 quando há estágio supervisionado",
           });
         }
       }
@@ -35,18 +38,10 @@ const disciplinaSchema = z.object({
     .string()
     .min(1, { message: "Selecione se tem estágio supervisionado" }),
   duracao: z.number(),
-  curso_id: z
-    .number()
-    .min(1, { message: "Selecione um curso" }),
-  professor_id: z
-    .number()
-    .min(1, { message: "Selecione um professor" }),
-  horario_inicio: z
-    .string()
-    .min(1, { message: "Defina um horário de início" }),
-  horario_fim: z
-    .string()
-    .min(1, { message: "Defina um horário de término" }),
+  curso_id: z.number().min(1, { message: "Selecione um curso" }),
+  professor_id: z.number().min(1, { message: "Selecione um professor" }),
+  horario_inicio: z.string().min(1, { message: "Defina um horário de início" }),
+  horario_fim: z.string().min(1, { message: "Defina um horário de término" }),
   dias_semana: z
     .array(z.string())
     .min(1, { message: "Selecione pelo menos um dia da semana" }),
@@ -69,14 +64,14 @@ const AddDisciplina = () => {
   const [cursos, setCursos] = useState([]);
   const [professores, setProfessores] = useState([]);
   const [modulo, setModulo] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o loading
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [cursosResponse, professoresResponse] = await Promise.all([
           api.get("/cursos"),
-          api.get("/professores")
+          api.get("/professores"),
         ]);
         setCursos(cursosResponse.data);
         setProfessores(professoresResponse.data);
@@ -90,11 +85,11 @@ const AddDisciplina = () => {
 
   const handleDiasSemanaChange = (e) => {
     const dia = e.target.value;
-    setDias_semana(prev => {
+    setDias_semana((prev) => {
       if (e.target.checked) {
         return [...prev, dia];
       } else {
-        return prev.filter(d => d !== dia);
+        return prev.filter((d) => d !== dia);
       }
     });
   };
@@ -105,7 +100,8 @@ const AddDisciplina = () => {
       nome,
       modulo,
       carga_horaria: Number(carga_horaria),
-      carga_horaria_estagio: estagio_supervisionado === "Sim" ? Number(carga_horaria_estagio) : 0,
+      carga_horaria_estagio:
+        estagio_supervisionado === "Sim" ? Number(carga_horaria_estagio) : 0,
       estagio_supervisionado,
       duracao: Number(duracao),
       curso_id: Number(curso_id),
@@ -133,8 +129,13 @@ const AddDisciplina = () => {
         dias_semana: fieldErrors.dias_semana?._errors[0],
       });
     } else {
+      setIsLoading(true); // Ativa o estado de loading antes da requisição
+
       try {
-        const response = await api.post("/disciplinas/create", disciplinaresult.data);
+        const response = await api.post(
+          "/disciplinas/create",
+          disciplinaresult.data
+        );
         console.log("Disciplina adicionada com sucesso!", response.data);
         alert("Disciplina adicionada com sucesso!");
 
@@ -155,6 +156,8 @@ const AddDisciplina = () => {
       } catch (error) {
         console.error("Erro ao adicionar disciplina", error);
         alert("Erro ao adicionar disciplina. Por favor, tente novamente.");
+      } finally {
+        setIsLoading(false); // Desativa o estado de loading após a requisição (sucesso ou erro)
       }
       setErrors({});
     }
@@ -163,8 +166,7 @@ const AddDisciplina = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
-
-        <VoltarButton url='/disciplinas' />
+        <VoltarButton url="/disciplinas" />
 
         <h2>Adicionar Disciplina</h2>
 
@@ -186,7 +188,7 @@ const AddDisciplina = () => {
               onChange={(e) => setCurso_id(e.target.value)}
             >
               <option value="">Selecione o Curso</option>
-              {cursos.map(curso => (
+              {cursos.map((curso) => (
                 <option key={curso.id} value={curso.id}>
                   {curso.nome}
                 </option>
@@ -204,7 +206,7 @@ const AddDisciplina = () => {
               onChange={(e) => setProfessor_id(e.target.value)}
             >
               <option value="">Selecione o Professor</option>
-              {professores.map(professor => (
+              {professores.map((professor) => (
                 <option key={professor.id} value={professor.id}>
                   {professor.nome}
                 </option>
@@ -232,10 +234,7 @@ const AddDisciplina = () => {
           )}
 
           <div className="custom-select-wrapper">
-            <select
-              value={modulo}
-              onChange={(e) => setModulo(e.target.value)}
-            >
+            <select value={modulo} onChange={(e) => setModulo(e.target.value)}>
               <option value="">Módulo</option>
               <option value="Modulo 1">Modulo 1</option>
               <option value="Modulo 2">Modulo 2</option>
@@ -317,7 +316,7 @@ const AddDisciplina = () => {
         </div>
 
         <div className="input-three-columns label-margin">
-          <label className='label-input'>
+          <label className="label-input">
             <input
               type="checkbox"
               value="Segunda"
@@ -325,7 +324,7 @@ const AddDisciplina = () => {
             />
             Segunda-feira
           </label>
-          <label className='label-input' >
+          <label className="label-input">
             <input
               type="checkbox"
               value="Terça"
@@ -333,7 +332,7 @@ const AddDisciplina = () => {
             />
             Terça-feira
           </label>
-          <label className='label-input'>
+          <label className="label-input">
             <input
               type="checkbox"
               value="Quarta"
@@ -341,7 +340,7 @@ const AddDisciplina = () => {
             />
             Quarta-feira
           </label>
-          <label className='label-input'>
+          <label className="label-input">
             <input
               type="checkbox"
               value="Quinta"
@@ -349,7 +348,7 @@ const AddDisciplina = () => {
             />
             Quinta-feira
           </label>
-          <label className='label-input'>
+          <label className="label-input">
             <input
               type="checkbox"
               value="Sexta"
@@ -357,7 +356,7 @@ const AddDisciplina = () => {
             />
             Sexta-feira
           </label>
-          <label className='label-input'>
+          <label className="label-input">
             <input
               type="checkbox"
               value="Sábado"
@@ -367,7 +366,13 @@ const AddDisciplina = () => {
           </label>
         </div>
         <div className="form-btn-container">
-          <button className="form-btn" type="submit">Adicionar Disciplina</button>
+          <button
+            className="form-btn"
+            type="submit"
+            disabled={isLoading} // Desabilita o botão quando estiver carregando
+          >
+            {isLoading ? "Adicionando..." : "Adicionar Disciplina"}
+          </button>
         </div>
       </form>
     </div>

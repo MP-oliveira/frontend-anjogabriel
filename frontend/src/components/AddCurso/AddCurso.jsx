@@ -3,7 +3,7 @@ import { useState } from "react";
 import api from "../../services/api";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
-import VoltarButton from '../VoltarButton/VoltarButton';
+import VoltarButton from "../VoltarButton/VoltarButton";
 
 const cursoSchema = z.object({
   nome: z
@@ -13,9 +13,7 @@ const cursoSchema = z.object({
   carga_horaria: z
     .number()
     .min(1, { message: "A carga horária precisa ser maior que 0" }),
-  duracao: z
-    .number()
-    .min(1, { message: "A duração precisa ser maior que 0" }),
+  duracao: z.number().min(1, { message: "A duração precisa ser maior que 0" }),
   valor_total: z
     .number()
     .min(0, { message: "O valor total não pode ser negativo" }),
@@ -93,8 +91,7 @@ const AddCurso = () => {
   return (
     <div className="form-container">
       <form className="form-add" onSubmit={handleSubmit}>
-
-        <VoltarButton url='/cursos' />
+        <VoltarButton url="/cursos" />
 
         <h2>Adicionar Curso</h2>
         <input
@@ -158,7 +155,7 @@ const AddCurso = () => {
           <div className="custom-select-wrapper">
             <select
               value={status}
-              className='custom-select-wrapper'
+              className="custom-select-wrapper"
               onChange={(e) => setStatus(e.target.value)}
             >
               <option value="">Selecione o Status</option>
@@ -188,8 +185,8 @@ const AddCurso = () => {
           )}
         </div>
         <div className="form-btn-container">
-          <button 
-            className="form-btn" 
+          <button
+            className="form-btn"
             type="submit"
             disabled={isLoading} // Desabilita o botão quando estiver carregando
           >
