@@ -5,24 +5,25 @@ import { useNavigate } from "react-router-dom";
 import VoltarButton from "../VoltarButton/VoltarButton";
 
 const AddTurnos = () => {
-  const [nome, setNome] = useState("")
-  const [inicio, setInicio] = useState("")
-  const [termino, setTermino] = useState("")
+  const [nome, setNome] = useState("");
+  const [inicio, setInicio] = useState("");
+  const [termino, setTermino] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o loading
   const navigate = useNavigate();
-
 
   // Função para lidar com o envio do formulário
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Criar um FormData para enviar os arquivos junto com os dados
+    // Criar o objeto com os dados do turno
     const newTurno = {
       nome,
       inicio,
       termino
-    }
+    };
 
-    // console.log(newTurno)
+    // Ativar o estado de loading antes da requisição
+    setIsLoading(true);
 
     try {
       // Enviar os dados para a API
@@ -30,17 +31,19 @@ const AddTurnos = () => {
       alert("Turno adicionado com sucesso!");
 
       // Resetar campos
-      setNome("")
-      setInicio("")
-      setTermino("")
+      setNome("");
+      setInicio("");
+      setTermino("");
       
       // Redirecionar para a página de turnos
       navigate("/turnos");
     } catch (error) {
       console.error("Erro ao adicionar Turno", error);
+    } finally {
+      // Desativar o estado de loading após a requisição (sucesso ou erro)
+      setIsLoading(false);
     }
   };
-
 
   return (
     <>
@@ -50,7 +53,7 @@ const AddTurnos = () => {
           onSubmit={handleSubmit}
         >
           <VoltarButton url="/turnos" />
-        <h2 >Adicionar Turno</h2>
+          <h2>Adicionar Turno</h2>
           <input
             type="text"
             value={nome}
@@ -71,8 +74,10 @@ const AddTurnos = () => {
           />
           <button
             className="aluno-btn"
-            type="submit">
-            Adicionar Turno
+            type="submit"
+            disabled={isLoading} // Desabilita o botão quando estiver carregando
+          >
+            {isLoading ? "Adicionando..." : "Adicionar Turno"}
           </button>
         </form>
       </div>

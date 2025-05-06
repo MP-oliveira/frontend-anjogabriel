@@ -165,7 +165,7 @@ const MaterialEUtensilio = () => {
                           {materiaisDaCategoria.map(material => (
                             <tr key={material.id} className="material-item">
                               <td>{material.nome}</td>
-                              <td>{material.quantidade} {material.unidade}</td>
+                              <td>{material.quantidade}</td>
                               <td>R$ {material.valor_unitario}</td>
                               <td>
                                 <span className={`status-badge ${material.status_material.toLowerCase()}`}>
