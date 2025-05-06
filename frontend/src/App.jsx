@@ -72,7 +72,8 @@ function App() {
           <Route path="/disciplinas/edit/:id" element={user &&  role.role === 'admin' ? <EditDisciplina /> : <Navigate to="/login" />} />
           <Route path="/disciplinas" element={user &&  role.role === 'admin'  ? <Disciplinas /> : <Navigate to="/login" />} />
 
-          <Route path="/admins/create" element={user && role.role === 'admin' ? <AddAdmin /> : <Navigate to="/login" />} />
+          {/* <Route path="/admins/create" element={user && role.role === 'admin' ? <AddAdmin /> : <Navigate to="/login" />} /> */}
+          <Route path="/admins/create" element={<AddAdmin />} />
           <Route path="/admins/edit/:id" element={user && role.role === 'admin' ? <EditAdmin /> : <Navigate to="/login" />} />
           <Route path="/admins" element={<Admins />} />
 

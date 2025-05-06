@@ -120,6 +120,9 @@ const RegistroAcademicoAluno = () => {
               <th>Aluno</th>
               <th>Curso</th>
               <th>Disciplinas</th>
+              <th>Motivos das Faltas</th>
+              <th>Datas das Faltas</th>
+              <th>Total de Faltas</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -129,7 +132,7 @@ const RegistroAcademicoAluno = () => {
                 <tr key={registro.id}>
                   <td>
                     <Link 
-                    to={`/registroacademico/${registro.id}`} 
+                      to={`/registroacademico/${registro.id}`} 
                       className="aluno-link"
                       title={registro.aluno}
                     >
@@ -138,6 +141,23 @@ const RegistroAcademicoAluno = () => {
                   </td>
                   <td>{registro.curso}</td>
                   <td>{registro.disciplinas}</td>
+                  <td>
+                    <ul style={{margin: 0, paddingLeft: 16}}>
+                      {(registro.faltaMotivo || []).map((motivo, idx) => (
+                        <li key={idx}>{motivo}</li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td>
+                    <ul style={{margin: 0, paddingLeft: 16}}>
+                      {(registro.faltaData || []).map((data, idx) => (
+                        <li key={idx}>{data ? new Date(data).toLocaleDateString() : ''}</li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td>
+                    {(registro.faltaQuantidade || []).reduce((acc, val) => acc + (parseInt(val) || 0), 0)}
+                  </td>
                   <td className="for-list-acoes">
                     <Link to={`/registroacademico/edit/${registro.id}`}>
                       <img src={Edit} alt="Editar" />
@@ -153,7 +173,7 @@ const RegistroAcademicoAluno = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4">Nenhum registro encontrado</td>
+                <td colSpan="7">Nenhum registro encontrado</td>
               </tr>
             )}
           </tbody>

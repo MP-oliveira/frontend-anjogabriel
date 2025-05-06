@@ -118,18 +118,6 @@ const Mensalidade = () => {
     }, 100);
   };
 
-  const handlePrintAll = () => {
-    if (mensalidadePage1Ref.current) {
-      mensalidadePage1Ref.current.style.display = "block";
-    }
-    if (mensalidadePage2Ref.current) {
-      mensalidadePage2Ref.current.style.display = "block";
-    }
-    setTimeout(() => {
-      window.print();
-    }, 100);
-  };
-
   if (loading) {
     return <div>Carregando...</div>;
   }
