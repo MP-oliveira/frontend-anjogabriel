@@ -37,6 +37,7 @@ const AddCurso = () => {
   const [status, setStatus] = useState("");
   const [modalidade, setModalidade] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar o loading
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,6 +66,7 @@ const AddCurso = () => {
         modalidade: fieldErrors.modalidade?._errors[0],
       });
     } else {
+      setIsLoading(true); // Ativa o estado de loading antes da requisição
       try {
         const response = await api.post("/cursos/create", cursoresult.data);
         console.log("Curso adicionado com sucesso!", response.data);
@@ -81,6 +83,8 @@ const AddCurso = () => {
         navigate("/cursos");
       } catch (error) {
         console.error("Erro ao adicionar curso", error);
+      } finally {
+        setIsLoading(false); // Desativa o estado de loading após a requisição (sucesso ou erro)
       }
       setErrors({});
     }
@@ -184,8 +188,12 @@ const AddCurso = () => {
           )}
         </div>
         <div className="form-btn-container">
-          <button className="form-btn" type="submit">
-            Adicionar Curso
+          <button 
+            className="form-btn" 
+            type="submit"
+            disabled={isLoading} // Desabilita o botão quando estiver carregando
+          >
+            {isLoading ? "Adicionando..." : "Adicionar Curso"}
           </button>
         </div>
       </form>
