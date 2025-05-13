@@ -60,6 +60,14 @@ function Transacoes() {
     setTransacoesFiltradas(transacoesFiltradas);
   };
 
+  const handleLimparFiltro = () => {
+    setFiltroData({
+      dataInicio: '',
+      dataFim: ''
+    });
+    setTransacoesFiltradas(transacoes);
+  };
+
   if (loading) {
     return (
       <div className="loading-container">
@@ -79,18 +87,27 @@ function Transacoes() {
 
           {/* Formulário de filtro */}
           <form onSubmit={handleFilterSubmit} className="filter-form">
-            <div className="input-three-columns">
-              <input
-                type="date"
-                value={filtroData.dataInicio}
-                onChange={(e) => setFiltroData({ ...filtroData, dataInicio: e.target.value })}
-              />
-              <input
-                type="date"
-                value={filtroData.dataFim}
-                onChange={(e) => setFiltroData({ ...filtroData, dataFim: e.target.value })}
-              />
+            <div className="filter-inputs">
+              <div className="input-group">
+                <label>Data Inicial</label>
+                <input
+                  type="date"
+                  value={filtroData.dataInicio}
+                  onChange={(e) => setFiltroData({ ...filtroData, dataInicio: e.target.value })}
+                />
+              </div>
+              <div className="input-group">
+                <label>Data Final</label>
+                <input
+                  type="date"
+                  value={filtroData.dataFim}
+                  onChange={(e) => setFiltroData({ ...filtroData, dataFim: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="filter-buttons">
               <button className='filter' type="submit">Filtrar</button>
+              <button className='limpar' type="button" onClick={handleLimparFiltro}>Limpar Filtro</button>
             </div>
           </form>
 
