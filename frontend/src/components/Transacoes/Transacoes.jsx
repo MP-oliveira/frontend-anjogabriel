@@ -7,6 +7,7 @@ import { CircularProgress } from '@mui/material';
 
 function Transacoes() {
   const [transacoes, setTransacoes] = useState([]);
+  const [transacoesFiltradas, setTransacoesFiltradas] = useState([]);
   const [contas, setContas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -24,6 +25,7 @@ function Transacoes() {
       // Buscar transações
       const transacoesResponse = await axios.get('http://localhost:3001/api/financeiro');
       setTransacoes(transacoesResponse.data);
+      setTransacoesFiltradas(transacoesResponse.data);
       
       // Buscar contas
       const contasResponse = await axios.get('http://localhost:3001/api/financeiro/contas');
@@ -38,8 +40,24 @@ function Transacoes() {
 
   const handleFilterSubmit = (e) => {
     e.preventDefault();
-    // Lógica para filtrar transações com base nas datas
-    // Você pode implementar a lógica de filtragem aqui
+    
+    if (!filtroData.dataInicio || !filtroData.dataFim) {
+      setTransacoesFiltradas(transacoes);
+      return;
+    }
+
+    const dataInicio = new Date(filtroData.dataInicio);
+    const dataFim = new Date(filtroData.dataFim);
+    
+    // Ajusta a data fim para incluir todo o dia
+    dataFim.setHours(23, 59, 59, 999);
+
+    const transacoesFiltradas = transacoes.filter(transacao => {
+      const dataTransacao = new Date(transacao.data);
+      return dataTransacao >= dataInicio && dataTransacao <= dataFim;
+    });
+
+    setTransacoesFiltradas(transacoesFiltradas);
   };
 
   if (loading) {
@@ -91,11 +109,11 @@ function Transacoes() {
             </div>
           </div>
 
-          {transacoes.length === 0 ? (
+          {transacoesFiltradas.length === 0 ? (
             <p>Nenhuma transação encontrada.</p>
           ) : (
             <ul className="transacoes-list">
-              {transacoes.map(transacao => (
+              {transacoesFiltradas.map(transacao => (
                 <li key={transacao.id} className="transacao-item">
                   <span className="transacao-descricao">{transacao.descricao}</span>
                   <span className="transacao-data">{new Date(transacao.data).toLocaleDateString('pt-BR')}</span>
