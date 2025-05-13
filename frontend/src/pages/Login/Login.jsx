@@ -61,13 +61,19 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className="form-input"
         />
-        <select value={role} onChange={(e) => setRole(e.target.value)} required>
+        <select 
+          value={role} 
+          onChange={(e) => setRole(e.target.value)} 
+          required
+          className="form-input"
+        >
           <option value="">Selecione seu papel</option>
           <option value="admin">Admin</option>
           <option value="professor">Professor</option>
         </select>
-        <button type="submit" className="aluno-btn">
+        <button type="submit" className="form-input aluno-btn">
           Entrar
         </button>
       </form>

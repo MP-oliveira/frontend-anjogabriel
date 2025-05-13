@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Transacoes.css'; // Certifique-se de que o CSS está correto
 import { Link } from 'react-router-dom';
 import VoltarButton from '../VoltarButton/VoltarButton';
+import { CircularProgress } from '@mui/material';
 
 function Transacoes() {
   const [transacoes, setTransacoes] = useState([]);
@@ -42,7 +43,12 @@ function Transacoes() {
   };
 
   if (loading) {
-    return <div>Carregando transações...</div>;
+    return (
+      <div className="loading-container">
+        <CircularProgress sx={{ color: '#fff' }} />
+        <p>Carregando transações...</p>
+      </div>
+    );
   }
 
   return (

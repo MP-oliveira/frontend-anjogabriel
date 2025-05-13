@@ -191,3 +191,19 @@
 .btn-action:hover {
   background-color: #0d3b7d;
 }
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #1a53a2;
+  color: #fff;
+  gap: 20px;
+}
+
+.loading-container p {
+  font-size: 18px;
+  margin: 0;
+}

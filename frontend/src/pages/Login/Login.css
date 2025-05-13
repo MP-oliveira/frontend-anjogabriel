@@ -4,16 +4,19 @@
   align-items: center;
   min-height: 100vh;
   background-color: #EDF3FC;
-  padding: 20px;
+  padding: 40px;
 }
 
 .login-form {
   background-color: white;
-  padding: 40px;
+  padding: 50px;
   border-radius: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .login-form h2 {
@@ -33,7 +36,7 @@
   color: #555;
 }
 
-input, select {
+.form-input {
   width: 100%;
   padding: 15px;
   font-size: 14px;
@@ -41,8 +44,8 @@ input, select {
   color: #333;
   border: 1px solid #C6D6F3;
   border-radius: 8px;
-  margin-bottom: 20px;
   outline-color: #C6D6F3;
+  box-sizing: border-box;
 }
 
 input::placeholder {
@@ -55,10 +58,11 @@ input::placeholder {
   background-color: #FBD064;
   color: #000;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: 10px;
 }
 
 .login-button:hover, .aluno-btn:hover {
