@@ -884,7 +884,9 @@ const DetalhesAluno = () => {
                   </div>
 
                   <div className="media-final">
-                    <h4>Média Atual: {disciplinaAtual.media !== undefined && disciplinaAtual.media !== null ? disciplinaAtual.media.toFixed(2) : "N/A"}</h4>
+                    <h4 className={disciplinaAtual.media !== null && disciplinaAtual.media < 6 ? 'nota-baixa' : ''}>
+                      Média Atual: {disciplinaAtual.media !== null ? disciplinaAtual.media.toFixed(2) : "N/A"}
+                    </h4>
                   </div>
                 </div>
 
@@ -1056,17 +1058,17 @@ const DetalhesAluno = () => {
                     <p>Estágio: {disciplina.estagioNota !== undefined && disciplina.estagioNota !== null ? disciplina.estagioNota.toFixed(1) : "N/A"}</p>
                     <div className="disciplina-notas-grid">
                       {disciplina.notaProva !== undefined && disciplina.notaProva !== null && disciplina.notaProva !== '' && (
-                        <span className={parseFloat(disciplina.notaProva) < 6 ? 'nota-baixa' : ''}>
+                        <span>
                           P: {disciplina.notaProva.toFixed(1)}
                         </span>
                       )}
                       {disciplina.notaTeste !== undefined && disciplina.notaTeste !== null && disciplina.notaTeste !== '' && (
-                        <span className={parseFloat(disciplina.notaTeste) < 6 ? 'nota-baixa' : ''}>
+                        <span>
                           T: {disciplina.notaTeste.toFixed(1)}
                         </span>
                       )}
                       {disciplina.notaTrabalho !== undefined && disciplina.notaTrabalho !== null && disciplina.notaTrabalho !== '' && (
-                        <span className={parseFloat(disciplina.notaTrabalho) < 6 ? 'nota-baixa' : ''}>
+                        <span>
                           Tr: {disciplina.notaTrabalho.toFixed(1)}
                         </span>
                       )}

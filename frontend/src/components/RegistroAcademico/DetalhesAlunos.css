@@ -172,6 +172,11 @@
     font-size: 16px;
   }
   
+  .media-final h4.nota-baixa {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
   .presenca-section {
     background: #f8f9fa;
     padding: 1.5rem;
