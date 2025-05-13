@@ -1,14 +1,13 @@
 import { useEffect, useState, useContext } from "react";
 import { UserCircle, List, X } from "phosphor-react";
 import { UserContext } from "../../context/UseContext";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 import Logo from "../../assets/Logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
   const { user, setUser } = useContext(UserContext);
-  const role = user;
   const [isBlurred, setIsBlurred] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
