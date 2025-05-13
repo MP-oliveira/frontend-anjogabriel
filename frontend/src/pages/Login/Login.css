@@ -22,7 +22,7 @@
 .login-form h2 {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  color: #3333339e;
   font-size: 32px;
 }
 
@@ -39,24 +39,38 @@
 .form-input {
   width: 100%;
   padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   font-size: 14px;
   background-color: #fff;
   color: #333;
-  border: 1px solid #C6D6F3;
-  border-radius: 8px;
   outline-color: #C6D6F3;
   box-sizing: border-box;
 }
 
-input::placeholder {
-  color: #999999;
+.form-input::placeholder {
+  color: rgba(102, 102, 102, 0.7);
+}
+
+select.form-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.form-input option {
+  color: #a36565;
 }
 
 .login-button, .aluno-btn {
   width: 100%;
   padding: 15px;
   background-color: #FBD064;
-  color: #000;
+  color: #929292;
   border: none;
   border-radius: 8px;
   font-size: 16px;

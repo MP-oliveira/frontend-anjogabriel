@@ -2,15 +2,15 @@ import { useState, useContext } from "react";
 import api from "../../services/api";
 import "./Login.css";
 import { UserContext } from "../../context/UseContext";
-import { useNavigate } from "react-router-dom";
-import InputPassword from "../../components/InputPassword/InputPassword";
+
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const { setUser } = useContext(UserContext);
-  const navigate = useNavigate();
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -63,16 +63,18 @@ function Login() {
           placeholder="Password"
           className="form-input"
         />
-        <select 
-          value={role} 
-          onChange={(e) => setRole(e.target.value)} 
-          required
-          className="form-input"
-        >
-          <option value="">Selecione seu papel</option>
-          <option value="admin">Admin</option>
-          <option value="professor">Professor</option>
-        </select>
+        <div className="custom-select-wrapper">
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            required
+            className="form-input"
+          >
+            <option value="">Selecione seu papel</option>
+            <option value="admin">Admin</option>
+            <option value="professor">Professor</option>
+          </select>
+        </div>
         <button type="submit" className="form-input aluno-btn">
           Entrar
         </button>
