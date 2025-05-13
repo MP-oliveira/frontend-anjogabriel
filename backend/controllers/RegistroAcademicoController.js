@@ -17,9 +17,9 @@ const createRegistroAcademico = async (req, res) => {
     alunoId,
     disciplinaId,
     cursoId,
-    faltaData, // Agora é array
-    faltaMotivo, // Agora é array
-    faltaQuantidade, // Agora é array
+    faltaData,
+    faltaMotivo,
+    faltaQuantidade,
     testeData,
     notaTeste,
     provaData,
@@ -28,6 +28,7 @@ const createRegistroAcademico = async (req, res) => {
     notaTrabalho,
     estagioData,
     estagioNota,
+    totalAulas,
   } = req.body;
 
   // Calcula a média
@@ -85,6 +86,7 @@ const createRegistroAcademico = async (req, res) => {
       estagioNota,
       media,
       mediaFinal,
+      totalAulas,
     });
 
     res.status(200).json({ 
@@ -135,6 +137,9 @@ const listRegistrosAcademicos = async (req, res) => {
       testeData: registro.testeData,
       notaTrabalho: registro.notaTrabalho,
       trabalhoData: registro.trabalhoData,
+      estagioData: registro.estagioData,
+      estagioNota: registro.estagioNota,
+      totalAulas: registro.totalAulas,
       createdAt: registro.createdAt,
       updatedAt: registro.updatedAt,
     }));
@@ -176,6 +181,9 @@ const getRegistroAcademicoById = async (req, res) => {
         testeData: registro.testeData,
         notaTrabalho: registro.notaTrabalho,
         trabalhoData: registro.trabalhoData,
+        estagioData: registro.estagioData,
+        estagioNota: registro.estagioNota,
+        totalAulas: registro.totalAulas,
         createdAt: registro.createdAt,
         updatedAt: registro.updatedAt,
       };
@@ -205,40 +213,38 @@ const updateRegistroAcademico = async (req, res) => {
     notaTrabalho,
     estagioData,
     estagioNota,
+    totalAulas,
   } = req.body;
 
   try {
     const registro = await RegistroAcademico.findByPk(id);
     
     if (registro) {
-      // Calcula a nova média com os valores do body
-      const novaMedia = (
-        (notaTeste || registro.notaTeste) + 
-        (notaProva || registro.notaProva) + 
-        (notaTrabalho || registro.notaTrabalho) +
-        (estagioNota || registro.estagioNota)
-      ) / 4;
+      // Calcula a nova média apenas com as notas preenchidas
+      const notas = [
+        { nome: 'Teste', valor: notaTeste },
+        { nome: 'Prova', valor: notaProva },
+        { nome: 'Trabalho', valor: notaTrabalho },
+        { nome: 'Estágio', valor: estagioNota }
+      ];
+
+      const notasPreenchidas = notas.filter(n => n.valor > 0);
+      const novaMedia = notasPreenchidas.length > 0 
+        ? notasPreenchidas.reduce((acc, n) => acc + parseFloat(n.valor), 0) / notasPreenchidas.length 
+        : 0;
       
       // Calcula a média final usando a média antiga do registro e a nova média
       const mediaFinal = (novaMedia + registro.media) / 2;
 
       // Tratar os arrays de faltas
-      let faltaDataAtualizada = registro.faltaData || [];
-      let faltaMotivoAtualizada = registro.faltaMotivo || [];
-      let faltaQuantidadeAtualizada = registro.faltaQuantidade || [];
+      let faltaDataAtualizada = faltaData || [];
+      let faltaMotivoAtualizada = faltaMotivo || [];
+      let faltaQuantidadeAtualizada = faltaQuantidade || [];
 
-      // Se houver novas faltas para adicionar
-      if (faltaData) {
-        // Converter para array se não for
-        const novasFaltasData = Array.isArray(faltaData) ? faltaData : [faltaData].filter(Boolean);
-        const novosMotivosFalta = Array.isArray(faltaMotivo) ? faltaMotivo : [faltaMotivo].filter(Boolean);
-        const novasQuantidadesFalta = Array.isArray(faltaQuantidade) ? faltaQuantidade : [faltaQuantidade].filter(Boolean);
-
-        // Adicionar aos arrays existentes
-        faltaDataAtualizada = [...faltaDataAtualizada, ...novasFaltasData];
-        faltaMotivoAtualizada = [...faltaMotivoAtualizada, ...novosMotivosFalta];
-        faltaQuantidadeAtualizada = [...faltaQuantidadeAtualizada, ...novasQuantidadesFalta];
-      }
+      // Converter para arrays se não forem
+      faltaDataAtualizada = Array.isArray(faltaDataAtualizada) ? faltaDataAtualizada : [faltaDataAtualizada].filter(Boolean);
+      faltaMotivoAtualizada = Array.isArray(faltaMotivoAtualizada) ? faltaMotivoAtualizada : [faltaMotivoAtualizada].filter(Boolean);
+      faltaQuantidadeAtualizada = Array.isArray(faltaQuantidadeAtualizada) ? faltaQuantidadeAtualizada : [faltaQuantidadeAtualizada].filter(Boolean);
 
       await registro.update({
         faltaData: faltaDataAtualizada,
@@ -254,9 +260,10 @@ const updateRegistroAcademico = async (req, res) => {
         estagioNota,
         media: novaMedia,
         mediaFinal,
+        totalAulas,
       });
       
-      res.status(200).json({message: "Registro atualizado com sucesso", registro: registro});
+      res.status(200).json({ message: "Registro atualizado com sucesso", registro });
     } else {
       res.status(404).json({ error: "Registro não encontrado" });
     }
@@ -328,6 +335,7 @@ const getRegistrosByAlunoId = async (req, res) => {
       trabalhoData: registro.trabalhoData,
       estagioNota: registro.estagioNota,
       estagioData: registro.estagioData,
+      totalAulas: registro.totalAulas,
       createdAt: registro.createdAt,
       updatedAt: registro.updatedAt,
     }));
@@ -346,5 +354,5 @@ module.exports = {
   updateRegistroAcademico,
   deleteRegistroAcademico,
   testeRegistroAcademico,
-  getRegistrosByAlunoId
+  getRegistrosByAlunoId,
 };

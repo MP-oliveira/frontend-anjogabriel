@@ -1,9 +1,7 @@
 .detalhes-container {
-    padding-top: 100px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 2rem;
+    max-width: 1150px;
+    margin: 80px auto 80px;
     background-color: #EDF3FC; /* Cor de fundo da página */
     min-height: 100vh;
     border-radius: 20px;
@@ -15,6 +13,7 @@
     align-items: center;
     text-align: center;
     padding-top: 120px; /* Ajuste para acomodar o header */
+    min-height: 200px;
   }
   
   .loading-container h2 {
@@ -32,7 +31,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
     flex-wrap: wrap;
   }
   
@@ -50,7 +49,7 @@
   }
   
   .aluno-info {
-    flex-grow: 1;
+    flex: 1;
     margin: 0 20px;
   }
   
@@ -60,10 +59,16 @@
     color: #333;
   }
   
-  .curso-nome {
+  .aluno-nome {
     font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .curso-nome {
+    font-size: 14px;
     color: #666;
-    margin: 5px 0;
+    margin-top: 0.5rem;
   }
   
   .header-buttons {
@@ -72,37 +77,34 @@
   }
   
   .disciplina-atual-section {
-    margin-bottom: 40px;
+    margin-bottom: 2rem;
   }
   
   .disciplina-atual-section h2,
   .disciplinas-section h2 {
     color: #333;
-    font-size: 22px;
+    font-size: 18px;
     border-bottom: 2px solid #1976d2;
     padding-bottom: 10px;
     margin-bottom: 20px;
   }
   
   .disciplina-atual-card {
-    background-color: #fff;
+    background: white;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
   .disciplina-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
   }
   
   .disciplina-header h3 {
-    font-size: 20px;
+    font-size: 16px;
     color: #333;
     margin: 0;
   }
@@ -122,169 +124,153 @@
   }
   
   .notas-section {
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
   }
   
   .notas-section h3,
   .presenca-section h3 {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 15px;
     color: #444;
   }
   
   .notas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
   }
   
   .notas-card {
-    background-color: #f9f9f9;
+    background: #f8f9fa;
+    padding: 1rem;
     border-radius: 6px;
-    padding: 15px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   }
   
   .notas-card h4 {
-    font-size: 16px;
-    margin: 0 0 10px 0;
-    color: #555;
+    margin: 0 0 0.5rem 0;
+    color: #666;
+    font-size: 14px;
   }
   
   .notas-card p {
-    font-size: 22px;
-    font-weight: bold;
     margin: 0;
+    font-size: 16px;
+    font-weight: bold;
     color: #333;
   }
   
   .media-final {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f0f7ff;
-    border-radius: 6px;
+    margin-top: 1.5rem;
     text-align: center;
   }
   
   .media-final h4 {
     margin: 0;
-    font-size: 18px;
-    color: #0d47a1;
+    color: #333;
+    font-size: 16px;
   }
   
   .presenca-section {
-    margin-bottom: 30px;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 6px;
   }
   
   .presenca-info {
-    background-color: #f9f9f9;
-    border-radius: 6px;
-    padding: 15px;
+    margin-top: 1rem;
   }
   
   .presenca-info p {
-    margin: 8px 0;
-    font-size: 15px;
-    color: #444;
+    margin: 0.5rem 0;
+    font-size: 14px;
   }
   
   .alerta {
-    color: #d32f2f;
-    font-weight: bold;
+    color: #dc3545;
   }
   
   /* Disciplinas cursadas */
   .disciplinas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
   }
   
   .disciplina-card {
-    background-color: #fff;
+    background: white;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     cursor: pointer;
+    transition: transform 0.2s;
   }
   
   .disciplina-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
   }
   
   .disciplina-icon {
-    background-color: #e3f2fd;
-    padding: 15px;
-    text-align: center;
+    margin-bottom: 1rem;
   }
   
   .disciplina-icon h3 {
     margin: 0;
-    font-size: 18px;
-    color: #0d47a1;
+    color: #333;
   }
   
   .disciplina-card-content-p {
-    padding: 15px;
+    color: #666;
   }
   
   .disciplina-card-content-p p {
-    margin: 5px 0;
+    margin: 0.5rem 0;
     font-size: 14px;
-    color: #555;
   }
   
   .disciplina-notas-grid {
     display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-    background-color: #f5f9ff;
-    padding: 8px;
-    border-radius: 4px;
-    font-size: 13px;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
   }
   
   .disciplina-notas-grid span {
-    padding: 3px 7px;
-    background-color: #e3f2fd;
-    border-radius: 3px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .disciplina-notas-grid .nota-baixa {
+    color: #dc3545;
     font-weight: bold;
-    color: #0d47a1;
+  }
+  
+  .disciplina-notas-grid .nota-nao-aplicada {
+    color: #6c757d;
+    font-style: italic;
   }
   
   .disciplina-presenca {
-    font-size: 13px !important;
-    padding: 5px 0;
-    border-top: 1px dashed #eee;
-    margin-top: 8px !important;
+    margin: 1rem 0;
+    font-size: 14px;
   }
   
   .disciplina-faltas {
     font-size: 12px;
-    color: #bf360c;
-    margin-left: 5px;
+    color: #666;
+    margin-left: 0.5rem;
   }
   
   .disciplina-card-footer {
-    margin-top: 10px;
-    padding-top: 5px;
-    border-top: 1px solid #eee;
+    margin-top: 1rem;
     text-align: center;
   }
   
   .clique-para-editar {
-    font-size: 12px;
     color: #1976d2;
-    font-style: italic;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  
-  .disciplina-card:hover .clique-para-editar {
-    opacity: 1;
+    font-size: 12px;
   }
   
   .media-aprovado {
@@ -299,37 +285,32 @@
   
   /* Seção de adicionar disciplina */
   .adicionar-disciplina-section {
-    margin-bottom: 40px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    margin-top: 2rem;
   }
   
   .add-disciplina-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
   }
   
   .add-disciplina-header h2 {
     color: #333;
-    font-size: 22px;
+    font-size: 18px;
     margin: 0;
     border-bottom: none;
   }
   
   .add-disciplina-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 6px;
-    margin-top: 15px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   
   .disciplina-info {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 1rem;
   }
   
   .disciplina-info .alerta {
@@ -341,33 +322,19 @@
   }
   
   .disciplina-reload {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
   }
   
   .reload-icon {
-    font-size: 16px;
-    animation: spin 2s linear infinite;
-    animation-play-state: paused;
-  }
-  
-  .disciplina-reload button:hover .reload-icon {
-    animation-play-state: running;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    font-size: 1.2rem;
   }
   
   .loading-disciplinas {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    margin: 15px 0;
+    gap: 1rem;
+    margin: 2rem 0;
   }
   
   .loading-disciplinas p {
@@ -425,4 +392,59 @@
     .disciplinas-grid, .notas-grid {
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
+  }
+
+  .faltas-form {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+  }
+
+  .faltas-label {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .falta-item {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .falta-data {
+    flex: 1;
+  }
+
+  .falta-motivo {
+    flex: 2;
+  }
+
+  .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .add-falta-btn {
+    margin-top: 4px;
+  }
+
+  .faltas-lista {
+    margin: 0;
+    padding-left: 16px;
+    font-size: 12px;
+    list-style: none;
+  }
+
+  .falta-item-lista {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+    font-size: 12px;
+  }
+
+  .falta-arrow {
+    color: #1976d2;
+    font-weight: bold;
+    margin-right: 6px;
   }

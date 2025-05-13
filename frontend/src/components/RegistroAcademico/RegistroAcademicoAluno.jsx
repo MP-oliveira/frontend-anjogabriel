@@ -15,27 +15,28 @@ const RegistroAcademicoAluno = () => {
     const fetchRegistros = async () => {
       try {
         const response = await api.get('/registroacademico/');
-        // console.log("response registro academico", response.data)  // chegou aqui ok
         const registrosUnicos = response.data.reduce((acc, registro) => {
           const key = registro.id;
           if (!acc[key]) {
             acc[key] = {
               id: registro.id,
               aluno: registro.aluno,
-              // para aparecer o curso, precisa fazer o relacionamento de curso com o registro academico e fazer o include no fetch do controller
-              curso: registro.curso?.nome || 'Não definido',  
-              disciplinas: registro.disciplina
+              curso: registro.curso || 'Não definido',
+              disciplina: registro.disciplina,
+              faltaMotivo: registro.faltaMotivo || [],
+              faltaData: registro.faltaData || [],
+              faltaQuantidade: registro.faltaQuantidade || [],
+              totalAulas: registro.totalAulas || 0,
             };
-          } else {
-            acc[key].disciplinas.add(registro.disciplina);
           }
           return acc;
         }, {});
-        // console.log("Registros unicos", registrosUnicos)  // chegou aqui ok
 
         const registrosFormatados = Object.values(registrosUnicos).map(reg => ({
           ...reg,
-          disciplinas: Array.from(reg.disciplinas)
+          faltaMotivo: Array.isArray(reg.faltaMotivo) ? reg.faltaMotivo : [],
+          faltaData: Array.isArray(reg.faltaData) ? reg.faltaData : [],
+          faltaQuantidade: Array.isArray(reg.faltaQuantidade) ? reg.faltaQuantidade : [],
         }));
 
         setRegistros(registrosUnicos);
@@ -51,9 +52,10 @@ const RegistroAcademicoAluno = () => {
     const value = e.target.value.toLowerCase();
     setSearch(value);
     
-    const filtered = registros.filter(registro => 
+    const filtered = Object.values(registros).filter(registro => 
       registro.aluno.toLowerCase().includes(value) ||
-      registro.curso.toLowerCase().includes(value)
+      registro.curso.toLowerCase().includes(value) ||
+      registro.disciplina.toLowerCase().includes(value)
     );
     setFilteredRegistros(filtered);
   };
@@ -62,7 +64,11 @@ const RegistroAcademicoAluno = () => {
     if (window.confirm('Tem certeza que deseja excluir este registro?')) {
       try {
         await api.delete(`/registroacademico/${id}`);
-        setRegistros(registros.filter(registro => registro.id !== id));
+        setRegistros(prev => {
+          const updated = { ...prev };
+          delete updated[id];
+          return updated;
+        });
         setFilteredRegistros(filteredRegistros.filter(registro => registro.id !== id));
         alert('Registro excluído com sucesso!');
       } catch (error) {
@@ -74,6 +80,7 @@ const RegistroAcademicoAluno = () => {
 
   // Função para formatar nomes longos
   const formatarNome = (nomeCompleto) => {
+    if (!nomeCompleto) return '';
     const partesNome = nomeCompleto.split(' ');
     if (partesNome.length <= 2) {
       return nomeCompleto;
@@ -108,7 +115,7 @@ const RegistroAcademicoAluno = () => {
           <input
             className="registro_lista_input"
             type="text"
-            placeholder="Buscar por aluno ou curso"
+            placeholder="Buscar por aluno, curso ou disciplina"
             value={search}
             onChange={handleSearch}
           />
@@ -119,10 +126,11 @@ const RegistroAcademicoAluno = () => {
             <tr>
               <th>Aluno</th>
               <th>Curso</th>
-              <th>Disciplinas</th>
+              <th>Disciplina</th>
               <th>Motivos das Faltas</th>
               <th>Datas das Faltas</th>
               <th>Total de Faltas</th>
+              <th>Total de Aulas</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -140,24 +148,33 @@ const RegistroAcademicoAluno = () => {
                     </Link>
                   </td>
                   <td>{registro.curso}</td>
-                  <td>{registro.disciplinas}</td>
+                  <td>{registro.disciplina}</td>
                   <td>
-                    <ul style={{margin: 0, paddingLeft: 16}}>
-                      {(registro.faltaMotivo || []).map((motivo, idx) => (
-                        <li key={idx}>{motivo}</li>
-                      ))}
+                    <ul style={{ margin: 0, paddingLeft: 16 }}>
+                      {registro.faltaMotivo.length > 0 ? (
+                        registro.faltaMotivo.map((motivo, idx) => (
+                          <li key={idx}>{motivo}</li>
+                        ))
+                      ) : (
+                        <li>Nenhum motivo registrado</li>
+                      )}
                     </ul>
                   </td>
                   <td>
-                    <ul style={{margin: 0, paddingLeft: 16}}>
-                      {(registro.faltaData || []).map((data, idx) => (
-                        <li key={idx}>{data ? new Date(data).toLocaleDateString() : ''}</li>
-                      ))}
+                    <ul style={{ margin: 0, paddingLeft: 16 }}>
+                      {registro.faltaData.length > 0 ? (
+                        registro.faltaData.map((data, idx) => (
+                          <li key={idx}>{data ? new Date(data).toLocaleDateString() : ''}</li>
+                        ))
+                      ) : (
+                        <li>Nenhuma data registrada</li>
+                      )}
                     </ul>
                   </td>
                   <td>
-                    {(registro.faltaQuantidade || []).reduce((acc, val) => acc + (parseInt(val) || 0), 0)}
+                    {registro.faltaQuantidade.reduce((acc, val) => acc + (parseInt(val) || 0), 0)}
                   </td>
+                  <td>{registro.totalAulas}</td>
                   <td className="for-list-acoes">
                     <Link to={`/registroacademico/edit/${registro.id}`}>
                       <img src={Edit} alt="Editar" />
@@ -173,14 +190,14 @@ const RegistroAcademicoAluno = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7">Nenhum registro encontrado</td>
+                <td colSpan="8">Nenhum registro encontrado</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default RegistroAcademicoAluno;

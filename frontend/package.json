@@ -18,6 +18,7 @@
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.5",
     "axios": "^1.7.7",
+    "esbuild-wasm": "^0.25.4",
     "phosphor-react": "^1.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

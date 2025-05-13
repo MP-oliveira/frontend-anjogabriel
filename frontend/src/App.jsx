@@ -34,7 +34,7 @@ import Professores from "./components/Professores/Professores";
 import AddRegistroAcademico from "./components/AddRegistroAcademico/AddRegistroAcademico";
 import EditRegistroAcademico from "./components/EditRegistroAcademico/EditRegistroAcademico";
 import RegistroAcademico from './components/RegistroAcademico/RegistroAcademicoAluno';
-import DetalhesAluno from './components/RegistroAcademico/DestalhesAlunos';
+import DetalhesAluno from './components/RegistroAcademico/DetalhesAlunos';
 import Boletim from './components/Boletim/Boletim';
 
 
