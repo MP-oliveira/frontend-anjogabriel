@@ -66,8 +66,6 @@ const DetalhesAluno = () => {
             (response.data.data && Array.isArray(response.data.data)) ? response.data.data : [];
 
           if (disciplinas.length > 0) {
-            console.log("Disciplinas encontradas:", disciplinas.length);
-            console.log("Amostra:", disciplinas[0]);
             setTodasDisciplinas(disciplinas);
             setLoadingDisciplinas(false);
             return disciplinas;
@@ -101,9 +99,7 @@ const DetalhesAluno = () => {
     const fetchDetalhesAluno = async () => {
       try {
         setLoading(true);
-        console.log("Buscando registro acadêmico com ID:", id);
         const response = await api.get(`/registroacademico/${id}`);
-        console.log("Dados recebidos:", response.data);
 
         if (response.data) {
           setRegistroAluno(response.data);
@@ -111,9 +107,7 @@ const DetalhesAluno = () => {
           // Buscar informações do aluno
           try {
             const alunoId = response.data.alunoId || id;
-            console.log("Buscando aluno com ID:", alunoId);
             const alunoResponse = await api.get(`/alunos/${alunoId}`);
-            console.log("Dados do aluno:", alunoResponse.data);
 
             if (alunoResponse.data) {
               setAlunoInfo({
@@ -127,7 +121,6 @@ const DetalhesAluno = () => {
               // Buscar mensalidades do aluno
               try {
                 const mensalidadesResponse = await api.get(`/pagamentos/aluno/${alunoResponse.data.id}`);
-                console.log("Mensalidades recebidas:", mensalidadesResponse.data);
                 setMensalidades(mensalidadesResponse.data.pagamentos || []);
               } catch (error) {
                 console.error("Erro ao buscar mensalidades:", error);
@@ -187,7 +180,6 @@ const DetalhesAluno = () => {
       } catch (error) {
         console.error("Erro ao buscar detalhes do aluno:", error);
       } finally {
-        console.log("Iniciando busca de disciplinas...");
         const disciplinas = await fetchTodasDisciplinas();
         console.log("Disciplinas carregadas no useEffect:", disciplinas);
         setLoading(false);
@@ -202,11 +194,10 @@ const DetalhesAluno = () => {
   const fetchDisciplinasCursadas = async () => {
     try {
       const alunoId = alunoInfo.id || registroAluno.alunoId || id;
-      console.log("Buscando disciplinas cursadas pelo aluno ID:", alunoId);
+
 
       try {
         const disciplinasResponse = await api.get(`/registroacademico/aluno/${alunoId}`);
-        console.log("Disciplinas cursadas encontradas:", disciplinasResponse.data);
 
         if (disciplinasResponse.data && Array.isArray(disciplinasResponse.data)) {
           const disciplinasFormatadas = disciplinasResponse.data.map(disc => ({
@@ -224,7 +215,6 @@ const DetalhesAluno = () => {
             faltaMotivo: disc.faltaMotivo || []
           }));
 
-          console.log("Disciplinas formatadas:", disciplinasFormatadas);
           setDisciplinasCursadas(disciplinasFormatadas);
           return;
         }
@@ -234,7 +224,6 @@ const DetalhesAluno = () => {
 
       // Tentativa alternativa: buscar da listagem completa
       const registrosResponse = await api.get('/registroacademico');
-      console.log("Todos os registros acadêmicos:", registrosResponse.data);
 
       if (registrosResponse.data && Array.isArray(registrosResponse.data)) {
         const registrosDoAluno = registrosResponse.data.filter(reg =>
@@ -242,7 +231,6 @@ const DetalhesAluno = () => {
           (reg.aluno && reg.aluno.toLowerCase().includes(alunoInfo.nome.toLowerCase()))
         );
 
-        console.log("Registros filtrados para o aluno:", registrosDoAluno);
 
         if (registrosDoAluno.length > 0) {
           const disciplinasFormatadas = registrosDoAluno.map(reg => ({
@@ -260,7 +248,6 @@ const DetalhesAluno = () => {
             faltaMotivo: reg.faltaMotivo || []
           }));
 
-          console.log("Disciplinas formatadas:", disciplinasFormatadas);
           setDisciplinasCursadas(disciplinasFormatadas);
           return;
         }
@@ -400,8 +387,6 @@ const DetalhesAluno = () => {
         faltas: faltaDataArray.length
       };
 
-      console.log("Dados a serem enviados:", dadosAtualizados);
-      console.log("Salvando alterações no registro ID:", registroAtualId);
 
       try {
         // Primeiro, atualizar o registro com arrays vazios para limpar as faltas
@@ -420,7 +405,6 @@ const DetalhesAluno = () => {
         
         // Depois, enviar os novos dados com as faltas atualizadas
         const response = await api.put(`/registroacademico/edit/${registroAtualId}`, dadosAtualizados);
-        console.log("Resposta da atualização:", response.data);
 
         // Atualizar o estado local com os novos dados
         setDisciplinaAtual(prev => ({
@@ -472,12 +456,8 @@ const DetalhesAluno = () => {
         
         alert("Registro acadêmico atualizado com sucesso!");
       } catch (apiError) {
-        console.error("Erro na API:", apiError);
 
         if (apiError.response) {
-          console.error("Resposta da API:", apiError.response.data);
-          console.error("Status:", apiError.response.status);
-
           let mensagemErro = "Erro ao atualizar registro acadêmico";
 
           if (apiError.response.data) {
@@ -498,8 +478,7 @@ const DetalhesAluno = () => {
         }
       }
     } catch (error) {
-      console.error("Erro ao salvar alterações:", error);
-      alert("Erro ao salvar alterações. Tente novamente.");
+      alert("Erro ao salvar alterações. Tente novamente.", error);
     }
   };
 
@@ -511,16 +490,12 @@ const DetalhesAluno = () => {
     }
 
     try {
-      console.log("Todas disciplinas:", todasDisciplinas);
-      console.log("Disciplina selecionada:", disciplinaSelecionada, "tipo:", typeof disciplinaSelecionada);
-
       // Extrair o ID da disciplina e garantir que é um número
       const disciplinaId = typeof disciplinaSelecionada === 'string'
         ? parseInt(disciplinaSelecionada, 10)
         : disciplinaSelecionada;
 
       const disciplina = todasDisciplinas.find(d => d.id === disciplinaId);
-      console.log("Disciplina encontrada:", disciplina);
 
       if (!disciplina) {
         console.error("Disciplina não encontrada com ID:", disciplinaId);
@@ -537,11 +512,11 @@ const DetalhesAluno = () => {
 
       // Usar o ID do aluno armazenado no estado alunoInfo
       const alunoId = alunoInfo.id || registroAluno.alunoId || id;
-      console.log("ID do aluno para registro:", alunoId);
+
 
       // Usar o ID do curso armazenado no estado alunoInfo
       const cursoId = alunoInfo.cursoId || registroAluno.cursoId || 1;
-      console.log("ID do curso para registro:", cursoId);
+
 
       // Data atual no formato correto para o banco de dados
       const dataAtual = new Date().toISOString().slice(0, 10);
@@ -570,11 +545,8 @@ const DetalhesAluno = () => {
         faltas: 0
       };
 
-      console.log("Enviando novo registro:", novoRegistro);
-
       try {
         const response = await api.post('/registroacademico/create', novoRegistro);
-        console.log("Disciplina adicionada:", response.data);
 
         const novoItem = response.data.novoRegistro || {
           id: new Date().getTime(),
@@ -600,7 +572,6 @@ const DetalhesAluno = () => {
           faltaMotivo: []
         };
 
-        console.log("Adicionando à lista local:", novaDisciplina);
         setDisciplinasCursadas(prevDisciplinas => [...prevDisciplinas, novaDisciplina]);
 
         setAdicionandoDisciplina(false);
@@ -660,7 +631,6 @@ const DetalhesAluno = () => {
 
   // Função para selecionar uma disciplina para edição
   const selecionarDisciplinaParaEdicao = (disciplina) => {
-    console.log("Selecionando disciplina para edição:", disciplina);
 
     // Armazenar o ID do registro acadêmico sendo editado
     setRegistroAtualId(disciplina.id);

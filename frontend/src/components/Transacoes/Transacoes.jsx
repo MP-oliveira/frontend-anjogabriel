@@ -24,8 +24,6 @@ function Transacoes() {
     try {
       // Buscar transações
       const transacoesResponse = await axios.get('http://localhost:3001/api/financeiro');
-      console.log('Número de transações recebidas:', transacoesResponse.data.length);
-      console.log('Transações recebidas:', transacoesResponse.data);
       
       // Ordenar transações por data
       const transacoesOrdenadas = [...transacoesResponse.data].sort((a, b) => 
@@ -37,7 +35,7 @@ function Transacoes() {
       
       // Buscar contas
       const contasResponse = await axios.get('http://localhost:3001/api/financeiro/contas');
-      console.log('Contas recebidas:', contasResponse.data);
+
       setContas(contasResponse.data);
     } catch (error) {
       console.error('Erro ao buscar dados:', error);
