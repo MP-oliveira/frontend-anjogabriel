@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { UserCircle, List, X } from "phosphor-react";
 import { UserContext } from "../../context/UseContext";
-import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import Logo from "../../assets/Logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
