@@ -127,7 +127,8 @@ const DetalhesAluno = () => {
               // Buscar mensalidades do aluno
               try {
                 const mensalidadesResponse = await api.get(`/pagamentos/aluno/${alunoResponse.data.id}`);
-                setMensalidades(mensalidadesResponse.data || []);
+                console.log("Mensalidades recebidas:", mensalidadesResponse.data);
+                setMensalidades(mensalidadesResponse.data.pagamentos || []);
               } catch (error) {
                 console.error("Erro ao buscar mensalidades:", error);
                 setMensalidades([]);
@@ -733,14 +734,14 @@ const DetalhesAluno = () => {
               <CircularProgress />
               <p>Carregando mensalidades...</p>
             </div>
-          ) : mensalidades.length > 0 ? (
+          ) : mensalidades && mensalidades.length > 0 ? (
             mensalidades.map((mensalidade) => (
               <div key={mensalidade.id} className="mensalidade-card">
                 <div className="mensalidade-header">
                   <h3>Mês: {new Date(mensalidade.mes_referencia).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
                 </div>
                 <div className="mensalidade-content">
-                  <p>Valor: R$ {mensalidade.valor.toFixed(2)}</p>
+                  <p>Valor: R$ {parseFloat(mensalidade.valor).toFixed(2)}</p>
                   <p>Data do Pagamento: {new Date(mensalidade.data_pagamento).toLocaleDateString('pt-BR')}</p>
                   <p>Recebido por: {mensalidade.recebido_por}</p>
                   {mensalidade.observacao && (
@@ -908,28 +909,28 @@ const DetalhesAluno = () => {
                   <div className="notas-grid">
                     <div className="notas-card">
                       <h4>Provas</h4>
-                      <p>{disciplinaAtual.notaProva !== undefined && disciplinaAtual.notaProva !== null ? disciplinaAtual.notaProva.toFixed(1) : "N/A"}</p>
+                      <p>{typeof disciplinaAtual.notaProva === 'number' ? disciplinaAtual.notaProva.toFixed(1) : "N/A"}</p>
                     </div>
 
                     <div className="notas-card">
                       <h4>Testes</h4>
-                      <p>{disciplinaAtual.notaTeste !== undefined && disciplinaAtual.notaTeste !== null ? disciplinaAtual.notaTeste.toFixed(1) : "N/A"}</p>
+                      <p>{typeof disciplinaAtual.notaTeste === 'number' ? disciplinaAtual.notaTeste.toFixed(1) : "N/A"}</p>
                     </div>
 
                     <div className="notas-card">
                       <h4>Trabalhos</h4>
-                      <p>{disciplinaAtual.notaTrabalho !== undefined && disciplinaAtual.notaTrabalho !== null ? disciplinaAtual.notaTrabalho.toFixed(1) : "N/A"}</p>
+                      <p>{typeof disciplinaAtual.notaTrabalho === 'number' ? disciplinaAtual.notaTrabalho.toFixed(1) : "N/A"}</p>
                     </div>
 
                     <div className="notas-card">
                       <h4>Estágio</h4>
-                      <p>{disciplinaAtual.estagioNota !== undefined && disciplinaAtual.estagioNota !== null ? disciplinaAtual.estagioNota.toFixed(1) : "N/A"}</p>
+                      <p>{typeof disciplinaAtual.estagioNota === 'number' ? disciplinaAtual.estagioNota.toFixed(1) : "N/A"}</p>
                     </div>
                   </div>
 
                   <div className="media-final">
-                    <h4 className={disciplinaAtual.media !== null && disciplinaAtual.media < 6 ? 'nota-baixa' : ''}>
-                      Média Atual: {disciplinaAtual.media !== null ? disciplinaAtual.media.toFixed(2) : "N/A"}
+                    <h4 className={typeof disciplinaAtual.media === 'number' && disciplinaAtual.media < 6 ? 'nota-baixa' : ''}>
+                      Média Atual: {typeof disciplinaAtual.media === 'number' ? disciplinaAtual.media.toFixed(2) : "N/A"}
                     </h4>
                   </div>
                 </div>
