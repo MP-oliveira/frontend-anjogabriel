@@ -24,11 +24,20 @@ function Transacoes() {
     try {
       // Buscar transações
       const transacoesResponse = await axios.get('http://localhost:3001/api/financeiro');
-      setTransacoes(transacoesResponse.data);
-      setTransacoesFiltradas(transacoesResponse.data);
+      console.log('Número de transações recebidas:', transacoesResponse.data.length);
+      console.log('Transações recebidas:', transacoesResponse.data);
+      
+      // Ordenar transações por data
+      const transacoesOrdenadas = [...transacoesResponse.data].sort((a, b) => 
+        new Date(b.data) - new Date(a.data)
+      );
+      
+      setTransacoes(transacoesOrdenadas);
+      setTransacoesFiltradas(transacoesOrdenadas);
       
       // Buscar contas
       const contasResponse = await axios.get('http://localhost:3001/api/financeiro/contas');
+      console.log('Contas recebidas:', contasResponse.data);
       setContas(contasResponse.data);
     } catch (error) {
       console.error('Erro ao buscar dados:', error);
@@ -129,17 +138,20 @@ function Transacoes() {
           {transacoesFiltradas.length === 0 ? (
             <p>Nenhuma transação encontrada.</p>
           ) : (
-            <ul className="transacoes-list">
-              {transacoesFiltradas.map(transacao => (
-                <li key={transacao.id} className="transacao-item">
-                  <span className="transacao-descricao">{transacao.descricao}</span>
-                  <span className="transacao-data">{new Date(transacao.data).toLocaleDateString('pt-BR')}</span>
-                  <span className={`transacao-valor ${transacao.tipo === 'receita' ? 'positivo' : 'negativo'}`}>
-                    R$ {parseFloat(transacao.valor).toFixed(2)}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <>
+              <p className="total-transacoes">Total de transações: {transacoesFiltradas.length}</p>
+              <ul className="transacoes-list">
+                {transacoesFiltradas.map(transacao => (
+                  <li key={transacao.id} className="transacao-item">
+                    <span className="transacao-descricao">{transacao.descricao}</span>
+                    <span className="transacao-data">{new Date(transacao.data).toLocaleDateString('pt-BR')}</span>
+                    <span className={`transacao-valor ${transacao.tipo === 'receita' ? 'positivo' : 'negativo'}`}>
+                      R$ {parseFloat(transacao.valor).toFixed(2)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
 
           <div className="action-buttons">

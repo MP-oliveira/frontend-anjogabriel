@@ -4,9 +4,13 @@ const { Op, Sequelize } = require("sequelize");
 module.exports = class TransacoesFinanceirasController {
   static async listarTransacoes(req, res) {
     try {
+      console.log('Buscando todas as transações...');
       const transacoes = await TransacaoFinanceira.findAll({
-        include: [{ model: ContaBancaria }]
+        include: [{ model: ContaBancaria }],
+        order: [['data', 'DESC']]
       });
+      console.log('Número de transações encontradas:', transacoes.length);
+      console.log('Transações encontradas:', JSON.stringify(transacoes, null, 2));
       res.status(200).json(transacoes);
     } catch (err) {
       console.error("Erro ao buscar transações:", err);
