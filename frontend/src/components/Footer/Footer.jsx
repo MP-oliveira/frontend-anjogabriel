@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
+import { FaWhatsapp } from 'react-icons/fa';
 import './Footer.css';
 import footer1 from '../../assets/footer1.png';
 import footer2 from '../../assets/footer2.png';
@@ -29,11 +29,6 @@ const Footer = () => {
             <h3> Escola de Enfermagem <span>Anjo Gabriel</span></h3>
           </div>
           <p>Formação técnica de excelência em enfermagem</p>
-          <div className="social-icons">
-            <a href="#" aria-label="Facebook"><FaFacebook /></a>
-            <a href="#" aria-label="Instagram"><FaInstagram /></a>
-            <a href="#" aria-label="Youtube"><FaYoutube /></a>
-          </div>
         </div>
 
         <div className="footer-locations">
