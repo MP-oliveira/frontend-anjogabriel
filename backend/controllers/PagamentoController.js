@@ -8,10 +8,11 @@ const PagamentoController = {
   // Criar um novo pagamento
   async create(req, res) {
     try {
-      const { aluno_id, conta_id, mes_referencia, valor, recebido_por, observacao } = req.body;
+      const { aluno_id, conta_id, mes_referencia, valor, observacao } = req.body;
+      const recebido_por = req.body.recebido_por || 'Usuário não identificado';
 
       // Validar dados
-      if (!aluno_id || !conta_id || !mes_referencia || !valor || !recebido_por) {
+      if (!aluno_id || !conta_id || !mes_referencia || !valor) {
         return res.status(400).json({ error: 'Todos os campos obrigatórios devem ser preenchidos' });
       }
 

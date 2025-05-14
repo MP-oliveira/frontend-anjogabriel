@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import api from '../../services/api';
 import './Pagamento.css';
 import { useParams } from 'react-router-dom';
 import VoltarButton from '../VoltarButton/VoltarButton';
+import { UserContext } from '../../context/UseContext';
 
 const Pagamento = () => {
   const { aluno_id } = useParams();
+  const { user } = useContext(UserContext);
   const [aluno, setAluno] = useState(null);
   const [contas, setContas] = useState([]);
   const [pagamentos, setPagamentos] = useState([]);
@@ -60,9 +62,14 @@ const Pagamento = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Obter o nome do usuário logado do localStorage
+      const userData = JSON.parse(localStorage.getItem('user'));
+      const nomeUsuario = userData?.role?.nome || userData?.role?.email || 'Usuário não identificado';
+
       await api.post('/pagamentos', {
         ...formData,
-        aluno_id
+        aluno_id,
+        recebido_por: nomeUsuario // Usar o nome do usuário logado
       });
 
       const pagamentosResponse = await api.get(`/pagamentos/aluno/${aluno_id}`);
@@ -160,17 +167,6 @@ const Pagamento = () => {
                   onChange={handleInputChange}
                   required
                   placeholder="R$"
-                />
-              </div>
-
-              <div className="payment-form-group">
-                <label>Recebido Por</label>
-                <input
-                  type="text"
-                  name="recebido_por"
-                  value={formData.recebido_por}
-                  onChange={handleInputChange}
-                  required
                 />
               </div>
 
