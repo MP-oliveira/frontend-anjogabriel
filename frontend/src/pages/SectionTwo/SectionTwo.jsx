@@ -2,6 +2,11 @@ import './SectionTwo.css';
 
 
 const SectionTwo = () => {
+  const scrollToSectionFour = () => {
+    const sectionFour = document.getElementById('sectionFour');
+    sectionFour.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const courses = [
     {
       title: "Técnico em Enfermagem",
@@ -33,7 +38,7 @@ const SectionTwo = () => {
       </div>
       <div className="emergency-cta">
         <h3>Quer saber mais sobre os nossos cursos?</h3>
-        <button className="contact-btn">Fale Conosco</button>
+        <button className="contact-btn" onClick={scrollToSectionFour}>Fale Conosco</button>
       </div>
     </div>
   );

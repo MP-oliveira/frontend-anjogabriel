@@ -37,7 +37,9 @@ const SectionFour = () => {
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="social-link">
             <FaWhatsapp /> WhatsApp
           </a>
-          <a href="#" className="social-link"><FaInstagram /> Instagram</a>
+          <a href="https://www.instagram.com/enfermagemanjogabriel/" target="_blank" rel="noopener noreferrer" className="social-link">
+            <FaInstagram /> Instagram
+          </a>
         </div>
       </div>
       

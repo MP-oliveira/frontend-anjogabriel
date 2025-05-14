@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaYoutube, FaWhatsapp } from 'react-icons/fa';
 import './Footer.css';
 import footer1 from '../../assets/footer1.png';
 import footer2 from '../../assets/footer2.png';
@@ -8,11 +8,19 @@ import footer5 from '../../assets/footer5.png';
 import footer6 from '../../assets/footer6.png';
 
 const Footer = () => {
+  const whatsappLink = () => {
+    const number = "5571992011531";
+    const message = "Olá! Gostaria de saber mais informações sobre os cursos.";
+    return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  };
+
   return (
     <footer className="footer">
       <div className="footer-top">
         <h2 className="footer-cta">Precisa de informações?</h2>
-        <a href="tel:7133962484" className="footer-button">Ligue (71) 3396-2484</a>
+        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="footer-button">
+          <FaWhatsapp /> (71) 99201-1531
+        </a>
       </div>
 
       <div className="footer-content">

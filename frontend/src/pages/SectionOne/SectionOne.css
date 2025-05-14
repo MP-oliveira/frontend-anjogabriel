@@ -53,6 +53,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  color: #1E56B8;
 }
 
 .sectionOne-btn:hover {
@@ -97,12 +98,13 @@
 }
 
 .sectionOne-right img {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
+  width: 400px;
+  max-width: 500px;
+  height: 470px;
+  object-fit: cover;
   border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 /* Responsividade para MacBook 13" (1280x800) */
