@@ -453,3 +453,64 @@
     font-weight: bold;
     margin-right: 6px;
   }
+
+  .mensalidades-section {
+    margin-bottom: 2rem;
+  }
+
+  .mensalidades-section h2 {
+    color: #333;
+    font-size: 18px;
+    border-bottom: 2px solid #1976d2;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+
+  .mensalidades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .mensalidade-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .mensalidade-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .mensalidade-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mensalidade-header h3 {
+    color: #1976d2;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .mensalidade-content {
+    color: #666;
+  }
+
+  .mensalidade-content p {
+    margin: 8px 0;
+    font-size: 14px;
+  }
+
+  .mensalidade-observacao {
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #eee;
+  }

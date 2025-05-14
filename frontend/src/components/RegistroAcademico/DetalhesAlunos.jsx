@@ -37,6 +37,9 @@ const DetalhesAluno = () => {
   const [errorMsg, setErrorMsg] = useState("");
   // NOVO: Estado para pares de faltas
   const [faltas, setFaltas] = useState([{ data: '', motivo: '' }]);
+  // Novo estado para mensalidades
+  const [mensalidades, setMensalidades] = useState([]);
+  const [loadingMensalidades, setLoadingMensalidades] = useState(true);
 
   // Função para buscar todas as disciplinas, com tentativas alternativas
   const fetchTodasDisciplinas = async () => {
@@ -120,6 +123,15 @@ const DetalhesAluno = () => {
                 cursoId: alunoResponse.data.cursoId || response.data.cursoId || 1,
                 turma: alunoResponse.data.turno || response.data.turma || "Não informada"
               });
+
+              // Buscar mensalidades do aluno
+              try {
+                const mensalidadesResponse = await api.get(`/pagamentos/aluno/${alunoResponse.data.id}`);
+                setMensalidades(mensalidadesResponse.data || []);
+              } catch (error) {
+                console.error("Erro ao buscar mensalidades:", error);
+                setMensalidades([]);
+              }
             }
           } catch (error) {
             console.error("Erro ao buscar dados do aluno:", error);
@@ -178,6 +190,7 @@ const DetalhesAluno = () => {
         const disciplinas = await fetchTodasDisciplinas();
         console.log("Disciplinas carregadas no useEffect:", disciplinas);
         setLoading(false);
+        setLoadingMensalidades(false);
       }
     };
 
@@ -709,6 +722,37 @@ const DetalhesAluno = () => {
         >
           {isEditing ? "Salvar" : "Editar"}
         </Button>
+      </div>
+
+      {/* Nova seção de mensalidades */}
+      <div className="mensalidades-section">
+        <h2>Mensalidades</h2>
+        <div className="mensalidades-grid">
+          {loadingMensalidades ? (
+            <div className="loading-container">
+              <CircularProgress />
+              <p>Carregando mensalidades...</p>
+            </div>
+          ) : mensalidades.length > 0 ? (
+            mensalidades.map((mensalidade) => (
+              <div key={mensalidade.id} className="mensalidade-card">
+                <div className="mensalidade-header">
+                  <h3>Mês: {new Date(mensalidade.mes_referencia).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
+                </div>
+                <div className="mensalidade-content">
+                  <p>Valor: R$ {mensalidade.valor.toFixed(2)}</p>
+                  <p>Data do Pagamento: {new Date(mensalidade.data_pagamento).toLocaleDateString('pt-BR')}</p>
+                  <p>Recebido por: {mensalidade.recebido_por}</p>
+                  {mensalidade.observacao && (
+                    <p className="mensalidade-observacao">Observação: {mensalidade.observacao}</p>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>Nenhuma mensalidade registrada.</p>
+          )}
+        </div>
       </div>
 
       {/* Seção de disciplina atual */}

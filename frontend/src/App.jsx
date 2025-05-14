@@ -47,6 +47,7 @@ import AddTurnos from './components/Addturnos/AddTurnos';
 import MaterialEUtensilio from './components/MaterialEUtensilio/MaterialEUtensilio';
 import EditMaterialEUtensilio from './components/EditMaterialEUtensilio/EditMaterialEUtensilio';
 import Mensalidade from './components/Mensalidade/Mensalidade';
+import Pagamento from './components/Pagamento/Pagamento';
 
 
 function App() {
@@ -99,6 +100,7 @@ function App() {
           <Route path="/adicionar-transacao" element={user && role.role === 'admin' ? <AdicionarTransacao /> : <Navigate to="/" />} />
           <Route path="/adicionar-conta" element={user && role.role === 'admin' ? <AdicionarConta /> : <Navigate to="/" />} />
           <Route path="/mensalidade/:id" element={user && role.role === 'admin' ? <Mensalidade /> : <Navigate to="/" />} />
+          <Route path="/pagamento/:aluno_id" element={<Pagamento />} />
           
           {/* Rota principal que renderiza a Home */}
           <Route path="/*" element={<Home />} />

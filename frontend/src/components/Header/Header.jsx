@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { UserCircle, List, X } from "phosphor-react";
 import { UserContext } from "../../context/UseContext";
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 import Logo from "../../assets/Logo.png";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import "./Header.css";
@@ -88,7 +89,7 @@ const Header = () => {
         </button>
         <div className={`links ${menuOpen ? "active" : ""}`}>
           <li>
-            <Link
+            <ScrollLink
               activeClass="active"
               to="sectionOne"
               spy={true}
@@ -102,10 +103,10 @@ const Header = () => {
               }}
             >
               Home
-            </Link>
+            </ScrollLink>
           </li>
           <li>
-            <Link
+            <ScrollLink
               activeClass="active"
               to="sectionTwo"
               spy={true}
@@ -119,10 +120,10 @@ const Header = () => {
               }}
             >
               Nossos Cursos
-            </Link>
+            </ScrollLink>
           </li>
           <li>
-            <Link
+            <ScrollLink
               activeClass="active"
               to="sectionThree"
               spy={true}
@@ -136,10 +137,10 @@ const Header = () => {
               }}
             >
               Nossa Estrutura
-            </Link>
+            </ScrollLink>
           </li>
           <li>
-            <Link
+            <ScrollLink
               activeClass="active"
               to="sectionFour"
               spy={true}
@@ -153,7 +154,7 @@ const Header = () => {
               }}
             >
               Fale Conosco
-            </Link>
+            </ScrollLink>
           </li>
           <li className="dropdown">
             <NavLink

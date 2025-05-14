@@ -14,6 +14,8 @@ const turnoRoutes = require('./routes/turnoRoutes');
 const authRoutes = require('./routes/authRoutes');
 const regsitroAcademicoRoutes = require('./routes/registroAcademicoRoutes')
 const transacaoFinanceiraRoutes = require('./routes/transacaoFinanceiraRoutes');
+const pagamentoRoutes = require('./routes/pagamentoRoutes');
+const contaRoutes = require('./routes/contaRoutes');
 const cors = require('cors')
 const db = require("./db/db");
 
@@ -37,6 +39,8 @@ app.use('/api/turnos', turnoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/registroacademico', regsitroAcademicoRoutes)
 app.use('/api/financeiro', transacaoFinanceiraRoutes);
+app.use('/api/pagamentos', pagamentoRoutes);
+app.use('/api/contas', contaRoutes);
 
 db
 // .sync({ force: true, alter: true })
