@@ -708,14 +708,14 @@ const DetalhesAluno = () => {
             mensalidades.map((mensalidade) => (
               <div key={mensalidade.id} className="mensalidade-card">
                 <div className="mensalidade-header">
-                  <h3>Mês: {new Date(mensalidade.mes_referencia).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
+                  <h3>{new Date(mensalidade.mes_referencia).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</h3>
                 </div>
                 <div className="mensalidade-content">
-                  <p>Valor: R$ {parseFloat(mensalidade.valor).toFixed(2)}</p>
-                  <p>Data do Pagamento: {new Date(mensalidade.data_pagamento).toLocaleDateString('pt-BR')}</p>
-                  <p>Recebido por: {mensalidade.recebido_por}</p>
+                  <p><strong>Valor:</strong> R$ {parseFloat(mensalidade.valor).toFixed(2)}</p>
+                  <p><strong>Data do Pagamento:</strong> {new Date(mensalidade.data_pagamento).toLocaleDateString('pt-BR')}</p>
+                  <p><strong>Recebido por:</strong> {mensalidade.recebido_por}</p>
                   {mensalidade.observacao && (
-                    <p className="mensalidade-observacao">Observação: {mensalidade.observacao}</p>
+                    <p className="mensalidade-observacao"><strong>Observação:</strong> {mensalidade.observacao}</p>
                   )}
                 </div>
               </div>
