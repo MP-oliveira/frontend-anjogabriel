@@ -55,12 +55,9 @@ const DetalhesAluno = () => {
 
     for (const endpoint of endpoints) {
       try {
-        console.log(`Tentando buscar disciplinas no endpoint: ${endpoint}`);
         const response = await api.get(endpoint);
 
         if (response.data) {
-          console.log(`Resposta do endpoint ${endpoint}:`, response.data);
-
           // Verificar o formato dos dados
           const disciplinas = Array.isArray(response.data) ? response.data :
             (response.data.data && Array.isArray(response.data.data)) ? response.data.data : [];
@@ -69,8 +66,6 @@ const DetalhesAluno = () => {
             setTodasDisciplinas(disciplinas);
             setLoadingDisciplinas(false);
             return disciplinas;
-          } else {
-            console.warn(`Endpoint ${endpoint} retornou array vazio`);
           }
         }
       } catch (error) {
@@ -79,20 +74,9 @@ const DetalhesAluno = () => {
     }
 
     // Se chegou aqui, vamos tentar um mock de dados como último recurso
-    console.warn("Todos os endpoints falharam, usando dados de fallback");
-    const disciplinasMock = [
-      { id: 1, nome: "Anatomia Humana", modulo: "Modulo 1" },
-      { id: 2, nome: "Fisiologia", modulo: "Modulo 1" },
-      { id: 3, nome: "Bioquímica", modulo: "Modulo 2" },
-      { id: 4, nome: "Farmacologia", modulo: "Modulo 2" },
-      { id: 5, nome: "Enfermagem Cirúrgica", modulo: "Modulo 3" },
-      { id: 6, nome: "Atendimento de Emergência", modulo: "Modulo 3" },
-    ];
-
-    setTodasDisciplinas(disciplinasMock);
-    setErrorMsg("Não foi possível carregar as disciplinas do servidor. Usando dados de exemplo.");
+    setErrorMsg("Não foi possível carregar as disciplinas do servidor. Por favor, tente novamente mais tarde.");
     setLoadingDisciplinas(false);
-    return disciplinasMock;
+    return [];
   };
 
   useEffect(() => {
@@ -180,8 +164,7 @@ const DetalhesAluno = () => {
       } catch (error) {
         console.error("Erro ao buscar detalhes do aluno:", error);
       } finally {
-        const disciplinas = await fetchTodasDisciplinas();
-        console.log("Disciplinas carregadas no useEffect:", disciplinas);
+        await fetchTodasDisciplinas();
         setLoading(false);
         setLoadingMensalidades(false);
       }
@@ -580,12 +563,9 @@ const DetalhesAluno = () => {
 
         await fetchDisciplinasCursadas();
       } catch (apiError) {
-        console.error("Erro na API:", apiError);
+        console.error(`Erro ao adicionar disciplina no servidor:`, apiError);
 
         if (apiError.response) {
-          console.error("Resposta da API:", apiError.response.data);
-          console.error("Status:", apiError.response.status);
-
           let mensagemErro = "Erro ao adicionar disciplina no servidor";
 
           if (apiError.response.data) {
@@ -1003,7 +983,6 @@ const DetalhesAluno = () => {
                     value={disciplinaSelecionada}
                     label="Disciplina"
                     onChange={(e) => {
-                      console.log("Disciplina selecionada:", e.target.value);
                       setDisciplinaSelecionada(e.target.value);
                     }}
                   >
