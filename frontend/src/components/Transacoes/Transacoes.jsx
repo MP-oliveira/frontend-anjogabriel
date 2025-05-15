@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../services/api';
 import './Transacoes.css'; // Certifique-se de que o CSS está correto
 import { Link } from 'react-router-dom';
 import VoltarButton from '../VoltarButton/VoltarButton';
 import { CircularProgress } from '@mui/material';
+
+// Função utilitária para formatar data yyyy-mm-dd para dd/mm/yyyy
+const formatarData = (dataStr) => {
+  if (!dataStr) return '';
+  const [ano, mes, dia] = dataStr.split('-');
+  return `${dia}/${mes}/${ano}`;
+};
 
 function Transacoes() {
   const [transacoes, setTransacoes] = useState([]);
@@ -23,7 +30,7 @@ function Transacoes() {
   const fetchData = async () => {
     try {
       // Buscar transações
-      const transacoesResponse = await axios.get('http://localhost:3001/api/financeiro');
+      const transacoesResponse = await api.get('/financeiro');
       
       // Ordenar transações por data
       const transacoesOrdenadas = [...transacoesResponse.data].sort((a, b) => 
@@ -34,7 +41,7 @@ function Transacoes() {
       setTransacoesFiltradas(transacoesOrdenadas);
       
       // Buscar contas
-      const contasResponse = await axios.get('http://localhost:3001/api/financeiro/contas');
+      const contasResponse = await api.get('/financeiro/contas');
 
       setContas(contasResponse.data);
     } catch (error) {
@@ -142,7 +149,7 @@ function Transacoes() {
                 {transacoesFiltradas.map(transacao => (
                   <li key={transacao.id} className="transacao-item">
                     <span className="transacao-descricao">{transacao.descricao}</span>
-                    <span className="transacao-data">{new Date(transacao.data).toLocaleDateString('pt-BR')}</span>
+                    <span className="transacao-data">{formatarData(transacao.data)}</span>
                     <span className={`transacao-valor ${transacao.tipo === 'receita' ? 'positivo' : 'negativo'}`}>
                       R$ {parseFloat(transacao.valor).toFixed(2)}
                     </span>

@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { 
   PieChart, Pie, AreaChart, Area,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell
 } from 'recharts';
+import api from '../../services/api';
 import PropTypes from 'prop-types';
 import './Dashboard.css';
 
@@ -39,8 +39,11 @@ function Dashboard() {
   };
 
   const formatarData = (dataString) => {
-    const data = new Date(dataString);
-    return data.toLocaleDateString('pt-BR');
+    if (!dataString) return '';
+    // Se vier no formato yyyy-mm-dd ou yyyy-mm-ddTHH:MM:SS
+    const [data] = dataString.split('T');
+    const [ano, mes, dia] = data.split('-');
+    return `${dia}/${mes}/${ano}`;
   };
 
   const fetchData = useCallback(async () => {
@@ -48,10 +51,10 @@ function Dashboard() {
     try {
       // Buscar transações
       const url = `http://localhost:3001/api/financeiro?dataInicio=${filtroData.dataInicio}&dataFim=${filtroData.dataFim}`;
-      const responseTransacoes = await axios.get(url);
+      const responseTransacoes = await api.get(url);
       
       // Buscar contas
-      const responseContas = await axios.get('http://localhost:3001/api/financeiro/contas');
+      const responseContas = await api.get('/financeiro/contas');
       setContas(responseContas.data);
       
       processarDados(responseTransacoes.data, responseContas.data);
@@ -361,17 +364,17 @@ function Dashboard() {
                 <div className="tab-panel">
                   <div className="chart-container">
                     <h3>Fluxo de Caixa</h3>
-                    <ResponsiveContainer width="100%" height={300}>
+                    <ResponsiveContainer width="95%"  height={300}>
                       <AreaChart
                         data={stats.transacoesPorDia}
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                        margin={{ top: 0, right: 30, left: 70, bottom: 40 }}
                       >
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="data" tickFormatter={(value) => new Date(value).toLocaleDateString('pt-BR')} />
-                        <YAxis />
+                        <XAxis dataKey="data" tickFormatter={formatarData} dy={7} />
+                        <YAxis  />
                         <Tooltip 
                           formatter={(value) => formatarValor(value)}
-                          labelFormatter={(label) => new Date(label).toLocaleDateString('pt-BR')}
+                          labelFormatter={formatarData}
                         />
                         <Legend />
                         <Area type="monotone" dataKey="receitas" stackId="1" stroke="#28a745" fill="#28a745" name="Receitas" />
