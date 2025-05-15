@@ -30,9 +30,11 @@ const SectionTwo = () => {
       <div className="services-grid">
         {courses.map((service, index) => (
           <div key={index} className="service-card">
-            <div className="service-icon">{service.icon}</div>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
+            <div className={`service-content ${service.title === "Técnico em Saúde do Trabalhador" ? "health-worker-content" : ""}`}>
+              <div className="service-icon">{service.icon}</div>
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+            </div>
           </div>
         ))}
       </div>

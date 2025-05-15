@@ -62,19 +62,23 @@ const Pagamento = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Obter o nome do usuário logado do localStorage
-      const userData = JSON.parse(localStorage.getItem('user'));
-      const nomeUsuario = userData?.role?.nome || userData?.role?.email || 'Usuário não identificado';
+      // Obter a data atual no fuso horário brasileiro
+      const dataAtual = new Date();
+      const dataBrasil = new Date(dataAtual.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
 
-      await api.post('/pagamentos', {
+      const dataToSend = {
         ...formData,
-        aluno_id,
-        recebido_por: nomeUsuario // Usar o nome do usuário logado
-      });
+        data_pagamento: dataBrasil.toISOString(),
+        aluno_id: aluno_id
+      };
 
+      await api.post('/pagamentos', dataToSend);
+      
+      // Atualizar a lista de pagamentos
       const pagamentosResponse = await api.get(`/pagamentos/aluno/${aluno_id}`);
       setPagamentos(pagamentosResponse.data.pagamentos || []);
-
+      
+      // Limpar o formulário
       setFormData({
         conta_id: '',
         mes_referencia: '',
@@ -201,15 +205,21 @@ const Pagamento = () => {
                 </tr>
               </thead>
               <tbody>
-                {pagamentos.map(pagamento => (
-                  <tr key={pagamento.id}>
-                    <td>{new Date(pagamento.data_pagamento).toLocaleDateString('pt-BR')} {new Date(pagamento.data_pagamento).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td>{new Date(pagamento.mes_referencia).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</td>
-                    <td>R$ {parseFloat(pagamento.valor).toFixed(2)}</td>
-                    <td>{pagamento.recebido_por}</td>
-                    <td>{pagamento.observacao}</td>
-                  </tr>
-                ))}
+                {pagamentos.map(pagamento => {
+                  // Converter a data para o fuso horário brasileiro
+                  const dataPagamento = new Date(pagamento.data_pagamento);
+                  const dataBrasil = new Date(dataPagamento.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' }));
+
+                  return (
+                    <tr key={pagamento.id}>
+                      <td>{dataBrasil.toLocaleDateString('pt-BR')} {dataBrasil.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</td>
+                      <td>{new Date(pagamento.mes_referencia).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}</td>
+                      <td>R$ {parseFloat(pagamento.valor).toFixed(2)}</td>
+                      <td>{pagamento.recebido_por}</td>
+                      <td>{pagamento.observacao}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -207,7 +207,6 @@
   background: linear-gradient(135deg, #ffffff, #e0e0e0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 0.5px;
 }
 
 .service-card p {
@@ -247,6 +246,20 @@
   transform: translateY(-2px);
 }
 
+.service-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.health-worker-content {
+  transform: translateY(-20px);
+}
+
+.health-worker-content .service-icon {
+  margin-top: 8px;
+}
+
 /* Responsividade para MacBook 13" (1280x800) */
 @media screen and (max-width: 1280px) {
   .services-section {
@@ -258,6 +271,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
+  
 }
 
 /* iPad 10 (820x1180) */

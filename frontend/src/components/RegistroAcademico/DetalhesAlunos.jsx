@@ -712,7 +712,7 @@ const DetalhesAluno = () => {
                 </div>
                 <div className="mensalidade-content">
                   <p><strong>Valor:</strong> R$ {parseFloat(mensalidade.valor).toFixed(2)}</p>
-                  <p><strong>Data do Pagamento:</strong> {new Date(mensalidade.data_pagamento).toLocaleDateString('pt-BR')}</p>
+                  <p><strong>Data do Pagamento:</strong> {new Date(mensalidade.data_pagamento).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</p>
                   <p><strong>Recebido por:</strong> {mensalidade.recebido_por}</p>
                   {mensalidade.observacao && (
                     <p className="mensalidade-observacao"><strong>Observação:</strong> {mensalidade.observacao}</p>

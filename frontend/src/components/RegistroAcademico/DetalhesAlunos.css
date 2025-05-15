@@ -472,18 +472,19 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-height: 300px; /* Altura para mostrar aproximadamente 3 cards */
     overflow-y: auto;
-    max-height: calc(100% - 50px);
     padding-right: 10px;
   }
 
   .mensalidade-card {
     background: white;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.2s ease-in-out;
     border-left: 4px solid #1976d2;
+    min-height: 80px; /* Altura mínima para cada card */
   }
 
   .mensalidade-card:hover {
@@ -492,9 +493,12 @@
   }
 
   .mensalidade-header {
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
     border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
   }
 
   .mensalidade-header h3 {
@@ -504,24 +508,30 @@
   }
 
   .mensalidade-content {
-    color: #666;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
   }
 
   .mensalidade-content p {
-    margin: 4px 0;
+    margin: 0;
     font-size: 14px;
+    color: #666;
+  }
+
+  .mensalidade-content p strong {
+    color: #333;
+    font-weight: 500;
   }
 
   .mensalidade-observacao {
     font-style: italic;
     color: #888;
-    margin-top: 5px;
-    padding-top: 5px;
+    margin-top: 10px;
+    padding-top: 10px;
     border-top: 1px dashed #eee;
     grid-column: 1 / -1;
+    font-size: 13px;
   }
 
   /* Estilização da barra de rolagem */
